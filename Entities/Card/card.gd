@@ -30,6 +30,8 @@ var selectable := false
 var hovering := false
 var hover_enabled := false
 var disabled := false
+var highlighted := false
+var attacking := false
 
 func _ready() -> void:
     data = CardCatalog.get_data(card_name)
@@ -61,7 +63,14 @@ func set_selectable(value: bool) -> void:
 
 func set_disabled(value: bool) -> void:
     disabled = value
-    var color := Color(0.45, 0.45, 0.45) if disabled else Color.WHITE
+    refresh_color()
+
+func set_highlighted(value: bool) -> void:
+    highlighted = value
+    refresh_color()
+
+func refresh_color() -> void:
+    var color := Color("#fee761") if highlighted else Color(0.45, 0.45, 0.45) if disabled else Color.WHITE
     front.modulate = color
     back.modulate = color
 
@@ -92,12 +101,19 @@ func retreat_out(side_to_retreat: int) -> void:
     tween.set_trans(Tween.TRANS_SINE)
     tween.tween_property(self, "global_position:y", target_y, 0.3)
 
-func attack_card(defender: Card) -> void:
+func attack_card(defender: Card) -> Signal:
+    attacking = true
+    z_index = 100
     var start := global_position
     var tween := create_tween()
     tween.tween_property(self, "global_position", defender.global_position, 0.18)
     tween.tween_property(self, "global_position", start, 0.18)
-    await tween.finished
+    tween.tween_callback(finish_attack)
+    return tween.finished
+
+func finish_attack() -> void:
+    attacking = false
+    z_index = 2
 
 func defend() -> void:
     var tween := create_tween()

@@ -22,6 +22,10 @@ func run_test() -> void:
     assert(board.get_row_slots(1)[2].get_card() == player)
     assert(board.get_row_slots(0)[2].get_card() == enemy)
     assert(player.position.length() > 1.0)
+    var attack := player.attack_card(enemy)
+    assert(player.z_index == 100)
+    await attack
+    assert(player.z_index == 2)
     for _frame in 20:
         await process_frame
     assert(board.scale.is_equal_approx(Vector2(0.9, 0.9)))

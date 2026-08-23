@@ -50,6 +50,11 @@ func play_first_card() -> void:
     slot.set_hovering(false)
     game.turns.target_clicked(slot)
     assert(game.board.get_row_slots(game.board.player_row)[0].get_card() == card)
+    slot.set_targetable(true)
+    slot.set_hovering(true)
+    assert(card.front.modulate == Color("#fee761"))
+    slot.set_hovering(false)
+    assert(card.front.modulate == Color.WHITE)
     assert(card.position.distance_to(Vector2.ZERO) > 1.0)
 
 func verify_reveal() -> void:

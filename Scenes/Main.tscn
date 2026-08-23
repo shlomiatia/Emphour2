@@ -14,7 +14,7 @@
 [node name="Game" type="Node2D" unique_id=891812253]
 script = ExtResource("1_game")
 player_cards = Array[String](["Militia", "Archer", "Mantlet", "Stakes", "Militia", "Archer", "Militia", "Militia"])
-enemy_cards = Array[String](["Archer", "Militia", "Mantlet", "Stakes"])
+enemy_cards = Array[String](["Archer", "Militia", "Militia"])
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
 position = Vector2(960, 540)
@@ -38,22 +38,20 @@ position = Vector2(960, 954)
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
 
-[node name="EnemyDiscard" type="Control" parent="Interface"]
+[node name="EnemyDiscard" type="Control" parent="Interface" unique_id=946180786]
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -96.0
-offset_right = 0.0
 offset_bottom = 96.0
 grow_horizontal = 0
-grow_vertical = 1
 
-[node name="Pile" parent="Interface/EnemyDiscard" instance=ExtResource("5_discard")]
+[node name="Pile" parent="Interface/EnemyDiscard" unique_id=224881315 instance=ExtResource("5_discard")]
 position = Vector2(48, 48)
 side = 1
 
-[node name="PlayerDiscard" type="Control" parent="Interface"]
+[node name="PlayerDiscard" type="Control" parent="Interface" unique_id=1172753045]
 layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
@@ -65,26 +63,10 @@ offset_top = -96.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Pile" parent="Interface/PlayerDiscard" instance=ExtResource("5_discard")]
+[node name="Pile" parent="Interface/PlayerDiscard" unique_id=702495137 instance=ExtResource("5_discard")]
 position = Vector2(48, 48)
 
-[node name="BattleResolver" type="Node" parent="." unique_id=1327443828]
-script = ExtResource("6_battle")
-
-[node name="BattleState" type="Node" parent="." unique_id=740540934]
-script = ExtResource("8_battle_state")
-
-[node name="TurnState" type="Node" parent="." unique_id=2008914432]
-script = ExtResource("7_turn")
-
-[node name="Audio" type="Node" parent="." unique_id=1211780519]
-script = ExtResource("9_audio")
-
-[node name="Effects" type="AudioStreamPlayer" parent="Audio" unique_id=1991389209]
-
-[node name="Music" type="AudioStreamPlayer" parent="Audio" unique_id=1920207098]
-
-[node name="StatusBackground" type="ColorRect" parent="Interface"]
+[node name="StatusBackground" type="ColorRect" parent="Interface" unique_id=935474049]
 offset_left = 24.0
 offset_top = 16.0
 offset_right = 40.0
@@ -102,7 +84,7 @@ theme_override_font_sizes/font_size = 48
 text = "Preparing game"
 vertical_alignment = 1
 
-[node name="StrengthBackground" type="ColorRect" parent="Interface"]
+[node name="StrengthBackground" type="ColorRect" parent="Interface" unique_id=1567139500]
 offset_left = 24.0
 offset_top = 112.0
 offset_right = 500.0
@@ -115,12 +97,14 @@ offset_top = 118.0
 offset_right = 490.0
 offset_bottom = 294.0
 theme = ExtResource("10_text")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
+text = "Player strength 0
+Enemy strength 0
+Player potential losses 0
+Enemy potential losses 0"
 scroll_active = false
 autowrap_mode = 0
-text = "Player strength 0\nEnemy strength 0\nPlayer potential losses 0\nEnemy potential losses 0"
 
 [node name="Result" type="Panel" parent="Interface" unique_id=706372181]
 visible = false
@@ -152,3 +136,19 @@ theme_override_font_sizes/font_size = 52
 text = "PLAYER VICTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BattleResolver" type="Node" parent="." unique_id=1327443828]
+script = ExtResource("6_battle")
+
+[node name="BattleState" type="Node" parent="." unique_id=740540934]
+script = ExtResource("8_battle_state")
+
+[node name="TurnState" type="Node" parent="." unique_id=2008914432]
+script = ExtResource("7_turn")
+
+[node name="Audio" type="Node" parent="." unique_id=1211780519]
+script = ExtResource("9_audio")
+
+[node name="Effects" type="AudioStreamPlayer" parent="Audio" unique_id=1991389209]
+
+[node name="Music" type="AudioStreamPlayer" parent="Audio" unique_id=1920207098]

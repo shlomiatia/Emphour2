@@ -24,7 +24,8 @@ func move_card(card: Card, delta: float) -> void:
     card.position = card.position.lerp(Vector2.ZERO, weight)
     card.scale = card.scale.lerp(Vector2.ONE, weight)
     card.rotation = lerp_angle(card.rotation, 0.0, weight)
-    card.z_index = 2
+    if !card.attacking:
+        card.z_index = 2
 
 func place(card: Card) -> void:
     card.reparent(anchor)
@@ -59,6 +60,9 @@ func set_hovering(value: bool) -> void:
 func refresh_border() -> void:
     border.self_modulate = Color.WHITE if targetable && hovering else row_color
     border.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
+    var card := get_card()
+    if card:
+        card.set_highlighted(targetable && hovering)
 
 func contains_point(point: Vector2) -> bool:
     return Rect2(-slot_size / 2.0, slot_size).has_point(to_local(point))
