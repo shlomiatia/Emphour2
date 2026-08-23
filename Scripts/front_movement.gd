@@ -37,9 +37,10 @@ func take_row(row: int) -> Array[Dictionary]:
     var cards: Array[Dictionary]
     if row < 0 || row >= Board.ROW_COUNT:
         return cards
-    for slot in board.get_row_slots(row):
+    var slots := board.get_row_slots(row)
+    for slot in slots:
         if slot.get_card():
-            cards.append({"card": slot.get_card(), "column": slot.column})
+            cards.append({"card": slot.get_card(), "column": slots.find(slot)})
             slot.get_card().reparent(board)
     return cards
 

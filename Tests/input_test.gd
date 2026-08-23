@@ -28,7 +28,7 @@ func run_test() -> void:
     send_drag(Vector2(100, 500))
     await process_frame
     var dragged := game.player_hand.get_cards()[-1]
-    var target := game.board.get_row_slots(game.board.player_row)[4]
+    var target := game.board.get_row_slots(game.board.player_row)[2]
     send_button(dragged.global_position, true)
     var desired_position := target.global_position + Vector2(110, 0)
     var drop_point := desired_position - game.player_hand.interaction.drag_offset

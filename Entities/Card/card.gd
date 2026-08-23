@@ -20,6 +20,7 @@ var dragging := false
 var selectable := false
 var hovering := false
 var hover_enabled := false
+var disabled := false
 
 func _ready() -> void:
     data = CardCatalog.get_data(card_name)
@@ -38,6 +39,12 @@ func set_hidden(value: bool) -> void:
 
 func set_selectable(value: bool) -> void:
     selectable = value
+
+func set_disabled(value: bool) -> void:
+    disabled = value
+    var color := Color(0.45, 0.45, 0.45) if disabled else Color.WHITE
+    front.modulate = color
+    back.modulate = color
 
 func set_hovering(value: bool) -> void:
     hovering = value

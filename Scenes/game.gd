@@ -16,6 +16,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var strength_label: Label = $Interface/Strength
 @onready var result_panel: Panel = $Interface/Result
 @onready var result_label: Label = $Interface/Result/Label
+@onready var audio: GameAudio = $Audio
 
 var selectable_cards: Array[Card]
 var finished := false
@@ -23,6 +24,7 @@ var finished := false
 signal card_chosen(card: Card)
 
 func _ready() -> void:
+    audio.start_music()
     battle.setup(self)
     battle_state.setup(self)
     turns.setup(self)
@@ -69,6 +71,15 @@ func defeat_card(card: Card) -> void:
 
 func discard_card(card: Card) -> void:
     get_discard(card.side).add_card(card)
+
+func play_card_sound() -> void:
+    audio.play_card()
+
+func play_attack_sound() -> void:
+    audio.play_attack()
+
+func play_block_sound() -> void:
+    audio.play_block()
 
 func get_discard(side: int) -> DiscardPile:
     return player_discard if side == GameRules.Side.PLAYER else enemy_discard

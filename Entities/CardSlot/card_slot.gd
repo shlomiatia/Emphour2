@@ -2,12 +2,17 @@ class_name CardSlot extends Node2D
 
 @export var row := 0
 @export var column := 0
+@export var slot_size := Vector2(132, 168)
 @onready var border: NinePatchRect = $Border
 @onready var anchor: Node2D = $CardAnchor
 
 var row_color := Color(0.1, 0.08, 0.15, 0.25)
 var targetable := false
 var hovering := false
+
+func _ready() -> void:
+    border.position = -slot_size / 2.0
+    border.size = slot_size
 
 func _process(delta: float) -> void:
     var card := get_card()
@@ -56,7 +61,7 @@ func refresh_border() -> void:
     border.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
 
 func contains_point(point: Vector2) -> bool:
-    return Rect2(-60, -76, 120, 152).has_point(to_local(point))
+    return Rect2(-slot_size / 2.0, slot_size).has_point(to_local(point))
 
 func get_global_rect() -> Rect2:
-    return Rect2(global_position - Vector2(60, 76), Vector2(120, 152))
+    return Rect2(global_position - slot_size / 2.0, slot_size)

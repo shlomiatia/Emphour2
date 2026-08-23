@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://b4ahuyc0m8c2o"]
 
-[ext_resource type="Script" path="res://Entities/Hand/hand.gd" id="1_script"]
-[ext_resource type="Script" path="res://Entities/Hand/hand_interaction.gd" id="2_interaction"]
+[ext_resource type="Script" uid="uid://d0eb0yhrffuhp" path="res://Entities/Hand/hand.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dt00c0qdje0vq" path="res://Entities/Hand/hand_interaction.gd" id="2_interaction"]
 
-[node name="Hand" type="Node2D"]
+[node name="Hand" type="Node2D" unique_id=1099277511]
 script = ExtResource("1_script")
 
-[node name="Interaction" type="Node" parent="."]
+[node name="Interaction" type="Node" parent="." unique_id=840599696]
 script = ExtResource("2_interaction")

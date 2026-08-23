@@ -28,7 +28,7 @@ func run_test() -> void:
 
 func verify_opening() -> void:
     assert(game.player_hand.get_card_count() == 8)
-    assert(game.enemy_hand.get_card_count() == 7)
+    assert(game.enemy_hand.get_card_count() == 3)
     assert(game.board.get_cards(GameRules.Side.ENEMY).size() == 1)
     assert(game.board.get_cards(GameRules.Side.ENEMY)[0].face_down)
 
@@ -39,7 +39,7 @@ func verify_mantlet_rule() -> void:
 
 func play_first_card() -> void:
     var card := game.player_hand.get_cards()[0]
-    var slot := game.board.get_row_slots(game.board.player_row)[3]
+    var slot := game.board.get_row_slots(game.board.player_row)[0]
     card.set_hovering(true)
     assert(card.modulate == Color.WHITE)
     card.set_hovering(false)

@@ -26,6 +26,7 @@ func play_enemy_card() -> void:
     if game.enemy_hand.get_card_count() == 0:
         return
     pending_enemy = game.enemy_hand.get_cards()[0]
+    game.play_card_sound()
     pending_enemy.set_hidden(true)
     if !game.board.play_leftmost(pending_enemy, GameRules.Side.ENEMY):
         game.discard_card(game.board.replace_first(pending_enemy, GameRules.Side.ENEMY))
@@ -82,6 +83,7 @@ func card_cancelled() -> void:
     clear_targets()
 
 func finish_player_action() -> void:
+    game.play_card_sound()
     accepting_action = false
     game.player_hand.set_draggable(false)
     clear_targets()

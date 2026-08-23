@@ -16,11 +16,11 @@ func run_test() -> void:
     root.add_child(player)
     root.add_child(enemy)
     board.get_row_slots(2)[2].place(player)
-    board.get_row_slots(1)[4].place(enemy)
+    board.get_row_slots(1)[2].place(enemy)
     var result := board.advance(GameRules.Side.PLAYER)
     assert(!result["finished"])
     assert(board.get_row_slots(1)[2].get_card() == player)
-    assert(board.get_row_slots(0)[4].get_card() == enemy)
+    assert(board.get_row_slots(0)[2].get_card() == enemy)
     assert(player.position.length() > 1.0)
     for _frame in 20:
         await process_frame

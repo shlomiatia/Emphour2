@@ -4,6 +4,8 @@ const ROW_COUNT := 4
 
 @export var player_row := 2
 @export var enemy_row := 1
+@export_range(1, 5) var slot_count := 3
+@export var row_spacing := 8.0
 @onready var movement: FrontMovement = $FrontMovement
 
 var dragged_card: Card
@@ -13,6 +15,7 @@ signal target_chosen(slot: CardSlot)
 
 func _ready() -> void:
     movement.setup(self)
+    refresh_slots()
     refresh_rows()
 
 func _process(_delta: float) -> void:
@@ -32,6 +35,22 @@ func _unhandled_input(event: InputEvent) -> void:
 func refresh_rows() -> void:
     for slot in get_slots():
         slot.set_active(slot.row == player_row, slot.row == enemy_row)
+
+func refresh_slots() -> void:
+    var rows := $Rows.get_children()
+    var row_height := get_row_height()
+    for row_index in rows.size():
+        var row := rows[row_index] as Node2D
+        row.position.y = (row_index - (rows.size() - 1) / 2.0) * row_height
+        var slots := row.get_children()
+        var first := (slots.size() - slot_count) / 2
+        for index in slots.size():
+            var slot := slots[index] as CardSlot
+            slot.visible = index >= first && index < first + slot_count
+
+func get_row_height() -> float:
+    var slot := $Rows.get_child(0).get_child(0) as CardSlot
+    return slot.slot_size.y + row_spacing
 
 func play_leftmost(card: Card, side: int) -> bool:
     for slot in get_row_slots(get_side_row(side)):
@@ -78,7 +97,10 @@ func enable_player_targets(full_row: bool) -> void:
 func enable_card_targets(cards: Array[Card]) -> void:
     clear_targets()
     for slot in get_slots():
-        slot.set_targetable(cards.has(slot.get_card()))
+        var card := slot.get_card()
+        slot.set_targetable(cards.has(card))
+        if card:
+            card.set_disabled(!cards.has(card))
 
 func set_dragged_card(card: Card) -> void:
     dragged_card = card
@@ -88,6 +110,8 @@ func clear_targets() -> void:
     highlighted_target = null
     for slot in get_slots():
         slot.set_targetable(false)
+        if slot.get_card():
+            slot.get_card().set_disabled(false)
 
 func get_target_at(point: Vector2) -> CardSlot:
     for slot in get_slots():
@@ -118,7 +142,7 @@ func set_side_row(side: int, value: int) -> void:
         enemy_row = value
 
 func get_row_slots(row: int) -> Array[CardSlot]:
-    return get_slots().filter(func(slot: CardSlot) -> bool: return slot.row == row)
+    return get_slots().filter(func(slot: CardSlot) -> bool: return slot.row == row && slot.visible)
 
 func get_slots() -> Array[CardSlot]:
     var result: Array[CardSlot]
