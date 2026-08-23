@@ -7,12 +7,13 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var board: Board = $Board
 @onready var player_hand: CardHand = $PlayerHand
 @onready var enemy_hand: CardHand = $EnemyHand
-@onready var player_discard: DiscardPile = $PlayerDiscard
-@onready var enemy_discard: DiscardPile = $EnemyDiscard
+@onready var player_discard: DiscardPile = $Interface/PlayerDiscard/Pile
+@onready var enemy_discard: DiscardPile = $Interface/EnemyDiscard/Pile
 @onready var battle: BattleResolver = $BattleResolver
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
 @onready var status_label: Label = $Interface/Status
+@onready var status_background: ColorRect = $Interface/StatusBackground
 @onready var strength_label: Label = $Interface/Strength
 @onready var result_panel: Panel = $Interface/Result
 @onready var result_label: Label = $Interface/Result/Label
@@ -35,6 +36,7 @@ func _ready() -> void:
     player_hand.card_cancelled.connect(turns.card_cancelled)
     add_starting_cards(player_cards, player_hand, GameRules.Side.PLAYER)
     add_starting_cards(enemy_cards, enemy_hand, GameRules.Side.ENEMY)
+    set_status(status_label.text)
     turns.start_round()
 
 func _on_target_chosen(slot: CardSlot) -> void:
@@ -86,6 +88,8 @@ func get_discard(side: int) -> DiscardPile:
 
 func set_status(value: String) -> void:
     status_label.text = value
+    status_label.reset_size()
+    status_background.size = status_label.size + Vector2(16, 8)
 
 func set_strengths(player_strength: int, enemy_strength: int) -> void:
     strength_label.text = "Player %d strength   Enemy %d strength" % [player_strength, enemy_strength]

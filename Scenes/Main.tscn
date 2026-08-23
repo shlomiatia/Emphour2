@@ -27,21 +27,46 @@ position = Vector2(960, 540)
 position = Vector2(960, 74)
 side = 1
 face_down = true
-card_spacing = 68.0
+card_spacing = 48.0
 angle_step_degrees = 3.0
 arc_direction = -1.0
 hover_enabled = false
 hover_offset = Vector2(0, 0)
 
 [node name="PlayerHand" parent="." unique_id=1302264869 instance=ExtResource("4_hand")]
-position = Vector2(960, 1006)
+position = Vector2(960, 954)
 
-[node name="EnemyDiscard" parent="." unique_id=249674516 instance=ExtResource("5_discard")]
-position = Vector2(1790, 120)
+[node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
+
+[node name="EnemyDiscard" type="Control" parent="Interface"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -96.0
+offset_right = 0.0
+offset_bottom = 96.0
+grow_horizontal = 0
+grow_vertical = 1
+
+[node name="Pile" parent="Interface/EnemyDiscard" instance=ExtResource("5_discard")]
+position = Vector2(48, 48)
 side = 1
 
-[node name="PlayerDiscard" parent="." unique_id=1004069138 instance=ExtResource("5_discard")]
-position = Vector2(1790, 930)
+[node name="PlayerDiscard" type="Control" parent="Interface"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -96.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Pile" parent="Interface/PlayerDiscard" instance=ExtResource("5_discard")]
+position = Vector2(48, 48)
 
 [node name="BattleResolver" type="Node" parent="." unique_id=1327443828]
 script = ExtResource("6_battle")
@@ -59,19 +84,17 @@ script = ExtResource("9_audio")
 
 [node name="Music" type="AudioStreamPlayer" parent="Audio" unique_id=1920207098]
 
-[node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
-
 [node name="StatusBackground" type="ColorRect" parent="Interface"]
 offset_left = 24.0
 offset_top = 16.0
-offset_right = 870.0
+offset_right = 40.0
 offset_bottom = 76.0
 color = Color(0, 0, 0, 1)
 
 [node name="Status" type="Label" parent="Interface" unique_id=2036854357]
 offset_left = 32.0
 offset_top = 18.0
-offset_right = 862.0
+offset_right = 32.0
 offset_bottom = 74.0
 theme = ExtResource("10_text")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
