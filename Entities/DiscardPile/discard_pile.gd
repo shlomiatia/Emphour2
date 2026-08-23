@@ -28,15 +28,9 @@ func move_card(card: Card, delta: float) -> void:
     card.rotation = lerp_angle(card.rotation, 0.0, weight)
 
 func add_card(card: Card) -> void:
-    card.reparent(anchor)
-    card.draggable = false
-    card.hover_enabled = false
-    card.set_hovering(false)
-    card.set_selectable(false)
-    card.set_hidden(false)
-    card.z_index = anchor.get_child_count()
     card_count += 1
     count_label.text = str(card_count)
+    card.queue_free()
 
 func add_defeated(card: Card) -> void:
     card_count += 1

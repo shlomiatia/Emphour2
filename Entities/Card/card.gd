@@ -1,5 +1,14 @@
 class_name Card extends Node2D
 
+const ATTACK_ICONS := {
+    CardData.AttackType.MISSILE: preload("res://Textures/Missle.png"),
+    CardData.AttackType.CAVALRY: preload("res://Textures/Cavalry.png")
+}
+const DEFENCE_ICONS := {
+    CardData.DefenceType.ARMOR: preload("res://Textures/Armor.png"),
+    CardData.DefenceType.RETREAT: preload("res://Textures/Retreat.png")
+}
+
 @export var card_name := "Militia"
 @export var side: int = GameRules.Side.PLAYER
 @export var face_down := false
@@ -7,7 +16,12 @@ class_name Card extends Node2D
 @onready var back: Node2D = $Back
 @onready var art: Sprite2D = $Front/Art
 @onready var title: Label = $Front/Title
-@onready var stats: Label = $Front/Stats
+@onready var strength: Label = $Front/Strength
+@onready var attack: Label = $Front/Attack
+@onready var defence: Label = $Front/Defence
+@onready var attack_icon: Sprite2D = $Front/AttackIcon
+@onready var defence_icon: Sprite2D = $Front/DefenceIcon
+@onready var counter: Sprite2D = $Front/Counter
 
 var data: CardData
 var draggable := false
@@ -24,8 +38,18 @@ func _ready() -> void:
 func refresh() -> void:
     art.texture = load("res://Textures/Cards/" + card_name + ".png")
     title.text = card_name
-    stats.text = "Strength %d   Attack %d   Defence %d" % [data.strength, data.attack, data.defence]
+    strength.text = str(data.strength)
+    attack.text = str(data.attack)
+    defence.text = str(data.defence)
+    set_icons()
     set_hidden(face_down)
+
+func set_icons() -> void:
+    attack_icon.texture = ATTACK_ICONS.get(data.attack_type)
+    defence_icon.texture = ATTACK_ICONS.get(data.anti_attack, DEFENCE_ICONS.get(data.defence_type))
+    attack_icon.visible = attack_icon.texture != null
+    defence_icon.visible = defence_icon.texture != null
+    counter.visible = data.anti_attack != CardData.AttackType.NONE
 
 func set_hidden(value: bool) -> void:
     face_down = value

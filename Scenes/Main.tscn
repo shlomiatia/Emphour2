@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c6ngpnt2iur5a" path="res://Scripts/turn_state.gd" id="7_turn"]
 [ext_resource type="Script" uid="uid://cna2jv3ibfvv4" path="res://Scripts/battle_state.gd" id="8_battle_state"]
 [ext_resource type="Script" uid="uid://b1p4vw54bbj1e" path="res://Scripts/game_audio.gd" id="9_audio"]
+[ext_resource type="Theme" path="res://Themes/CardText.tres" id="10_text"]
 
 [node name="Game" type="Node2D" unique_id=891812253]
 script = ExtResource("1_game")
@@ -60,23 +61,30 @@ script = ExtResource("9_audio")
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
 
+[node name="StatusBackground" type="ColorRect" parent="Interface"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 870.0
+offset_bottom = 76.0
+color = Color(0, 0, 0, 1)
+
 [node name="Status" type="Label" parent="Interface" unique_id=2036854357]
 offset_left = 32.0
-offset_top = 24.0
-offset_right = 850.0
-offset_bottom = 65.0
-theme_override_colors/font_color = Color(1, 0.95, 0.75, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 28
+offset_top = 18.0
+offset_right = 862.0
+offset_bottom = 74.0
+theme = ExtResource("10_text")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 38
 text = "Preparing game"
+vertical_alignment = 1
 
 [node name="Strength" type="Label" parent="Interface" unique_id=2134672147]
 offset_left = 32.0
 offset_top = 66.0
 offset_right = 650.0
 offset_bottom = 102.0
+theme = ExtResource("10_text")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
@@ -105,6 +113,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("10_text")
 theme_override_colors/font_color = Color(0.95, 0.75, 0.25, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3
