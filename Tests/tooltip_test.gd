@@ -17,4 +17,11 @@ func run_test() -> void:
     tooltip.show_tooltip()
     assert(tooltip.panel.visible)
     assert(!tooltip.description.text.is_empty())
+    assert(tooltip.get_hovered_card(game.enemy_hand.get_cards()[0].global_position) == null)
+    tooltip.hovered_card = game.board.get_cards(GameRules.Side.ENEMY)[0]
+    tooltip.show_tooltip()
+    assert(!tooltip.description.visible)
+    assert(tooltip.cards.get_child_count() == 2)
+    assert((tooltip.cards.get_child(0) as Card).count.text == "x2")
+    assert((tooltip.cards.get_child(1) as Card).count.text == "x1")
     quit()

@@ -11,6 +11,7 @@ const ATTACK_ICONS := {
 @onready var back: Node2D = $Back
 @onready var art: Sprite2D = $Front/Art
 @onready var title: Label = $Front/Title
+@onready var count: Label = $Front/Count
 @onready var strength: Label = $Front/Strength
 @onready var attack: Label = $Front/Attack
 @onready var defence: Label = $Front/Defence
@@ -53,6 +54,10 @@ func set_hidden(value: bool) -> void:
     face_down = value
     front.visible = !face_down
     back.visible = face_down
+
+func set_preview_count(value: int) -> void:
+    count.text = "x%d" % value
+    count.show()
 
 func set_selectable(value: bool) -> void:
     selectable = value
