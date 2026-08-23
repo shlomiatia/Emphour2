@@ -4,11 +4,6 @@ const ATTACK_ICONS := {
     CardData.AttackType.MISSILE: preload("res://Textures/Missle.png"),
     CardData.AttackType.CAVALRY: preload("res://Textures/Cavalry.png")
 }
-const DEFENCE_ICONS := {
-    CardData.DefenceType.ARMOR: preload("res://Textures/Armor.png"),
-    CardData.DefenceType.RETREAT: preload("res://Textures/Retreat.png")
-}
-
 @export var card_name := "Militia"
 @export var side: int = GameRules.Side.PLAYER
 @export var face_down := false
@@ -34,6 +29,7 @@ var highlighted := false
 var attacking := false
 
 func _ready() -> void:
+    add_to_group("cards")
     data = CardCatalog.get_data(card_name)
     refresh()
 
@@ -48,7 +44,7 @@ func refresh() -> void:
 
 func set_icons() -> void:
     attack_icon.texture = ATTACK_ICONS.get(data.attack_type)
-    defence_icon.texture = ATTACK_ICONS.get(data.anti_attack, DEFENCE_ICONS.get(data.defence_type))
+    defence_icon.texture = ATTACK_ICONS.get(data.anti_attack)
     attack_icon.visible = attack_icon.texture != null
     defence_icon.visible = defence_icon.texture != null
     counter.visible = data.anti_attack != CardData.AttackType.NONE

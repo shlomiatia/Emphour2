@@ -15,7 +15,6 @@ static func create_archer() -> CardData:
     var data := create_card("Archer")
     data.attack = 1
     data.attack_type = CardData.AttackType.MISSILE
-    data.anti_defences.append(CardData.DefenceType.RETREAT)
     return data
 
 static func create_defence(card_name: String, attack_type: CardData.AttackType) -> CardData:
@@ -33,6 +32,5 @@ static func create_card(card_name: String) -> CardData:
     var data := CardData.new()
     data.name = card_name
     data.attack_type = CardData.AttackType.NONE
-    data.defence_type = CardData.DefenceType.NONE
     data.anti_attack = CardData.AttackType.NONE
     return data

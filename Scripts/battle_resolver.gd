@@ -80,13 +80,7 @@ func choose_target(attacker: Card, cards: Array[Card]) -> Card:
     return cards[0]
 
 func can_defend(attacker: CardData, defender: CardData) -> bool:
-    if defender.defence == 0:
-        return false
-    if defender.anti_attack == attacker.attack_type:
-        return true
-    if defender.defence_type == CardData.DefenceType.NONE:
-        return false
-    return !attacker.anti_defences.has(defender.defence_type)
+    return defender.defence > 0 && defender.anti_attack == attacker.attack_type
 
 func total_strength(cards: Array[Card]) -> int:
     return cards.reduce(func(sum: int, card: Card) -> int: return sum + card.data.strength, 0)

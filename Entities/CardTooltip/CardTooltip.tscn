@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Entities/CardTooltip/card_tooltip.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip"]
+bg_color = Color(0.06, 0.05, 0.04, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.88, 0.66, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="CardTooltip" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+offset_right = 1.0
+offset_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
+mouse_filter = 2
+
+[node name="Description" type="Label" parent="Panel"]
+offset_left = 14.0
+offset_top = 12.0
+offset_right = 15.0
+offset_bottom = 13.0
+theme_override_colors/font_color = Color(1, 0.9, 0.67, 1)
+theme_override_font_sizes/font_size = 24
+mouse_filter = 2

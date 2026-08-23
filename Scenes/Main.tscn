@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cna2jv3ibfvv4" path="res://Scripts/battle_state.gd" id="8_battle_state"]
 [ext_resource type="Script" uid="uid://b1p4vw54bbj1e" path="res://Scripts/game_audio.gd" id="9_audio"]
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="10_text"]
+[ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 
 [node name="Game" type="Node2D" unique_id=891812253]
 script = ExtResource("1_game")
@@ -136,6 +137,8 @@ theme_override_font_sizes/font_size = 52
 text = "PLAYER VICTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CardTooltip" parent="." unique_id=782447997 instance=ExtResource("11_tooltip")]
 
 [node name="BattleResolver" type="Node" parent="." unique_id=1327443828]
 script = ExtResource("6_battle")
