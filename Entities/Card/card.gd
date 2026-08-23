@@ -86,7 +86,7 @@ func fade_out() -> void:
     await tween.finished
 
 func retreat_out(side_to_retreat: int) -> void:
-    var target_y := 1195.0 if side_to_retreat == GameRules.Side.PLAYER else -115.0
+    var target_y := 1280.0 if side_to_retreat == GameRules.Side.PLAYER else -200.0
     var tween := create_tween()
     tween.set_ease(Tween.EASE_OUT)
     tween.set_trans(Tween.TRANS_SINE)

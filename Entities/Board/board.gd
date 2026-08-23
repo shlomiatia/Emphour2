@@ -10,13 +10,16 @@ const ROW_COUNT := 4
 
 var dragged_card: Card
 var highlighted_target: CardSlot
+var zoomer: BoardZoomer
 
 signal target_chosen(slot: CardSlot)
 
 func _ready() -> void:
+    zoomer = BoardZoomer.new(self)
     movement.setup(self)
     refresh_slots()
     refresh_rows()
+    zoomer.change_zoom(false)
 
 func _process(_delta: float) -> void:
     var target := get_overlap_target(dragged_card) if dragged_card else get_target_at(get_viewport().get_mouse_position())
@@ -127,10 +130,13 @@ func get_overlap_target(card: Card) -> CardSlot:
     return targets[0] if !targets.is_empty() else null
 
 func advance(winner: int) -> Dictionary:
-    return movement.advance(winner)
+    var result := movement.advance(winner)
+    zoomer.change_zoom()
+    return result
 
 func advance_to_end(winner: int) -> void:
     movement.advance_to_end(winner)
+    zoomer.change_zoom()
 
 func get_side_row(side: int) -> int:
     return player_row if side == GameRules.Side.PLAYER else enemy_row

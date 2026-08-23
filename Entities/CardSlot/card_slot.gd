@@ -22,6 +22,7 @@ func _process(delta: float) -> void:
 func move_card(card: Card, delta: float) -> void:
     var weight := minf(delta * 10.0, 1.0)
     card.position = card.position.lerp(Vector2.ZERO, weight)
+    card.scale = card.scale.lerp(Vector2.ONE, weight)
     card.rotation = lerp_angle(card.rotation, 0.0, weight)
     card.z_index = 2
 

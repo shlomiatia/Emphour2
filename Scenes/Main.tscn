@@ -92,28 +92,35 @@ offset_bottom = 76.0
 color = Color(0, 0, 0, 1)
 
 [node name="Status" type="Label" parent="Interface" unique_id=2036854357]
-offset_left = 32.0
-offset_top = 18.0
-offset_right = 32.0
-offset_bottom = 74.0
+offset_left = 34.0
+offset_top = 22.0
+offset_right = 34.0
+offset_bottom = 82.0
 theme = ExtResource("10_text")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 48
 text = "Preparing game"
 vertical_alignment = 1
 
-[node name="Strength" type="Label" parent="Interface" unique_id=2134672147]
-offset_left = 32.0
-offset_top = 66.0
-offset_right = 650.0
-offset_bottom = 102.0
+[node name="StrengthBackground" type="ColorRect" parent="Interface"]
+offset_left = 24.0
+offset_top = 112.0
+offset_right = 500.0
+offset_bottom = 300.0
+color = Color(0, 0, 0, 1)
+
+[node name="Strength" type="RichTextLabel" parent="Interface" unique_id=2134672147]
+offset_left = 34.0
+offset_top = 118.0
+offset_right = 490.0
+offset_bottom = 294.0
 theme = ExtResource("10_text")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 22
-text = "Player 0 strength   Enemy 0 strength"
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+scroll_active = false
+autowrap_mode = 0
+text = "Player strength 0\nEnemy strength 0\nPlayer potential losses 0\nEnemy potential losses 0"
 
 [node name="Result" type="Panel" parent="Interface" unique_id=706372181]
 visible = false

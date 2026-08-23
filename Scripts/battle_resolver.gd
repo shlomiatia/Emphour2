@@ -12,7 +12,9 @@ func resolve() -> int:
     var used_defences: Array[Card]
     var defeated: Array[Card]
     var attackers := player_cards + enemy_cards
-    game.set_strengths(strengths[0], strengths[1])
+    var player_losses := potential_losses(enemy_cards, player_cards)
+    var enemy_losses := potential_losses(player_cards, enemy_cards)
+    game.set_strengths(strengths[0], strengths[1], player_losses, enemy_losses)
     for attacker in attackers:
         await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
     for card in defeated:
@@ -69,6 +71,15 @@ func can_defend(attacker: CardData, defender: CardData) -> bool:
 
 func total_strength(cards: Array[Card]) -> int:
     return cards.reduce(func(sum: int, card: Card) -> int: return sum + card.data.strength, 0)
+
+func potential_losses(attackers: Array[Card], defenders: Array[Card]) -> int:
+    return maxi(total_attack(attackers) - total_relevant_defence(attackers, defenders), 0)
+
+func total_attack(cards: Array[Card]) -> int:
+    return cards.reduce(func(sum: int, card: Card) -> int: return sum + card.data.attack, 0)
+
+func total_relevant_defence(attackers: Array[Card], defenders: Array[Card]) -> int:
+    return defenders.filter(func(defender: Card) -> bool: return attackers.any(func(attacker: Card) -> bool: return can_defend(attacker.data, defender.data))).reduce(func(sum: int, card: Card) -> int: return sum + card.data.defence, 0)
 
 func compare_strengths(strengths: Array) -> int:
     if strengths[0] == strengths[1]:

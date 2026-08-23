@@ -14,7 +14,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var turns: TurnState = $TurnState
 @onready var status_label: Label = $Interface/Status
 @onready var status_background: ColorRect = $Interface/StatusBackground
-@onready var strength_label: Label = $Interface/Strength
+@onready var strength_label: RichTextLabel = $Interface/Strength
 @onready var result_panel: Panel = $Interface/Result
 @onready var result_label: Label = $Interface/Result/Label
 @onready var audio: GameAudio = $Audio
@@ -89,10 +89,12 @@ func get_discard(side: int) -> DiscardPile:
 func set_status(value: String) -> void:
     status_label.text = value
     status_label.reset_size()
-    status_background.size = status_label.size + Vector2(16, 8)
+    status_background.size = status_label.size + Vector2(20, 12)
 
-func set_strengths(player_strength: int, enemy_strength: int) -> void:
-    strength_label.text = "Player %d strength   Enemy %d strength" % [player_strength, enemy_strength]
+func set_strengths(player_strength: int, enemy_strength: int, player_losses: int, enemy_losses: int) -> void:
+    var strength_color := "76d275" if player_strength > enemy_strength else "ef5b5b" if player_strength < enemy_strength else "ffffff"
+    var loss_color := "ef5b5b" if player_losses > 0 else "ffffff"
+    strength_label.text = "[color=#%s]Player strength %d[/color]\nEnemy strength %d\n[color=#%s]Player potential losses %d[/color]\nEnemy potential losses %d" % [strength_color, player_strength, enemy_strength, loss_color, player_losses, enemy_losses]
 
 func finish_game(winner: int) -> void:
     finished = true
