@@ -2,7 +2,7 @@ class_name CardSlot extends Node2D
 
 @export var row := 0
 @export var column := 0
-@export var slot_size := Vector2(132, 168)
+@export var slot_size := Vector2(182, 253)
 @onready var border: NinePatchRect = $Border
 @onready var anchor: Node2D = $CardAnchor
 
@@ -22,7 +22,6 @@ func _process(delta: float) -> void:
 func move_card(card: Card, delta: float) -> void:
     var weight := minf(delta * 10.0, 1.0)
     card.position = card.position.lerp(Vector2.ZERO, weight)
-    card.scale = card.scale.lerp(Card.BOARD_SCALE, weight)
     card.rotation = lerp_angle(card.rotation, 0.0, weight)
     card.z_index = 2
 

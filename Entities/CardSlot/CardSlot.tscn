@@ -5,7 +5,7 @@
 
 [node name="CardSlot" type="Node2D"]
 script = ExtResource("1_script")
-slot_size = Vector2(132, 168)
+slot_size = Vector2(182, 253)
 
 [node name="Border" type="NinePatchRect" parent="."]
 self_modulate = Color(0.1, 0.08, 0.15, 0.25)

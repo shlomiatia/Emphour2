@@ -25,7 +25,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func move_card(card: Card, delta: float) -> void:
     var weight := minf(delta * 10.0, 1.0)
     card.position = card.position.lerp(Vector2.ZERO, weight)
-    card.scale = card.scale.lerp(Card.DISCARD_SCALE, weight)
     card.rotation = lerp_angle(card.rotation, 0.0, weight)
 
 func add_card(card: Card) -> void:
@@ -62,7 +61,7 @@ func refresh_border() -> void:
     border.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
 
 func contains_point(point: Vector2) -> bool:
-    return Rect2(-65, -88, 130, 176).has_point(to_local(point))
+    return Rect2(-91, -126.5, 182, 253).has_point(to_local(point))
 
 func overlaps(card: Card) -> bool:
-    return card && Rect2(global_position - Vector2(65, 88), Vector2(130, 176)).intersects(card.get_global_rect())
+    return card && Rect2(global_position - Vector2(91, 126.5), Vector2(182, 253)).intersects(card.get_global_rect())

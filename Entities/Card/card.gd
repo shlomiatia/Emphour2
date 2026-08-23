@@ -1,10 +1,5 @@
 class_name Card extends Node2D
 
-const HAND_SCALE := Vector2(0.36, 0.36)
-const BOARD_SCALE := Vector2(0.3, 0.3)
-const DISCARD_SCALE := Vector2(0.22, 0.22)
-const HOVER_SCALE := Vector2(0.46, 0.46)
-
 @export var card_name := "Militia"
 @export var side: int = GameRules.Side.PLAYER
 @export var face_down := false
@@ -50,10 +45,10 @@ func set_hovering(value: bool) -> void:
     hovering = value
 
 func contains_point(point: Vector2) -> bool:
-    return Rect2(-165, -230, 330, 460).has_point(to_local(point))
+    return Rect2(-91, -126.5, 182, 253).has_point(to_local(point))
 
 func get_global_rect() -> Rect2:
-    var points := [Vector2(-165, -230), Vector2(165, -230), Vector2(165, 230), Vector2(-165, 230)]
+    var points := [Vector2(-91, -126.5), Vector2(91, -126.5), Vector2(91, 126.5), Vector2(-91, 126.5)]
     var result := Rect2(global_transform * points[0], Vector2.ZERO)
     for point in points:
         result = result.expand(global_transform * point)

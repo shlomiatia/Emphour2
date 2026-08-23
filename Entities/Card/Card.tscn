@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://Textures/CardBackground.png" id="2_background"]
 [ext_resource type="Texture2D" path="res://Textures/Card.png" id="3_frame"]
 [ext_resource type="Texture2D" path="res://Textures/Cards/Militia.png" id="4_art"]
-[ext_resource type="Texture2D" path="res://Textures/Deck.png" id="5_back"]
+[ext_resource type="Texture2D" path="res://Textures/CardBack.png" id="6_back_pattern"]
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="7_theme"]
 
 [node name="Card" type="Node2D"]
@@ -13,34 +13,35 @@ script = ExtResource("1_script")
 [node name="Front" type="Node2D" parent="."]
 
 [node name="Background" type="Sprite2D" parent="Front"]
-position = Vector2(0, -5)
+position = Vector2(0, -3)
 texture = ExtResource("2_background")
 
 [node name="Art" type="Sprite2D" parent="Front"]
-position = Vector2(0, -5)
+position = Vector2(0, -3)
 texture = ExtResource("4_art")
 
 [node name="Frame" type="Sprite2D" parent="Front"]
 texture = ExtResource("3_frame")
 
 [node name="Title" type="Label" parent="Front"]
-offset_left = -154.0
-offset_top = -220.0
-offset_right = 154.0
-offset_bottom = -174.0
+offset_left = -85.0
+offset_top = -121.0
+offset_right = 85.0
+offset_bottom = -96.0
 theme = ExtResource("7_theme")
+theme_override_font_sizes/font_size = 19
 mouse_filter = 2
 text = "Militia"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Stats" type="Label" parent="Front"]
-offset_left = -150.0
-offset_top = 176.0
-offset_right = 150.0
-offset_bottom = 220.0
+offset_left = -83.0
+offset_top = 97.0
+offset_right = 83.0
+offset_bottom = 121.0
 theme = ExtResource("7_theme")
-theme_override_font_sizes/font_size = 21
+theme_override_font_sizes/font_size = 12
 mouse_filter = 2
 text = "Strength 1   Attack 0   Defence 0"
 horizontal_alignment = 1
@@ -54,5 +55,4 @@ modulate = Color(0.45, 0.18, 0.16, 1)
 texture = ExtResource("3_frame")
 
 [node name="Pattern" type="Sprite2D" parent="Back"]
-scale = Vector2(4.2, 4.2)
-texture = ExtResource("5_back")
+texture = ExtResource("6_back_pattern")

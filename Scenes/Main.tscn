@@ -26,7 +26,6 @@ position = Vector2(960, 540)
 position = Vector2(960, 74)
 side = 1
 face_down = true
-card_scale = Vector2(0.3, 0.3)
 card_spacing = 68.0
 angle_step_degrees = 3.0
 arc_direction = -1.0

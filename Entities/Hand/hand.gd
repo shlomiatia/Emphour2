@@ -2,7 +2,6 @@ class_name CardHand extends Node2D
 
 @export var side: int = GameRules.Side.PLAYER
 @export var face_down := false
-@export var card_scale := Card.HAND_SCALE
 @export var card_spacing := 112.0
 @export var angle_step_degrees := 2.5
 @export var arc_direction := 1.0
@@ -32,7 +31,6 @@ func move_card(card: Card, props: Dictionary, delta: float, index: int) -> void:
     var target_position: Vector2 = props["position"] + (hover_offset if hovered else Vector2.ZERO)
     var weight := minf(delta * 10.0, 1.0)
     card.position = card.position.lerp(target_position, weight)
-    card.scale = card.scale.lerp(Card.HOVER_SCALE if hovered else card_scale, weight)
     card.rotation = lerp_angle(card.rotation, 0.0 if hovered else float(props["rotation"]), weight)
     card.z_index = 100 if hovered else index + 5
 
@@ -49,7 +47,6 @@ func add_card(card: Card) -> void:
         add_child(card)
     card.set_hidden(face_down)
     card.hover_enabled = hover_enabled
-    card.scale = card_scale
 
 func get_card_at(point: Vector2) -> Card:
     var cards := get_cards()
