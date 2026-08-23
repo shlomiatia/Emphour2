@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://Entities/Card/card.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Textures/CardBackground.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://Textures/Card.png" id="3_frame"]
+[ext_resource type="Texture2D" path="res://Textures/Cards/Militia.png" id="4_art"]
+[ext_resource type="Texture2D" path="res://Textures/Deck.png" id="5_back"]
+[ext_resource type="Texture2D" path="res://Textures/Border.png" id="6_border"]
+[ext_resource type="Theme" path="res://Themes/CardText.tres" id="7_theme"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_card"]
+size = Vector2(330, 460)
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Front" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Front"]
+position = Vector2(0, -5)
+texture = ExtResource("2_background")
+
+[node name="Art" type="Sprite2D" parent="Front"]
+position = Vector2(0, -5)
+texture = ExtResource("4_art")
+
+[node name="Frame" type="Sprite2D" parent="Front"]
+texture = ExtResource("3_frame")
+
+[node name="Title" type="Label" parent="Front"]
+offset_left = -154.0
+offset_top = -220.0
+offset_right = 154.0
+offset_bottom = -174.0
+theme = ExtResource("7_theme")
+mouse_filter = 2
+text = "Militia"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stats" type="Label" parent="Front"]
+offset_left = -150.0
+offset_top = 176.0
+offset_right = 150.0
+offset_bottom = 220.0
+theme = ExtResource("7_theme")
+theme_override_font_sizes/font_size = 21
+mouse_filter = 2
+text = "Strength 1   Attack 0   Defence 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Node2D" parent="."]
+visible = false
+
+[node name="Frame" type="Sprite2D" parent="Back"]
+modulate = Color(0.45, 0.18, 0.16, 1)
+texture = ExtResource("3_frame")
+
+[node name="Pattern" type="Sprite2D" parent="Back"]
+scale = Vector2(4.2, 4.2)
+texture = ExtResource("5_back")
+
+[node name="Selection" type="NinePatchRect" parent="."]
+visible = false
+modulate = Color(1, 0.85, 0.25, 1)
+offset_left = -174.0
+offset_top = -239.0
+offset_right = 174.0
+offset_bottom = 239.0
+mouse_filter = 2
+texture = ExtResource("6_border")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Hitbox" type="Area2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape_card")
+
+[connection signal="input_event" from="Hitbox" to="." method="_on_input_event"]

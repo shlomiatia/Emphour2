@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Entities/DiscardPile/discard_pile.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Textures/Border.png" id="2_border"]
+[ext_resource type="Texture2D" path="res://Textures/Deck.png" id="3_deck"]
+[ext_resource type="Theme" path="res://Themes/CardText.tres" id="4_theme"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_pile"]
+size = Vector2(130, 176)
+
+[node name="DiscardPile" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Border" type="NinePatchRect" parent="."]
+offset_left = -65.0
+offset_top = -88.0
+offset_right = 65.0
+offset_bottom = 88.0
+mouse_filter = 2
+texture = ExtResource("2_border")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.35)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_deck")
+
+[node name="Title" type="Label" parent="."]
+z_index = 100
+offset_left = -85.0
+offset_top = -124.0
+offset_right = 85.0
+offset_bottom = -88.0
+theme = ExtResource("4_theme")
+theme_override_font_sizes/font_size = 24
+text = "Discard"
+horizontal_alignment = 1
+
+[node name="Count" type="Label" parent="."]
+z_index = 100
+offset_left = -30.0
+offset_top = -22.0
+offset_right = 30.0
+offset_bottom = 22.0
+theme = ExtResource("4_theme")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardAnchor" type="Node2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape_pile")

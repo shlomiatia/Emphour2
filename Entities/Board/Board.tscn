@@ -1,0 +1,121 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Entities/Board/board.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Entities/CardSlot/CardSlot.tscn" id="2_slot"]
+[ext_resource type="Script" path="res://Scripts/front_movement.gd" id="3_movement"]
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="FrontMovement" type="Node" parent="."]
+script = ExtResource("3_movement")
+
+[node name="Rows" type="Node2D" parent="."]
+
+[node name="Row0" type="Node2D" parent="Rows"]
+position = Vector2(0, -240)
+
+[node name="Slot0" parent="Rows/Row0" instance=ExtResource("2_slot")]
+position = Vector2(-300, 0)
+row = 0
+column = 0
+
+[node name="Slot1" parent="Rows/Row0" instance=ExtResource("2_slot")]
+position = Vector2(-150, 0)
+row = 0
+column = 1
+
+[node name="Slot2" parent="Rows/Row0" instance=ExtResource("2_slot")]
+row = 0
+column = 2
+
+[node name="Slot3" parent="Rows/Row0" instance=ExtResource("2_slot")]
+position = Vector2(150, 0)
+row = 0
+column = 3
+
+[node name="Slot4" parent="Rows/Row0" instance=ExtResource("2_slot")]
+position = Vector2(300, 0)
+row = 0
+column = 4
+
+[node name="Row1" type="Node2D" parent="Rows"]
+position = Vector2(0, -80)
+
+[node name="Slot0" parent="Rows/Row1" instance=ExtResource("2_slot")]
+position = Vector2(-300, 0)
+row = 1
+column = 0
+
+[node name="Slot1" parent="Rows/Row1" instance=ExtResource("2_slot")]
+position = Vector2(-150, 0)
+row = 1
+column = 1
+
+[node name="Slot2" parent="Rows/Row1" instance=ExtResource("2_slot")]
+row = 1
+column = 2
+
+[node name="Slot3" parent="Rows/Row1" instance=ExtResource("2_slot")]
+position = Vector2(150, 0)
+row = 1
+column = 3
+
+[node name="Slot4" parent="Rows/Row1" instance=ExtResource("2_slot")]
+position = Vector2(300, 0)
+row = 1
+column = 4
+
+[node name="Row2" type="Node2D" parent="Rows"]
+position = Vector2(0, 80)
+
+[node name="Slot0" parent="Rows/Row2" instance=ExtResource("2_slot")]
+position = Vector2(-300, 0)
+row = 2
+column = 0
+
+[node name="Slot1" parent="Rows/Row2" instance=ExtResource("2_slot")]
+position = Vector2(-150, 0)
+row = 2
+column = 1
+
+[node name="Slot2" parent="Rows/Row2" instance=ExtResource("2_slot")]
+row = 2
+column = 2
+
+[node name="Slot3" parent="Rows/Row2" instance=ExtResource("2_slot")]
+position = Vector2(150, 0)
+row = 2
+column = 3
+
+[node name="Slot4" parent="Rows/Row2" instance=ExtResource("2_slot")]
+position = Vector2(300, 0)
+row = 2
+column = 4
+
+[node name="Row3" type="Node2D" parent="Rows"]
+position = Vector2(0, 240)
+
+[node name="Slot0" parent="Rows/Row3" instance=ExtResource("2_slot")]
+position = Vector2(-300, 0)
+row = 3
+column = 0
+
+[node name="Slot1" parent="Rows/Row3" instance=ExtResource("2_slot")]
+position = Vector2(-150, 0)
+row = 3
+column = 1
+
+[node name="Slot2" parent="Rows/Row3" instance=ExtResource("2_slot")]
+row = 3
+column = 2
+
+[node name="Slot3" parent="Rows/Row3" instance=ExtResource("2_slot")]
+position = Vector2(150, 0)
+row = 3
+column = 3
+
+[node name="Slot4" parent="Rows/Row3" instance=ExtResource("2_slot")]
+position = Vector2(300, 0)
+row = 3
+column = 4
