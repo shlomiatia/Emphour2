@@ -51,7 +51,6 @@ func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Arra
         used.append(defender)
         game.play_block_sound()
         await attacker.attack_card(defender)
-        await defender.defend()
         return
     var targets := available_targets(attacker, opponents, defeated)
     var target := await choose_target(attacker, targets)

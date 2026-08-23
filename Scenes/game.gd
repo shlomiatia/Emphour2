@@ -30,6 +30,7 @@ func _ready() -> void:
     battle_state.setup(self)
     turns.setup(self)
     board.target_chosen.connect(_on_target_chosen)
+    board.state_changed.connect(battle.update_strengths)
     player_discard.target_chosen.connect(turns.discard_clicked)
     player_hand.card_clicked.connect(turns.card_clicked)
     player_hand.card_released.connect(turns.card_released)
@@ -68,6 +69,7 @@ func choose_card(cards: Array[Card], prompt: String) -> Card:
 
 func defeat_card(card: Card) -> void:
     card.reparent(self)
+    board.notify_state_changed()
     await card.fade_out()
     get_discard(card.side).add_defeated(card)
 
@@ -94,7 +96,8 @@ func set_status(value: String) -> void:
 func set_strengths(player_strength: int, enemy_strength: int, player_losses: int, enemy_losses: int) -> void:
     var strength_color := "76d275" if player_strength > enemy_strength else "ef5b5b" if player_strength < enemy_strength else "ffffff"
     var loss_color := "ef5b5b" if player_losses > 0 else "ffffff"
-    strength_label.text = "[color=#%s]Player strength %d[/color]\nEnemy strength %d\n[color=#%s]Player potential losses %d[/color]\nEnemy potential losses %d" % [strength_color, player_strength, enemy_strength, loss_color, player_losses, enemy_losses]
+    var enemy_loss_color := "76d275" if enemy_losses > 0 else "ffffff"
+    strength_label.text = "[color=#%s]Player strength %d[/color]\nEnemy strength %d\n[color=#%s]Player potential losses %d[/color]\n[color=#%s]Enemy potential losses %d[/color]" % [strength_color, player_strength, enemy_strength, loss_color, player_losses, enemy_loss_color, enemy_losses]
 
 func finish_game(winner: int) -> void:
     finished = true

@@ -13,7 +13,7 @@
 
 [node name="Game" type="Node2D" unique_id=891812253]
 script = ExtResource("1_game")
-player_cards = Array[String](["Militia", "Archer", "Mantlet", "Stakes", "Militia", "Archer", "Militia", "Militia"])
+player_cards = Array[String](["Archer", "Mantlet", "Stakes", "Militia", "Militia", "Militia"])
 enemy_cards = Array[String](["Archer", "Militia", "Militia"])
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
@@ -21,7 +21,7 @@ position = Vector2(960, 540)
 texture = ExtResource("2_background")
 
 [node name="Board" parent="." unique_id=1079065982 instance=ExtResource("3_board")]
-position = Vector2(960, 540)
+position = Vector2(948, 681)
 
 [node name="EnemyHand" parent="." unique_id=245630305 instance=ExtResource("4_hand")]
 position = Vector2(960, 74)

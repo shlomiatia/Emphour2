@@ -114,9 +114,3 @@ func attack_card(defender: Card) -> Signal:
 func finish_attack() -> void:
     attacking = false
     z_index = 2
-
-func defend() -> void:
-    var tween := create_tween()
-    tween.tween_property(self, "modulate", Color(0.4, 1.0, 0.5), 0.15)
-    tween.tween_property(self, "modulate", Color.WHITE, 0.15)
-    await tween.finished

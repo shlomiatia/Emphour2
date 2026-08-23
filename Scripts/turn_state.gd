@@ -99,6 +99,7 @@ func reveal_enemy_card() -> void:
     if pending_enemy:
         pending_enemy.set_hidden(false)
         pending_enemy = null
+        game.board.notify_state_changed()
 
 func complete_round() -> void:
     if battle_needed():

@@ -13,6 +13,7 @@ var highlighted_target: CardSlot
 var zoomer: BoardZoomer
 
 signal target_chosen(slot: CardSlot)
+signal state_changed
 
 func _ready() -> void:
     zoomer = BoardZoomer.new(self)
@@ -90,6 +91,7 @@ func get_cards(side: int) -> Array[Card]:
 func reveal_enemy_cards() -> void:
     for card in get_cards(GameRules.Side.ENEMY):
         card.set_hidden(false)
+    state_changed.emit()
 
 func enable_player_targets(full_row: bool) -> void:
     clear_targets()
@@ -137,6 +139,9 @@ func advance(winner: int) -> Dictionary:
 func advance_to_end(winner: int) -> void:
     movement.advance_to_end(winner)
     zoomer.change_zoom()
+
+func notify_state_changed() -> void:
+    state_changed.emit()
 
 func get_side_row(side: int) -> int:
     return player_row if side == GameRules.Side.PLAYER else enemy_row
