@@ -8,18 +8,38 @@ func setup(card_game: CardGame) -> void:
 func resolve() -> int:
     var player_cards := game.board.get_cards(GameRules.Side.PLAYER)
     var enemy_cards := game.board.get_cards(GameRules.Side.ENEMY)
-    var strengths := [total_strength(player_cards), total_strength(enemy_cards)]
     var used_defences: Array[Card]
     var defeated: Array[Card]
     var attackers := player_cards + enemy_cards
-    var player_losses := potential_losses(enemy_cards, player_cards)
-    var enemy_losses := potential_losses(player_cards, enemy_cards)
-    game.set_strengths(strengths[0], strengths[1], player_losses, enemy_losses)
+    update_strengths()
     for attacker in attackers:
         await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
     for card in defeated:
         await game.defeat_card(card)
+    return update_strengths()
+
+func update_strengths() -> int:
+    var player_cards := game.board.get_cards(GameRules.Side.PLAYER)
+    var enemy_cards := game.board.get_cards(GameRules.Side.ENEMY)
+    var strengths := [total_strength(player_cards), total_strength(enemy_cards)]
+    var player_losses := potential_losses(enemy_cards, player_cards)
+    var enemy_losses := potential_losses(player_cards, enemy_cards)
+    game.set_strengths(strengths[0], strengths[1], player_losses, enemy_losses)
     return compare_strengths(strengths)
+
+func empty_hand_winner() -> int:
+    if game.player_hand.get_card_count() == 0 && game.enemy_hand.get_card_count() > 0:
+        return winning_side(GameRules.Side.ENEMY)
+    if game.enemy_hand.get_card_count() == 0 && game.player_hand.get_card_count() > 0:
+        return winning_side(GameRules.Side.PLAYER)
+    return -1
+
+func winning_side(side: int) -> int:
+    var cards := game.board.get_cards(side)
+    var opponents := game.board.get_cards(GameRules.other(side))
+    if total_strength(cards) > total_strength(opponents) && potential_losses(opponents, cards) == 0:
+        return side
+    return -1
 
 func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Array[Card], used: Array[Card], defeated: Array[Card]) -> void:
     if attacker.data.attack == 0:

@@ -17,6 +17,10 @@ func start(final_battle: bool) -> void:
     await finish(winner, final_battle)
 
 func finish(winner: int, final_battle: bool) -> void:
+    var decisive_winner := game.battle.empty_hand_winner()
+    if decisive_winner != -1:
+        await finish_decisive(decisive_winner)
+        return
     if final_battle:
         await finish_final(winner)
         return
@@ -27,6 +31,16 @@ func finish(winner: int, final_battle: bool) -> void:
     active = false
     await get_tree().create_timer(0.35).timeout
     game.turns.start_round()
+
+func finish_decisive(winner: int) -> void:
+    active = true
+    game.turns.accepting_action = false
+    game.player_hand.set_draggable(false)
+    game.board.reveal_enemy_cards()
+    game.set_status("Victory")
+    game.board.advance_to_end(winner)
+    await get_tree().create_timer(0.35).timeout
+    game.finish_game(winner)
 
 func push_front(winner: int) -> bool:
     var result := game.board.advance(winner)
