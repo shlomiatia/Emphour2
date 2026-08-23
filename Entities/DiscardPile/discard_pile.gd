@@ -3,17 +3,66 @@ class_name DiscardPile extends Node2D
 @export var side: int = GameRules.Side.PLAYER
 @onready var anchor: Node2D = $CardAnchor
 @onready var count_label: Label = $Count
+@onready var border: NinePatchRect = $Border
+
+var targetable := false
+var hovering := false
+var dragged_card: Card
+var card_count := 0
+
+signal target_chosen
+
+func _process(delta: float) -> void:
+    for card in anchor.get_children():
+        move_card(card, delta)
+    set_hovering(overlaps(dragged_card) if dragged_card else contains_point(get_viewport().get_mouse_position()))
+
+func _unhandled_input(event: InputEvent) -> void:
+    if targetable && event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed && contains_point(event.position):
+        target_chosen.emit()
+        get_viewport().set_input_as_handled()
+
+func move_card(card: Card, delta: float) -> void:
+    var weight := minf(delta * 10.0, 1.0)
+    card.position = card.position.lerp(Vector2.ZERO, weight)
+    card.scale = card.scale.lerp(Card.DISCARD_SCALE, weight)
+    card.rotation = lerp_angle(card.rotation, 0.0, weight)
 
 func add_card(card: Card) -> void:
     card.reparent(anchor)
-    card.position = Vector2.ZERO
-    card.rotation = 0.0
-    card.scale = Card.DISCARD_SCALE
     card.draggable = false
+    card.hover_enabled = false
+    card.set_hovering(false)
     card.set_selectable(false)
     card.set_hidden(false)
     card.z_index = anchor.get_child_count()
-    count_label.text = str(anchor.get_child_count())
+    card_count += 1
+    count_label.text = str(card_count)
+
+func add_defeated(card: Card) -> void:
+    card_count += 1
+    count_label.text = str(card_count)
+    card.queue_free()
+
+func set_targetable(value: bool) -> void:
+    targetable = value
+    if !value:
+        dragged_card = null
+    refresh_border()
+
+func set_dragged_card(card: Card) -> void:
+    dragged_card = card
+
+func set_hovering(value: bool) -> void:
+    hovering = value
+    refresh_border()
+
+func refresh_border() -> void:
+    border.self_modulate = Color.WHITE if targetable && hovering else Color(0.1, 0.08, 0.15, 0.35)
+    border.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
 
 func contains_point(point: Vector2) -> bool:
     return Rect2(-65, -88, 130, 176).has_point(to_local(point))
+
+func overlaps(card: Card) -> bool:
+    return card && Rect2(global_position - Vector2(65, 88), Vector2(130, 176)).intersects(card.get_global_rect())

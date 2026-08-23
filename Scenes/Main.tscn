@@ -25,8 +25,12 @@ position = Vector2(960, 540)
 position = Vector2(960, 74)
 side = 1
 face_down = true
-width = 920.0
 card_scale = Vector2(0.3, 0.3)
+card_spacing = 68.0
+angle_step_degrees = 3.0
+arc_direction = -1.0
+hover_enabled = false
+hover_offset = Vector2(0, 0)
 
 [node name="PlayerHand" parent="." unique_id=1302264869 instance=ExtResource("4_hand")]
 position = Vector2(960, 1006)
@@ -72,19 +76,6 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 22
 text = "Player 0 strength   Enemy 0 strength"
-
-[node name="Front" type="Label" parent="Interface" unique_id=894500375]
-offset_left = 760.0
-offset_top = 172.0
-offset_right = 1160.0
-offset_bottom = 208.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.9)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 22
-text = "Enemy row 2   Player row 3"
-horizontal_alignment = 1
 
 [node name="Result" type="Panel" parent="Interface" unique_id=706372181]
 visible = false

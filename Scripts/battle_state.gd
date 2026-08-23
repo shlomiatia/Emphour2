@@ -18,30 +18,26 @@ func start(final_battle: bool) -> void:
 
 func finish(winner: int, final_battle: bool) -> void:
     if final_battle:
-        finish_final(winner)
+        await finish_final(winner)
         return
     if winner != -1 && push_front(winner):
+        await get_tree().create_timer(0.35).timeout
+        game.finish_game(winner)
         return
     active = false
-    game.update_front_text()
     await get_tree().create_timer(0.35).timeout
     game.turns.start_round()
 
 func push_front(winner: int) -> bool:
     var result := game.board.advance(winner)
-    for card in result["ejected"]:
-        game.discard_card(card)
-    if result["finished"]:
-        game.finish_game(winner)
-        return true
-    return false
+    return result["finished"]
 
 func finish_final(winner: int) -> void:
     if winner == -1:
         winner = territory_winner()
     if winner != -1:
         game.board.advance_to_end(winner)
-        game.update_front_text()
+        await get_tree().create_timer(0.35).timeout
     game.finish_game(winner)
 
 func territory_winner() -> int:

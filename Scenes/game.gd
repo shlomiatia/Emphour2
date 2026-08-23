@@ -14,7 +14,6 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var turns: TurnState = $TurnState
 @onready var status_label: Label = $Interface/Status
 @onready var strength_label: Label = $Interface/Strength
-@onready var front_label: Label = $Interface/Front
 @onready var result_panel: Panel = $Interface/Result
 @onready var result_label: Label = $Interface/Result/Label
 
@@ -27,10 +26,21 @@ func _ready() -> void:
     battle.setup(self)
     battle_state.setup(self)
     turns.setup(self)
+    board.target_chosen.connect(_on_target_chosen)
+    player_discard.target_chosen.connect(turns.discard_clicked)
+    player_hand.card_clicked.connect(turns.card_clicked)
+    player_hand.card_released.connect(turns.card_released)
+    player_hand.card_cancelled.connect(turns.card_cancelled)
     add_starting_cards(player_cards, player_hand, GameRules.Side.PLAYER)
     add_starting_cards(enemy_cards, enemy_hand, GameRules.Side.ENEMY)
-    update_front_text()
     turns.start_round()
+
+func _on_target_chosen(slot: CardSlot) -> void:
+    var card := slot.get_card()
+    if selectable_cards.has(card):
+        card_chosen.emit(card)
+    else:
+        turns.target_clicked(slot)
 
 func add_starting_cards(names: Array[String], hand: CardHand, side: int) -> void:
     for card_name in names:
@@ -41,42 +51,33 @@ func create_card(card_name: String, side: int) -> Card:
     var card := CARD_SCENE.instantiate() as Card
     card.card_name = card_name
     card.side = side
-    card.dropped.connect(_on_card_dropped)
-    card.selected.connect(_on_card_selected)
     return card
-
-func _on_card_dropped(card: Card, point: Vector2) -> void:
-    turns.card_dropped(card, point)
-
-func _on_card_selected(card: Card) -> void:
-    if selectable_cards.has(card):
-        card_chosen.emit(card)
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(cards)
     set_status(prompt)
-    for card in selectable_cards:
-        card.set_selectable(true)
+    board.enable_card_targets(selectable_cards)
     var chosen: Card = await card_chosen
-    for card in selectable_cards:
-        card.set_selectable(false)
+    board.clear_targets()
     selectable_cards.clear()
     return chosen
 
+func defeat_card(card: Card) -> void:
+    card.reparent(self)
+    await card.fade_out()
+    get_discard(card.side).add_defeated(card)
+
 func discard_card(card: Card) -> void:
-    if card.side == GameRules.Side.PLAYER:
-        player_discard.add_card(card)
-    else:
-        enemy_discard.add_card(card)
+    get_discard(card.side).add_card(card)
+
+func get_discard(side: int) -> DiscardPile:
+    return player_discard if side == GameRules.Side.PLAYER else enemy_discard
 
 func set_status(value: String) -> void:
     status_label.text = value
 
 func set_strengths(player_strength: int, enemy_strength: int) -> void:
     strength_label.text = "Player %d strength   Enemy %d strength" % [player_strength, enemy_strength]
-
-func update_front_text() -> void:
-    front_label.text = "Enemy row %d   Player row %d" % [board.enemy_row + 1, board.player_row + 1]
 
 func finish_game(winner: int) -> void:
     finished = true

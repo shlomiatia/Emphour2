@@ -39,8 +39,18 @@ func verify_mantlet_rule() -> void:
 
 func play_first_card() -> void:
     var card := game.player_hand.get_cards()[0]
-    var slot := game.board.get_row_slots(game.board.player_row)[0]
-    game.turns.card_dropped(card, slot.global_position)
+    var slot := game.board.get_row_slots(game.board.player_row)[3]
+    card.set_hovering(true)
+    assert(card.modulate == Color.WHITE)
+    card.set_hovering(false)
+    game.turns.card_clicked(card)
+    assert(slot.targetable)
+    slot.set_hovering(true)
+    assert(slot.border.modulate == Color("#fee761"))
+    slot.set_hovering(false)
+    game.turns.target_clicked(slot)
+    assert(game.board.get_row_slots(game.board.player_row)[0].get_card() == card)
+    assert(card.position.distance_to(Vector2.ZERO) > 1.0)
 
 func verify_reveal() -> void:
     assert(!game.board.get_cards(GameRules.Side.ENEMY)[0].face_down)
@@ -49,13 +59,16 @@ func act_if_needed() -> void:
     if !game.turns.accepting_action:
         return
     var card := game.player_hand.get_cards()[0]
+    game.turns.card_clicked(card)
     if game.board.is_full(GameRules.Side.PLAYER) && !used_discard:
         used_discard = true
-        game.turns.card_dropped(card, game.player_discard.global_position)
+        game.player_discard.set_hovering(true)
+        assert(game.player_discard.border.modulate == Color("#fee761"))
+        game.turns.discard_clicked()
     else:
         var slot := game.board.get_row_slots(game.board.player_row)[0]
-        game.turns.card_dropped(card, slot.global_position)
+        game.turns.target_clicked(slot)
 
 func choose_if_needed() -> void:
     if !game.selectable_cards.is_empty():
-        game._on_card_selected(game.selectable_cards[0])
+        game.card_chosen.emit(game.selectable_cards[0])

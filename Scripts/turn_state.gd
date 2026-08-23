@@ -2,6 +2,7 @@ class_name TurnState extends Node
 
 var game: CardGame
 var pending_enemy: Card
+var selected_card: Card
 var accepting_action := false
 
 func setup(card_game: CardGame) -> void:
@@ -32,35 +33,65 @@ func play_enemy_card() -> void:
 func begin_player_action() -> void:
     accepting_action = true
     game.player_hand.set_draggable(true)
-    if game.board.is_full(GameRules.Side.PLAYER):
-        game.set_status("Replace a battlefield card, or drag a card to your discard pile")
-    else:
-        game.set_status("Drag one card to your highlighted row")
+    game.set_status("Choose a card")
 
-func card_dropped(card: Card, point: Vector2) -> void:
+func card_clicked(card: Card) -> void:
     if !accepting_action || card.get_parent() != game.player_hand:
         return
-    if game.player_discard.contains_point(point) && game.board.is_full(GameRules.Side.PLAYER):
-        game.discard_card(card)
-        finish_player_action()
-    elif game.board.contains_row_point(point, GameRules.Side.PLAYER):
-        play_player_card(card, point)
+    selected_card = card
+    enable_targets()
 
-func play_player_card(card: Card, point: Vector2) -> void:
+func enable_targets() -> void:
+    var full_row := game.board.is_full(GameRules.Side.PLAYER)
+    game.board.enable_player_targets(full_row)
+    game.board.set_dragged_card(selected_card)
+    game.player_discard.set_targetable(full_row)
+    game.player_discard.set_dragged_card(selected_card)
+    game.set_status("Choose a card to replace, or discard" if full_row else "Choose the leftmost space")
+
+func target_clicked(slot: CardSlot) -> void:
+    if !selected_card:
+        return
     if game.board.is_full(GameRules.Side.PLAYER):
-        var replaced := game.board.replace_at(card, point, GameRules.Side.PLAYER)
+        var replaced := game.board.replace_at(selected_card, slot, GameRules.Side.PLAYER)
         if !replaced:
             return
         game.discard_card(replaced)
-    elif !game.board.play_leftmost(card, GameRules.Side.PLAYER):
+    elif !game.board.play_leftmost(selected_card, GameRules.Side.PLAYER):
         return
     finish_player_action()
+
+func discard_clicked() -> void:
+    if selected_card && game.board.is_full(GameRules.Side.PLAYER):
+        game.discard_card(selected_card)
+        finish_player_action()
+
+func card_released(card: Card) -> void:
+    if card != selected_card:
+        return
+    if game.player_discard.targetable && game.player_discard.overlaps(card):
+        discard_clicked()
+        return
+    var slot := game.board.get_overlap_target(card)
+    if slot:
+        target_clicked(slot)
+        return
+    clear_targets()
+
+func card_cancelled() -> void:
+    clear_targets()
 
 func finish_player_action() -> void:
     accepting_action = false
     game.player_hand.set_draggable(false)
+    clear_targets()
     reveal_enemy_card()
     complete_round()
+
+func clear_targets() -> void:
+    selected_card = null
+    game.board.clear_targets()
+    game.player_discard.set_targetable(false)
 
 func reveal_enemy_card() -> void:
     if pending_enemy:

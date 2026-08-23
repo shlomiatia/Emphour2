@@ -6,6 +6,8 @@
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_script")
+player_row = 2
+enemy_row = 1
 
 [node name="FrontMovement" type="Node" parent="."]
 script = ExtResource("3_movement")

@@ -16,7 +16,7 @@ func resolve() -> int:
     for attacker in attackers:
         await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
     for card in defeated:
-        game.discard_card(card)
+        await game.defeat_card(card)
     return compare_strengths(strengths)
 
 func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Array[Card], used: Array[Card], defeated: Array[Card]) -> void:

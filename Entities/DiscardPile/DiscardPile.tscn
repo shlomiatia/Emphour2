@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Entities/DiscardPile/discard_pile.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Textures/Border.png" id="2_border"]
 [ext_resource type="Texture2D" path="res://Textures/Deck.png" id="3_deck"]
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="4_theme"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape_pile"]
-size = Vector2(130, 176)
 
 [node name="DiscardPile" type="Node2D"]
 script = ExtResource("1_script")
@@ -36,6 +33,7 @@ offset_right = 85.0
 offset_bottom = -88.0
 theme = ExtResource("4_theme")
 theme_override_font_sizes/font_size = 24
+mouse_filter = 2
 text = "Discard"
 horizontal_alignment = 1
 
@@ -46,13 +44,9 @@ offset_top = -22.0
 offset_right = 30.0
 offset_bottom = 22.0
 theme = ExtResource("4_theme")
+mouse_filter = 2
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CardAnchor" type="Node2D" parent="."]
-
-[node name="Hitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("RectangleShape_pile")
