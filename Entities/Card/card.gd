@@ -9,7 +9,8 @@ const ATTACK_ICONS := {
 @export var face_down := false
 @onready var front: Node2D = $Front
 @onready var back: Node2D = $Back
-@onready var art: Sprite2D = $Front/Art
+@onready var background: Sprite2D = $Front/Background
+@onready var art: Sprite2D = $Front/Background/Art
 @onready var title: Label = $Front/Title
 @onready var count: Label = $Front/Count
 @onready var strength: Label = $Front/Strength
@@ -112,13 +113,24 @@ func retreat_out(side_to_retreat: int) -> void:
 func attack_card(defender: Card) -> Signal:
     attacking = true
     z_index = 100
-    var start := global_position
+    var attack_art := create_attack_art(defender)
+    var hidden_x := -art.texture.get_width()
     var tween := create_tween()
-    tween.tween_property(self, "global_position", defender.global_position, 0.18)
-    tween.tween_property(self, "global_position", start, 0.18)
-    tween.tween_callback(finish_attack)
+    tween.tween_property(art, "position:x", hidden_x, 0.18)
+    tween.tween_property(attack_art, "position:x", -45.0, 0.18)
+    tween.tween_property(attack_art, "position:x", hidden_x, 0.18)
+    tween.tween_property(art, "position:x", 0.0, 0.18)
+    tween.tween_callback(finish_attack.bind(attack_art))
     return tween.finished
 
-func finish_attack() -> void:
+func create_attack_art(defender: Card) -> Sprite2D:
+    var attack_art := art.duplicate() as Sprite2D
+    defender.background.add_child(attack_art)
+    attack_art.flip_h = true
+    attack_art.position.x = -art.texture.get_width()
+    return attack_art
+
+func finish_attack(attack_art: Sprite2D) -> void:
+    attack_art.free()
     attacking = false
     z_index = 2
