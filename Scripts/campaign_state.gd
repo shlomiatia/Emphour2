@@ -2,8 +2,6 @@ class_name CampaignState extends RefCounted
 
 enum Faction {
 	FRANKS,
-	ENGLAND,
-	HOLY_ROMAN_EMPIRE,
 	REBELS
 }
 
@@ -23,27 +21,16 @@ enum Relation {
 
 const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Militia", "Militia", "Militia"]
 const STARTING_OWNERS := {
-	"Paris": Faction.FRANKS,
+	"Paris": Faction.REBELS,
 	"Rouen": Faction.REBELS,
 	"Amiens": Faction.REBELS,
 	"Abbeville": Faction.REBELS,
 	"Boulogne": Faction.REBELS,
-	"Calais": Faction.REBELS,
-	"Reims": Faction.REBELS,
-	"Verdun": Faction.REBELS,
-	"Metz": Faction.REBELS,
-	"Strasbourg": Faction.REBELS,
-	"Colmar": Faction.REBELS,
-	"Besancon": Faction.REBELS
+	"Calais": Faction.REBELS
 }
 
 static var selected_city := ""
-static var selected_front: Faction = Faction.REBELS
 static var player_deck: Array[String] = STARTING_DECK.duplicate()
-static var relations := {
-	Faction.ENGLAND: Relation.NEUTRAL,
-	Faction.HOLY_ROMAN_EMPIRE: Relation.NEUTRAL
-}
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := STARTING_OWNERS.duplicate()
 
@@ -57,23 +44,15 @@ static func capture_selected_city() -> void:
 	if !city_owner.has(selected_city):
 		return
 	city_owner[selected_city] = Faction.FRANKS
-	for faction in relations:
-		relations[faction] = Relation.TRADE_EMBARGO if faction == selected_front else Relation.TRADE_PACT
 
 static func faction_color(faction: Faction) -> Color:
 	match faction:
-		Faction.ENGLAND:
-			return Color("#e43b44")
-		Faction.HOLY_ROMAN_EMPIRE:
-			return Color("#fee761")
 		Faction.REBELS:
 			return Color("#f5eee2")
 	return Color("#0099db")
 
 static func reset() -> void:
 	selected_city = ""
-	selected_front = Faction.REBELS
 	player_deck.assign(STARTING_DECK)
-	relations = {Faction.ENGLAND: Relation.NEUTRAL, Faction.HOLY_ROMAN_EMPIRE: Relation.NEUTRAL}
 	loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 	city_owner = STARTING_OWNERS.duplicate()

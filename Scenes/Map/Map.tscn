@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://dl38kgy3xnhwt"]
 
-[ext_resource type="Script" path="res://Scenes/Map/map.gd" id="1_map"]
-[ext_resource type="Texture2D" path="res://Textures/Europe.png" id="2_europe"]
+[ext_resource type="Script" uid="uid://uv1cyboafa0j" path="res://Scenes/Map/map.gd" id="1_map"]
+[ext_resource type="Texture2D" uid="uid://dalarjfd4yb8d" path="res://Textures/Europe.png" id="2_europe"]
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
-[ext_resource type="FontFile" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="4_font"]
+[ext_resource type="FontFile" uid="uid://bfqfvsdi33sqk" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="4_font"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
-[ext_resource type="AudioStream" path="res://Audio/confirm1.mp3" id="6_confirm"]
+[ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_header"]
 bg_color = Color(0.035, 0.13, 0.32, 0.96)
@@ -19,231 +19,84 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_tooltip"]
-bg_color = Color(0.94, 0.86, 0.68, 0.98)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.18, 0.12, 0.06, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[node name="Map" type="Node2D"]
+[node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
 
-[node name="Europe" type="Sprite2D" parent="."]
+[node name="Europe" type="Sprite2D" parent="." unique_id=930417886]
 position = Vector2(1035, 624)
 texture = ExtResource("2_europe")
 
-[node name="MapShade" type="ColorRect" parent="."]
+[node name="MapShade" type="ColorRect" parent="." unique_id=1499670773]
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
 color = Color(0.32, 0.22, 0.08, 0.12)
 
-[node name="MapElements" type="Node2D" parent="."]
+[node name="MapElements" type="Node2D" parent="." unique_id=2039291876]
 
-[node name="Roads" type="Node2D" parent="MapElements"]
+[node name="Roads" type="Node2D" parent="MapElements" unique_id=669451369]
 
-[node name="ParisToRouen" type="Line2D" parent="MapElements/Roads"]
+[node name="ParisToRouen" type="Line2D" parent="MapElements/Roads" unique_id=1337790449]
 points = PackedVector2Array(800, 538, 750, 500)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
 
-[node name="RouenToAmiens" type="Line2D" parent="MapElements/Roads"]
+[node name="RouenToAmiens" type="Line2D" parent="MapElements/Roads" unique_id=1593756111]
 points = PackedVector2Array(750, 500, 785, 450)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
 
-[node name="AmiensToAbbeville" type="Line2D" parent="MapElements/Roads"]
+[node name="AmiensToAbbeville" type="Line2D" parent="MapElements/Roads" unique_id=1864216985]
 points = PackedVector2Array(785, 450, 750, 405)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
 
-[node name="AbbevilleToBoulogne" type="Line2D" parent="MapElements/Roads"]
+[node name="AbbevilleToBoulogne" type="Line2D" parent="MapElements/Roads" unique_id=324206234]
 points = PackedVector2Array(750, 405, 770, 360)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
 
-[node name="BoulogneToCalais" type="Line2D" parent="MapElements/Roads"]
+[node name="BoulogneToCalais" type="Line2D" parent="MapElements/Roads" unique_id=635525019]
 points = PackedVector2Array(770, 360, 805, 320)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
 
-[node name="ParisToReims" type="Line2D" parent="MapElements/Roads"]
-points = PackedVector2Array(800, 538, 870, 525)
-width = 8.0
-default_color = Color(0.2, 0.13, 0.07, 0.72)
+[node name="Cities" type="Node2D" parent="MapElements" unique_id=2003977789]
 
-[node name="ReimsToVerdun" type="Line2D" parent="MapElements/Roads"]
-points = PackedVector2Array(870, 525, 940, 500)
-width = 8.0
-default_color = Color(0.2, 0.13, 0.07, 0.72)
-
-[node name="VerdunToMetz" type="Line2D" parent="MapElements/Roads"]
-points = PackedVector2Array(940, 500, 1010, 485)
-width = 8.0
-default_color = Color(0.2, 0.13, 0.07, 0.72)
-
-[node name="MetzToStrasbourg" type="Line2D" parent="MapElements/Roads"]
-points = PackedVector2Array(1010, 485, 1090, 520)
-width = 8.0
-default_color = Color(0.2, 0.13, 0.07, 0.72)
-
-[node name="StrasbourgToColmar" type="Line2D" parent="MapElements/Roads"]
-points = PackedVector2Array(1090, 520, 1095, 585)
-width = 8.0
-default_color = Color(0.2, 0.13, 0.07, 0.72)
-
-[node name="ColmarToBesancon" type="Line2D" parent="MapElements/Roads"]
-points = PackedVector2Array(1095, 585, 1030, 640)
-width = 8.0
-default_color = Color(0.2, 0.13, 0.07, 0.72)
-
-[node name="Cities" type="Node2D" parent="MapElements"]
-
-[node name="Paris" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Paris" parent="MapElements/Cities" unique_id=923179646 instance=ExtResource("3_city")]
 position = Vector2(800, 538)
 city_name = "Paris"
 
-[node name="Rouen" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Rouen" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
 position = Vector2(750, 500)
 city_name = "Rouen"
-front = 1
 
-[node name="Amiens" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Amiens" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
 position = Vector2(785, 450)
 city_name = "Amiens"
-front = 1
 
-[node name="Abbeville" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Abbeville" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
 position = Vector2(750, 405)
 city_name = "Abbeville"
-front = 1
 
-[node name="Boulogne" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Boulogne" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
 position = Vector2(770, 360)
 city_name = "Boulogne"
-front = 1
 
-[node name="Calais" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Calais" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
 position = Vector2(805, 320)
 city_name = "Calais"
-front = 1
 
-[node name="Reims" parent="MapElements/Cities" instance=ExtResource("3_city")]
-position = Vector2(870, 525)
-city_name = "Reims"
-front = 2
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]
 
-[node name="Verdun" parent="MapElements/Cities" instance=ExtResource("3_city")]
-position = Vector2(940, 500)
-city_name = "Verdun"
-front = 2
-
-[node name="Metz" parent="MapElements/Cities" instance=ExtResource("3_city")]
-position = Vector2(1010, 485)
-city_name = "Metz"
-front = 2
-
-[node name="Strasbourg" parent="MapElements/Cities" instance=ExtResource("3_city")]
-position = Vector2(1090, 520)
-city_name = "Strasbourg"
-front = 2
-
-[node name="Colmar" parent="MapElements/Cities" instance=ExtResource("3_city")]
-position = Vector2(1095, 585)
-city_name = "Colmar"
-front = 2
-
-[node name="Besancon" parent="MapElements/Cities" instance=ExtResource("3_city")]
-position = Vector2(1030, 640)
-city_name = "Besancon"
-front = 2
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ForeignRelations" type="Panel" parent="CanvasLayer"]
-offset_left = 410.0
+[node name="KingdomLoyalty" type="Panel" parent="CanvasLayer" unique_id=374410194]
+offset_left = 690.0
 offset_top = 14.0
-offset_right = 950.0
+offset_right = 1230.0
 offset_bottom = 146.0
 theme_override_styles/panel = SubResource("StyleBox_header")
 
-[node name="Title" type="Label" parent="CanvasLayer/ForeignRelations"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 4.0
-offset_right = 524.0
-offset_bottom = 42.0
-theme_override_colors/font_color = Color(0.96, 0.85, 0.62, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 25
-text = "FOREIGN RELATIONS"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="England" type="Label" parent="CanvasLayer/ForeignRelations"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 43.0
-offset_right = 330.0
-offset_bottom = 81.0
-theme_override_colors/font_color = Color(0.96, 0.85, 0.62, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "England"
-vertical_alignment = 1
-
-[node name="EnglandStatus" type="Label" parent="CanvasLayer/ForeignRelations"]
-layout_mode = 0
-offset_left = 330.0
-offset_top = 43.0
-offset_right = 518.0
-offset_bottom = 81.0
-theme_override_colors/font_color = Color(0.87, 0.83, 0.74, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Neutral"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Empire" type="Label" parent="CanvasLayer/ForeignRelations"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 82.0
-offset_right = 330.0
-offset_bottom = 120.0
-theme_override_colors/font_color = Color(0.96, 0.85, 0.62, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Holy Roman Empire"
-vertical_alignment = 1
-
-[node name="EmpireStatus" type="Label" parent="CanvasLayer/ForeignRelations"]
-layout_mode = 0
-offset_left = 330.0
-offset_top = 82.0
-offset_right = 518.0
-offset_bottom = 120.0
-theme_override_colors/font_color = Color(0.87, 0.83, 0.74, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Neutral"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="KingdomLoyalty" type="Panel" parent="CanvasLayer"]
-offset_left = 970.0
-offset_top = 14.0
-offset_right = 1510.0
-offset_bottom = 146.0
-theme_override_styles/panel = SubResource("StyleBox_header")
-
-[node name="Title" type="Label" parent="CanvasLayer/KingdomLoyalty"]
+[node name="Title" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=1625869914]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 4.0
@@ -256,7 +109,7 @@ text = "KINGDOM LOYALTY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Peasants" type="Label" parent="CanvasLayer/KingdomLoyalty"]
+[node name="Peasants" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=1887101475]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 43.0
@@ -268,7 +121,7 @@ theme_override_font_sizes/font_size = 22
 text = "Peasants"
 vertical_alignment = 1
 
-[node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty"]
+[node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=465970467]
 layout_mode = 0
 offset_left = 330.0
 offset_top = 43.0
@@ -281,7 +134,7 @@ text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Nobility" type="Label" parent="CanvasLayer/KingdomLoyalty"]
+[node name="Nobility" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=26332371]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 82.0
@@ -293,7 +146,7 @@ theme_override_font_sizes/font_size = 22
 text = "Nobility"
 vertical_alignment = 1
 
-[node name="NobilityStatus" type="Label" parent="CanvasLayer/KingdomLoyalty"]
+[node name="NobilityStatus" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=670872147]
 layout_mode = 0
 offset_left = 330.0
 offset_top = 82.0
@@ -306,124 +159,7 @@ text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Tooltip" type="Panel" parent="CanvasLayer"]
-visible = false
-offset_right = 620.0
-offset_bottom = 180.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBox_tooltip")
+[node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]
 
-[node name="Title" type="Label" parent="CanvasLayer/Tooltip"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 5.0
-offset_right = 604.0
-offset_bottom = 46.0
-theme_override_colors/font_color = Color(0.12, 0.08, 0.04, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 29
-text = "Attack Rouen"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Grid" type="GridContainer" parent="CanvasLayer/Tooltip"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 48.0
-offset_right = 604.0
-offset_bottom = 170.0
-theme_override_constants/h_separation = 14
-theme_override_constants/v_separation = 2
-columns = 3
-
-[node name="CountryHeader" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(220, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.25, 0.18, 0.1, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 18
-text = "Country"
-vertical_alignment = 1
-
-[node name="CurrentHeader" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(140, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.25, 0.18, 0.1, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 18
-text = "Current"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TargetHeader" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(200, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.25, 0.18, 0.1, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 18
-text = "After attack"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="England" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(220, 38)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.12, 0.08, 0.04, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "England"
-vertical_alignment = 1
-
-[node name="EnglandCurrent" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(140, 38)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.27, 0.22, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Neutral"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="EnglandTarget" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(200, 38)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.66, 0.42, 0.08, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Trade Embargo"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Empire" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(220, 38)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.12, 0.08, 0.04, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Holy Roman Empire"
-vertical_alignment = 1
-
-[node name="EmpireCurrent" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(140, 38)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.27, 0.22, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Neutral"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="EmpireTarget" type="Label" parent="CanvasLayer/Tooltip/Grid"]
-custom_minimum_size = Vector2(200, 38)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.18, 0.55, 0.27, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "Trade Pact"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Fade" parent="CanvasLayer" instance=ExtResource("5_fade")]
-
-[node name="ConfirmSound" type="AudioStreamPlayer" parent="."]
+[node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=1313794689]
 stream = ExtResource("6_confirm")

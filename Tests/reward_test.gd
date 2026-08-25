@@ -17,7 +17,6 @@ func run_test() -> void:
 
 func open_reward() -> void:
 	CampaignState.selected_city = "Rouen"
-	CampaignState.selected_front = CampaignState.Faction.ENGLAND
 	var game := load("res://Scenes/Game/Game.tscn").instantiate() as CardGame
 	root.add_child(game)
 	current_scene = game
@@ -63,6 +62,4 @@ func verify_choice() -> void:
 	assert(CampaignState.loyalty["Peasants"] == -1)
 	assert(CampaignState.loyalty["Nobility"] == 1)
 	assert(CampaignState.city_owner["Rouen"] == CampaignState.Faction.FRANKS)
-	assert(CampaignState.relations[CampaignState.Faction.ENGLAND] == CampaignState.Relation.TRADE_EMBARGO)
-	assert(CampaignState.relations[CampaignState.Faction.HOLY_ROMAN_EMPIRE] == CampaignState.Relation.TRADE_PACT)
 	assert(current_scene is CampaignMap)
