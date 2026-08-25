@@ -60,6 +60,10 @@ func verify_enemy_deck_generation() -> void:
 func verify_loyalty_rules() -> void:
     assert(LoyaltyRules.CHANCES[-1] == [10, 0, 0])
     assert(LoyaltyRules.CHANCES[-5] == [30, 20, 15])
+    assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 5) == LoyaltyRules.Event.BETRAY)
+    assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 15) == LoyaltyRules.Event.DESERT)
+    assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 35) == LoyaltyRules.Event.REFUSE)
+    assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 36) == -1)
     assert(RewardRules.belongs_to("Militia", "Peasants"))
     assert(RewardRules.belongs_to("Knight", "Nobility"))
 

@@ -20,7 +20,8 @@ func run() -> void:
         return
     running = true
     for group in CampaignState.loyalty:
-        for event in LoyaltyRules.roll(CampaignState.loyalty[group]):
+        var loyalty: int = CampaignState.loyalty[group]
+        for event in LoyaltyRules.roll(loyalty):
             await run_event(group, event)
     running = false
     game.event_panel.hide()
