@@ -66,8 +66,8 @@ func replace_at(card: Card, slot: CardSlot, side: int) -> Card:
     slot.place(card)
     return replaced
 
-func replace_first(card: Card, side: int) -> Card:
-    var slot := get_row_slots(get_side_row(side))[0]
+func replace_random(card: Card, side: int) -> Card:
+    var slot := get_row_slots(get_side_row(side)).pick_random() as CardSlot
     var replaced := slot.get_card()
     replaced.reparent(self)
     slot.place(card)

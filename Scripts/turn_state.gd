@@ -21,11 +21,11 @@ func play_enemy_card() -> void:
     pending_enemy = null
     if game.enemy_hand.get_card_count() == 0:
         return
-    pending_enemy = game.enemy_hand.get_cards()[0]
+    pending_enemy = game.enemy_hand.get_cards().pick_random()
     game.audio.play_card()
     pending_enemy.set_hidden(true)
     if !game.board.play_leftmost(pending_enemy, GameRules.Side.ENEMY):
-        game.discard_card(game.board.replace_first(pending_enemy, GameRules.Side.ENEMY))
+        game.discard_card(game.board.replace_random(pending_enemy, GameRules.Side.ENEMY))
 
 func begin_player_action() -> void:
     accepting_action = true

@@ -54,7 +54,7 @@ func choose_defender(attacker: Card, cards: Array[Card]) -> Card:
         return null
     if attacker.side == GameRules.Side.ENEMY:
         return await game.choose_card(cards, "Choose a card to defend against %s" % attacker.card_name)
-    return cards[0]
+    return cards.pick_random()
 
 func available_targets(attacker: Card, cards: Array[Card], used: Array[Card], defeated: Array[Card]) -> Array[Card]:
     return cards.filter(func(card: Card) -> bool: return !defeated.has(card) && (used.has(card) || !can_defend(attacker.data, card.data)))
@@ -64,7 +64,7 @@ func choose_target(attacker: Card, cards: Array[Card]) -> Card:
         return null
     if attacker.side == GameRules.Side.PLAYER:
         return await game.choose_card(cards, "Choose a card for %s to kill" % attacker.card_name)
-    return cards[0]
+    return cards.pick_random()
 
 func can_defend(attacker: CardData, defender: CardData) -> bool:
     return defender.defence > 0 && defender.anti_attack == attacker.attack_type
