@@ -5,6 +5,9 @@ class_name Title extends Node2D
 
 var input_disabled := false
 
+func _ready() -> void:
+    CampaignState.reset()
+
 func _input(event: InputEvent) -> void:
     if !input_disabled && event.is_pressed():
         input_disabled = true

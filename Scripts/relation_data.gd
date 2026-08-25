@@ -1,0 +1,25 @@
+class_name RelationData extends RefCounted
+
+const RELATION_NAMES := [
+	"War", "Hostile", "Close Borders", "Diplomatic Protest", "Trade Embargo", "Neutral",
+	"Trade Pact", "Non Aggression Pact", "Open Borders", "Defensive Alliance", "Military Alliance"
+]
+const LOYALTY_NAMES := [
+	"Treacherous", "Disloyal", "Defiant", "Discontent", "Uneasy", "Neutral",
+	"At Ease", "Content", "Obedient", "Loyal", "Devoted"
+]
+const COLORS := [
+	Color("#a92335"), Color("#c83b3b"), Color("#dc5838"), Color("#e68135"), Color("#e7b84b"),
+	Color("#ddd3bd"), Color("#a4cc73"), Color("#76c66a"), Color("#4ebd68"), Color("#2eaa60"), Color("#168f50")
+]
+
+static func relation_name(value: int) -> String:
+	return RELATION_NAMES[value + 5]
+
+static func loyalty_name(value: int) -> String:
+	return LOYALTY_NAMES[value + 5]
+
+static func color(value: int, dark_neutral := false) -> Color:
+	if value == CampaignState.Relation.NEUTRAL && dark_neutral:
+		return Color("#51483b")
+	return COLORS[value + 5]

@@ -53,8 +53,8 @@ func is_attackable(city_name: String) -> bool:
 func update_header() -> void:
 	set_relation_label(england_status, CampaignState.relations[CampaignState.Faction.ENGLAND])
 	set_relation_label(empire_status, CampaignState.relations[CampaignState.Faction.HOLY_ROMAN_EMPIRE])
-	set_relation_label(peasants_status, CampaignState.loyalty["Peasants"])
-	set_relation_label(nobility_status, CampaignState.loyalty["Nobility"])
+	set_loyalty_label(peasants_status, CampaignState.loyalty["Peasants"])
+	set_loyalty_label(nobility_status, CampaignState.loyalty["Nobility"])
 
 func _on_city_hovered(city: CampaignCity) -> void:
 	hovered_city = city
@@ -71,12 +71,16 @@ func update_tooltip(city: CampaignCity) -> void:
 	set_relation_label(england_target, england_result, true)
 	set_relation_label(empire_target, empire_result, true)
 
-func get_target_relation(front: CampaignState.Faction, faction: CampaignState.Faction) -> CampaignState.Relation:
+func get_target_relation(front: CampaignState.Faction, faction: CampaignState.Faction) -> int:
 	return CampaignState.Relation.TRADE_EMBARGO if front == faction else CampaignState.Relation.TRADE_PACT
 
-func set_relation_label(label: Label, relation: CampaignState.Relation, dark_neutral := false) -> void:
-	label.text = CampaignState.relation_name(relation)
-	label.add_theme_color_override("font_color", CampaignState.relation_color(relation, dark_neutral))
+func set_relation_label(label: Label, relation: int, dark_neutral := false) -> void:
+	label.text = RelationData.relation_name(relation)
+	label.add_theme_color_override("font_color", RelationData.color(relation, dark_neutral))
+
+func set_loyalty_label(label: Label, loyalty_value: int) -> void:
+	label.text = RelationData.loyalty_name(loyalty_value)
+	label.add_theme_color_override("font_color", RelationData.color(loyalty_value))
 
 func get_tooltip_position(city_position: Vector2) -> Vector2:
 	var position := city_position + Vector2(36, 24)

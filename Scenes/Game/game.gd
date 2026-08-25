@@ -18,6 +18,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var result_panel: Panel = $Interface/Result
 @onready var result_label: Label = $Interface/Result/Label
 @onready var audio: GameAudio = $Audio
+@onready var fade: Fade = $Interface/Fade
 
 var selectable_cards: Array[Card]
 var finished := false
@@ -35,7 +36,7 @@ func _ready() -> void:
     player_hand.card_clicked.connect(turns.card_clicked)
     player_hand.card_released.connect(turns.card_released)
     player_hand.card_cancelled.connect(turns.card_cancelled)
-    add_starting_cards(player_cards, player_hand, GameRules.Side.PLAYER)
+    add_starting_cards(CampaignState.player_deck, player_hand, GameRules.Side.PLAYER)
     add_starting_cards(enemy_cards, enemy_hand, GameRules.Side.ENEMY)
     set_status(status_label.text)
     turns.start_round()
@@ -110,3 +111,10 @@ func finish_game(winner: int) -> void:
     else:
         result_label.text = "ENEMY VICTORY"
     set_status("Game over")
+    if winner == GameRules.Side.PLAYER:
+        open_rewards()
+
+func open_rewards() -> void:
+    await get_tree().create_timer(0.8).timeout
+    await fade.fade_out()
+    get_tree().change_scene_to_file("res://Scenes/Reward/Reward.tscn")
