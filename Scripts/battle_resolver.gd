@@ -37,12 +37,14 @@ func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Arra
     if defender:
         used.append(defender)
         game.audio.play_block()
+        game.shake_camera()
         await attacker.attack_card(defender)
         return
     var targets := available_targets(attacker, opponents, used, defeated)
     var target := await choose_target(attacker, targets)
     if target:
         game.audio.play_attack()
+        game.shake_camera()
         await attacker.attack_card(target)
         defeated.append(target)
 

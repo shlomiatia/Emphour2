@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
 [ext_resource type="Script" path="res://Scripts/loyalty_events.gd" id="14_loyalty"]
 [ext_resource type="Script" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
+[ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
@@ -26,6 +27,8 @@ enemy_deck = SubResource("Resource_enemy_deck")
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
 position = Vector2(960, 540)
 texture = ExtResource("2_background")
+
+[node name="ShakingCamera" parent="." instance=ExtResource("16_shake")]
 
 [node name="Board" parent="." unique_id=1079065982 instance=ExtResource("3_board")]
 position = Vector2(960, 410)

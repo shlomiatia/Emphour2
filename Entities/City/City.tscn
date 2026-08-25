@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://Entities/City/city.gd" id="1_city"]
-[ext_resource type="FontFile" uid="uid://bfqfvsdi33sqk" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://blgdr3wpr6u6u" path="res://Fonts/MedievalSharp.ttf" id="2_font"]
 [ext_resource type="Texture2D" path="res://Textures/Shield.png" id="3_shield"]
 
 [sub_resource type="CircleShape2D" id="CircleShape_city"]

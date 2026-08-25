@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Reward/reward.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Textures/Europe.png" id="2_europe"]
 [ext_resource type="PackedScene" path="res://Entities/RewardOption/RewardOption.tscn" id="3_option"]
-[ext_resource type="FontFile" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="4_font"]
+[ext_resource type="FontFile" path="res://Fonts/MedievalSharp.ttf" id="4_font"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]

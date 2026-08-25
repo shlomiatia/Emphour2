@@ -4,6 +4,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 
 @export var enemy_deck: EnemyDeck
 @onready var board: Board = $Board
+@onready var shaking_camera: ShakingCamera = $ShakingCamera
 @onready var player_hand: CardHand = $PlayerHand
 @onready var enemy_hand: CardHand = $EnemyHand
 @onready var player_discard: DiscardPile = $Interface/PlayerDiscard/Pile
@@ -91,6 +92,9 @@ func defeat_card(card: Card) -> void:
     board.notify_state_changed()
     await card.fade_out()
     get_discard(card.side).add_defeated(card)
+
+func shake_camera() -> void:
+    shaking_camera.shake()
 
 func discard_card(card: Card) -> void:
     get_discard(card.side).add_card(card)

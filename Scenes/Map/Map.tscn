@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://uv1cyboafa0j" path="res://Scenes/Map/map.gd" id="1_map"]
 [ext_resource type="Texture2D" uid="uid://dalarjfd4yb8d" path="res://Textures/Europe.png" id="2_europe"]
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
-[ext_resource type="FontFile" uid="uid://bfqfvsdi33sqk" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="4_font"]
+[ext_resource type="FontFile" uid="uid://blgdr3wpr6u6u" path="res://Fonts/MedievalSharp.ttf" id="4_font"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 
