@@ -52,4 +52,4 @@ func show_current_text() -> void:
 func start_game() -> void:
 	input_disabled = true
 	await fade.fade_out()
-	get_tree().change_scene_to_file("res://Scenes/Game/Game.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
