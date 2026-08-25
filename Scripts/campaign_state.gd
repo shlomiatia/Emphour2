@@ -43,7 +43,22 @@ static func loyalty_after(group: String, amount: int) -> int:
 static func capture_selected_city() -> void:
 	if !city_owner.has(selected_city):
 		return
+	var was_final := is_final_battle()
 	city_owner[selected_city] = Faction.FRANKS
+	if city_owner.values().all(func(owner: int) -> bool: return owner == Faction.FRANKS) && !was_final:
+		city_owner["Paris"] = Faction.REBELS
+
+static func is_final_battle() -> bool:
+	return city_owner["Paris"] == Faction.REBELS && city_owner.values().count(Faction.FRANKS) == city_owner.size() - 1
+
+static func enemy_city() -> String:
+	return "City 7" if is_final_battle() else selected_city
+
+static func loyal_group() -> String:
+	return "Peasants" if loyalty["Peasants"] >= loyalty["Nobility"] else "Nobility"
+
+static func disloyal_group() -> String:
+	return "Nobility" if loyal_group() == "Peasants" else "Peasants"
 
 static func faction_color(faction: Faction) -> Color:
 	match faction:

@@ -19,18 +19,33 @@ func run() -> void:
     if running:
         return
     running = true
+    if CampaignState.is_final_battle():
+        await run_final_events()
+    else:
+        await run_regular_events()
+    running = false
+    game.event_panel.hide()
+
+func run_final_events() -> void:
+    var group := CampaignState.disloyal_group()
+    for card in eligible_cards(group):
+        for event in LoyaltyRules.roll(CampaignState.loyalty[group]):
+            await run_card_event(card, event)
+
+func run_regular_events() -> void:
     for group in CampaignState.loyalty:
         var loyalty: int = CampaignState.loyalty[group]
         for event in LoyaltyRules.roll(loyalty):
             await run_event(group, event)
-    running = false
-    game.event_panel.hide()
 
 func run_event(group: String, event: int) -> void:
     var cards := eligible_cards(group)
     if cards.is_empty():
         return
     var card := cards.pick_random() as Card
+    await run_card_event(card, event)
+
+func run_card_event(card: Card, event: int) -> void:
     show_message(card, event)
     await wait_for_input()
     if !is_instance_valid(card):

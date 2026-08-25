@@ -10,13 +10,25 @@ class_name RewardScreen extends Node2D
 
 var offers := {}
 var input_disabled := false
+var final_reward := false
 
 func _ready() -> void:
+	final_reward = CampaignState.is_final_battle()
 	create_options()
 
 func create_options() -> void:
+	if final_reward:
+		create_final_options()
+		return
 	for group in ["Peasants", "Nobility"]:
 		offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck)
+	peasants.setup(offers["Peasants"])
+	nobility.setup(offers["Nobility"])
+
+func create_final_options() -> void:
+	var group := CampaignState.loyal_group()
+	offers["Peasants"] = RewardRules.create_final_offer(group, false, CampaignState.player_deck)
+	offers["Nobility"] = RewardRules.create_final_offer(group, true, CampaignState.player_deck)
 	peasants.setup(offers["Peasants"])
 	nobility.setup(offers["Nobility"])
 
@@ -25,7 +37,8 @@ func _on_option_chosen(group: String) -> void:
 		return
 	input_disabled = true
 	RewardRules.apply_offer(offers[group], CampaignState.player_deck)
-	apply_loyalty(group)
+	if !final_reward:
+		apply_loyalty(group)
 	CampaignState.capture_selected_city()
 	confirm_sound.play()
 	await fade.fade_out()
@@ -37,6 +50,8 @@ func apply_loyalty(group: String) -> void:
 	CampaignState.change_loyalty(other, -1)
 
 func _on_option_hovered(group: String) -> void:
+	if final_reward:
+		return
 	set_change(0, "Peasants", 1 if group == "Peasants" else -1)
 	set_change(1, "Nobility", 1 if group == "Nobility" else -1)
 	tooltip.position.x = 110.0 if group == "Peasants" else 1090.0

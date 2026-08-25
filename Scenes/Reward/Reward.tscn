@@ -77,6 +77,7 @@ offset_top = 190.0
 offset_right = 1810.0
 offset_bottom = 800.0
 group_name = "Nobility"
+option_id = "Nobility"
 
 [node name="LoyaltyTooltip" type="Panel" parent="CanvasLayer"]
 visible = false

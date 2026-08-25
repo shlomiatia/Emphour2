@@ -2,7 +2,8 @@ class_name EnemyDeck extends Resource
 
 const CITY_DECKS := {
 	"Paris": ["Light Cavalry", "Militia", "Militia"],
-	"Rouen": ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"]
+	"Rouen": ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"],
+	"City 7": ["Foot Knight", "Lancer", "Heavy Cavalry", "Light Cavalry", "Axeman", "Swordman", "Spearman", "Militia", "Militia"]
 }
 
 const LATE_CITIES := ["Amiens", "Abbeville", "Boulogne", "Calais"]

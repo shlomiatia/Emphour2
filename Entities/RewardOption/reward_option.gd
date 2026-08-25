@@ -3,6 +3,7 @@ class_name RewardOption extends Control
 const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 
 @export var group_name := "Peasants"
+@export var option_id := "Peasants"
 @onready var title: Label = $Panel/Title
 @onready var offer_root: Node2D = $Panel/Offer
 @onready var arrow: Label = $Panel/Offer/Arrow
@@ -16,7 +17,7 @@ signal unhovered
 
 func setup(value: Dictionary) -> void:
 	offer = value
-	title.text = group_name
+	title.text = offer.get("title", group_name)
 	if !offer["old"].is_empty():
 		add_card(offer["old"], Vector2(-150, 0))
 		add_card(offer["new"], Vector2(150, 0))
@@ -34,7 +35,7 @@ func add_card(card_name: String, position_value: Vector2) -> void:
 	cards.append(card)
 
 func _on_button_pressed() -> void:
-	chosen.emit(group_name)
+	chosen.emit(option_id)
 
 func _on_button_mouse_entered() -> void:
 	set_highlighted(true)
