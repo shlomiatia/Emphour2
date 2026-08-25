@@ -18,6 +18,7 @@ func run_test() -> void:
     await verify_desertion()
     await verify_betrayal()
     await verify_casualty_persistence()
+    await verify_freed_card_safe()
     quit()
 
 func verify_mouse_continue() -> void:
@@ -57,6 +58,18 @@ func verify_casualty_persistence() -> void:
     var old_count := CampaignState.player_deck.count(card.card_name)
     await game.defeat_card(card)
     assert(CampaignState.player_deck.count(card.card_name) == old_count)
+
+func verify_freed_card_safe() -> void:
+    var cards := game.loyalty_events.eligible_cards("Peasants")
+    game.loyalty_events.run_event("Peasants", LoyaltyRules.Event.REFUSE)
+    assert(game.loyalty_events.waiting)
+    for card in cards:
+        card.free()
+    var event := InputEventMouseButton.new()
+    event.pressed = true
+    game.loyalty_events._input(event)
+    await process_frame
+    assert(!game.loyalty_events.waiting)
 
 func find_card(card_name: String) -> Card:
     return game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == card_name)[0]

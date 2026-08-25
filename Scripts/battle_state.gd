@@ -8,11 +8,13 @@ func setup(card_game: CardBattle) -> void:
     game = card_game
 
 func start() -> void:
+    if active:
+        return
+    active = true
     await game.loyalty_events.run()
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
     game.turns.reveal_enemy_card()
-    active = true
     game.set_status("Battle")
     await get_tree().create_timer(0.35).timeout
     await move_balance(game.battle.strength_difference())
