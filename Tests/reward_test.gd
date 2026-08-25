@@ -32,17 +32,23 @@ func verify_rules() -> void:
 	for group in ["Peasants", "Nobility"]:
 		for loyalty in 6:
 			var offer := RewardRules.create_offer(group, loyalty, deck)
-			var rule: Array = RewardRules.REWARDS[group][loyalty]
-			assert(RewardRules.get_group_cards(group, rule[1]).has(offer["new"]))
-			if rule[0] > 0:
-				assert(RewardRules.TIERS[rule[0]].has(offer["old"]))
+			var rule := RewardRules.get_reward(group, loyalty)
+			assert(RewardRules.get_group_cards(group, rule["tier"]).has(offer["new"]))
+			if rule["upgrade"] && !offer["old"].is_empty():
+				assert(RewardRules.get_upgrade_cards(group, offer["old"], rule["tier"]).has(offer["new"]))
+	verify_upgrade_fallback()
+
+func verify_upgrade_fallback() -> void:
+	var offer := RewardRules.create_offer("Nobility", 3, ["Horse Archer"])
+	assert(offer["old"] == "Horse Archer")
+	assert(RewardRules.get_group_cards("Nobility", 3).has(offer["new"]))
 
 func verify_options() -> void:
 	var peasants: Dictionary = reward.offers["Peasants"]
 	var nobility: Dictionary = reward.offers["Nobility"]
 	assert(peasants["old"].is_empty())
 	assert(RewardRules.get_group_cards("Peasants", 1).has(peasants["new"]))
-	assert(RewardRules.TIERS[1].has(nobility["old"]))
+	assert(nobility["old"].is_empty())
 	assert(RewardRules.get_group_cards("Nobility", 2).has(nobility["new"]))
 
 func verify_tooltip() -> void:
@@ -57,7 +63,7 @@ func verify_choice() -> void:
 	var old_count := CampaignState.player_deck.count(offer["old"])
 	await reward._on_option_chosen("Nobility")
 	await process_frame
-	assert(CampaignState.player_deck.count(offer["old"]) == old_count - 1)
+	assert(CampaignState.player_deck.count(offer["old"]) == (old_count - 1 if !offer["old"].is_empty() else old_count))
 	assert(CampaignState.player_deck.has(offer["new"]))
 	assert(CampaignState.loyalty["Peasants"] == -1)
 	assert(CampaignState.loyalty["Nobility"] == 1)

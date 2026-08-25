@@ -1,5 +1,6 @@
 class_name RewardRules extends RefCounted
 
+const DATA_PATH := "res://Resources/reward_data.cfg"
 const TIERS := {
 	1: ["Archer", "Mantlet", "Stakes"],
 	2: ["Horse Archer", "Light Cavalry", "Axeman", "Swordman", "Spearman"],
@@ -7,17 +8,11 @@ const TIERS := {
 	4: ["Knight"]
 }
 const NOBILITY := ["Horse Archer", "Light Cavalry", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"]
-const REWARDS := {
-	"Peasants": [[0, 1], [1, 2], [0, 2], [1, 2], [0, 2], [2, 2]],
-	"Nobility": [[1, 2], [1, 2], [1, 2], [2, 3], [1, 3], [1, 4]]
-}
 
 static func create_offer(group: String, loyalty: int, deck: Array[String]) -> Dictionary:
-	var rule: Array = REWARDS[group][clampi(loyalty, 0, 5)]
-	var old_name := pick_old_card(int(rule[0]), deck)
-	var choices := get_group_cards(group, int(rule[1]))
-	if choices.size() > 1:
-		choices.erase(old_name)
+	var reward := get_reward(group, loyalty)
+	var old_name := pick_old_card(group, reward, deck)
+	var choices := get_upgrade_cards(group, old_name, reward["tier"]) if !old_name.is_empty() else get_group_cards(group, reward["tier"])
 	return {"old": old_name, "new": choices.pick_random()}
 
 static func apply_offer(offer: Dictionary, deck: Array[String]) -> void:
@@ -25,12 +20,25 @@ static func apply_offer(offer: Dictionary, deck: Array[String]) -> void:
 		deck.erase(offer["old"])
 	deck.append(offer["new"])
 
-static func pick_old_card(tier: int, deck: Array[String]) -> String:
-	if tier == 0:
+static func get_reward(group: String, loyalty: int) -> Dictionary:
+	var data := get_data()
+	var parts := (data.get_value("rewards", "%s_%s" % [group, clampi(loyalty, 0, 5)]) as String).split(":")
+	return {"upgrade": parts[0] == "upgrade", "from": int(parts[1]) if parts.size() == 3 else 0, "tier": int(parts[-1])}
+
+static func pick_old_card(group: String, reward: Dictionary, deck: Array[String]) -> String:
+	if !reward["upgrade"]:
 		return ""
-	var choices: Array[String]
-	choices.assign(deck.filter(func(card: String) -> bool: return TIERS[tier].has(card)))
-	return "" if choices.is_empty() else choices.pick_random()
+	for tier in range(reward["from"], reward["tier"]):
+		var choices := deck.filter(func(card: String) -> bool: return TIERS[tier].has(card) && !get_upgrade_cards(group, card, reward["tier"]).is_empty())
+		if !choices.is_empty():
+			return choices.pick_random()
+	return ""
+
+static func get_upgrade_cards(group: String, card_name: String, tier: int) -> Array[String]:
+	var upgrade := get_data().get_value("upgrades", card_name, "") as String
+	var cards: Array[String]
+	cards.assign(TIERS[tier])
+	return cards.filter(func(card: String) -> bool: return belongs_to(card, group) && (upgrade == "all" || upgrade.split(",").has(card)))
 
 static func get_group_cards(group: String, tier: int) -> Array[String]:
 	var choices: Array[String]
@@ -39,3 +47,8 @@ static func get_group_cards(group: String, tier: int) -> Array[String]:
 
 static func belongs_to(card_name: String, group: String) -> bool:
 	return NOBILITY.has(card_name) == (group == "Nobility")
+
+static func get_data() -> ConfigFile:
+	var data := ConfigFile.new()
+	data.load(DATA_PATH)
+	return data

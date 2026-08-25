@@ -1,45 +1,43 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://ce2ami7211ayp"]
 
-[ext_resource type="Script" path="res://Entities/Card/card.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Textures/CardBackground.png" id="2_background"]
-[ext_resource type="Texture2D" path="res://Textures/Card.png" id="3_frame"]
-[ext_resource type="Texture2D" path="res://Textures/Cards/Militia.png" id="4_art"]
-[ext_resource type="Texture2D" path="res://Textures/Deck.png" id="6_deck"]
+[ext_resource type="Script" uid="uid://c0m6qup05j225" path="res://Entities/Card/card.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://xr6wcvu1ukkq" path="res://Textures/CardBackground.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://dpm30yhxg3qan" path="res://Textures/Card.png" id="3_frame"]
+[ext_resource type="Texture2D" uid="uid://c553jgrwfc68i" path="res://Textures/Cards/Militia.png" id="4_art"]
+[ext_resource type="Texture2D" uid="uid://ctqwgnyda807l" path="res://Textures/Deck.png" id="6_deck"]
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="7_theme"]
-[ext_resource type="Texture2D" path="res://Textures/Missle.png" id="8_missile"]
-[ext_resource type="Texture2D" path="res://Textures/Armor.png" id="10_armor"]
-[ext_resource type="Texture2D" path="res://Textures/X.png" id="11_x"]
+[ext_resource type="Texture2D" uid="uid://bxfcuav3tnhgq" path="res://Textures/Missle.png" id="8_missile"]
+[ext_resource type="Texture2D" uid="uid://bys5xrk8togde" path="res://Textures/Armor.png" id="10_armor"]
+[ext_resource type="Texture2D" uid="uid://i3jmx1e1g1ld" path="res://Textures/X.png" id="11_x"]
 
-[node name="Card" type="Node2D"]
-groups = ["cards"]
+[node name="Card" type="Node2D" unique_id=580931423]
 script = ExtResource("1_script")
 
-[node name="Front" type="Node2D" parent="."]
+[node name="Front" type="Node2D" parent="." unique_id=463157745]
 
-[node name="Background" type="Sprite2D" parent="Front"]
+[node name="Background" type="Sprite2D" parent="Front" unique_id=881381779]
 position = Vector2(0, -3)
 texture = ExtResource("2_background")
 
-[node name="Art" type="Sprite2D" parent="Front"]
+[node name="Art" type="Sprite2D" parent="Front" unique_id=1033041801]
 position = Vector2(0, -3)
 texture = ExtResource("4_art")
 
-[node name="Frame" type="Sprite2D" parent="Front"]
+[node name="Frame" type="Sprite2D" parent="Front" unique_id=1229233838]
 texture = ExtResource("3_frame")
 
-[node name="Title" type="Label" parent="Front"]
+[node name="Title" type="Label" parent="Front" unique_id=387634293]
 offset_left = -85.0
 offset_top = -121.0
 offset_right = 85.0
 offset_bottom = -96.0
 theme = ExtResource("7_theme")
 theme_override_font_sizes/font_size = 19
-mouse_filter = 2
 text = "Militia"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Count" type="Label" parent="Front"]
+[node name="Count" type="Label" parent="Front" unique_id=844100627]
 visible = false
 offset_left = 96.0
 offset_top = -12.0
@@ -48,68 +46,60 @@ offset_bottom = 13.0
 theme = ExtResource("7_theme")
 theme_override_colors/font_color = Color(0.95, 0.75, 0.25, 1)
 theme_override_font_sizes/font_size = 28
-mouse_filter = 2
-horizontal_alignment = 0
 vertical_alignment = 1
 
-[node name="Strength" type="Label" parent="Front"]
+[node name="Strength" type="Label" parent="Front" unique_id=1947068233]
 offset_left = -83.28
 offset_top = 99.1
 offset_right = -53.28
 offset_bottom = 123.1
 theme = ExtResource("7_theme")
 theme_override_font_sizes/font_size = 22
-mouse_filter = 2
 text = "1"
-horizontal_alignment = 0
 vertical_alignment = 1
 
-[node name="Attack" type="Label" parent="Front"]
+[node name="Attack" type="Label" parent="Front" unique_id=1265626549]
 offset_left = -25.37
 offset_top = 99.1
 offset_right = 4.63
 offset_bottom = 123.1
 theme = ExtResource("7_theme")
 theme_override_font_sizes/font_size = 22
-mouse_filter = 2
 text = "0"
-horizontal_alignment = 0
 vertical_alignment = 1
 
-[node name="Defence" type="Label" parent="Front"]
+[node name="Defence" type="Label" parent="Front" unique_id=1914251063]
 offset_left = 34.74
 offset_top = 99.1
 offset_right = 64.74
 offset_bottom = 123.1
 theme = ExtResource("7_theme")
 theme_override_font_sizes/font_size = 22
-mouse_filter = 2
 text = "0"
-horizontal_alignment = 0
 vertical_alignment = 1
 
-[node name="AttackIcon" type="Sprite2D" parent="Front"]
+[node name="AttackIcon" type="Sprite2D" parent="Front" unique_id=2113483271]
 visible = false
 position = Vector2(0, 110.5)
 scale = Vector2(0.55, 0.55)
 texture = ExtResource("8_missile")
 
-[node name="DefenceIcon" type="Sprite2D" parent="Front"]
+[node name="DefenceIcon" type="Sprite2D" parent="Front" unique_id=1558045746]
 visible = false
 position = Vector2(60, 110.5)
 scale = Vector2(0.55, 0.55)
 texture = ExtResource("10_armor")
 
-[node name="Counter" type="Sprite2D" parent="Front"]
+[node name="Counter" type="Sprite2D" parent="Front" unique_id=754947672]
 visible = false
 modulate = Color(0.894118, 0.231373, 0.266667, 1)
 position = Vector2(60, 110.5)
 scale = Vector2(0.275, 0.275)
 texture = ExtResource("11_x")
 
-[node name="Back" type="Node2D" parent="."]
+[node name="Back" type="Node2D" parent="." unique_id=920298850]
 visible = false
 
-[node name="Card" type="Sprite2D" parent="Back"]
+[node name="Card" type="Sprite2D" parent="Back" unique_id=835103950]
 modulate = Color(1, 1, 1, 0.5)
 texture = ExtResource("6_deck")
