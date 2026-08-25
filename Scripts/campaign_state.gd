@@ -19,7 +19,7 @@ enum Relation {
 	MILITARY_ALLIANCE
 }
 
-const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Militia", "Militia", "Militia"]
+const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Light Cavalry", "Militia", "Militia", "Militia", "Militia", "Militia", "Militia"]
 const STARTING_OWNERS := {
 	"Paris": Faction.REBELS,
 	"Rouen": Faction.REBELS,
