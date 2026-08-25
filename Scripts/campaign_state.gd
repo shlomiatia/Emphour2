@@ -38,6 +38,7 @@ const STARTING_OWNERS := {
 }
 
 static var selected_city := ""
+static var selected_front: Faction = Faction.REBELS
 static var player_deck: Array[String] = STARTING_DECK.duplicate()
 static var relations := {
 	Faction.ENGLAND: Relation.NEUTRAL,
@@ -53,8 +54,11 @@ static func loyalty_after(group: String, amount: int) -> int:
 	return clampi(loyalty[group] + amount, Relation.WAR, Relation.MILITARY_ALLIANCE)
 
 static func capture_selected_city() -> void:
-	if city_owner.has(selected_city):
-		city_owner[selected_city] = Faction.FRANKS
+	if !city_owner.has(selected_city):
+		return
+	city_owner[selected_city] = Faction.FRANKS
+	for faction in relations:
+		relations[faction] = Relation.TRADE_EMBARGO if faction == selected_front else Relation.TRADE_PACT
 
 static func faction_color(faction: Faction) -> Color:
 	match faction:
@@ -68,6 +72,7 @@ static func faction_color(faction: Faction) -> Color:
 
 static func reset() -> void:
 	selected_city = ""
+	selected_front = Faction.REBELS
 	player_deck.assign(STARTING_DECK)
 	relations = {Faction.ENGLAND: Relation.NEUTRAL, Faction.HOLY_ROMAN_EMPIRE: Relation.NEUTRAL}
 	loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}

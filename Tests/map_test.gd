@@ -69,4 +69,5 @@ func verify_battle_transition() -> void:
 	for _frame in 30:
 		await process_frame
 	assert(CampaignState.selected_city == "Rouen")
+	assert(CampaignState.selected_front == CampaignState.Faction.ENGLAND)
 	assert(current_scene is CardGame)

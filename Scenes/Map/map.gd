@@ -98,6 +98,7 @@ func _on_city_clicked(city: CampaignCity) -> void:
 		return
 	input_disabled = true
 	CampaignState.selected_city = city.city_name
+	CampaignState.selected_front = city.front
 	confirm_sound.play()
 	await fade.fade_out()
 	get_tree().change_scene_to_file("res://Scenes/Game/Game.tscn")
