@@ -17,7 +17,7 @@ func run_test() -> void:
     play_last_card()
     for _frame in 100:
         if game.finished:
-            assert(game.enemy_hand.get_card_count() == 2)
+            assert(game.enemy_hand.get_card_count() < 2)
             quit()
             return
         await process_frame

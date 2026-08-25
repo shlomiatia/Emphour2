@@ -18,7 +18,7 @@ func start() -> void:
     await get_tree().create_timer(0.35).timeout
     await move_balance(game.battle.strength_difference())
     await game.battle.resolve()
-    await finish(game.player_hand.get_card_count() == 0)
+    await finish(game.player_hand.get_card_count() == 0 && game.enemy_hand.get_card_count() == 0)
 
 func move_balance(difference: int) -> void:
     balance += difference
@@ -31,6 +31,9 @@ func finish(final_battle: bool) -> void:
         game.set_status("Balance of power reached %s" % balance)
         await get_tree().create_timer(0.35).timeout
         finish_game(winner)
+        return
+    if game.turns.enemy_defeated():
+        finish_game(GameRules.Side.PLAYER)
         return
     if final_battle:
         await get_tree().create_timer(0.35).timeout
