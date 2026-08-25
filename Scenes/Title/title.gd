@@ -11,4 +11,4 @@ func _input(event: InputEvent) -> void:
         confirm_sound.play()
         fade.fade_out()
         await confirm_sound.finished
-        get_tree().change_scene_to_file("res://Scenes/Game/Game.tscn")
+        get_tree().change_scene_to_file("res://Scenes/Intro/Intro.tscn")
