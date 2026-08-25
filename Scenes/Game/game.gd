@@ -13,8 +13,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
 @onready var status_label: Label = $Interface/Status
-@onready var status_background: ColorRect = $Interface/StatusBackground
-@onready var strength_label: RichTextLabel = $Interface/Strength
+@onready var battle_hud: BattleHud = $Interface/BattleHud
 @onready var result_panel: Panel = $Interface/Result
 @onready var result_label: Label = $Interface/Result/Label
 @onready var audio: GameAudio = $Audio
@@ -39,6 +38,7 @@ func _ready() -> void:
     add_starting_cards(CampaignState.player_deck, player_hand, GameRules.Side.PLAYER)
     add_starting_cards(enemy_cards, enemy_hand, GameRules.Side.ENEMY)
     set_status(status_label.text)
+    set_balance(0)
     turns.start_round()
 
 func _on_target_chosen(slot: CardSlot) -> void:
@@ -91,14 +91,12 @@ func get_discard(side: int) -> DiscardPile:
 
 func set_status(value: String) -> void:
     status_label.text = value
-    status_label.reset_size()
-    status_background.size = status_label.size + Vector2(20, 12)
 
 func set_strengths(player_strength: int, enemy_strength: int, player_losses: int, enemy_losses: int) -> void:
-    var strength_color := "76d275" if player_strength > enemy_strength else "ef5b5b" if player_strength < enemy_strength else "ffffff"
-    var loss_color := "ef5b5b" if player_losses > 0 else "ffffff"
-    var enemy_loss_color := "76d275" if enemy_losses > 0 else "ffffff"
-    strength_label.text = "[color=#%s]Player strength %d[/color]\nEnemy strength %d\n[color=#%s]Player potential losses %d[/color]\n[color=#%s]Enemy potential losses %d[/color]" % [strength_color, player_strength, enemy_strength, loss_color, player_losses, enemy_loss_color, enemy_losses]
+    battle_hud.set_strengths(player_strength, enemy_strength, player_losses, enemy_losses)
+
+func set_balance(value: int) -> void:
+    battle_hud.set_balance(value)
 
 func finish_game(winner: int) -> void:
     finished = true

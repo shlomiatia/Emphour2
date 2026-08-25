@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://155xx7s6y6ta"]
+[gd_scene load_steps=14 format=3 uid="uid://155xx7s6y6ta"]
 
 [ext_resource type="Script" uid="uid://btorxy7bi5341" path="res://Scenes/Game/game.gd" id="1_game"]
 [ext_resource type="Texture2D" uid="uid://dpghcl5vvayld" path="res://Textures/Background.png" id="2_background"]
@@ -12,6 +12,7 @@
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="10_text"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
+[ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
 
 [node name="Game" type="Node2D" unique_id=891812253]
 script = ExtResource("1_game")
@@ -23,7 +24,7 @@ position = Vector2(960, 540)
 texture = ExtResource("2_background")
 
 [node name="Board" parent="." unique_id=1079065982 instance=ExtResource("3_board")]
-position = Vector2(948, 681)
+position = Vector2(960, 410)
 
 [node name="EnemyHand" parent="." unique_id=245630305 instance=ExtResource("4_hand")]
 position = Vector2(960, 74)
@@ -69,44 +70,29 @@ grow_vertical = 0
 position = Vector2(48, 48)
 
 [node name="StatusBackground" type="ColorRect" parent="Interface" unique_id=935474049]
-offset_left = 24.0
-offset_top = 16.0
-offset_right = 40.0
-offset_bottom = 76.0
-color = Color(0, 0, 0, 1)
+offset_left = 700.0
+offset_top = 738.0
+offset_right = 1220.0
+offset_bottom = 800.0
+mouse_filter = 2
+color = Color(0.08, 0.055, 0.03, 0.94)
 
 [node name="Status" type="Label" parent="Interface" unique_id=2036854357]
-offset_left = 34.0
-offset_top = 22.0
-offset_right = 34.0
-offset_bottom = 82.0
+offset_left = 710.0
+offset_top = 744.0
+offset_right = 1210.0
+offset_bottom = 794.0
+mouse_filter = 2
 theme = ExtResource("10_text")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
+theme_override_font_sizes/font_size = 34
 text = "Preparing game"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StrengthBackground" type="ColorRect" parent="Interface" unique_id=1567139500]
-offset_left = 24.0
-offset_top = 112.0
-offset_right = 500.0
-offset_bottom = 300.0
-color = Color(0, 0, 0, 1)
-
-[node name="Strength" type="RichTextLabel" parent="Interface" unique_id=2134672147]
-offset_left = 34.0
-offset_top = 118.0
-offset_right = 490.0
-offset_bottom = 294.0
-theme = ExtResource("10_text")
-theme_override_font_sizes/normal_font_size = 28
-bbcode_enabled = true
-text = "Player strength 0
-Enemy strength 0
-Player potential losses 0
-Enemy potential losses 0"
-scroll_active = false
-autowrap_mode = 0
+[node name="BattleHud" parent="Interface" instance=ExtResource("13_hud")]
+offset_top = 350.0
+offset_bottom = 476.0
 
 [node name="Result" type="Panel" parent="Interface" unique_id=706372181]
 visible = false

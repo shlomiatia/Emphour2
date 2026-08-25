@@ -1,26 +1,21 @@
 class_name Board extends Node2D
 
-const ROW_COUNT := 4
+const ROW_COUNT := 2
 
-@export var player_row := 2
-@export var enemy_row := 1
+@export var player_row := 1
+@export var enemy_row := 0
 @export_range(1, 5) var slot_count := 3
 @export var row_spacing := 8.0
-@onready var movement: FrontMovement = $FrontMovement
 
 var dragged_card: Card
 var highlighted_target: CardSlot
-var zoomer: BoardZoomer
 
 signal target_chosen(slot: CardSlot)
 signal state_changed
 
 func _ready() -> void:
-    zoomer = BoardZoomer.new(self)
-    movement.setup(self)
     refresh_slots()
     refresh_rows()
-    zoomer.change_zoom(false)
 
 func _process(_delta: float) -> void:
     var target := get_overlap_target(dragged_card) if dragged_card else get_target_at(get_viewport().get_mouse_position())
@@ -131,26 +126,11 @@ func get_overlap_target(card: Card) -> CardSlot:
     targets.sort_custom(func(a: CardSlot, b: CardSlot) -> bool: return a.global_position.distance_to(card.global_position) < b.global_position.distance_to(card.global_position))
     return targets[0] if !targets.is_empty() else null
 
-func advance(winner: int) -> Dictionary:
-    var result := movement.advance(winner)
-    zoomer.change_zoom()
-    return result
-
-func advance_to_end(winner: int) -> void:
-    movement.advance_to_end(winner)
-    zoomer.change_zoom()
-
 func notify_state_changed() -> void:
     state_changed.emit()
 
 func get_side_row(side: int) -> int:
     return player_row if side == GameRules.Side.PLAYER else enemy_row
-
-func set_side_row(side: int, value: int) -> void:
-    if side == GameRules.Side.PLAYER:
-        player_row = value
-    else:
-        enemy_row = value
 
 func get_row_slots(row: int) -> Array[CardSlot]:
     return get_slots().filter(func(slot: CardSlot) -> bool: return slot.row == row && slot.visible)

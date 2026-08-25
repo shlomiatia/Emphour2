@@ -16,30 +16,19 @@ func resolve() -> int:
         await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
     for card in defeated:
         await game.defeat_card(card)
-    return update_strengths()
+    update_strengths()
+    return strength_difference()
 
-func update_strengths() -> int:
+func update_strengths() -> void:
     var player_cards := game.board.get_cards(GameRules.Side.PLAYER)
     var enemy_cards := game.board.get_cards(GameRules.Side.ENEMY)
     var strengths := [total_strength(player_cards), total_strength(enemy_cards)]
     var player_losses := potential_losses(enemy_cards, player_cards)
     var enemy_losses := potential_losses(player_cards, enemy_cards)
     game.set_strengths(strengths[0], strengths[1], player_losses, enemy_losses)
-    return compare_strengths(strengths)
 
-func empty_hand_winner() -> int:
-    if game.player_hand.get_card_count() == 0 && game.enemy_hand.get_card_count() > 0:
-        return winning_side(GameRules.Side.ENEMY)
-    if game.enemy_hand.get_card_count() == 0 && game.player_hand.get_card_count() > 0:
-        return winning_side(GameRules.Side.PLAYER)
-    return -1
-
-func winning_side(side: int) -> int:
-    var cards := game.board.get_cards(side)
-    var opponents := game.board.get_cards(GameRules.other(side))
-    if total_strength(cards) > total_strength(opponents) && potential_losses(opponents, cards) == 0:
-        return side
-    return -1
+func strength_difference() -> int:
+    return total_strength(game.board.get_cards(GameRules.Side.PLAYER)) - total_strength(game.board.get_cards(GameRules.Side.ENEMY))
 
 func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Array[Card], used: Array[Card], defeated: Array[Card]) -> void:
     if attacker.data.attack == 0:
@@ -93,8 +82,3 @@ func total_attack(cards: Array[Card]) -> int:
 
 func total_relevant_defence(attackers: Array[Card], defenders: Array[Card]) -> int:
     return defenders.filter(func(defender: Card) -> bool: return attackers.any(func(attacker: Card) -> bool: return can_defend(attacker.data, defender.data))).reduce(func(sum: int, card: Card) -> int: return sum + card.data.defence, 0)
-
-func compare_strengths(strengths: Array) -> int:
-    if strengths[0] == strengths[1]:
-        return -1
-    return GameRules.Side.PLAYER if strengths[0] > strengths[1] else GameRules.Side.ENEMY

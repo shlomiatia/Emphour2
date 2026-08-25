@@ -1,0 +1,219 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Entities/BattleHud/battle_hud.gd" id="1_script"]
+[ext_resource type="Theme" path="res://Themes/CardText.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://Textures/Shield.png" id="3_shield"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_background"]
+bg_color = Color(0.105, 0.075, 0.045, 0.94)
+border_width_top = 3
+border_width_bottom = 3
+border_color = Color(0.78, 0.63, 0.32, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_meter"]
+bg_color = Color(0.95, 0.92, 0.8, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.04, 0.035, 0.03, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_marker"]
+bg_color = Color(0.98, 0.95, 0.84, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.04, 0.035, 0.03, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="BattleHud" type="Control"]
+custom_minimum_size = Vector2(1920, 126)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 126.0
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_background")
+
+[node name="EnemyShieldFill" type="Polygon2D" parent="."]
+position = Vector2(202, 31)
+polygon = PackedVector2Array(32, 3, 58, 12, 56, 38, 46, 54, 32, 62, 18, 54, 8, 38, 6, 12)
+color = Color(0.9, 0.26, 0.22, 1)
+
+[node name="EnemyShield" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 31.0
+offset_right = 266.0
+offset_bottom = 95.0
+mouse_filter = 2
+texture = ExtResource("3_shield")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnemyStats" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 19.0
+offset_right = 620.0
+offset_bottom = 107.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+theme_override_colors/default_color = Color(0.98, 0.82, 0.73, 1)
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center]ENEMY\nStrength 0   Losses 0[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="PlayerStats" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1300.0
+offset_top = 19.0
+offset_right = 1642.0
+offset_bottom = 107.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+theme_override_colors/default_color = Color(0.7, 0.85, 1, 1)
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center]PLAYER\nStrength 0   Losses 0[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="PlayerShieldFill" type="Polygon2D" parent="."]
+position = Vector2(1654, 31)
+polygon = PackedVector2Array(32, 3, 58, 12, 56, 38, 46, 54, 32, 62, 18, 54, 8, 38, 6, 12)
+color = Color(0.24, 0.58, 0.95, 1)
+
+[node name="PlayerShield" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1654.0
+offset_top = 31.0
+offset_right = 1718.0
+offset_bottom = 95.0
+mouse_filter = 2
+texture = ExtResource("3_shield")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BalanceLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 650.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 47.0
+theme = ExtResource("2_theme")
+theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
+theme_override_font_sizes/font_size = 28
+text = "BALANCE OF POWER  0"
+horizontal_alignment = 1
+
+[node name="Meter" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 61.0
+offset_right = 1220.0
+offset_bottom = 77.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_meter")
+
+[node name="EnemyHalf" type="ColorRect" parent="Meter"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -5.0
+offset_right = 0.0
+offset_bottom = 5.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.82, 0.22, 0.18, 1)
+
+[node name="PlayerHalf" type="ColorRect" parent="Meter"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -5.0
+offset_right = -3.0
+offset_bottom = 5.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.18, 0.48, 0.86, 1)
+
+[node name="Center" type="ColorRect" parent="Meter"]
+layout_mode = 0
+offset_left = 257.0
+offset_top = -7.0
+offset_right = 263.0
+offset_bottom = 23.0
+mouse_filter = 2
+color = Color(0.97, 0.88, 0.66, 1)
+
+[node name="Marker" type="Panel" parent="Meter"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = -5.0
+offset_right = 272.0
+offset_bottom = 21.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_marker")
+
+[node name="EnemyTarget" type="Label" parent="."]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 82.0
+offset_right = 748.0
+offset_bottom = 116.0
+theme = ExtResource("2_theme")
+theme_override_colors/font_color = Color(0.98, 0.68, 0.61, 1)
+theme_override_font_sizes/font_size = 23
+text = "−5"
+horizontal_alignment = 1
+
+[node name="Zero" type="Label" parent="."]
+layout_mode = 0
+offset_left = 928.0
+offset_top = 82.0
+offset_right = 992.0
+offset_bottom = 116.0
+theme = ExtResource("2_theme")
+theme_override_font_sizes/font_size = 23
+text = "0"
+horizontal_alignment = 1
+
+[node name="PlayerTarget" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1172.0
+offset_top = 82.0
+offset_right = 1236.0
+offset_bottom = 116.0
+theme = ExtResource("2_theme")
+theme_override_colors/font_color = Color(0.62, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 23
+text = "+5"
+horizontal_alignment = 1

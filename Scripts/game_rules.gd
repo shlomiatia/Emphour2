@@ -1,5 +1,7 @@
 class_name GameRules extends RefCounted
 
+const WINNING_SCORE := 5
+
 enum Side {
     PLAYER,
     ENEMY
