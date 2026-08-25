@@ -21,7 +21,7 @@ func create_options() -> void:
 		create_final_options()
 		return
 	for group in ["Peasants", "Nobility"]:
-		offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck)
+		offers[group] = RewardRules.create_offer(group, CampaignState.public_loyalty[group], CampaignState.player_deck)
 	peasants.setup(offers["Peasants"])
 	nobility.setup(offers["Nobility"])
 
@@ -58,8 +58,8 @@ func _on_option_hovered(group: String) -> void:
 	tooltip.show()
 
 func set_change(index: int, group: String, amount: int) -> void:
-	set_label(current_labels[index], CampaignState.loyalty[group])
-	set_label(target_labels[index], CampaignState.loyalty_after(group, amount))
+	set_label(current_labels[index], CampaignState.public_loyalty[group])
+	set_label(target_labels[index], CampaignState.public_loyalty_after(group, amount))
 
 func set_label(label: Label, value: int) -> void:
 	label.text = RelationData.loyalty_name(value)

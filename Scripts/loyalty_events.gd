@@ -29,12 +29,12 @@ func run() -> void:
 func run_final_events() -> void:
     var group := CampaignState.disloyal_group()
     for card in eligible_cards(group):
-        for event in LoyaltyRules.roll(CampaignState.loyalty[group]):
+        for event in LoyaltyRules.roll(CampaignState.internal_loyalty[group]):
             await run_card_event(card, event)
 
 func run_regular_events() -> void:
-    for group in CampaignState.loyalty:
-        var loyalty: int = CampaignState.loyalty[group]
+    for group in CampaignState.internal_loyalty:
+        var loyalty: int = CampaignState.internal_loyalty[group]
         for event in LoyaltyRules.roll(loyalty):
             await run_event(group, event)
 
@@ -76,9 +76,14 @@ func execute(card: Card, event: int) -> void:
         game.player_discard.add_card(card)
     elif event == LoyaltyRules.Event.DESERT:
         CampaignState.player_deck.erase(card.card_name)
+        CampaignState.lose_loyalty(card_group(card))
         await card.move_to(card.global_position + Vector2(0, -400), true)
         card.queue_free()
     else:
+        CampaignState.lose_loyalty(card_group(card))
         await card.move_to(game.enemy_hand.global_position)
         card.side = GameRules.Side.ENEMY
         game.enemy_hand.add_card(card)
+
+func card_group(card: Card) -> String:
+    return "Nobility" if RewardRules.belongs_to(card.card_name, "Nobility") else "Peasants"

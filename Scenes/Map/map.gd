@@ -42,8 +42,8 @@ func is_attackable(city_name: String) -> bool:
 	return false
 
 func update_header() -> void:
-	set_loyalty_label(peasants_status, CampaignState.loyalty["Peasants"])
-	set_loyalty_label(nobility_status, CampaignState.loyalty["Nobility"])
+	set_loyalty_label(peasants_status, CampaignState.public_loyalty["Peasants"])
+	set_loyalty_label(nobility_status, CampaignState.public_loyalty["Nobility"])
 
 func set_loyalty_label(label: Label, loyalty_value: int) -> void:
 	label.text = RelationData.loyalty_name(loyalty_value)

@@ -43,15 +43,21 @@ func verify_refusal() -> void:
 func verify_desertion() -> void:
     var card := find_card("Mantlet")
     var old_count := CampaignState.player_deck.count(card.card_name)
+    var group := game.loyalty_events.card_group(card)
     await game.loyalty_events.execute(card, LoyaltyRules.Event.DESERT)
     assert(CampaignState.player_deck.count(card.card_name) == old_count - 1)
+    assert(CampaignState.public_loyalty[group] == CampaignState.Relation.NEUTRAL)
+    assert(CampaignState.internal_loyalty[group] == CampaignState.Relation.NEUTRAL - 1)
 
 func verify_betrayal() -> void:
     var card := find_card("Stakes")
     var old_count := game.enemy_hand.get_card_count()
+    var group := game.loyalty_events.card_group(card)
+    var old_loyalty: int = CampaignState.internal_loyalty[group]
     await game.loyalty_events.execute(card, LoyaltyRules.Event.BETRAY)
     assert(card.side == GameRules.Side.ENEMY)
     assert(game.enemy_hand.get_card_count() == old_count + 1)
+    assert(CampaignState.internal_loyalty[group] == old_loyalty - 1)
 
 func verify_casualty_persistence() -> void:
     var card := find_card("Militia")

@@ -87,7 +87,9 @@ func verify_choice() -> void:
 	await process_frame
 	assert(CampaignState.player_deck.count(offer["old"]) == (old_count - 1 if !offer["old"].is_empty() else old_count))
 	assert(CampaignState.player_deck.has(offer["new"]))
-	assert(CampaignState.loyalty["Peasants"] == -1)
-	assert(CampaignState.loyalty["Nobility"] == 1)
+	assert(CampaignState.public_loyalty["Peasants"] == -1)
+	assert(CampaignState.public_loyalty["Nobility"] == 1)
+	assert(CampaignState.internal_loyalty["Peasants"] == -1)
+	assert(CampaignState.internal_loyalty["Nobility"] == 1)
 	assert(CampaignState.city_owner["Rouen"] == CampaignState.Faction.FRANKS)
 	assert(current_scene is CampaignMap)
