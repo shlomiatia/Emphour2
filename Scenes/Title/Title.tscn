@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://ca2mesbtcodcs"]
+
+[ext_resource type="Script" uid="uid://bd6mdpj0yenjs" path="res://Scenes/Title/title.gd" id="1_title"]
+[ext_resource type="Texture2D" uid="uid://dalarjfd4yb8d" path="res://Textures/Europe.png" id="2_map"]
+[ext_resource type="FontFile" uid="uid://bfqfvsdi33sqk" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="3_font"]
+[ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Blink.tscn" id="4_blink"]
+[ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
+[ext_resource type="AudioStream" uid="uid://bko1c65p4u2wl" path="res://Audio/long_confirm.mp3" id="6_sound"]
+
+[node name="Title" type="Node2D" unique_id=1851559752]
+script = ExtResource("1_title")
+
+[node name="Europe" type="Sprite2D" parent="." unique_id=2117975955]
+position = Vector2(1035, 624)
+texture = ExtResource("2_map")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1892615310]
+
+[node name="Tint" type="ColorRect" parent="CanvasLayer" unique_id=1991491373]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.917647, 0.831373, 0.666667, 0.752941)
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer" unique_id=281432235]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -412.0
+offset_top = -180.0
+offset_right = 412.0
+offset_bottom = 129.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 256
+text = "Emphour"
+horizontal_alignment = 1
+
+[node name="ClickToStart" type="Label" parent="CanvasLayer" unique_id=1362911146]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -180.0
+offset_right = 240.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 56
+text = "Press any key to start"
+horizontal_alignment = 1
+
+[node name="Blink" parent="CanvasLayer/ClickToStart" unique_id=1439525570 instance=ExtResource("4_blink")]
+
+[node name="Fade" parent="CanvasLayer" unique_id=542405679 instance=ExtResource("5_fade")]
+
+[node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=332672737]
+stream = ExtResource("6_sound")

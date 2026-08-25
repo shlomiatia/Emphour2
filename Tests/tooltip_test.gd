@@ -6,7 +6,7 @@ func _initialize() -> void:
     run_test()
 
 func run_test() -> void:
-    game = load("res://Scenes/Main.tscn").instantiate()
+    game = load("res://Scenes/Game/Game.tscn").instantiate()
     root.add_child(game)
     for _frame in 10:
         await process_frame

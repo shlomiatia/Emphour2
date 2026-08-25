@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://bkil0qtxvy1g7"]
+[gd_scene load_steps=13 format=3 uid="uid://155xx7s6y6ta"]
 
-[ext_resource type="Script" path="res://Scenes/game.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://btorxy7bi5341" path="res://Scenes/Game/game.gd" id="1_game"]
 [ext_resource type="Texture2D" uid="uid://dpghcl5vvayld" path="res://Textures/Background.png" id="2_background"]
 [ext_resource type="PackedScene" uid="uid://bsql53vleifh1" path="res://Entities/Board/Board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://b1p4vw54bbj1e" path="res://Scripts/game_audio.gd" id="9_audio"]
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="10_text"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
+[ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
 
 [node name="Game" type="Node2D" unique_id=891812253]
 script = ExtResource("1_game")
@@ -155,3 +156,5 @@ script = ExtResource("9_audio")
 [node name="Effects" type="AudioStreamPlayer" parent="Audio" unique_id=1991389209]
 
 [node name="Music" type="AudioStreamPlayer" parent="Audio" unique_id=1920207098]
+
+[node name="Fade" parent="Interface" instance=ExtResource("12_fade")]

@@ -7,7 +7,7 @@ func _initialize() -> void:
 
 func run_test() -> void:
     Engine.time_scale = 30.0
-    game = load("res://Scenes/Main.tscn").instantiate()
+    game = load("res://Scenes/Game/Game.tscn").instantiate()
     root.add_child(game)
     for _frame in 10:
         await process_frame
