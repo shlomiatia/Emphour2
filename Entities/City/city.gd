@@ -3,6 +3,8 @@ class_name CampaignCity extends Area2D
 @export var city_name: String
 
 @onready var name_label: Label = $Name
+@onready var marker: Sprite2D = $Marker
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var attackable := false
 
@@ -12,18 +14,24 @@ func _ready() -> void:
 	name_label.text = city_name
 
 func apply_owner(faction: CampaignState.Faction) -> void:
-	modulate = CampaignState.faction_color(faction)
+	marker.modulate = CampaignState.faction_color(faction)
 
 func set_attackable(value: bool) -> void:
 	attackable = value
 	input_pickable = value
+	if attackable:
+		animation_player.play("Pulse")
+	else:
+		animation_player.play("RESET")
 
 func _on_mouse_entered() -> void:
-	scale = Vector2(1.35, 1.35)
+	if attackable:
+		animation_player.play("Large")
 	z_index = 2
 
 func _on_mouse_exited() -> void:
-	scale = Vector2.ONE
+	if attackable:
+		animation_player.play("Pulse")
 	z_index = 0
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_index: int) -> void:
