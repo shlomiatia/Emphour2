@@ -53,7 +53,7 @@ func create_rule_card(card_name: String) -> Card:
 
 func verify_enemy_deck_generation() -> void:
     var deck := EnemyDeck.generate(8, 20, CardCatalog.CARDS)
-    var value := deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0)
+    var value: int = deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0)
     assert(deck.size() == 8)
     assert(value == 20)
 

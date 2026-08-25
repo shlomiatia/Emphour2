@@ -10,36 +10,36 @@ func setup(card_battle: CardBattle) -> void:
     game = card_battle
 
 func _input(event: InputEvent) -> void:
-	if !waiting || !event.is_pressed() || event is InputEventKey && event.echo:
-		return
-	get_viewport().set_input_as_handled()
-	continued.emit()
+    if !waiting || !event.is_pressed() || event is InputEventKey && event.echo:
+        return
+    get_viewport().set_input_as_handled()
+    continued.emit()
 
 func run() -> void:
-	if running:
-		return
-	running = true
-	for group in CampaignState.loyalty:
-		for event in LoyaltyRules.roll(CampaignState.loyalty[group]):
-			await run_event(group, event)
-	running = false
-	game.event_panel.hide()
+    if running:
+        return
+    running = true
+    for group in CampaignState.loyalty:
+        for event in LoyaltyRules.roll(CampaignState.loyalty[group]):
+            await run_event(group, event)
+    running = false
+    game.event_panel.hide()
 
 func run_event(group: String, event: int) -> void:
     var cards := eligible_cards(group)
     if cards.is_empty():
         return
     var card := cards.pick_random() as Card
-	show_message(card, event)
-	await wait_for_input()
-	if !is_instance_valid(card):
-		return
-	await execute(card, event)
+    show_message(card, event)
+    await wait_for_input()
+    if !is_instance_valid(card):
+        return
+    await execute(card, event)
 
 func eligible_cards(group: String) -> Array[Card]:
-	var result: Array[Card]
-	for card in game.player_hand.get_cards():
-		if !card.is_queued_for_deletion() && RewardRules.belongs_to(card.card_name, group):
+    var result: Array[Card]
+    for card in game.player_hand.get_cards():
+        if !card.is_queued_for_deletion() && RewardRules.belongs_to(card.card_name, group):
             result.append(card)
     return result
 

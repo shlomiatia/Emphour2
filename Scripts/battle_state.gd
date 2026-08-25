@@ -11,7 +11,6 @@ func start() -> void:
     if active:
         return
     active = true
-    await game.loyalty_events.run()
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
     game.turns.reveal_enemy_card()
