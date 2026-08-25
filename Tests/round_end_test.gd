@@ -8,9 +8,9 @@ func _initialize() -> void:
 func run_test() -> void:
     Engine.time_scale = 30.0
     CampaignState.reset()
+    CampaignState.selected_city = "Paris"
     CampaignState.player_deck.assign(["Militia"])
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
-    game.enemy_deck.static_cards.assign(["Militia", "Militia", "Militia"])
     game.get_node("Board").slot_count = 1
     root.add_child(game)
     await process_frame

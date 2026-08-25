@@ -56,6 +56,11 @@ func verify_enemy_deck_generation() -> void:
     var value: int = deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0)
     assert(deck.size() == 8)
     assert(value == 20)
+    assert(EnemyDeck.new().build("Paris") == ["Light Cavalry", "Militia", "Militia"])
+    assert(EnemyDeck.new().build("Rouen") == ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"])
+    var late_deck := EnemyDeck.new().build("Amiens")
+    assert(late_deck.size() == 9)
+    assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 10)
 
 func verify_loyalty_rules() -> void:
     assert(LoyaltyRules.CHANCES[-1] == [10, 0, 0])

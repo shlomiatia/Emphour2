@@ -18,7 +18,6 @@
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
-static_cards = Array[String](["Archer", "Militia", "Militia"])
 
 [node name="Battle" type="Node2D" unique_id=891812253]
 script = ExtResource("1_battle")
