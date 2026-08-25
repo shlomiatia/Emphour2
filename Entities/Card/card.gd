@@ -95,6 +95,13 @@ func fade_out() -> void:
     tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.3)
     await tween.finished
 
+func move_to(target: Vector2, fade := false) -> void:
+    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(self, "global_position", target, 0.45)
+    if fade:
+        tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
+    await tween.finished
+
 func retreat_out(side_to_retreat: int) -> void:
     var target_y := 1280.0 if side_to_retreat == GameRules.Side.PLAYER else -200.0
     var tween := create_tween()

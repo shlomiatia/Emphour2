@@ -34,5 +34,8 @@ static func pick_old_card(tier: int, deck: Array[String]) -> String:
 
 static func get_group_cards(group: String, tier: int) -> Array[String]:
 	var choices: Array[String]
-	choices.assign(TIERS[tier].filter(func(card: String) -> bool: return NOBILITY.has(card) == (group == "Nobility")))
+	choices.assign(TIERS[tier].filter(func(card: String) -> bool: return belongs_to(card, group)))
 	return choices
+
+static func belongs_to(card_name: String, group: String) -> bool:
+	return NOBILITY.has(card_name) == (group == "Nobility")

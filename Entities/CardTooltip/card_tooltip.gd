@@ -43,11 +43,11 @@ func can_show_for(card: Card) -> bool:
     return !card.dragging && (!card.face_down || is_hidden_enemy_card(card) && !is_dragging())
 
 func is_hidden_enemy_card(card: Card) -> bool:
-    var game := get_parent() as CardGame
+    var game := get_parent() as CardBattle
     return game && card.face_down && game.board.get_cards(GameRules.Side.ENEMY).has(card)
 
 func is_dragging() -> bool:
-    var game := get_parent() as CardGame
+    var game := get_parent() as CardBattle
     return game && game.player_hand.interaction.dragging_card != null
 
 func show_enemy_cards() -> void:
@@ -79,13 +79,13 @@ func get_card_count(source: Array[Card], card_name: String) -> int:
 
 func get_possible_cards_source() -> Array[Card]:
     var result: Array[Card]
-    var game := get_parent() as CardGame
+    var game := get_parent() as CardBattle
     result.assign(game.enemy_hand.get_cards())
     result.append(hovered_card)
     return result
 
 func add_preview(source: Card, index: int, count: int) -> void:
-    var game := get_parent() as CardGame
+    var game := get_parent() as CardBattle
     var card := game.create_card(source.card_name, source.side)
     cards.add_child(card)
     card.set_meta("tooltip_preview", true)

@@ -1,31 +1,29 @@
 class_name BattleResolver extends Node
 
-var game: CardGame
+var game: CardBattle
 
-func setup(card_game: CardGame) -> void:
+func setup(card_game: CardBattle) -> void:
     game = card_game
 
-func resolve() -> int:
+func resolve() -> void:
     var player_cards := game.board.get_cards(GameRules.Side.PLAYER)
     var enemy_cards := game.board.get_cards(GameRules.Side.ENEMY)
     var used_defences: Array[Card]
     var defeated: Array[Card]
     var attackers := player_cards + enemy_cards
-    update_strengths()
     for attacker in attackers:
         await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
     for card in defeated:
         await game.defeat_card(card)
-    update_strengths()
-    return strength_difference()
 
-func update_strengths() -> void:
+func update_preview() -> void:
     var player_cards := game.board.get_cards(GameRules.Side.PLAYER)
     var enemy_cards := game.board.get_cards(GameRules.Side.ENEMY)
-    var strengths := [total_strength(player_cards), total_strength(enemy_cards)]
     var player_losses := potential_losses(enemy_cards, player_cards)
     var enemy_losses := potential_losses(player_cards, enemy_cards)
-    game.set_strengths(strengths[0], strengths[1], player_losses, enemy_losses)
+    game.set_losses(player_losses, enemy_losses)
+    if !game.battle_state.active:
+        game.preview_balance(total_strength(player_cards) - total_strength(enemy_cards))
 
 func strength_difference() -> int:
     return total_strength(game.board.get_cards(GameRules.Side.PLAYER)) - total_strength(game.board.get_cards(GameRules.Side.ENEMY))
@@ -38,13 +36,13 @@ func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Arra
     var defender := await choose_defender(attacker, defenders)
     if defender:
         used.append(defender)
-        game.play_block_sound()
+        game.audio.play_block()
         await attacker.attack_card(defender)
         return
     var targets := available_targets(attacker, opponents, used, defeated)
     var target := await choose_target(attacker, targets)
     if target:
-        game.play_attack_sound()
+        game.audio.play_attack()
         await attacker.attack_card(target)
         defeated.append(target)
 

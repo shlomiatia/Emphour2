@@ -1,11 +1,11 @@
 class_name TurnState extends Node
 
-var game: CardGame
+var game: CardBattle
 var pending_enemy: Card
 var selected_card: Card
 var accepting_action := false
 
-func setup(card_game: CardGame) -> void:
+func setup(card_game: CardBattle) -> void:
     game = card_game
 
 func start_round() -> void:
@@ -26,7 +26,7 @@ func play_enemy_card() -> void:
     if game.enemy_hand.get_card_count() == 0:
         return
     pending_enemy = game.enemy_hand.get_cards()[0]
-    game.play_card_sound()
+    game.audio.play_card()
     pending_enemy.set_hidden(true)
     if !game.board.play_leftmost(pending_enemy, GameRules.Side.ENEMY):
         game.discard_card(game.board.replace_first(pending_enemy, GameRules.Side.ENEMY))
@@ -83,7 +83,7 @@ func card_cancelled() -> void:
     clear_targets()
 
 func finish_player_action() -> void:
-    game.play_card_sound()
+    game.audio.play_card()
     accepting_action = false
     game.player_hand.set_draggable(false)
     clear_targets()
@@ -99,7 +99,7 @@ func reveal_enemy_card() -> void:
     if pending_enemy:
         pending_enemy.set_hidden(false)
         pending_enemy = null
-        game.board.notify_state_changed()
+    game.board.notify_state_changed()
 
 func complete_round() -> void:
     if battle_needed():

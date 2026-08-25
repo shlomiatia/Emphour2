@@ -17,11 +17,11 @@ func run_test() -> void:
 
 func open_reward() -> void:
 	CampaignState.selected_city = "Rouen"
-	var game := load("res://Scenes/Game/Game.tscn").instantiate() as CardGame
+	var game := load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
 	root.add_child(game)
 	current_scene = game
 	await process_frame
-	game.finish_game(GameRules.Side.PLAYER)
+	game.battle_state.finish_game(GameRules.Side.PLAYER)
 	for frame in 60:
 		await process_frame
 	reward = current_scene as RewardScreen

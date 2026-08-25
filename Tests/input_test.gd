@@ -1,13 +1,13 @@
 extends SceneTree
 
-var game: CardGame
+var game: CardBattle
 
 func _initialize() -> void:
     run_test()
 
 func run_test() -> void:
     Engine.time_scale = 30.0
-    game = load("res://Scenes/Game/Game.tscn").instantiate()
+    game = load("res://Scenes/Battle/Battle.tscn").instantiate()
     root.add_child(game)
     for _frame in 10:
         await process_frame

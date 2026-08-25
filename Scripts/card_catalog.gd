@@ -1,5 +1,14 @@
 class_name CardCatalog extends RefCounted
 
+const CARDS: Array[String] = [
+    "Archer", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman",
+    "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"
+]
+
+static func get_value(card_name: String) -> int:
+    var data := get_data(card_name)
+    return data.strength + data.attack + data.defence
+
 static func get_data(card_name: String) -> CardData:
     match card_name:
         "Archer":

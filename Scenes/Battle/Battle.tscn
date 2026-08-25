@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
-[ext_resource type="Script" uid="uid://btorxy7bi5341" path="res://Scenes/Game/game.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://btorxy7bi5341" path="res://Scenes/Battle/battle.gd" id="1_battle"]
 [ext_resource type="Texture2D" uid="uid://dpghcl5vvayld" path="res://Textures/Background.png" id="2_background"]
 [ext_resource type="PackedScene" uid="uid://bsql53vleifh1" path="res://Entities/Board/Board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
@@ -13,11 +13,16 @@
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
 [ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
+[ext_resource type="Script" path="res://Scripts/loyalty_events.gd" id="14_loyalty"]
+[ext_resource type="Script" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
 
-[node name="Game" type="Node2D" unique_id=891812253]
-script = ExtResource("1_game")
-player_cards = Array[String](["Archer", "Mantlet", "Stakes", "Militia", "Militia", "Militia"])
-enemy_cards = Array[String](["Archer", "Militia", "Militia"])
+[sub_resource type="Resource" id="Resource_enemy_deck"]
+script = ExtResource("15_enemy_deck")
+static_cards = Array[String](["Archer", "Militia", "Militia"])
+
+[node name="Battle" type="Node2D" unique_id=891812253]
+script = ExtResource("1_battle")
+enemy_deck = SubResource("Resource_enemy_deck")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
 position = Vector2(960, 540)
@@ -93,6 +98,34 @@ vertical_alignment = 1
 offset_top = 350.0
 offset_bottom = 476.0
 
+[node name="Event" type="Panel" parent="Interface"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -100.0
+offset_right = 330.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Message" type="Label" parent="Interface/Event"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("10_text")
+theme_override_colors/font_color = Color(0.95, 0.75, 0.25, 1)
+theme_override_font_sizes/font_size = 38
+text = "A unit refuses to fight.\nPress any key or mouse button"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Result" type="Panel" parent="Interface" unique_id=706372181]
 visible = false
 anchors_preset = 8
@@ -136,6 +169,9 @@ script = ExtResource("8_battle_state")
 
 [node name="TurnState" type="Node" parent="." unique_id=2008914432]
 script = ExtResource("7_turn")
+
+[node name="LoyaltyEvents" type="Node" parent="."]
+script = ExtResource("14_loyalty")
 
 [node name="Audio" type="Node" parent="." unique_id=1211780519]
 script = ExtResource("9_audio")

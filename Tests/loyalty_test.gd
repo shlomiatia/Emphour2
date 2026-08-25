@@ -1,0 +1,60 @@
+extends SceneTree
+
+var game: CardBattle
+
+func _initialize() -> void:
+    run_test()
+
+func run_test() -> void:
+    Engine.time_scale = 30.0
+    CampaignState.reset()
+    game = load("res://Scenes/Battle/Battle.tscn").instantiate()
+    root.add_child(game)
+    await process_frame
+    game.turns.accepting_action = false
+    game.player_hand.set_draggable(false)
+    await verify_mouse_continue()
+    await verify_refusal()
+    await verify_desertion()
+    await verify_betrayal()
+    await verify_casualty_persistence()
+    quit()
+
+func verify_mouse_continue() -> void:
+    var pending = game.loyalty_events.wait_for_input()
+    var event := InputEventMouseButton.new()
+    event.pressed = true
+    game.loyalty_events._input(event)
+    await pending
+    assert(!game.loyalty_events.waiting)
+
+func verify_refusal() -> void:
+    var card := find_card("Archer")
+    var deck := CampaignState.player_deck.duplicate()
+    game.loyalty_events.show_message(card, LoyaltyRules.Event.REFUSE)
+    assert(game.event_panel.visible)
+    assert(game.event_message.text.contains("refuses to fight"))
+    await game.loyalty_events.execute(card, LoyaltyRules.Event.REFUSE)
+    assert(CampaignState.player_deck == deck)
+
+func verify_desertion() -> void:
+    var card := find_card("Mantlet")
+    var old_count := CampaignState.player_deck.count(card.card_name)
+    await game.loyalty_events.execute(card, LoyaltyRules.Event.DESERT)
+    assert(CampaignState.player_deck.count(card.card_name) == old_count - 1)
+
+func verify_betrayal() -> void:
+    var card := find_card("Stakes")
+    var old_count := game.enemy_hand.get_card_count()
+    await game.loyalty_events.execute(card, LoyaltyRules.Event.BETRAY)
+    assert(card.side == GameRules.Side.ENEMY)
+    assert(game.enemy_hand.get_card_count() == old_count + 1)
+
+func verify_casualty_persistence() -> void:
+    var card := find_card("Militia")
+    var old_count := CampaignState.player_deck.count(card.card_name)
+    await game.defeat_card(card)
+    assert(CampaignState.player_deck.count(card.card_name) == old_count)
+
+func find_card(card_name: String) -> Card:
+    return game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == card_name)[0]

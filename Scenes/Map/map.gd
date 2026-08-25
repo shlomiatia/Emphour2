@@ -56,4 +56,4 @@ func _on_city_clicked(city: CampaignCity) -> void:
 	CampaignState.selected_city = city.city_name
 	confirm_sound.play()
 	await fade.fade_out()
-	get_tree().change_scene_to_file("res://Scenes/Game/Game.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Battle/Battle.tscn")

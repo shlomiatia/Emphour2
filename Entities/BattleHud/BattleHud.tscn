@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://Entities/BattleHud/battle_hud.gd" id="1_script"]
 [ext_resource type="Theme" path="res://Themes/CardText.tres" id="2_theme"]
@@ -33,6 +33,13 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_preview"]
+bg_color = Color(0.97, 0.88, 0.66, 0.38)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="BattleHud" type="Control"]
 custom_minimum_size = Vector2(1920, 126)
@@ -69,35 +76,33 @@ texture = ExtResource("3_shield")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EnemyStats" type="RichTextLabel" parent="."]
+[node name="EnemyStats" type="Label" parent="."]
 layout_mode = 0
 offset_left = 278.0
-offset_top = 19.0
+offset_top = 32.0
 offset_right = 620.0
-offset_bottom = 107.0
+offset_bottom = 94.0
 mouse_filter = 2
 theme = ExtResource("2_theme")
-theme_override_colors/default_color = Color(0.98, 0.82, 0.73, 1)
-theme_override_font_sizes/normal_font_size = 28
-bbcode_enabled = true
-text = "[center]ENEMY\nStrength 0   Losses 0[/center]"
-fit_content = true
-scroll_active = false
+theme_override_colors/font_color = Color(0.98, 0.82, 0.73, 1)
+theme_override_font_sizes/font_size = 28
+text = "ENEMY   Losses 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="PlayerStats" type="RichTextLabel" parent="."]
+[node name="PlayerStats" type="Label" parent="."]
 layout_mode = 0
 offset_left = 1300.0
-offset_top = 19.0
+offset_top = 32.0
 offset_right = 1642.0
-offset_bottom = 107.0
+offset_bottom = 94.0
 mouse_filter = 2
 theme = ExtResource("2_theme")
-theme_override_colors/default_color = Color(0.7, 0.85, 1, 1)
-theme_override_font_sizes/normal_font_size = 28
-bbcode_enabled = true
-text = "[center]PLAYER\nStrength 0   Losses 0[/center]"
-fit_content = true
-scroll_active = false
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "PLAYER   Losses 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlayerShieldFill" type="Polygon2D" parent="."]
 position = Vector2(1654, 31)
@@ -124,7 +129,7 @@ offset_bottom = 47.0
 theme = ExtResource("2_theme")
 theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
 theme_override_font_sizes/font_size = 28
-text = "BALANCE OF POWER  0"
+text = "BALANCE OF POWER"
 horizontal_alignment = 1
 
 [node name="Meter" type="Panel" parent="."]
@@ -174,6 +179,15 @@ offset_bottom = 23.0
 mouse_filter = 2
 color = Color(0.97, 0.88, 0.66, 1)
 
+[node name="Preview" type="Panel" parent="Meter"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = -9.0
+offset_right = 276.0
+offset_bottom = 23.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_preview")
+
 [node name="Marker" type="Panel" parent="Meter"]
 layout_mode = 0
 offset_left = 248.0
@@ -182,38 +196,3 @@ offset_right = 272.0
 offset_bottom = 21.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBox_marker")
-
-[node name="EnemyTarget" type="Label" parent="."]
-layout_mode = 0
-offset_left = 684.0
-offset_top = 82.0
-offset_right = 748.0
-offset_bottom = 116.0
-theme = ExtResource("2_theme")
-theme_override_colors/font_color = Color(0.98, 0.68, 0.61, 1)
-theme_override_font_sizes/font_size = 23
-text = "−5"
-horizontal_alignment = 1
-
-[node name="Zero" type="Label" parent="."]
-layout_mode = 0
-offset_left = 928.0
-offset_top = 82.0
-offset_right = 992.0
-offset_bottom = 116.0
-theme = ExtResource("2_theme")
-theme_override_font_sizes/font_size = 23
-text = "0"
-horizontal_alignment = 1
-
-[node name="PlayerTarget" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1172.0
-offset_top = 82.0
-offset_right = 1236.0
-offset_bottom = 116.0
-theme = ExtResource("2_theme")
-theme_override_colors/font_color = Color(0.62, 0.8, 1, 1)
-theme_override_font_sizes/font_size = 23
-text = "+5"
-horizontal_alignment = 1
