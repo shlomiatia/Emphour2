@@ -50,8 +50,17 @@ func connect_signals() -> void:
     player_hand.card_released.connect(turns.card_released)
     player_hand.card_cancelled.connect(turns.card_cancelled)
 
+func _input(event: InputEvent) -> void:
+    if selectable_cards.is_empty() || !(event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed):
+        return
+    var slot := board.get_target_at(event.position)
+    var card := slot.get_card() if slot else null
+    print("[BattleTarget] input position=%s card=%s" % [event.position, card.card_name if card else "none"])
+
 func _on_target_chosen(slot: CardSlot) -> void:
     var card := slot.get_card()
+    if !selectable_cards.is_empty():
+        print("[BattleTarget] accepted card=%s" % (card.card_name if card else "none"))
     if selectable_cards.has(card):
         card_chosen.emit(card)
     else:
@@ -69,6 +78,7 @@ func create_card(card_name: String, side: int) -> Card:
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(cards)
+    print("[BattleTarget] offered prompt=%s cards=%s" % [prompt, cards.map(func(card: Card) -> String: return card.card_name)])
     set_status(prompt)
     board.enable_card_targets(selectable_cards)
     var chosen: Card = await card_chosen
