@@ -13,7 +13,7 @@ func run_test() -> void:
     await process_frame
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
-    await verify_mouse_continue()
+    verify_mouse_continue()
     await verify_refusal()
     await verify_desertion()
     await verify_betrayal()
@@ -21,12 +21,14 @@ func run_test() -> void:
     quit()
 
 func verify_mouse_continue() -> void:
-    var pending = game.loyalty_events.wait_for_input()
+    var received := [false]
+    game.loyalty_events.continued.connect(func() -> void: received[0] = true, CONNECT_ONE_SHOT)
+    game.loyalty_events.waiting = true
     var event := InputEventMouseButton.new()
     event.pressed = true
     game.loyalty_events._input(event)
-    await pending
-    assert(!game.loyalty_events.waiting)
+    game.loyalty_events.waiting = false
+    assert(received[0])
 
 func verify_refusal() -> void:
     var card := find_card("Archer")

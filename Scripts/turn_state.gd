@@ -11,15 +11,11 @@ func setup(card_game: CardBattle) -> void:
 func start_round() -> void:
     if game.finished || game.battle_state.active:
         return
-    if hands_empty():
-        game.battle_state.start(true)
+    if player_finished():
+        game.battle_state.finish_game(game.battle_state.balance_winner())
         return
     play_enemy_card()
-    if game.player_hand.get_card_count() > 0:
-        begin_player_action()
-    else:
-        reveal_enemy_card()
-        await complete_round()
+    begin_player_action()
 
 func play_enemy_card() -> void:
     pending_enemy = null
@@ -87,7 +83,6 @@ func finish_player_action() -> void:
     accepting_action = false
     game.player_hand.set_draggable(false)
     clear_targets()
-    reveal_enemy_card()
     complete_round()
 
 func clear_targets() -> void:
@@ -103,13 +98,14 @@ func reveal_enemy_card() -> void:
 
 func complete_round() -> void:
     if battle_needed():
-        game.battle_state.start(hands_empty())
+        game.battle_state.start()
     else:
+        reveal_enemy_card()
         await get_tree().create_timer(0.2).timeout
         start_round()
 
 func battle_needed() -> bool:
-    return game.board.is_full(GameRules.Side.PLAYER) || game.board.is_full(GameRules.Side.ENEMY) || hands_empty()
+    return game.board.is_full(GameRules.Side.PLAYER) || game.board.is_full(GameRules.Side.ENEMY) || player_finished()
 
-func hands_empty() -> bool:
-    return game.player_hand.get_card_count() == 0 && game.enemy_hand.get_card_count() == 0
+func player_finished() -> bool:
+    return game.player_hand.get_card_count() == 0

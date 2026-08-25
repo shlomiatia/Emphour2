@@ -33,7 +33,6 @@ func _ready() -> void:
     add_starting_cards(CampaignState.player_deck, player_hand, GameRules.Side.PLAYER)
     add_starting_cards(enemy_deck.build(), enemy_hand, GameRules.Side.ENEMY)
     set_balance(0, false)
-    await loyalty_events.run()
     turns.start_round()
 
 func setup_states() -> void:

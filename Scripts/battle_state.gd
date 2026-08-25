@@ -7,16 +7,17 @@ var balance := 0
 func setup(card_game: CardBattle) -> void:
     game = card_game
 
-func start(final_battle: bool) -> void:
+func start() -> void:
+    await game.loyalty_events.run()
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
-    game.board.reveal_enemy_cards()
+    game.turns.reveal_enemy_card()
     active = true
     game.set_status("Battle")
     await get_tree().create_timer(0.35).timeout
     await move_balance(game.battle.strength_difference())
     await game.battle.resolve()
-    await finish(final_battle)
+    await finish(game.player_hand.get_card_count() == 0)
 
 func move_balance(difference: int) -> void:
     balance += difference
