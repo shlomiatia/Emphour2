@@ -69,7 +69,7 @@ func act_if_needed() -> void:
     if game.board.is_full(GameRules.Side.PLAYER) && !used_discard:
         used_discard = true
         game.player_discard.set_hovering(true)
-        assert(game.player_discard.border.modulate == Color("#fee761"))
+        assert(game.player_discard.icon.modulate == Color("#fee761"))
         game.turns.discard_clicked()
     else:
         var slot := game.board.get_row_slots(game.board.player_row)[0]

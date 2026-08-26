@@ -20,6 +20,8 @@ func _process(delta: float) -> void:
         move_card(card, delta)
 
 func move_card(card: Card, delta: float) -> void:
+    if card.moving:
+        return
     var weight := minf(delta * 10.0, 1.0)
     card.position = card.position.lerp(Vector2.ZERO, weight)
     card.scale = card.scale.lerp(Vector2.ONE, weight)
@@ -28,11 +30,14 @@ func move_card(card: Card, delta: float) -> void:
         card.z_index = 2
 
 func place(card: Card) -> void:
+    var from_enemy_hand := card.get_parent() is CardHand && card.face_down
     card.reparent(anchor)
     card.draggable = false
     card.hover_enabled = false
     card.set_hovering(false)
     card.set_selectable(false)
+    if from_enemy_hand:
+        card.move_to_line(global_position)
 
 func get_card() -> Card:
     for child in anchor.get_children():

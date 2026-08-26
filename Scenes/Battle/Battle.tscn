@@ -14,13 +14,25 @@
 [ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
 [ext_resource type="Script" uid="uid://cy1o1oww5aoqh" path="res://Scripts/loyalty_events.gd" id="14_loyalty"]
 [ext_resource type="Script" uid="uid://bidf16fg4sulc" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
-[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="15_parchment"]
+[ext_resource type="Theme" path="res://Themes/PanelText.tres" id="15_panel"]
 [ext_resource type="Theme" path="res://Themes/GoldText.tres" id="16_gold"]
 [ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
 [ext_resource type="Theme" path="res://Themes/LargeGoldText.tres" id="17_large_gold"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_instructions"]
+bg_color = Color(0.839216, 0.745098, 0.6, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.352941, 0.286275, 0.196078, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Battle" type="Node2D" unique_id=891812253]
 script = ExtResource("1_battle")
@@ -78,20 +90,20 @@ grow_vertical = 0
 [node name="Pile" parent="Interface/PlayerDiscard" unique_id=702495137 instance=ExtResource("5_discard")]
 position = Vector2(48, 48)
 
-[node name="StatusBackground" type="ColorRect" parent="Interface" unique_id=935474049]
+[node name="StatusBackground" type="Panel" parent="Interface" unique_id=935474049]
 offset_left = 700.0
 offset_top = 738.0
 offset_right = 1220.0
 offset_bottom = 800.0
 mouse_filter = 2
-color = Color(0.08, 0.055, 0.03, 0.94)
+theme_override_styles/panel = SubResource("StyleBox_instructions")
 
 [node name="Status" type="Label" parent="Interface" unique_id=2036854357]
 offset_left = 710.0
 offset_top = 744.0
 offset_right = 1210.0
 offset_bottom = 794.0
-theme = ExtResource("15_parchment")
+theme = ExtResource("15_panel")
 text = "Preparing game"
 horizontal_alignment = 1
 vertical_alignment = 1

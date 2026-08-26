@@ -27,9 +27,9 @@ func verify_strength_difference(game: CardBattle) -> void:
 
 func verify_hud(game: CardBattle) -> void:
     game.battle.update_preview()
-    assert(!game.battle_hud.enemy_stats.text.contains("Strength"))
-    assert(game.battle_hud.get_node("BalanceLabel").text == "BALANCE OF POWER")
-    assert(game.battle_hud.preview.position.x > game.battle_hud.marker.position.x)
+    assert(!game.battle_hud.has_node("BalanceLabel"))
+    assert(!game.battle_hud.has_node("EnemyShield"))
+    assert(game.battle_hud.preview_tween != null)
 
 func verify_defence_consumption(game: CardBattle) -> void:
     var archer := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == "Archer")[0] as Card

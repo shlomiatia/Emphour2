@@ -28,6 +28,7 @@ var hover_enabled := false
 var disabled := false
 var highlighted := false
 var attacking := false
+var moving := false
 
 func _ready() -> void:
     add_to_group("cards")
@@ -101,6 +102,17 @@ func move_to(target: Vector2, fade := false) -> void:
     if fade:
         tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
     await tween.finished
+
+func move_to_line(target: Vector2) -> void:
+    moving = true
+    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(self, "global_position", target, 0.45)
+    tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.45)
+    tween.parallel().tween_property(self, "rotation", 0.0, 0.45)
+    tween.tween_callback(finish_move)
+
+func finish_move() -> void:
+    moving = false
 
 func retreat_out(side_to_retreat: int) -> void:
     var target_y := 1280.0 if side_to_retreat == GameRules.Side.PLAYER else -200.0

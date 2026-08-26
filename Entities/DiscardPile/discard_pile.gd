@@ -4,6 +4,7 @@ class_name DiscardPile extends Node2D
 @onready var anchor: Node2D = $CardAnchor
 @onready var count_label: Label = $Count
 @onready var border: NinePatchRect = $Border
+@onready var icon: Sprite2D = $Icon
 
 var targetable := false
 var hovering := false
@@ -51,8 +52,8 @@ func set_hovering(value: bool) -> void:
     refresh_border()
 
 func refresh_border() -> void:
-    border.self_modulate = Color.WHITE if targetable && hovering else Color(0.1, 0.08, 0.15, 0.35)
-    border.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
+    border.hide()
+    icon.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
 
 func contains_point(point: Vector2) -> bool:
     return Rect2(-91, -126.5, 182, 253).has_point(to_local(point))

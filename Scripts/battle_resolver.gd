@@ -11,12 +11,15 @@ func resolve() -> void:
     var used_defences: Array[Card]
     var defeated: Array[Card]
     var attackers := player_cards + enemy_cards
+    await game.fade_losses()
     for attacker in attackers:
         await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
     for card in defeated:
         await game.defeat_card(card)
 
 func update_preview() -> void:
+    if game.battle_state.active:
+        return
     var player_cards := game.board.get_cards(GameRules.Side.PLAYER)
     var enemy_cards := game.board.get_cards(GameRules.Side.ENEMY)
     var player_losses := potential_losses(enemy_cards, player_cards)

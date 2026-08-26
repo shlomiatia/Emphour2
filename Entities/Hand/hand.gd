@@ -25,12 +25,13 @@ func arrange_cards(delta: float) -> void:
         move_card(cards[index], get_card_props(index, cards.size()), delta, index)
 
 func move_card(card: Card, props: Dictionary, delta: float, index: int) -> void:
-    if card.dragging:
+    if card.dragging || card.moving:
         return
     var hovered := card.hovering && card.hover_enabled
     var target_position: Vector2 = props["position"] + (hover_offset if hovered else Vector2.ZERO)
     var weight := minf(delta * 10.0, 1.0)
     card.position = card.position.lerp(target_position, weight)
+    card.scale = card.scale.lerp(Vector2.ONE * (0.25 if face_down else 1.0), weight)
     card.rotation = lerp_angle(card.rotation, 0.0 if hovered else float(props["rotation"]), weight)
     card.z_index = 100 if hovered else index + 5
 
@@ -46,6 +47,7 @@ func add_card(card: Card) -> void:
     else:
         add_child(card)
     card.set_hidden(face_down)
+    card.scale = Vector2.ONE * (0.25 if face_down else 1.0)
     card.hover_enabled = hover_enabled
 
 func get_card_at(point: Vector2) -> Card:

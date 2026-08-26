@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://xr6wcvu1ukkq" path="res://Textures/CardBackground.png" id="2_background"]
 [ext_resource type="Texture2D" uid="uid://dpm30yhxg3qan" path="res://Textures/Card.png" id="3_frame"]
 [ext_resource type="Texture2D" uid="uid://c553jgrwfc68i" path="res://Textures/Cards/Militia.png" id="4_art"]
-[ext_resource type="Texture2D" uid="uid://ctqwgnyda807l" path="res://Textures/Deck.png" id="6_deck"]
+[ext_resource type="Texture2D" path="res://Textures/CardBack.png" id="6_back"]
 [ext_resource type="Theme" uid="uid://c1x83a8nu54j7" path="res://Themes/CardText.tres" id="7_theme"]
 [ext_resource type="Texture2D" uid="uid://bxfcuav3tnhgq" path="res://Textures/Missle.png" id="8_missile"]
 [ext_resource type="Theme" path="res://Themes/GoldBodyText.tres" id="9_gold"]
@@ -96,5 +96,4 @@ texture = ExtResource("11_x")
 visible = false
 
 [node name="Card" type="Sprite2D" parent="Back" unique_id=835103950]
-modulate = Color(1, 1, 1, 0.5)
-texture = ExtResource("6_deck")
+texture = ExtResource("6_back")

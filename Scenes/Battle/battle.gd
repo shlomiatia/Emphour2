@@ -13,6 +13,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
 @onready var loyalty_events: LoyaltyEvents = $LoyaltyEvents
+@onready var status_background: Panel = $Interface/StatusBackground
 @onready var status_label: Label = $Interface/Status
 @onready var battle_hud: BattleHud = $Interface/BattleHud
 @onready var result_panel: Panel = $Interface/Result
@@ -88,6 +89,7 @@ func choose_card(cards: Array[Card], prompt: String) -> Card:
     return chosen
 
 func defeat_card(card: Card) -> void:
+    battle_hud.remove_loss(card.side)
     card.reparent(self)
     board.notify_state_changed()
     await card.fade_out()
@@ -105,6 +107,9 @@ func get_discard(side: int) -> DiscardPile:
 func set_losses(player: int, enemy: int) -> void:
     battle_hud.set_losses(player, enemy)
 
+func fade_losses() -> Signal:
+    return battle_hud.fade_losses()
+
 func preview_balance(difference: int) -> void:
     battle_hud.set_preview(battle_state.balance + difference)
 
@@ -113,3 +118,8 @@ func set_balance(value: int, animate := true) -> void:
 
 func set_status(value: String) -> void:
     status_label.text = value
+    var size := status_label.get_minimum_size() + Vector2(20, 12)
+    status_background.size = size
+    status_background.position = Vector2(960, 769) - size / 2.0
+    status_label.position = status_background.position + Vector2(10, 6)
+    status_label.size = size - Vector2(20, 12)
