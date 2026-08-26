@@ -1,42 +1,28 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://c4xukfgroeta6"]
 
-[ext_resource type="Script" path="res://Scenes/Reward/reward.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://xh6p2ucky4m3" path="res://Scenes/Reward/reward.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://Entities/RewardOption/RewardOption.tscn" id="3_option"]
 [ext_resource type="Theme" path="res://Themes/LargeGoldText.tres" id="4_large_gold"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
-[ext_resource type="AudioStream" path="res://Audio/confirm1.mp3" id="6_confirm"]
+[ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
 [ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="8_parchment"]
-[ext_resource type="Theme" path="res://Themes/PanelText.tres" id="9_text"]
-[ext_resource type="Theme" path="res://Themes/DarkBodyText.tres" id="10_dark_body"]
-[ext_resource type="PackedScene" path="res://Entities/EuropeMap/EuropeMap.tscn" id="11_europe_map"]
+[ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="11_europe_map"]
 
-[sub_resource type="StyleBoxFlat" id="Style_tooltip"]
-bg_color = Color(0.839216, 0.745098, 0.6, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.352941, 0.286275, 0.196078, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[node name="Reward" type="Node2D"]
+[node name="Reward" type="Node2D" unique_id=179328459]
 script = ExtResource("1_script")
 
-[node name="EuropeMap" parent="." instance=ExtResource("11_europe_map")]
+[node name="EuropeMap" parent="." unique_id=1833253788 instance=ExtResource("11_europe_map")]
 
-[node name="MapShade" type="ColorRect" parent="."]
+[node name="MapShade" type="ColorRect" parent="." unique_id=683696959]
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
 color = Color(0.015, 0.035, 0.08, 0.48)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1986444931]
 
-[node name="Title" type="Label" parent="CanvasLayer"]
+[node name="Title" type="Label" parent="CanvasLayer" unique_id=954811606]
 offset_left = 320.0
 offset_top = 34.0
 offset_right = 1600.0
@@ -46,7 +32,7 @@ text = "CHOOSE YOUR REWARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Instructions" type="Label" parent="CanvasLayer"]
+[node name="Instructions" type="Label" parent="CanvasLayer" unique_id=755069531]
 offset_left = 410.0
 offset_top = 112.0
 offset_right = 1510.0
@@ -56,119 +42,26 @@ text = "Choose the people you will favor"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Peasants" parent="CanvasLayer" instance=ExtResource("3_option")]
-offset_left = 110.0
+[node name="Peasants" parent="CanvasLayer" unique_id=1215690009 instance=ExtResource("3_option")]
+offset_left = 270.0
 offset_top = 190.0
-offset_right = 830.0
+offset_right = 880.0
 offset_bottom = 800.0
 
-[node name="Nobility" parent="CanvasLayer" instance=ExtResource("3_option")]
-offset_left = 1090.0
+[node name="Nobility" parent="CanvasLayer" unique_id=1623765149 instance=ExtResource("3_option")]
+offset_left = 1040.0
 offset_top = 190.0
-offset_right = 1810.0
+offset_right = 1650.0
 offset_bottom = 800.0
 group_name = "Nobility"
 option_id = "Nobility"
 
-[node name="LoyaltyTooltip" type="Panel" parent="CanvasLayer"]
-visible = false
-offset_left = 110.0
-offset_top = 835.0
-offset_right = 830.0
-offset_bottom = 1025.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("Style_tooltip")
+[node name="Fade" parent="CanvasLayer" unique_id=2032149417 instance=ExtResource("5_fade")]
 
-[node name="Grid" type="GridContainer" parent="CanvasLayer/LoyaltyTooltip"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 700.0
-offset_bottom = 170.0
-theme_override_constants/h_separation = 12
-theme_override_constants/v_separation = 8
-columns = 4
+[node name="CardTooltip" parent="." unique_id=2092224824 instance=ExtResource("7_card_tooltip")]
 
-[node name="Peasants" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(155, 65)
-layout_mode = 2
-theme = ExtResource("9_text")
-text = "Peasants"
-vertical_alignment = 1
-
-[node name="PeasantsCurrent" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(170, 65)
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
-theme = ExtResource("9_text")
-text = "Neutral"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PeasantsArrow" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(55, 65)
-layout_mode = 2
-theme = ExtResource("10_dark_body")
-text = "→"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PeasantsTarget" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(245, 65)
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
-theme = ExtResource("9_text")
-text = "At Ease"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Nobility" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(155, 65)
-layout_mode = 2
-theme = ExtResource("9_text")
-text = "Nobility"
-vertical_alignment = 1
-
-[node name="NobilityCurrent" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(170, 65)
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
-theme = ExtResource("9_text")
-text = "Neutral"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NobilityArrow" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(55, 65)
-layout_mode = 2
-theme = ExtResource("10_dark_body")
-text = "→"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NobilityTarget" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
-custom_minimum_size = Vector2(245, 65)
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
-theme = ExtResource("9_text")
-text = "Uneasy"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Fade" parent="CanvasLayer" instance=ExtResource("5_fade")]
-
-[node name="CardTooltip" parent="." instance=ExtResource("7_card_tooltip")]
-
-[node name="ConfirmSound" type="AudioStreamPlayer" parent="."]
+[node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=132062752]
 stream = ExtResource("6_confirm")
 
 [connection signal="chosen" from="CanvasLayer/Peasants" to="." method="_on_option_chosen"]
-[connection signal="hovered" from="CanvasLayer/Peasants" to="." method="_on_option_hovered"]
-[connection signal="unhovered" from="CanvasLayer/Peasants" to="." method="_on_option_unhovered"]
 [connection signal="chosen" from="CanvasLayer/Nobility" to="." method="_on_option_chosen"]
-[connection signal="hovered" from="CanvasLayer/Nobility" to="." method="_on_option_hovered"]
-[connection signal="unhovered" from="CanvasLayer/Nobility" to="." method="_on_option_unhovered"]

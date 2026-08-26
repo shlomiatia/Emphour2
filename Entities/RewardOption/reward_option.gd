@@ -6,25 +6,43 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @export var option_id := "Peasants"
 @onready var title: Label = $Panel/TitleBackground/MarginContainer/Title
 @onready var offer_root: Node2D = $Panel/Offer
-@onready var arrow: Label = $Panel/Offer/Arrow
+@onready var arrow: Control = $Panel/Offer/Arrow
+@onready var description: Label = $Panel/Description
+@onready var loyalty: VBoxContainer = $Panel/Loyalty
+@onready var current_labels := [$Panel/Loyalty/Peasants/Current, $Panel/Loyalty/Nobility/Current]
+@onready var target_labels := [$Panel/Loyalty/Peasants/Target, $Panel/Loyalty/Nobility/Target]
 
 var offer: Dictionary
 var cards: Array[Card]
 
 signal chosen(group: String)
-signal hovered(group: String)
-signal unhovered
 
 func setup(value: Dictionary) -> void:
 	offer = value
 	title.text = offer.get("title", group_name)
 	if !offer["old"].is_empty():
-		add_card(offer["old"], Vector2(-150, 0))
-		add_card(offer["new"], Vector2(150, 0))
+		add_card(offer["old"], Vector2(-128, 0))
+		add_card(offer["new"], Vector2(128, 0))
 		arrow.show()
 	else:
 		add_card(offer["new"], Vector2.ZERO)
 		arrow.hide()
+	description.text = "Add %s to deck." % offer["new"] if offer["old"].is_empty() else "Upgrade 1 %s from deck to %s." % [offer["old"], offer["new"]]
+
+func setup_loyalty(selected_group: String, visible: bool) -> void:
+	loyalty.visible = visible
+	if !visible:
+		return
+	set_change(0, "Peasants", 1 if selected_group == "Peasants" else -1)
+	set_change(1, "Nobility", 1 if selected_group == "Nobility" else -1)
+
+func set_change(index: int, group: String, amount: int) -> void:
+	set_label(current_labels[index], CampaignState.public_loyalty[group])
+	set_label(target_labels[index], CampaignState.public_loyalty_after(group, amount))
+
+func set_label(label: Label, value: int) -> void:
+	label.text = RelationData.loyalty_name(value)
+	label.add_theme_color_override("font_color", RelationData.color(value))
 
 func add_card(card_name: String, position_value: Vector2) -> void:
 	var card := CARD_SCENE.instantiate() as Card
@@ -39,11 +57,9 @@ func _on_button_pressed() -> void:
 
 func _on_button_mouse_entered() -> void:
 	set_highlighted(true)
-	hovered.emit(group_name)
 
 func _on_button_mouse_exited() -> void:
 	set_highlighted(false)
-	unhovered.emit()
 
 func set_highlighted(value: bool) -> void:
 	for card in cards:

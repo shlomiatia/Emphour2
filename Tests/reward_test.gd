@@ -13,7 +13,7 @@ func run_test() -> void:
 	verify_final_campaign()
 	await open_reward()
 	verify_options()
-	verify_tooltip()
+	verify_loyalty_changes()
 	await verify_choice()
 	quit()
 
@@ -70,15 +70,17 @@ func verify_options() -> void:
 	var nobility: Dictionary = reward.offers["Nobility"]
 	assert(peasants["old"].is_empty())
 	assert(RewardRules.get_group_cards("Peasants", 1).has(peasants["new"]))
+	assert(reward.peasants.description.text == "Add %s to deck." % peasants["new"])
 	assert(nobility["old"].is_empty())
 	assert(RewardRules.get_group_cards("Nobility", 2).has(nobility["new"]))
+	assert(reward.nobility.description.text == "Add %s to deck." % nobility["new"])
 
-func verify_tooltip() -> void:
-	reward._on_option_hovered("Nobility")
-	assert(reward.tooltip.visible)
-	assert(reward.current_labels[0].text == "Neutral")
-	assert(reward.target_labels[0].text == "Uneasy")
-	assert(reward.target_labels[1].text == "At Ease")
+func verify_loyalty_changes() -> void:
+	assert(reward.peasants.current_labels[0].text == "Neutral")
+	assert(reward.peasants.target_labels[0].text == "At Ease")
+	assert(reward.nobility.current_labels[0].text == "Neutral")
+	assert(reward.nobility.target_labels[0].text == "Uneasy")
+	assert(reward.nobility.target_labels[1].text == "At Ease")
 
 func verify_choice() -> void:
 	var offer: Dictionary = reward.offers["Nobility"]
