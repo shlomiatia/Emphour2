@@ -97,5 +97,5 @@ func verify_score_victory(game: CardBattle) -> void:
     await game.battle_state.finish(false)
     assert(game.battle_state.balance == 5)
     assert(game.finished)
-    assert(game.result_label.text == "PLAYER VICTORY")
+    assert(game.status_label.text == "PLAYER VICTORY")
     assert(is_equal_approx(game.battle_hud.marker.position.x, game.battle_hud.meter_position(5, game.battle_hud.marker)))

@@ -90,6 +90,7 @@ func add_preview(source: Card, index: int, count: int) -> void:
     cards.add_child(card)
     card.set_meta("tooltip_preview", true)
     card.set_preview_count(count)
+    card.count.add_theme_color_override("font_color", Color("#180f24"))
     card.scale = Vector2.ONE * PREVIEW_SCALE
     card.position = Vector2(54 + index % PREVIEW_COLUMNS * PREVIEW_WIDTH, 69 + index / PREVIEW_COLUMNS * 126)
 

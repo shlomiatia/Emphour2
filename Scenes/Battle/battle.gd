@@ -13,11 +13,8 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
 @onready var loyalty_events: LoyaltyEvents = $LoyaltyEvents
-@onready var status_background: Panel = $Interface/StatusBackground
-@onready var status_label: Label = $Interface/Status
+@onready var status_label: Label = $CardLayer/StatusBackground/Status
 @onready var battle_hud: BattleHud = $Interface/BattleHud
-@onready var result_panel: Panel = $Interface/Result
-@onready var result_label: Label = $Interface/Result/Label
 @onready var event_panel: Panel = $Interface/Event
 @onready var event_message: Label = $Interface/Event/Message
 @onready var audio: GameAudio = Audio
@@ -25,11 +22,13 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 
 var selectable_cards: Array[Card]
 var finished := false
+var can_restart := false
 
 signal card_chosen(card: Card)
 
 func _ready() -> void:
     audio.start_music()
+    board.slot_count = CampaignState.battle_slot_count()
     setup_states()
     connect_signals()
     add_starting_cards(CampaignState.player_deck, player_hand, GameRules.Side.PLAYER)
@@ -53,6 +52,10 @@ func connect_signals() -> void:
     player_hand.card_cancelled.connect(turns.card_cancelled)
 
 func _input(event: InputEvent) -> void:
+    if can_restart && event.is_pressed():
+        CampaignState.reset()
+        get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
+        return
     if selectable_cards.is_empty() || !(event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed):
         return
     var slot := board.get_target_at(event.position)
@@ -121,8 +124,3 @@ func set_balance(value: int, animate := true) -> void:
 
 func set_status(value: String) -> void:
     status_label.text = value
-    var size := status_label.get_minimum_size() + Vector2(20, 12)
-    status_background.size = size
-    status_background.position = Vector2(960, 769) - size / 2.0
-    status_label.position = status_background.position + Vector2(10, 6)
-    status_label.size = size - Vector2(20, 12)

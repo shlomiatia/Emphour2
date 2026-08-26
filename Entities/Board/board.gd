@@ -1,10 +1,15 @@
+@tool
 class_name Board extends Node2D
 
 const ROW_COUNT := 2
 
 @export var player_row := 1
 @export var enemy_row := 0
-@export_range(1, 5) var slot_count := 3
+@export_range(1, 5) var slot_count := 3:
+    set(value):
+        slot_count = value
+        if is_inside_tree():
+            refresh_slots()
 @export var row_spacing := 8.0
 
 var dragged_card: Card

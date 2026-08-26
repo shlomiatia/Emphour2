@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://doavcnalvqtv1" path="res://Textures/Sky.png" id="3_6tmns"]
 [ext_resource type="PackedScene" uid="uid://bsql53vleifh1" path="res://Entities/Board/Board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
-[ext_resource type="PackedScene" path="res://Entities/DiscardPile/DiscardPile.tscn" id="5_discard"]
+[ext_resource type="PackedScene" uid="uid://bk2gqm65aj5b3" path="res://Entities/DiscardPile/DiscardPile.tscn" id="5_discard"]
 [ext_resource type="Script" uid="uid://b0q3qtboon4wt" path="res://Scripts/battle_resolver.gd" id="6_battle"]
 [ext_resource type="Script" uid="uid://c6ngpnt2iur5a" path="res://Scripts/turn_state.gd" id="7_turn"]
 [ext_resource type="Script" uid="uid://cna2jv3ibfvv4" path="res://Scripts/battle_state.gd" id="8_battle_state"]
@@ -17,10 +17,18 @@
 [ext_resource type="Theme" path="res://Themes/PanelText.tres" id="15_panel"]
 [ext_resource type="Theme" path="res://Themes/GoldText.tres" id="16_gold"]
 [ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
-[ext_resource type="Theme" path="res://Themes/LargeGoldText.tres" id="17_large_gold"]
+[ext_resource type="PackedScene" uid="uid://bhecmvucxkodd" path="res://Entities/BattleWindOverlay/BattleWindOverlay.tscn" id="18_wind"]
+[ext_resource type="Shader" uid="uid://dyfgrenf2ywqr" path="res://Shaders/haze.gdshader" id="19_haze"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_haze"]
+shader = ExtResource("19_haze")
+shader_parameter/speed = 0.25
+shader_parameter/intensity = 0.0250000011875
+shader_parameter/blur_amount = 0.0
+shader_parameter/modulate_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_instructions"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -39,6 +47,7 @@ script = ExtResource("1_battle")
 enemy_deck = SubResource("Resource_enemy_deck")
 
 [node name="Sky" type="Sprite2D" parent="." unique_id=733791362]
+material = SubResource("ShaderMaterial_haze")
 position = Vector2(960, 540)
 texture = ExtResource("3_6tmns")
 
@@ -46,18 +55,21 @@ texture = ExtResource("3_6tmns")
 position = Vector2(960, 540)
 texture = ExtResource("2_background")
 
+[node name="BattleWindOverlay" parent="." unique_id=177503165 instance=ExtResource("18_wind")]
+
 [node name="ShakingCamera" parent="." unique_id=518469472 instance=ExtResource("16_shake")]
 
 [node name="CardLayer" type="CanvasLayer" parent="." unique_id=780174864]
 
 [node name="Board" parent="CardLayer" unique_id=1079065982 instance=ExtResource("3_board")]
 position = Vector2(960, 410)
+row_spacing = 80.0
 
 [node name="EnemyHand" parent="CardLayer" unique_id=245630305 instance=ExtResource("4_hand")]
 position = Vector2(960, 74)
 side = 1
 face_down = true
-card_spacing = 48.0
+card_spacing = 40.0
 angle_step_degrees = 3.0
 arc_direction = -1.0
 hover_enabled = false
@@ -65,6 +77,26 @@ hover_offset = Vector2(0, 0)
 
 [node name="PlayerHand" parent="CardLayer" unique_id=1302264869 instance=ExtResource("4_hand")]
 position = Vector2(960, 954)
+
+[node name="StatusBackground" type="PanelContainer" parent="CardLayer" unique_id=101215224]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 741.0
+offset_right = 260.0
+offset_bottom = 789.0
+grow_horizontal = 2
+size_flags_horizontal = 6
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_instructions")
+
+[node name="Status" type="Label" parent="CardLayer/StatusBackground" unique_id=2036854357]
+layout_mode = 2
+theme = ExtResource("15_panel")
+text = "Preparing game"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
 
@@ -96,24 +128,6 @@ grow_vertical = 0
 [node name="Pile" parent="Interface/PlayerDiscard" unique_id=702495137 instance=ExtResource("5_discard")]
 position = Vector2(48, 48)
 
-[node name="StatusBackground" type="Panel" parent="Interface" unique_id=935474049]
-offset_left = 700.0
-offset_top = 738.0
-offset_right = 1220.0
-offset_bottom = 800.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBox_instructions")
-
-[node name="Status" type="Label" parent="Interface" unique_id=2036854357]
-offset_left = 710.0
-offset_top = 744.0
-offset_right = 1210.0
-offset_bottom = 794.0
-theme = ExtResource("15_panel")
-text = "Preparing game"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="BattleHud" parent="Interface" unique_id=548796464 instance=ExtResource("13_hud")]
 anchors_preset = 0
 offset_top = 350.0
@@ -143,32 +157,6 @@ grow_vertical = 2
 theme = ExtResource("16_gold")
 text = "A unit refuses to fight.
 Press any key or mouse button"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Result" type="Panel" parent="Interface" unique_id=706372181]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -90.0
-offset_right = 280.0
-offset_bottom = 90.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Interface/Result" unique_id=374371734]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("17_large_gold")
-text = "PLAYER VICTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
 

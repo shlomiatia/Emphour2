@@ -59,16 +59,16 @@ func balance_winner() -> int:
 func finish_game(winner: int) -> void:
     game.finished = true
     game.player_hand.set_draggable(false)
-    game.result_panel.show()
-    game.result_label.text = result_text(winner)
-    game.set_status("Game over")
+    game.set_status(result_text(winner))
     if winner == GameRules.Side.PLAYER:
         open_rewards()
+    else:
+        game.can_restart = true
 
 func result_text(winner: int) -> String:
     if winner == -1:
         return "DRAW"
-    return "PLAYER VICTORY" if winner == GameRules.Side.PLAYER else "ENEMY VICTORY"
+    return "PLAYER VICTORY" if winner == GameRules.Side.PLAYER else "ENEMY VICTORY\nPress any key to restart"
 
 func open_rewards() -> void:
     await get_tree().create_timer(0.8).timeout

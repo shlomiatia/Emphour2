@@ -28,6 +28,10 @@ const STARTING_OWNERS := {
 	"City 5": Faction.REBELS,
 	"City 6": Faction.REBELS
 }
+const CITY_SLOTS := {
+	"City 1": 3, "City 2": 3, "City 3": 4, "City 4": 4,
+	"City 5": 5, "City 6": 5, "City 7": 5
+}
 
 static var selected_city := ""
 static var player_deck: Array[String] = STARTING_DECK.duplicate()
@@ -58,6 +62,9 @@ static func is_final_battle() -> bool:
 
 static func enemy_city() -> String:
 	return "City 7" if is_final_battle() else selected_city
+
+static func battle_slot_count() -> int:
+	return CITY_SLOTS.get(enemy_city(), 3)
 
 static func loyal_group() -> String:
 	return "Peasants" if public_loyalty["Peasants"] >= public_loyalty["Nobility"] else "Nobility"
