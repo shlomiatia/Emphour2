@@ -16,11 +16,12 @@ shader_parameter/modulate_color = Color(1, 1, 1, 1)
 
 [node name="Mediterranean" type="Sprite2D" parent="." unique_id=1187123707]
 material = SubResource("ShaderMaterial_haze")
-position = Vector2(1035, 624)
+position = Vector2(1035, 648)
 texture = ExtResource("3_mediterranean")
 
 [node name="Europe" type="Sprite2D" parent="." unique_id=388544906]
-position = Vector2(1035, 624)
+position = Vector2(1035, 648)
 texture = ExtResource("1_europe")
 
 [node name="MapWindOverlay" parent="." unique_id=389009123 instance=ExtResource("2_map_wind")]
+position = Vector2(1035, 648)

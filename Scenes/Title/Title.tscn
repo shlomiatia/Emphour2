@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Blink.tscn" id="4_blink"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://bko1c65p4u2wl" path="res://Audio/long_confirm.mp3" id="6_sound"]
-[ext_resource type="PackedScene" path="res://Entities/EuropeMap/EuropeMap.tscn" id="7_europe_map"]
+[ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="7_europe_map"]
 
 [node name="Title" type="Node2D" unique_id=1851559752]
 script = ExtResource("1_title")
 
-[node name="EuropeMap" parent="." instance=ExtResource("7_europe_map")]
+[node name="EuropeMap" parent="." unique_id=2007218734 instance=ExtResource("7_europe_map")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1892615310]
 
@@ -37,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_theme")
 theme_override_font_sizes/font_size = 256
-text = "Emphour"
+text = "Double Crossed"
 horizontal_alignment = 1
 
 [node name="ClickToStart" type="Label" parent="CanvasLayer" unique_id=1362911146]

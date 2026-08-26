@@ -47,7 +47,7 @@ func enable_targets() -> void:
     game.board.set_dragged_card(selected_card)
     game.player_discard.set_targetable(full_row)
     game.player_discard.set_dragged_card(selected_card)
-    game.set_status("Choose a card to replace, or discard" if full_row else "Choose the leftmost space")
+    game.set_status("Discard or choose a card to replace" if full_row else "Play a card")
 
 func target_clicked(slot: CardSlot) -> void:
     if !selected_card:
