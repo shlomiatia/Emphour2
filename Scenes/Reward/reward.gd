@@ -63,7 +63,7 @@ func set_change(index: int, group: String, amount: int) -> void:
 
 func set_label(label: Label, value: int) -> void:
 	label.text = RelationData.loyalty_name(value)
-	label.add_theme_color_override("font_color", RelationData.color(value, true))
+	label.add_theme_color_override("font_color", RelationData.color(value))
 
 func _on_option_unhovered() -> void:
 	tooltip.hide()

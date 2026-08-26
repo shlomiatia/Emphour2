@@ -12,7 +12,5 @@ const COLORS := [
 static func loyalty_name(value: int) -> String:
 	return LOYALTY_NAMES[value + 5]
 
-static func color(value: int, dark_neutral := false) -> Color:
-	if value == CampaignState.Relation.NEUTRAL && dark_neutral:
-		return Color("#51483b")
+static func color(value: int) -> Color:
 	return COLORS[value + 5]

@@ -8,20 +8,20 @@
 [ext_resource type="AudioStream" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
 [ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="8_parchment"]
-[ext_resource type="Theme" path="res://Themes/CardText.tres" id="9_text"]
+[ext_resource type="Theme" path="res://Themes/PanelText.tres" id="9_text"]
 [ext_resource type="Theme" path="res://Themes/DarkBodyText.tres" id="10_dark_body"]
 
 [sub_resource type="StyleBoxFlat" id="Style_tooltip"]
-bg_color = Color(0.94, 0.86, 0.68, 0.98)
+bg_color = Color(0.839216, 0.745098, 0.6, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.18, 0.12, 0.06, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+border_color = Color(0.352941, 0.286275, 0.196078, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Reward" type="Node2D"]
 script = ExtResource("1_script")
@@ -101,6 +101,8 @@ vertical_alignment = 1
 [node name="PeasantsCurrent" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(170, 65)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/outline_size = 3
 theme = ExtResource("9_text")
 text = "Neutral"
 horizontal_alignment = 1
@@ -117,6 +119,8 @@ vertical_alignment = 1
 [node name="PeasantsTarget" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(245, 65)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/outline_size = 3
 theme = ExtResource("9_text")
 text = "At Ease"
 horizontal_alignment = 2
@@ -132,6 +136,8 @@ vertical_alignment = 1
 [node name="NobilityCurrent" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(170, 65)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/outline_size = 3
 theme = ExtResource("9_text")
 text = "Neutral"
 horizontal_alignment = 1
@@ -148,6 +154,8 @@ vertical_alignment = 1
 [node name="NobilityTarget" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(245, 65)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/outline_size = 3
 theme = ExtResource("9_text")
 text = "Uneasy"
 horizontal_alignment = 2
