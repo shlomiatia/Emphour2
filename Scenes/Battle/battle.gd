@@ -21,6 +21,8 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var fade: Fade = $Interface/Fade
 
 var selectable_cards: Array[Card]
+var player_draw_pile: Array[String]
+var enemy_draw_pile: Array[String]
 var finished := false
 var can_restart := false
 
@@ -31,8 +33,10 @@ func _ready() -> void:
     board.slot_count = CampaignState.battle_slot_count()
     setup_states()
     connect_signals()
-    add_starting_cards(CampaignState.player_deck, player_hand, GameRules.Side.PLAYER)
-    add_starting_cards(enemy_deck.build(CampaignState.enemy_city()), enemy_hand, GameRules.Side.ENEMY)
+    setup_draw_pile(CampaignState.player_deck, player_draw_pile)
+    setup_draw_pile(enemy_deck.build(CampaignState.enemy_city()), enemy_draw_pile)
+    draw_cards(player_hand, GameRules.Side.PLAYER, 5)
+    draw_cards(enemy_hand, GameRules.Side.ENEMY, 5)
     set_balance(0, false)
     await loyalty_events.run()
     turns.start_round()
@@ -60,20 +64,30 @@ func _input(event: InputEvent) -> void:
         return
     var slot := board.get_target_at(event.position)
     var card := slot.get_card() if slot else null
-    print("[BattleTarget] input position=%s card=%s" % [event.position, card.card_name if card else "none"])
 
 func _on_target_chosen(slot: CardSlot) -> void:
     var card := slot.get_card()
-    if !selectable_cards.is_empty():
-        print("[BattleTarget] accepted card=%s" % (card.card_name if card else "none"))
     if selectable_cards.has(card):
         card_chosen.emit(card)
     else:
         turns.target_clicked(slot)
 
-func add_starting_cards(names: Array[String], hand: CardHand, side: int) -> void:
-    for card_name in names:
-        hand.add_card(create_card(card_name, side))
+func setup_draw_pile(names: Array[String], pile: Array[String]) -> void:
+    pile.assign(names)
+    pile.shuffle()
+
+func draw_cards(hand: CardHand, side: int, count: int) -> void:
+    for _card in count:
+        var pile := get_draw_pile(side)
+        if pile.is_empty():
+            return
+        hand.add_card(create_card(pile.pop_back(), side))
+
+func draw_card(side: int) -> void:
+    draw_cards(player_hand if side == GameRules.Side.PLAYER else enemy_hand, side, 1)
+
+func get_draw_pile(side: int) -> Array[String]:
+    return player_draw_pile if side == GameRules.Side.PLAYER else enemy_draw_pile
 
 func create_card(card_name: String, side: int) -> Card:
     var card := CARD_SCENE.instantiate() as Card
@@ -83,7 +97,6 @@ func create_card(card_name: String, side: int) -> Card:
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(cards)
-    print("[BattleTarget] offered prompt=%s cards=%s" % [prompt, cards.map(func(card: Card) -> String: return card.card_name)])
     set_status(prompt)
     board.enable_card_targets(selectable_cards)
     var chosen: Card = await card_chosen

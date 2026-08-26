@@ -32,10 +32,12 @@ func verify_hud(game: CardBattle) -> void:
     assert(game.battle_hud.preview_tween != null)
 
 func verify_defence_consumption(game: CardBattle) -> void:
-    var archer := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == "Archer")[0] as Card
-    var mantlet := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == "Mantlet")[0] as Card
+    var archer := create_rule_card("Archer")
+    var mantlet := create_rule_card("Mantlet")
     var militia := create_rule_card("Militia")
     assert(game.battle.available_targets(archer, [mantlet, militia], [mantlet], []) == [militia])
+    archer.free()
+    mantlet.free()
     militia.free()
 
 func verify_loss_prediction(game: CardBattle) -> void:
@@ -59,8 +61,12 @@ func verify_enemy_deck_generation() -> void:
     assert(deck.size() == 8)
     assert(value == 20)
     assert(EnemyDeck.new().build("City 1") == ["Light Cavalry", "Militia", "Militia"])
-    assert(EnemyDeck.new().build("City 3") == ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"])
-    assert(EnemyDeck.new().build("City 7").size() == 9)
+    var city_three := EnemyDeck.new().build("City 3")
+    assert(city_three.size() == 6)
+    assert(city_three.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 7)
+    var city_seven := EnemyDeck.new().build("City 7")
+    assert(city_seven.size() == 10)
+    assert(city_seven.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 18)
     var late_deck := EnemyDeck.new().build("City 2")
     assert(late_deck.size() == 9)
     assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 10)

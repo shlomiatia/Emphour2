@@ -72,7 +72,7 @@ func wait_for_input() -> void:
 func execute(card: Card, event: int) -> void:
     card.reparent(game)
     if event == LoyaltyRules.Event.REFUSE:
-        await card.move_to(game.player_discard.global_position)
+        await card.move_to(game.player_discard.global_position, false, Vector2.ZERO)
         game.player_discard.add_card(card)
     elif event == LoyaltyRules.Event.DESERT:
         CampaignState.player_deck.erase(card.card_name)
@@ -81,7 +81,7 @@ func execute(card: Card, event: int) -> void:
         card.queue_free()
     else:
         CampaignState.lose_loyalty(card_group(card))
-        await card.move_to(game.enemy_hand.global_position)
+        await card.move_to(game.enemy_hand.global_position, false, Vector2.ONE * 0.25)
         card.side = GameRules.Side.ENEMY
         game.enemy_hand.add_card(card)
 

@@ -2,8 +2,10 @@ class_name Card extends Node2D
 
 const ATTACK_ICONS := {
     CardData.AttackType.MISSILE: preload("res://Textures/Missle.png"),
-    CardData.AttackType.CAVALRY: preload("res://Textures/Cavalry.png")
+    CardData.AttackType.CAVALRY: preload("res://Textures/Cavalry.png"),
+    CardData.AttackType.ARMOR_PIERCING: preload("res://Textures/Missle.png")
 }
+const GROUP_ICONS := {"Peasants": preload("res://Textures/Peasants.png"), "Nobility": preload("res://Textures/Nobility.png")}
 @export var card_name := "Militia"
 @export var side: int = GameRules.Side.PLAYER
 @export var face_down := false
@@ -18,6 +20,7 @@ const ATTACK_ICONS := {
 @onready var attack_icon: Sprite2D = $Front/AttackIcon
 @onready var defence_icon: Sprite2D = $Front/DefenceIcon
 @onready var counter: Sprite2D = $Front/Counter
+@onready var group_icon: Sprite2D = $Front/GroupIcon
 
 var data: CardData
 var draggable := false
@@ -41,15 +44,16 @@ func refresh() -> void:
     strength.text = str(data.strength)
     attack.text = str(data.attack)
     defence.text = str(data.defence)
+    group_icon.texture = GROUP_ICONS["Nobility" if RewardRules.belongs_to(card_name, "Nobility") else "Peasants"]
     set_icons()
     set_hidden(face_down)
 
 func set_icons() -> void:
     attack_icon.texture = ATTACK_ICONS.get(data.attack_type)
-    defence_icon.texture = ATTACK_ICONS.get(data.anti_attack)
+    defence_icon.texture = preload("res://Textures/Armor.png") if data.armored else ATTACK_ICONS.get(data.anti_attack)
     attack_icon.visible = attack_icon.texture != null
     defence_icon.visible = defence_icon.texture != null
-    counter.visible = data.anti_attack != CardData.AttackType.NONE
+    counter.visible = data.anti_attack != CardData.AttackType.NONE && !data.armored
 
 func set_hidden(value: bool) -> void:
     face_down = value
@@ -96,9 +100,10 @@ func fade_out() -> void:
     tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.3)
     await tween.finished
 
-func move_to(target: Vector2, fade := false) -> void:
+func move_to(target: Vector2, fade := false, target_scale := Vector2.ONE) -> void:
     var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
     tween.tween_property(self, "global_position", target, 0.45)
+    tween.parallel().tween_property(self, "scale", target_scale, 0.45)
     if fade:
         tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
     await tween.finished

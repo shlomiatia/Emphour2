@@ -10,6 +10,7 @@
 [ext_resource type="Theme" path="res://Themes/GoldBodyText.tres" id="9_gold"]
 [ext_resource type="Texture2D" uid="uid://bys5xrk8togde" path="res://Textures/Armor.png" id="10_armor"]
 [ext_resource type="Texture2D" uid="uid://i3jmx1e1g1ld" path="res://Textures/X.png" id="11_x"]
+[ext_resource type="Texture2D" path="res://Textures/Peasants.png" id="12_peasants"]
 
 [node name="Card" type="Node2D" unique_id=580931423]
 script = ExtResource("1_script")
@@ -45,6 +46,11 @@ offset_right = 128.0
 offset_bottom = 13.0
 theme = ExtResource("9_gold")
 vertical_alignment = 1
+
+[node name="GroupIcon" type="Sprite2D" parent="Front"]
+position = Vector2(-72, -83)
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("12_peasants")
 
 [node name="Strength" type="Label" parent="Front" unique_id=1947068233]
 offset_left = -83.28

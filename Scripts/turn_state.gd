@@ -29,6 +29,7 @@ func play_enemy_card() -> void:
     pending_enemy.set_hidden(true)
     if !game.board.play_leftmost(pending_enemy, GameRules.Side.ENEMY):
         game.discard_card(game.board.replace_random(pending_enemy, GameRules.Side.ENEMY))
+    game.draw_card(GameRules.Side.ENEMY)
 
 func begin_player_action() -> void:
     accepting_action = true
@@ -86,6 +87,7 @@ func finish_player_action() -> void:
     accepting_action = false
     game.player_hand.set_draggable(false)
     clear_targets()
+    game.draw_card(GameRules.Side.PLAYER)
     complete_round()
 
 func clear_targets() -> void:

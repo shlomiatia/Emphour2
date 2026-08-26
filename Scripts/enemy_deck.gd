@@ -2,13 +2,13 @@ class_name EnemyDeck extends Resource
 
 const CITY_DECKS := {
 	"City 1": ["Light Cavalry", "Militia", "Militia"],
-	"City 3": ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"],
-	"City 7": ["Foot Knight", "Lancer", "Heavy Cavalry", "Light Cavalry", "Axeman", "Swordman", "Spearman", "Militia", "Militia"]
+    "City 2": ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"],
 }
 
-const LATE_CITIES := ["City 2", "City 4", "City 5", "City 6"]
-const LATE_CITY_COUNT := 9
-const LATE_CITY_VALUE := 10
+const CITY_RULES := {
+	"City 3": [9, 10], "City 4": [10, 11],
+	"City 5": [10, 12], "City 6": [11, 13], "City 7": [12, 14]
+}
 const DEFAULT_DECK: Array[String] = ["Archer", "Militia", "Militia"]
 const LEVEL_ONE_WEIGHTS := {"Militia": 6, "Archer": 2, "Stakes": 1, "Mantlet": 1}
 
@@ -19,8 +19,9 @@ func build(city_name: String) -> Array[String]:
 		var deck: Array[String]
 		deck.assign(CITY_DECKS[city_name])
 		return deck
-	if LATE_CITIES.has(city_name):
-		return generate(LATE_CITY_COUNT, LATE_CITY_VALUE, CardCatalog.CARDS)
+	if CITY_RULES.has(city_name):
+		var rule: Array = CITY_RULES[city_name]
+		return generate(rule[0], rule[1], CardCatalog.CARDS)
 	push_error("No enemy deck rule for %s" % city_name)
 	return []
 

@@ -1,7 +1,7 @@
 class_name CardCatalog extends RefCounted
 
 const CARDS: Array[String] = [
-    "Archer", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman",
+    "Archer", "Crossbowman", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman",
     "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"
 ]
 
@@ -13,6 +13,8 @@ static func get_data(card_name: String) -> CardData:
     match card_name:
         "Archer":
             return create_attacker(card_name, 0, CardData.AttackType.MISSILE)
+        "Crossbowman":
+            return create_attacker(card_name, 0, CardData.AttackType.ARMOR_PIERCING)
         "Mantlet":
             return create_defender(card_name, CardData.AttackType.MISSILE)
         "Stakes":
@@ -28,7 +30,7 @@ static func get_data(card_name: String) -> CardData:
         "Spearman":
             return create_guard(card_name, CardData.AttackType.CAVALRY)
         "Foot Knight":
-            return create_guard(card_name, CardData.AttackType.MISSILE, 2)
+            return create_armored(card_name, 2)
         "Lancer":
             return create_attacker(card_name, 2, CardData.AttackType.CAVALRY)
         "Heavy Cavalry":
@@ -46,7 +48,13 @@ static func create_horse_archer() -> CardData:
 static func create_armored_cavalry(card_name: String, strength: int) -> CardData:
     var data := create_attacker(card_name, strength, CardData.AttackType.CAVALRY)
     data.defence = 1
-    data.anti_attack = CardData.AttackType.MISSILE
+    data.armored = true
+    return data
+
+static func create_armored(card_name: String, strength: int) -> CardData:
+    var data := create_unit(card_name, strength)
+    data.defence = 1
+    data.armored = true
     return data
 
 static func create_attacker(card_name: String, strength: int, attack_type: CardData.AttackType) -> CardData:

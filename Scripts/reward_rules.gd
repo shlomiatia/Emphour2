@@ -5,7 +5,8 @@ const TIERS := {
 	1: ["Archer", "Mantlet", "Stakes"],
 	2: ["Horse Archer", "Light Cavalry", "Axeman", "Swordman", "Spearman"],
 	3: ["Foot Knight", "Lancer", "Heavy Cavalry"],
-	4: ["Knight"]
+	4: ["Knight"],
+	5: ["Crossbowman"]
 }
 const NOBILITY := ["Horse Archer", "Light Cavalry", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"]
 

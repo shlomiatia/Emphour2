@@ -9,6 +9,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var arrow: Control = $Panel/Offer/Arrow
 @onready var description: Label = $Panel/Description
 @onready var loyalty: VBoxContainer = $Panel/Loyalty
+@onready var group_icon: TextureRect = $Panel/TitleBackground/GroupIcon
 @onready var current_labels := [$Panel/Loyalty/Peasants/Current, $Panel/Loyalty/Nobility/Current]
 @onready var target_labels := [$Panel/Loyalty/Peasants/Target, $Panel/Loyalty/Nobility/Target]
 
@@ -20,6 +21,7 @@ signal chosen(group: String)
 func setup(value: Dictionary) -> void:
 	offer = value
 	title.text = offer.get("title", group_name)
+	group_icon.texture = load("res://Textures/%s.png" % group_name)
 	if !offer["old"].is_empty():
 		add_card(offer["old"], Vector2(-128, 0))
 		add_card(offer["new"], Vector2(128, 0))

@@ -78,4 +78,9 @@ func verify_freed_card_safe() -> void:
     assert(!game.loyalty_events.waiting)
 
 func find_card(card_name: String) -> Card:
-    return game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == card_name)[0]
+    var cards := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == card_name)
+    if !cards.is_empty():
+        return cards[0]
+    var card := game.create_card(card_name, GameRules.Side.PLAYER)
+    game.player_hand.add_card(card)
+    return card
