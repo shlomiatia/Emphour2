@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://uv1cyboafa0j" path="res://Scenes/Map/map.gd" id="1_map"]
 [ext_resource type="Texture2D" uid="uid://dalarjfd4yb8d" path="res://Textures/Europe.png" id="2_europe"]
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
-[ext_resource type="FontFile" uid="uid://blgdr3wpr6u6u" path="res://Fonts/MedievalSharp.ttf" id="4_font"]
+[ext_resource type="Theme" path="res://Themes/CardText.tres" id="4_text"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
+[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="7_parchment"]
+[ext_resource type="Theme" path="res://Themes/SmallParchmentText.tres" id="8_small_parchment"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_header"]
 bg_color = Color(0.035, 0.13, 0.32, 0.96)
@@ -102,9 +104,7 @@ offset_left = 16.0
 offset_top = 4.0
 offset_right = 524.0
 offset_bottom = 42.0
-theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 28
+theme = ExtResource("7_parchment")
 text = "KINGDOM LOYALTY"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -115,9 +115,7 @@ offset_left = 22.0
 offset_top = 43.0
 offset_right = 330.0
 offset_bottom = 81.0
-theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("8_small_parchment")
 text = "Peasants"
 vertical_alignment = 1
 
@@ -127,9 +125,7 @@ offset_left = 330.0
 offset_top = 43.0
 offset_right = 518.0
 offset_bottom = 81.0
-theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("4_text")
 text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -140,9 +136,7 @@ offset_left = 22.0
 offset_top = 82.0
 offset_right = 330.0
 offset_bottom = 120.0
-theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("8_small_parchment")
 text = "Nobility"
 vertical_alignment = 1
 
@@ -152,9 +146,7 @@ offset_left = 330.0
 offset_top = 82.0
 offset_right = 518.0
 offset_bottom = 120.0
-theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("4_text")
 text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1

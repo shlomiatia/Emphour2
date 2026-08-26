@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bd6mdpj0yenjs" path="res://Scenes/Title/title.gd" id="1_title"]
 [ext_resource type="Texture2D" uid="uid://dalarjfd4yb8d" path="res://Textures/Europe.png" id="2_map"]
-[ext_resource type="FontFile" uid="uid://bfqfvsdi33sqk" path="res://Fonts/Goudy Mediaeval DemiBold.ttf" id="3_font"]
+[ext_resource type="Theme" path="res://Themes/TitleText.tres" id="3_theme"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Blink.tscn" id="4_blink"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://bko1c65p4u2wl" path="res://Audio/long_confirm.mp3" id="6_sound"]
@@ -37,8 +37,7 @@ offset_right = 412.0
 offset_bottom = 129.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_fonts/font = ExtResource("3_font")
+theme = ExtResource("3_theme")
 theme_override_font_sizes/font_size = 256
 text = "Emphour"
 horizontal_alignment = 1
@@ -55,9 +54,7 @@ offset_right = 240.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 58
+theme = ExtResource("3_theme")
 text = "Press any key to start"
 horizontal_alignment = 1
 

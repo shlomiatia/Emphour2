@@ -3,10 +3,13 @@
 [ext_resource type="Script" path="res://Scenes/Reward/reward.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Textures/Europe.png" id="2_europe"]
 [ext_resource type="PackedScene" path="res://Entities/RewardOption/RewardOption.tscn" id="3_option"]
-[ext_resource type="FontFile" path="res://Fonts/MedievalSharp.ttf" id="4_font"]
+[ext_resource type="Theme" path="res://Themes/LargeGoldText.tres" id="4_large_gold"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
+[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="8_parchment"]
+[ext_resource type="Theme" path="res://Themes/CardText.tres" id="9_text"]
+[ext_resource type="Theme" path="res://Themes/DarkBodyText.tres" id="10_dark_body"]
 
 [sub_resource type="StyleBoxFlat" id="Style_tooltip"]
 bg_color = Color(0.94, 0.86, 0.68, 0.98)
@@ -40,12 +43,7 @@ offset_left = 320.0
 offset_top = 34.0
 offset_right = 1600.0
 offset_bottom = 106.0
-theme_override_colors/font_color = Color(0.95, 0.75, 0.25, 1)
-theme_override_colors/font_shadow_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 58
+theme = ExtResource("4_large_gold")
 text = "CHOOSE YOUR REWARD"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -55,12 +53,7 @@ offset_left = 410.0
 offset_top = 112.0
 offset_right = 1510.0
 offset_bottom = 158.0
-theme_override_colors/font_color = Color(0.97, 0.88, 0.66, 1)
-theme_override_colors/font_shadow_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 28
+theme = ExtResource("8_parchment")
 text = "Choose the people you will favor"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -101,17 +94,14 @@ columns = 4
 [node name="Peasants" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(155, 65)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("9_text")
 text = "Peasants"
 vertical_alignment = 1
 
 [node name="PeasantsCurrent" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(170, 65)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("9_text")
 text = "Neutral"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -119,9 +109,7 @@ vertical_alignment = 1
 [node name="PeasantsArrow" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(55, 65)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 28
+theme = ExtResource("10_dark_body")
 text = "→"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -129,8 +117,7 @@ vertical_alignment = 1
 [node name="PeasantsTarget" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(245, 65)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("9_text")
 text = "At Ease"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -138,17 +125,14 @@ vertical_alignment = 1
 [node name="Nobility" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(155, 65)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("9_text")
 text = "Nobility"
 vertical_alignment = 1
 
 [node name="NobilityCurrent" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(170, 65)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("9_text")
 text = "Neutral"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -156,9 +140,7 @@ vertical_alignment = 1
 [node name="NobilityArrow" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(55, 65)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 28
+theme = ExtResource("10_dark_body")
 text = "→"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -166,8 +148,7 @@ vertical_alignment = 1
 [node name="NobilityTarget" type="Label" parent="CanvasLayer/LoyaltyTooltip/Grid"]
 custom_minimum_size = Vector2(245, 65)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
+theme = ExtResource("9_text")
 text = "Uneasy"
 horizontal_alignment = 2
 vertical_alignment = 1
