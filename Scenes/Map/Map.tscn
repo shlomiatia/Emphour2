@@ -1,13 +1,12 @@
 [gd_scene format=3 uid="uid://dl38kgy3xnhwt"]
 
 [ext_resource type="Script" uid="uid://uv1cyboafa0j" path="res://Scenes/Map/map.gd" id="1_map"]
-[ext_resource type="Texture2D" uid="uid://dalarjfd4yb8d" path="res://Textures/Europe.png" id="2_europe"]
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
-[ext_resource type="Theme" path="res://Themes/PanelText.tres" id="4_text"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="7_parchment"]
 [ext_resource type="Theme" path="res://Themes/PanelText.tres" id="8_small_parchment"]
+[ext_resource type="PackedScene" path="res://Entities/EuropeMap/EuropeMap.tscn" id="9_europe_map"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_header"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -34,9 +33,7 @@ corner_radius_top_right = 8
 [node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
 
-[node name="Europe" type="Sprite2D" parent="." unique_id=930417886]
-position = Vector2(1035, 624)
-texture = ExtResource("2_europe")
+[node name="EuropeMap" parent="." instance=ExtResource("9_europe_map")]
 
 [node name="MapShade" type="ColorRect" parent="." unique_id=1499670773]
 offset_right = 1920.0
@@ -108,7 +105,7 @@ offset_right = 1230.0
 offset_bottom = 146.0
 theme_override_styles/panel = SubResource("StyleBox_header")
 
-[node name="TitleBackground" type="Panel" parent="CanvasLayer/KingdomLoyalty"]
+[node name="TitleBackground" type="Panel" parent="CanvasLayer/KingdomLoyalty" unique_id=373315012]
 layout_mode = 0
 offset_right = 540.0
 offset_bottom = 46.0
@@ -142,9 +139,9 @@ offset_left = 330.0
 offset_top = 43.0
 offset_right = 518.0
 offset_bottom = 81.0
+theme = ExtResource("8_small_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 3
-theme = ExtResource("4_text")
 text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -165,9 +162,9 @@ offset_left = 330.0
 offset_top = 82.0
 offset_right = 518.0
 offset_bottom = 120.0
+theme = ExtResource("8_small_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 3
-theme = ExtResource("4_text")
 text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
