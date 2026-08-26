@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="Theme" path="res://Themes/PanelText.tres" id="8_small_parchment"]
 [ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="9_europe_map"]
-[ext_resource type="PackedScene" path="res://Entities/PanelTitle/PanelTitle.tscn" id="10_title"]
+[ext_resource type="PackedScene" uid="uid://dk0oioyfkjskv" path="res://Entities/PanelTitle/PanelTitle.tscn" id="10_title"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_header"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -98,13 +98,11 @@ city_name = "Abbeville"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]
 
-[node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]
-
 [node name="KingdomLoyalty" type="PanelContainer" parent="CanvasLayer" unique_id=106806148]
 offset_left = 664.0
 offset_top = 18.0
-offset_right = 1256.0
-offset_bottom = 102.0
+offset_right = 1272.0
+offset_bottom = 134.0
 theme_override_styles/panel = SubResource("StyleBox_header")
 
 [node name="PanelContent" type="VBoxContainer" parent="CanvasLayer/KingdomLoyalty" unique_id=1304133691]
@@ -159,6 +157,8 @@ theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098,
 theme_override_constants/outline_size = 3
 text = "Neutral"
 vertical_alignment = 1
+
+[node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]
 
 [node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=1313794689]
 stream = ExtResource("6_confirm")

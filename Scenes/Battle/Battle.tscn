@@ -66,7 +66,7 @@ position = Vector2(960, 410)
 row_spacing = 80.0
 
 [node name="EnemyHand" parent="CardLayer" unique_id=245630305 instance=ExtResource("4_hand")]
-position = Vector2(960, 74)
+position = Vector2(960, 65)
 side = 1
 face_down = true
 card_spacing = 40.0
