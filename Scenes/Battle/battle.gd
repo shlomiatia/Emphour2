@@ -3,10 +3,10 @@ class_name CardBattle extends Node2D
 const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 
 @export var enemy_deck: EnemyDeck
-@onready var board: Board = $Board
+@onready var board: Board = $CardLayer/Board
 @onready var shaking_camera: ShakingCamera = $ShakingCamera
-@onready var player_hand: CardHand = $PlayerHand
-@onready var enemy_hand: CardHand = $EnemyHand
+@onready var player_hand: CardHand = $CardLayer/PlayerHand
+@onready var enemy_hand: CardHand = $CardLayer/EnemyHand
 @onready var player_discard: DiscardPile = $Interface/PlayerDiscard/Pile
 @onready var enemy_discard: DiscardPile = $Interface/EnemyDiscard/Pile
 @onready var battle: BattleResolver = $BattleResolver
@@ -20,7 +20,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var result_label: Label = $Interface/Result/Label
 @onready var event_panel: Panel = $Interface/Event
 @onready var event_message: Label = $Interface/Event/Message
-@onready var audio: GameAudio = $Audio
+@onready var audio: GameAudio = Audio
 @onready var fade: Fade = $Interface/Fade
 
 var selectable_cards: Array[Card]
@@ -99,7 +99,10 @@ func shake_camera() -> void:
     shaking_camera.shake()
 
 func discard_card(card: Card) -> void:
-    get_discard(card.side).add_card(card)
+    var discard := get_discard(card.side)
+    card.reparent(self)
+    discard.add_card(card, false)
+    card.move_to_discard(discard.global_position)
 
 func get_discard(side: int) -> DiscardPile:
     return player_discard if side == GameRules.Side.PLAYER else enemy_discard

@@ -103,6 +103,13 @@ func move_to(target: Vector2, fade := false) -> void:
         tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
     await tween.finished
 
+func move_to_discard(target: Vector2) -> void:
+    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+    tween.tween_property(self, "global_position", target, 0.45)
+    tween.parallel().tween_property(self, "scale", Vector2.ZERO, 0.45)
+    tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
+    tween.tween_callback(queue_free)
+
 func move_to_line(target: Vector2) -> void:
     moving = true
     var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

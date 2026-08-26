@@ -5,7 +5,6 @@
 
 [node name="Board" type="Node2D" unique_id=1311631284]
 script = ExtResource("1_script")
-slot_count = 3
 row_spacing = 120.0
 
 [node name="Rows" type="Node2D" parent="." unique_id=1436301784]

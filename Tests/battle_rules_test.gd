@@ -35,7 +35,7 @@ func verify_defence_consumption(game: CardBattle) -> void:
     var archer := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == "Archer")[0] as Card
     var mantlet := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == "Mantlet")[0] as Card
     var militia := create_rule_card("Militia")
-    assert(game.battle.available_targets(archer, [mantlet, militia], [mantlet], []) == [mantlet, militia])
+    assert(game.battle.available_targets(archer, [mantlet, militia], [mantlet], []) == [militia])
     militia.free()
 
 func verify_loss_prediction(game: CardBattle) -> void:

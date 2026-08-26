@@ -1,7 +1,7 @@
 extends SceneTree
 
 var game: CardBattle
-var mantlet: Card
+var militia: Card
 var selection_checked := false
 
 func _initialize() -> void:
@@ -15,9 +15,9 @@ func run_test() -> void:
     await process_frame
     setup_cards()
     verify_card_input()
-    process_frame.connect(select_mantlet)
+    process_frame.connect(select_militia)
     await game.battle.resolve()
-    process_frame.disconnect(select_mantlet)
+    process_frame.disconnect(select_militia)
     assert(selection_checked)
     assert(game.enemy_discard.card_count == 1)
     game.free()
@@ -27,8 +27,8 @@ func setup_cards() -> void:
     clear_cards()
     var archer_one := add_card("Archer", GameRules.Side.PLAYER)
     var archer_two := add_card("Archer", GameRules.Side.PLAYER)
-    mantlet = add_card("Mantlet", GameRules.Side.ENEMY)
-    var militia := add_card("Militia", GameRules.Side.ENEMY)
+    var mantlet := add_card("Mantlet", GameRules.Side.ENEMY)
+    militia = add_card("Militia", GameRules.Side.ENEMY)
     game.board.play_leftmost(archer_one, GameRules.Side.PLAYER)
     game.board.play_leftmost(archer_two, GameRules.Side.PLAYER)
     game.board.play_leftmost(mantlet, GameRules.Side.ENEMY)
@@ -48,15 +48,15 @@ func add_card(card_name: String, side: int) -> Card:
     return card
 
 func verify_card_input() -> void:
-    for node in mantlet.find_children("*", "Control", true, false):
+    for node in militia.find_children("*", "Control", true, false):
         assert((node as Control).mouse_filter == Control.MOUSE_FILTER_IGNORE)
 
-func select_mantlet() -> void:
+func select_militia() -> void:
     if game.selectable_cards.is_empty():
         return
     var names := game.selectable_cards.map(func(card: Card) -> String: return card.card_name)
-    assert(names == ["Mantlet", "Militia"])
-    var slot := mantlet.get_parent().get_parent() as CardSlot
+    assert(names == ["Militia"])
+    var slot := militia.get_parent().get_parent() as CardSlot
     assert(slot.targetable)
     assert(game.board.get_target_at(mantlet.global_position) == slot)
     selection_checked = true

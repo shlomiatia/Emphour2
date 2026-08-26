@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
 [ext_resource type="Script" uid="uid://btorxy7bi5341" path="res://Scenes/Battle/battle.gd" id="1_battle"]
-[ext_resource type="Texture2D" uid="uid://dpghcl5vvayld" path="res://Textures/Background.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://bq3rkneg1oemu" path="res://Textures/Background.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://doavcnalvqtv1" path="res://Textures/Sky.png" id="3_6tmns"]
 [ext_resource type="PackedScene" uid="uid://bsql53vleifh1" path="res://Entities/Board/Board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
 [ext_resource type="PackedScene" path="res://Entities/DiscardPile/DiscardPile.tscn" id="5_discard"]
 [ext_resource type="Script" uid="uid://b0q3qtboon4wt" path="res://Scripts/battle_resolver.gd" id="6_battle"]
 [ext_resource type="Script" uid="uid://c6ngpnt2iur5a" path="res://Scripts/turn_state.gd" id="7_turn"]
 [ext_resource type="Script" uid="uid://cna2jv3ibfvv4" path="res://Scripts/battle_state.gd" id="8_battle_state"]
-[ext_resource type="Script" uid="uid://b1p4vw54bbj1e" path="res://Scripts/game_audio.gd" id="9_audio"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
 [ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
@@ -38,16 +38,22 @@ corner_radius_bottom_left = 8
 script = ExtResource("1_battle")
 enemy_deck = SubResource("Resource_enemy_deck")
 
+[node name="Sky" type="Sprite2D" parent="." unique_id=733791362]
+position = Vector2(960, 540)
+texture = ExtResource("3_6tmns")
+
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
 position = Vector2(960, 540)
 texture = ExtResource("2_background")
 
 [node name="ShakingCamera" parent="." unique_id=518469472 instance=ExtResource("16_shake")]
 
-[node name="Board" parent="." unique_id=1079065982 instance=ExtResource("3_board")]
+[node name="CardLayer" type="CanvasLayer" parent="." unique_id=780174864]
+
+[node name="Board" parent="CardLayer" unique_id=1079065982 instance=ExtResource("3_board")]
 position = Vector2(960, 410)
 
-[node name="EnemyHand" parent="." unique_id=245630305 instance=ExtResource("4_hand")]
+[node name="EnemyHand" parent="CardLayer" unique_id=245630305 instance=ExtResource("4_hand")]
 position = Vector2(960, 74)
 side = 1
 face_down = true
@@ -57,7 +63,7 @@ arc_direction = -1.0
 hover_enabled = false
 hover_offset = Vector2(0, 0)
 
-[node name="PlayerHand" parent="." unique_id=1302264869 instance=ExtResource("4_hand")]
+[node name="PlayerHand" parent="CardLayer" unique_id=1302264869 instance=ExtResource("4_hand")]
 position = Vector2(960, 954)
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
@@ -109,6 +115,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BattleHud" parent="Interface" unique_id=548796464 instance=ExtResource("13_hud")]
+anchors_preset = 0
 offset_top = 350.0
 offset_bottom = 476.0
 
@@ -180,10 +187,3 @@ script = ExtResource("7_turn")
 
 [node name="LoyaltyEvents" type="Node" parent="." unique_id=1954826993]
 script = ExtResource("14_loyalty")
-
-[node name="Audio" type="Node" parent="." unique_id=1211780519]
-script = ExtResource("9_audio")
-
-[node name="Effects" type="AudioStreamPlayer" parent="Audio" unique_id=1991389209]
-
-[node name="Music" type="AudioStreamPlayer" parent="Audio" unique_id=1920207098]

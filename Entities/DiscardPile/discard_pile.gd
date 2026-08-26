@@ -28,10 +28,11 @@ func move_card(card: Card, delta: float) -> void:
     card.position = card.position.lerp(Vector2.ZERO, weight)
     card.rotation = lerp_angle(card.rotation, 0.0, weight)
 
-func add_card(card: Card) -> void:
+func add_card(card: Card, free := true) -> void:
     card_count += 1
     count_label.text = str(card_count)
-    card.queue_free()
+    if free:
+        card.queue_free()
 
 func add_defeated(card: Card) -> void:
     card_count += 1

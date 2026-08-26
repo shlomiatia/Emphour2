@@ -8,12 +8,19 @@ class_name BattleHud extends Control
 
 var marker_tween: Tween
 var preview_tween: Tween
+var player_loss_count := 0
+var enemy_loss_count := 0
+var losses_faded := false
 
 func set_losses(player: int, enemy: int) -> void:
+    player_loss_count = player
+    enemy_loss_count = enemy
+    losses_faded = false
     set_loss_icons(player_losses, player)
     set_loss_icons(enemy_losses, enemy)
 
 func fade_losses() -> Signal:
+    losses_faded = true
     var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
     for icon in enemy_losses + player_losses:
         if icon.visible:
@@ -29,6 +36,9 @@ func remove_loss(side: int) -> void:
             return
 
 func set_preview(value: int) -> void:
+    if !losses_faded:
+        set_loss_icons(player_losses, player_loss_count)
+        set_loss_icons(enemy_losses, enemy_loss_count)
     var target := meter_position(value, preview)
     if preview_tween:
         preview_tween.kill()
