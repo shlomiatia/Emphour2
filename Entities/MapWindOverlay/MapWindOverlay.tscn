@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://csab0iffw26jr"]
+[gd_scene load_steps=4 format=3 uid="uid://csab0iffw26jr"]
+
+[ext_resource type="Texture2D" uid="uid://dgqt0te5o3uwv" path="res://Textures/Europe.png" id="1_europe"]
 
 [sub_resource type="Shader" id="Shader_map_wind"]
 code = "shader_type canvas_item;
@@ -50,7 +52,8 @@ void fragment() {
 	float band = floor(p.y / band_spacing_px);
 	float n = max(band_value(p, band - 1.0), band_value(p, band));
 	n = max(n, band_value(p, band + 1.0));
-	COLOR = vec4(COLOR.rgb, COLOR.a * step(threshold, n) * opacity);
+	float land_alpha = texture(TEXTURE, UV).a;
+	COLOR = vec4(COLOR.rgb, COLOR.a * land_alpha * step(threshold, n) * opacity);
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_map_wind"]
@@ -66,9 +69,8 @@ shader_parameter/threshold = 0.7
 shader_parameter/opacity = 0.045
 shader_parameter/corner_roundness = 0.18
 
-[node name="MapWindOverlay" type="ColorRect" unique_id=1032547625]
+[node name="MapWindOverlay" type="Sprite2D" unique_id=1032547625]
 material = SubResource("ShaderMaterial_map_wind")
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 2
-color = Color(0.075, 0.15, 0.06, 1)
+position = Vector2(1035, 624)
+texture = ExtResource("1_europe")
+modulate = Color(0.075, 0.15, 0.06, 1)

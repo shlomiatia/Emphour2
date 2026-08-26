@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgqt0te5o3uwv"
-path="res://.godot/imported/Europe.png-d73caa50a44a22be37d07fbbd2205e86.ctex"
+uid="uid://bb8u1xrofe7qw"
+path="res://.godot/imported/Mediterranean.png-56aa1cbf8dcb97cae272a463dc51144f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Europe.png"
-dest_files=["res://.godot/imported/Europe.png-d73caa50a44a22be37d07fbbd2205e86.ctex"]
+source_file="res://Textures/Mediterranean.png"
+dest_files=["res://.godot/imported/Mediterranean.png-56aa1cbf8dcb97cae272a463dc51144f.ctex"]
 
 [params]
 
