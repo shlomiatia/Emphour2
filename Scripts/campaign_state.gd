@@ -21,12 +21,12 @@ enum Relation {
 
 const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Light Cavalry", "Militia", "Militia", "Militia", "Militia", "Militia", "Militia"]
 const STARTING_OWNERS := {
-	"Paris": Faction.REBELS,
-	"Rouen": Faction.REBELS,
-	"Amiens": Faction.REBELS,
-	"Abbeville": Faction.REBELS,
-	"Boulogne": Faction.REBELS,
-	"Calais": Faction.REBELS
+	"City 1": Faction.REBELS,
+	"City 2": Faction.REBELS,
+	"City 3": Faction.REBELS,
+	"City 4": Faction.REBELS,
+	"City 5": Faction.REBELS,
+	"City 6": Faction.REBELS
 }
 
 static var selected_city := ""
@@ -51,10 +51,10 @@ static func capture_selected_city() -> void:
 	var was_final := is_final_battle()
 	city_owner[selected_city] = Faction.FRANKS
 	if city_owner.values().all(func(owner: int) -> bool: return owner == Faction.FRANKS) && !was_final:
-		city_owner["Paris"] = Faction.REBELS
+		city_owner["City 1"] = Faction.REBELS
 
 static func is_final_battle() -> bool:
-	return city_owner["Paris"] == Faction.REBELS && city_owner.values().count(Faction.FRANKS) == city_owner.size() - 1
+	return city_owner["City 1"] == Faction.REBELS && city_owner.values().count(Faction.FRANKS) == city_owner.size() - 1
 
 static func enemy_city() -> String:
 	return "City 7" if is_final_battle() else selected_city

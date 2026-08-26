@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
-[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="7_parchment"]
 [ext_resource type="Theme" path="res://Themes/PanelText.tres" id="8_small_parchment"]
-[ext_resource type="PackedScene" path="res://Entities/EuropeMap/EuropeMap.tscn" id="9_europe_map"]
+[ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="9_europe_map"]
+[ext_resource type="PackedScene" path="res://Entities/PanelTitle/PanelTitle.tscn" id="10_title"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_header"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -20,20 +20,10 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_title"]
-bg_color = Color(0.172549, 0.243137, 0.301961, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.352941, 0.286275, 0.196078, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-
 [node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
 
-[node name="EuropeMap" parent="." instance=ExtResource("9_europe_map")]
+[node name="EuropeMap" parent="." unique_id=1765005480 instance=ExtResource("9_europe_map")]
 
 [node name="MapShade" type="ColorRect" parent="." unique_id=1499670773]
 offset_right = 1920.0
@@ -45,131 +35,130 @@ color = Color(0.32, 0.22, 0.08, 0.12)
 
 [node name="Roads" type="Node2D" parent="MapElements" unique_id=669451369]
 
-[node name="ParisToRouen" type="Line2D" parent="MapElements/Roads" unique_id=1337790449]
-points = PackedVector2Array(800, 538, 750, 500)
+[node name="Road1" type="Line2D" parent="MapElements/Roads" unique_id=1337790449]
+points = PackedVector2Array(891, 583, 864, 472)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
+metadata/source_city = 1
+metadata/target_city = 2
 
-[node name="RouenToAmiens" type="Line2D" parent="MapElements/Roads" unique_id=1593756111]
-points = PackedVector2Array(750, 500, 785, 450)
+[node name="Road2" type="Line2D" parent="MapElements/Roads" unique_id=1593756111]
+points = PackedVector2Array(864, 472, 738, 499)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
+metadata/source_city = 2
+metadata/target_city = 3
 
-[node name="AmiensToAbbeville" type="Line2D" parent="MapElements/Roads" unique_id=1864216985]
-points = PackedVector2Array(785, 450, 750, 405)
+[node name="Road3" type="Line2D" parent="MapElements/Roads" unique_id=1864216985]
+points = PackedVector2Array(738, 499, 766, 619)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
+metadata/source_city = 3
+metadata/target_city = 4
 
-[node name="AbbevilleToBoulogne" type="Line2D" parent="MapElements/Roads" unique_id=324206234]
-points = PackedVector2Array(750, 405, 770, 360)
+[node name="Road4" type="Line2D" parent="MapElements/Roads" unique_id=324206234]
+points = PackedVector2Array(766, 619, 679, 709)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
+metadata/source_city = 4
+metadata/target_city = 5
 
-[node name="BoulogneToCalais" type="Line2D" parent="MapElements/Roads" unique_id=635525019]
-points = PackedVector2Array(770, 360, 805, 320)
+[node name="Road5" type="Line2D" parent="MapElements/Roads" unique_id=635525019]
+points = PackedVector2Array(679, 709, 819, 745)
 width = 8.0
 default_color = Color(0.2, 0.13, 0.07, 0.72)
+metadata/source_city = 5
+metadata/target_city = 6
 
 [node name="Cities" type="Node2D" parent="MapElements" unique_id=2003977789]
 
-[node name="Paris" parent="MapElements/Cities" unique_id=923179646 instance=ExtResource("3_city")]
-position = Vector2(800, 538)
+[node name="City1" parent="MapElements/Cities" unique_id=923179646 instance=ExtResource("3_city")]
+position = Vector2(891, 583)
 city_name = "Paris"
 
-[node name="Rouen" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
-position = Vector2(750, 500)
-city_name = "Rouen"
-
-[node name="Amiens" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
-position = Vector2(785, 450)
+[node name="City2" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
+position = Vector2(864, 472)
 city_name = "Amiens"
 
-[node name="Abbeville" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
-position = Vector2(750, 405)
-city_name = "Abbeville"
+[node name="City3" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
+position = Vector2(738, 499)
+city_name = "Rouen"
 
-[node name="Boulogne" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
-position = Vector2(770, 360)
+[node name="City4" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
+position = Vector2(766, 619)
 city_name = "Boulogne"
 
-[node name="Calais" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
-position = Vector2(805, 320)
+[node name="City5" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
+position = Vector2(679, 709)
 city_name = "Calais"
+
+[node name="City6" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
+position = Vector2(819, 745)
+city_name = "Abbeville"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]
 
-[node name="KingdomLoyalty" type="Panel" parent="CanvasLayer" unique_id=374410194]
-offset_left = 690.0
-offset_top = 14.0
-offset_right = 1230.0
-offset_bottom = 146.0
+[node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]
+
+[node name="KingdomLoyalty" type="PanelContainer" parent="CanvasLayer" unique_id=106806148]
+offset_left = 664.0
+offset_top = 18.0
+offset_right = 1256.0
+offset_bottom = 102.0
 theme_override_styles/panel = SubResource("StyleBox_header")
 
-[node name="TitleBackground" type="Panel" parent="CanvasLayer/KingdomLoyalty" unique_id=373315012]
-layout_mode = 0
-offset_right = 540.0
-offset_bottom = 46.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBox_title")
+[node name="PanelContent" type="VBoxContainer" parent="CanvasLayer/KingdomLoyalty" unique_id=1304133691]
+layout_mode = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=1625869914]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 4.0
-offset_right = 524.0
-offset_bottom = 42.0
-theme = ExtResource("7_parchment")
-text = "KINGDOM LOYALTY"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="TitleBackground" parent="CanvasLayer/KingdomLoyalty/PanelContent" unique_id=373315012 instance=ExtResource("10_title")]
+layout_mode = 2
 
-[node name="Peasants" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=1887101475]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 43.0
-offset_right = 330.0
-offset_bottom = 81.0
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent" unique_id=1932809427]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ContentTitleContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer" unique_id=749810471]
+layout_mode = 2
+theme_override_constants/separation = 128
+
+[node name="PeasantsContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer" unique_id=1055832925]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Peasants" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=1887101475]
+layout_mode = 2
 theme = ExtResource("8_small_parchment")
 text = "Peasants"
 vertical_alignment = 1
 
-[node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=465970467]
-layout_mode = 0
-offset_left = 330.0
-offset_top = 43.0
-offset_right = 518.0
-offset_bottom = 81.0
+[node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=465970467]
+layout_mode = 2
 theme = ExtResource("8_small_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 3
 text = "Neutral"
-horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Nobility" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=26332371]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 82.0
-offset_right = 330.0
-offset_bottom = 120.0
+[node name="NobilityContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer" unique_id=298819769]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Nobility" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=26332371]
+layout_mode = 2
 theme = ExtResource("8_small_parchment")
 text = "Nobility"
 vertical_alignment = 1
 
-[node name="NobilityStatus" type="Label" parent="CanvasLayer/KingdomLoyalty" unique_id=670872147]
-layout_mode = 0
-offset_left = 330.0
-offset_top = 82.0
-offset_right = 518.0
-offset_bottom = 120.0
+[node name="NobilityStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=670872147]
+layout_mode = 2
 theme = ExtResource("8_small_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 3
 text = "Neutral"
-horizontal_alignment = 2
 vertical_alignment = 1
-
-[node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]
 
 [node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=1313794689]
 stream = ExtResource("6_confirm")

@@ -35,18 +35,22 @@ func verify_campaign() -> void:
 	assert(!map.get_node_or_null("CanvasLayer/Tooltip"))
 	for city in cities.get_children():
 		assert(city.get_node("Name").text == city.city_name)
-	assert(cities.get_node("Paris").modulate == Color("#f5eee2"))
-	assert(cities.get_node("Paris").attackable)
-	assert(!cities.get_node("Rouen").attackable)
-	assert(!cities.get_node("Amiens").attackable)
+	assert(cities.get_node("City1/Marker").modulate == Color("#f5eee2"))
+	assert(cities.get_node("City1").attackable)
+	assert(!cities.get_node("City2").attackable)
+	assert(!cities.get_node("City3").attackable)
 	assert(map.peasants_status.text == "Neutral")
+	CampaignState.selected_city = "City 1"
+	CampaignState.capture_selected_city()
+	assert(map.is_attackable("City 2"))
+	CampaignState.reset()
 
 func verify_battle_transition() -> void:
-	map._on_city_clicked(map.get_node("MapElements/Cities/Rouen"))
+	map._on_city_clicked(map.get_node("MapElements/Cities/City3"))
 	await process_frame
 	assert(!map.input_disabled)
-	map._on_city_clicked(map.get_node("MapElements/Cities/Paris"))
+	map._on_city_clicked(map.get_node("MapElements/Cities/City1"))
 	for _frame in 30:
 		await process_frame
-	assert(CampaignState.selected_city == "Paris")
+	assert(CampaignState.selected_city == "City 1")
 	assert(current_scene is CardBattle)

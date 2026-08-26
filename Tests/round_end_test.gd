@@ -8,7 +8,7 @@ func _initialize() -> void:
 func run_test() -> void:
     Engine.time_scale = 30.0
     CampaignState.reset()
-    CampaignState.selected_city = "Paris"
+    CampaignState.selected_city = "City 1"
     CampaignState.player_deck.assign(["Militia"])
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
     game.get_node("Board").slot_count = 1

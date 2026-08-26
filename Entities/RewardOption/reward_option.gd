@@ -4,7 +4,7 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 
 @export var group_name := "Peasants"
 @export var option_id := "Peasants"
-@onready var title: Label = $Panel/Title
+@onready var title: Label = $Panel/TitleBackground/MarginContainer/Title
 @onready var offer_root: Node2D = $Panel/Offer
 @onready var arrow: Label = $Panel/Offer/Arrow
 

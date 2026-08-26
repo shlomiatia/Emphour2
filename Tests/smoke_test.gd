@@ -8,7 +8,7 @@ func _initialize() -> void:
 
 func run_test() -> void:
     Engine.time_scale = 30.0
-    CampaignState.selected_city = "Paris"
+    CampaignState.selected_city = "City 1"
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
     root.add_child(game)
     await process_frame

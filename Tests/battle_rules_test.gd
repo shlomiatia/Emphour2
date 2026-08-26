@@ -58,10 +58,10 @@ func verify_enemy_deck_generation() -> void:
     var value: int = deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0)
     assert(deck.size() == 8)
     assert(value == 20)
-    assert(EnemyDeck.new().build("Paris") == ["Light Cavalry", "Militia", "Militia"])
-    assert(EnemyDeck.new().build("Rouen") == ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"])
+    assert(EnemyDeck.new().build("City 1") == ["Light Cavalry", "Militia", "Militia"])
+    assert(EnemyDeck.new().build("City 3") == ["Archer", "Axeman", "Mantlet", "Stakes", "Militia", "Militia"])
     assert(EnemyDeck.new().build("City 7").size() == 9)
-    var late_deck := EnemyDeck.new().build("Amiens")
+    var late_deck := EnemyDeck.new().build("City 2")
     assert(late_deck.size() == 9)
     assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 10)
 

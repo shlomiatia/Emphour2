@@ -18,7 +18,7 @@ func run_test() -> void:
 	quit()
 
 func open_reward() -> void:
-	CampaignState.selected_city = "Rouen"
+	CampaignState.selected_city = "City 3"
 	var game := load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
 	root.add_child(game)
 	current_scene = game
@@ -60,7 +60,7 @@ func verify_final_campaign() -> void:
 		CampaignState.capture_selected_city()
 	assert(CampaignState.is_final_battle())
 	assert(CampaignState.enemy_city() == "City 7")
-	CampaignState.selected_city = "Paris"
+	CampaignState.selected_city = "City 1"
 	CampaignState.capture_selected_city()
 	assert(!CampaignState.is_final_battle())
 	CampaignState.reset()
@@ -91,5 +91,5 @@ func verify_choice() -> void:
 	assert(CampaignState.public_loyalty["Nobility"] == 1)
 	assert(CampaignState.internal_loyalty["Peasants"] == -1)
 	assert(CampaignState.internal_loyalty["Nobility"] == 1)
-	assert(CampaignState.city_owner["Rouen"] == CampaignState.Faction.FRANKS)
+	assert(CampaignState.city_owner["City 3"] == CampaignState.Faction.FRANKS)
 	assert(current_scene is CampaignMap)
