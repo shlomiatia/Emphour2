@@ -81,6 +81,7 @@ func verify_enemy_deck_generation() -> void:
     assert(EnemyDeckPicker.total_weight(["Militia", "Archer", "Mantlet", "Stakes"]) == 10)
     verify_generated_city("City 3")
     verify_generated_city("City 7")
+    verify_final_loyalty_decks()
     var late_deck := EnemyDeck.new().build("City 2")
     assert(late_deck.size() == 6)
     assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 7)
@@ -91,6 +92,20 @@ func verify_generated_city(city_name: String) -> void:
     var value: float = deck.reduce(func(sum: float, card: String) -> float: return sum + CardCatalog.get_value(card), 0.0)
     assert(deck.size() == rule[0])
     assert(value == rule[1])
+
+func verify_final_loyalty_decks() -> void:
+    var loyalty := CampaignState.loyalty.duplicate()
+    CampaignState.loyalty = {"Peasants": 0, "Nobility": -1}
+    verify_final_loyalty_deck(9, 24, "Nobility")
+    CampaignState.loyalty = {"Peasants": -1, "Nobility": 0}
+    verify_final_loyalty_deck(13, 20, "Peasants")
+    CampaignState.loyalty = loyalty
+
+func verify_final_loyalty_deck(count: int, value: int, group: String) -> void:
+    var deck := EnemyDeck.new().build("City 7")
+    assert(deck.size() == count)
+    assert(deck.all(func(card: String) -> bool: return RewardRules.belongs_to(card, group)))
+    assert(deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == value)
 
 func verify_loyalty_rules() -> void:
     assert(LoyaltyRules.CHANCES[-1] == [10, 0, 0])
