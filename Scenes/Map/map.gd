@@ -106,9 +106,11 @@ func _on_city_hovered(city: CampaignCity) -> void:
 func set_tooltip_change(index: int, faction: CampaignState.Faction, target: int) -> void:
 	var change := tooltip_changes[index] as HBoxContainer
 	var icon := change.get_node("Group/Icon") as TextureRect
+	var name := change.get_node("Group/Name") as Label
 	icon.texture = SHIELD
 	icon.modulate = CampaignState.faction_color(faction)
-	(change.get_node("Group/Name") as Label).text = CampaignState.faction_name(faction)
+	name.custom_minimum_size = Vector2(200, 0)
+	name.text = CampaignState.faction_name(faction)
 	set_loyalty_label(change.get_node("Change/Current"), CampaignState.foreign_loyalty[faction])
 	set_loyalty_label(change.get_node("Change/Target"), target)
 
