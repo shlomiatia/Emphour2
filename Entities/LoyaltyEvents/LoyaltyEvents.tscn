@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" uid="uid://cypnnhxaescn5" path="res://Scripts/loyalty_events.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://78k8cepj200s" path="res://Scripts/loyalty_events.gd" id="1_script"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="2_text"]
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="3_panel"]
 

@@ -8,3 +8,8 @@ static func create(card_name: String, side: int, faction := -1) -> Card:
     card.side = side
     card.faction = faction if faction != -1 else CampaignState.Faction.FRANKS if side == GameRules.Side.PLAYER else CampaignState.Faction.REBELS
     return card
+
+static func create_campaign_card(entry: CampaignCard, side: int) -> Card:
+    var card := create(entry.card_name, side, entry.faction)
+    card.deck_entry = entry
+    return card

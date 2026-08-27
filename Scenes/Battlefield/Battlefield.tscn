@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
 [ext_resource type="PackedScene" uid="uid://mwa45cj2iwgm" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
 [ext_resource type="PackedScene" path="res://Entities/LoyaltyEvents/LoyaltyEvents.tscn" id="14_loyalty"]
-[ext_resource type="Script" uid="uid://bidf16fg4sulc" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
+[ext_resource type="Script" uid="uid://cf7wcta8lkxk7" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="15_panel"]
 [ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
 [ext_resource type="PackedScene" path="res://Entities/WindOverlay/WindOverlay.tscn" id="18_wind"]

@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" path="res://Entities/WindOverlay/WindOverlay.tscn" id="2_map_wind"]
 [ext_resource type="Texture2D" uid="uid://bb8u1xrofe7qw" path="res://Textures/Mediterranean.png" id="3_mediterranean"]
 [ext_resource type="Shader" uid="uid://dyfgrenf2ywqr" path="res://Shaders/haze.gdshader" id="4_haze"]
+[ext_resource type="Texture2D" uid="uid://c5nnwocwa43vu" path="res://Textures/Wave.png" id="4_iryji"]
+[ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="5_06ubw"]
+[ext_resource type="Texture2D" uid="uid://nfcfp4bwjyuv" path="res://Textures/Tree.png" id="5_vneyi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_haze"]
 shader = ExtResource("4_haze")
@@ -12,6 +15,20 @@ shader_parameter/intensity = 0.0250000011875
 shader_parameter/blur_amount = 0.0
 shader_parameter/modulate_color = Color(1, 1, 1, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iryji"]
+resource_local_to_scene = true
+shader = ExtResource("5_06ubw")
+shader_parameter/wind_dir_angle = 0.0
+shader_parameter/wind_speed = 16.0
+shader_parameter/patch_width_px = 240.0
+shader_parameter/patch_height_px = 28.0
+shader_parameter/band_spacing_px = 9.0
+shader_parameter/pixel_size_px = 1.0
+shader_parameter/rotation_degrees = -15.0
+shader_parameter/threshold = 0.7
+shader_parameter/opacity = 0.045
+shader_parameter/corner_roundness = 0.18
+
 [node name="EuropeMap" type="Node2D" unique_id=657417955]
 
 [node name="Mediterranean" type="Sprite2D" parent="." unique_id=1187123707]
@@ -19,11 +36,314 @@ material = SubResource("ShaderMaterial_haze")
 position = Vector2(1035, 648)
 texture = ExtResource("3_mediterranean")
 
+[node name="Wave" type="TextureRect" parent="Mediterranean" unique_id=1810301195]
+texture_repeat = 2
+offset_left = -806.0
+offset_top = 8.0
+offset_right = -730.0
+offset_bottom = 20.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave2" type="TextureRect" parent="Mediterranean" unique_id=473615812]
+texture_repeat = 2
+offset_left = -794.0
+offset_top = 23.0
+offset_right = -743.0
+offset_bottom = 35.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave3" type="TextureRect" parent="Mediterranean" unique_id=1271934505]
+texture_repeat = 2
+offset_left = -203.0
+offset_top = -491.0
+offset_right = -127.0
+offset_bottom = -479.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave4" type="TextureRect" parent="Mediterranean" unique_id=1073298483]
+texture_repeat = 2
+offset_left = -191.0
+offset_top = -476.0
+offset_right = -140.0
+offset_bottom = -464.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave5" type="TextureRect" parent="Mediterranean" unique_id=1730810397]
+texture_repeat = 2
+offset_left = -242.0
+offset_top = 327.0
+offset_right = -166.0
+offset_bottom = 339.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave6" type="TextureRect" parent="Mediterranean" unique_id=998615961]
+texture_repeat = 2
+offset_left = -230.0
+offset_top = 342.0
+offset_right = -179.0
+offset_bottom = 354.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave7" type="TextureRect" parent="Mediterranean" unique_id=475991968]
+texture_repeat = 2
+offset_left = 796.0
+offset_top = 152.0
+offset_right = 872.0
+offset_bottom = 164.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave8" type="TextureRect" parent="Mediterranean" unique_id=1960296322]
+texture_repeat = 2
+offset_left = 808.0
+offset_top = 167.0
+offset_right = 859.0
+offset_bottom = 179.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave9" type="TextureRect" parent="Mediterranean" unique_id=111573413]
+texture_repeat = 2
+offset_left = -965.0
+offset_top = -543.0
+offset_right = -889.0
+offset_bottom = -531.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave10" type="TextureRect" parent="Mediterranean" unique_id=1632062275]
+texture_repeat = 2
+offset_left = -953.0
+offset_top = -528.0
+offset_right = -902.0
+offset_bottom = -516.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave11" type="TextureRect" parent="Mediterranean" unique_id=564852014]
+texture_repeat = 2
+offset_left = 187.0
+offset_top = 241.0
+offset_right = 263.0
+offset_bottom = 253.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave12" type="TextureRect" parent="Mediterranean" unique_id=2066158611]
+texture_repeat = 2
+offset_left = 199.0
+offset_top = 256.0
+offset_right = 250.0
+offset_bottom = 268.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave13" type="TextureRect" parent="Mediterranean" unique_id=809168651]
+texture_repeat = 2
+offset_left = 39.0
+offset_top = 379.0
+offset_right = 115.0
+offset_bottom = 391.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave14" type="TextureRect" parent="Mediterranean" unique_id=1547206910]
+texture_repeat = 2
+offset_left = 51.0
+offset_top = 394.0
+offset_right = 102.0
+offset_bottom = 406.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave15" type="TextureRect" parent="Mediterranean" unique_id=913001714]
+texture_repeat = 2
+offset_left = 279.0
+offset_top = -512.0
+offset_right = 355.0
+offset_bottom = -500.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave16" type="TextureRect" parent="Mediterranean" unique_id=139934025]
+texture_repeat = 2
+offset_left = 291.0
+offset_top = -497.0
+offset_right = 342.0
+offset_bottom = -485.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave17" type="TextureRect" parent="Mediterranean" unique_id=1743741488]
+texture_repeat = 2
+offset_left = -566.0
+offset_top = -283.0
+offset_right = -521.0
+offset_bottom = -271.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave18" type="TextureRect" parent="Mediterranean" unique_id=1427968245]
+texture_repeat = 2
+offset_left = -585.0
+offset_top = -268.0
+offset_right = -534.0
+offset_bottom = -256.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave19" type="TextureRect" parent="Mediterranean" unique_id=343702909]
+texture_repeat = 2
+offset_left = 578.0
+offset_top = 384.0
+offset_right = 623.0
+offset_bottom = 396.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
+[node name="Wave20" type="TextureRect" parent="Mediterranean" unique_id=85660305]
+texture_repeat = 2
+offset_left = 559.0
+offset_top = 399.0
+offset_right = 610.0
+offset_bottom = 411.0
+texture = ExtResource("4_iryji")
+stretch_mode = 1
+
 [node name="Europe" type="Sprite2D" parent="." unique_id=388544906]
 position = Vector2(1035, 648)
 texture = ExtResource("1_europe")
 
+[node name="Trees" type="Node2D" parent="Europe" unique_id=1161246877]
+
+[node name="Tree" type="Sprite2D" parent="Europe/Trees" unique_id=1352299205]
+position = Vector2(-605, 352)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree2" type="Sprite2D" parent="Europe/Trees" unique_id=1109733124]
+position = Vector2(-625, 370)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree3" type="Sprite2D" parent="Europe/Trees" unique_id=896550533]
+position = Vector2(-587, 374)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree4" type="Sprite2D" parent="Europe/Trees" unique_id=661492343]
+position = Vector2(519, 151)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree5" type="Sprite2D" parent="Europe/Trees" unique_id=1973299691]
+position = Vector2(498, 170)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree6" type="Sprite2D" parent="Europe/Trees" unique_id=1937858192]
+position = Vector2(483, 149)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree7" type="Sprite2D" parent="Europe/Trees" unique_id=260176012]
+position = Vector2(498, 139)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree8" type="Sprite2D" parent="Europe/Trees" unique_id=859185454]
+position = Vector2(803, -127)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree9" type="Sprite2D" parent="Europe/Trees" unique_id=416470640]
+position = Vector2(771, -146)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree10" type="Sprite2D" parent="Europe/Trees" unique_id=1858205698]
+position = Vector2(776, -117)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree11" type="Sprite2D" parent="Europe/Trees" unique_id=1921904769]
+position = Vector2(786, -134)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree12" type="Sprite2D" parent="Europe/Trees" unique_id=971262981]
+position = Vector2(786, 383)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree13" type="Sprite2D" parent="Europe/Trees" unique_id=1714274495]
+position = Vector2(802, 401)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree14" type="Sprite2D" parent="Europe/Trees" unique_id=382747518]
+position = Vector2(770, 402)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree15" type="Sprite2D" parent="Europe/Trees" unique_id=600991629]
+position = Vector2(363, -153)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree16" type="Sprite2D" parent="Europe/Trees" unique_id=2057330289]
+position = Vector2(387, -151)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree17" type="Sprite2D" parent="Europe/Trees" unique_id=1646219313]
+position = Vector2(375, -177)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree18" type="Sprite2D" parent="Europe/Trees" unique_id=2115267714]
+position = Vector2(777, -543)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree19" type="Sprite2D" parent="Europe/Trees" unique_id=58471263]
+position = Vector2(789, -560)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree20" type="Sprite2D" parent="Europe/Trees" unique_id=1516021860]
+position = Vector2(801, -540)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree21" type="Sprite2D" parent="Europe/Trees" unique_id=686605107]
+position = Vector2(161, -548)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree22" type="Sprite2D" parent="Europe/Trees" unique_id=898035218]
+position = Vector2(133, -559)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree23" type="Sprite2D" parent="Europe/Trees" unique_id=1192195292]
+position = Vector2(144, -533)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree24" type="Sprite2D" parent="Europe/Trees" unique_id=342904604]
+position = Vector2(92, 234)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree25" type="Sprite2D" parent="Europe/Trees" unique_id=565586392]
+position = Vector2(83, 258)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree26" type="Sprite2D" parent="Europe/Trees" unique_id=1226309346]
+position = Vector2(110, 249)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree27" type="Sprite2D" parent="Europe/Trees" unique_id=155276681]
+position = Vector2(-751, 313)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree28" type="Sprite2D" parent="Europe/Trees" unique_id=972647269]
+position = Vector2(-769, 303)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree29" type="Sprite2D" parent="Europe/Trees" unique_id=901626156]
+position = Vector2(685, 43)
+texture = ExtResource("5_vneyi")
+
+[node name="Tree30" type="Sprite2D" parent="Europe/Trees" unique_id=1417431701]
+position = Vector2(-418, -559)
+texture = ExtResource("5_vneyi")
+
 [node name="WindOverlay" parent="." unique_id=389009123 instance=ExtResource("2_map_wind")]
+material = SubResource("ShaderMaterial_iryji")
 position = Vector2(1035, 648)
 texture = ExtResource("1_europe")
 patch_width = 120.0

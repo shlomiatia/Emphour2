@@ -32,6 +32,7 @@ const FACTION_PALETTES := {
 @onready var group_icon: Sprite2D = $Front/GroupIcon
 
 var data: CardData
+var deck_entry: CampaignCard
 var draggable := false
 var dragging := false
 var hovering := false

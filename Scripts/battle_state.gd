@@ -5,12 +5,12 @@ const MESSAGE_DURATION := 0.8
 var game: CardBattle
 var active := false
 var balance := 0
-var entry_deck: Array[String]
+var entry_deck: Array[CampaignCard]
 var entry_loyalty: Dictionary
 
 func setup(card_game: CardBattle) -> void:
     game = card_game
-    entry_deck.assign(CampaignState.player_deck)
+    entry_deck = CampaignState.copy_deck(CampaignState.player_deck)
     entry_loyalty = CampaignState.loyalty.duplicate()
 
 func start() -> void:
@@ -86,10 +86,14 @@ func restart() -> void:
     get_tree().change_scene_to_file("res://Scenes/Battlefield/Battlefield.tscn")
 
 func restore_entry_state() -> void:
-    CampaignState.player_deck.assign(entry_deck)
+    CampaignState.player_deck = CampaignState.copy_deck(entry_deck)
     CampaignState.loyalty = entry_loyalty.duplicate()
 
 func open_rewards() -> void:
     await get_tree().create_timer(MESSAGE_DURATION).timeout
     await game.fade.fade_out()
+    if CampaignState.is_act_2():
+        CampaignState.capture_selected_city()
+        get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
+        return
     get_tree().change_scene_to_file("res://Scenes/Reward/Reward.tscn")

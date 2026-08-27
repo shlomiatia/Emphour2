@@ -8,13 +8,19 @@ var active := false
 func setup(card_battle: CardBattle) -> void:
     game = card_battle
 
-func capture(group: String) -> void:
+func capture_group(group: String) -> void:
+    capture(func(entry: CampaignCard) -> bool: return RewardRules.belongs_to(entry.card_name, group))
+
+func capture_factions(factions: Array[int]) -> void:
+    capture(func(entry: CampaignCard) -> bool: return factions.has(entry.faction))
+
+func capture(filter: Callable) -> void:
     active = true
     candidates.clear()
     pending.clear()
     for index in game.player_draw_pile.size():
-        var name := game.player_draw_pile[index]
-        var candidate := {"index": index, "name": name, "eligible": RewardRules.belongs_to(name, group), "card": null}
+        var entry := game.player_draw_pile[index]
+        var candidate := {"entry": entry, "name": entry.card_name, "eligible": filter.call(entry), "card": null}
         candidates.append(candidate)
         pending.append(candidate)
 
@@ -32,7 +38,7 @@ func remove_from_deck(candidate: Dictionary) -> bool:
     if index < 0:
         return false
     pending.remove_at(index)
-    game.player_draw_pile.remove_at(index)
+    game.player_draw_pile.erase(candidate["entry"])
     game.player_deck.set_card_count(game.player_draw_pile.size())
     return true
 

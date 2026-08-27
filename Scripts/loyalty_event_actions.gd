@@ -5,8 +5,8 @@ var game: CardBattle
 func setup(card_battle: CardBattle) -> void:
     game = card_battle
 
-func create_deck_card(card_name: String) -> Card:
-    var card := game.create_card(card_name, GameRules.Side.PLAYER)
+func create_deck_card(entry: CampaignCard) -> Card:
+    var card := CardFactory.create_campaign_card(entry, GameRules.Side.PLAYER)
     game.card_space.add_child(card)
     card.global_position = game.player_deck.global_position
     card.scale = Vector2.ONE * 0.18
@@ -26,7 +26,7 @@ func refuse(card: Card) -> void:
     game.player_discard.add_card(card)
 
 func desert(card: Card) -> void:
-    CampaignState.player_deck.erase(card.card_name)
+    CampaignState.player_deck.erase(card.deck_entry)
     await card.move_to(card.global_position + Vector2(0, -400), true)
     card.queue_free()
 

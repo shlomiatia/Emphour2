@@ -8,7 +8,7 @@ func _initialize() -> void:
 
 func run_test() -> void:
     Engine.time_scale = 30.0
-    CampaignState.selected_city = "City 1"
+    CampaignState.selected_city = CampaignState.act_1_city_id(1)
     game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     root.add_child(game)
     await game.battle_ready

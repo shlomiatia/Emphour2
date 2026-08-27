@@ -21,7 +21,7 @@ class_name CardBattle extends Node2D
 var battle := BattleResolver.new()
 var draws := BattleDraws.new()
 var selectable_cards: Array[Card]
-var player_draw_pile: Array[String]
+var player_draw_pile: Array[CampaignCard]
 var enemy_draw_pile: Array[String]
 var finished := false
 var can_restart := false
@@ -34,7 +34,7 @@ func _ready() -> void:
     board.slot_count = CampaignState.battle_slot_count()
     setup_states()
     connect_signals()
-    draws.setup_piles(CampaignState.player_deck, enemy_deck.build(CampaignState.enemy_city()))
+    draws.setup_piles(CampaignState.player_deck, enemy_deck.build(CampaignState.selected_city))
     set_balance(0, false)
     await draws.draw_opening_hands()
     await loyalty_events.run()
@@ -113,6 +113,7 @@ func fade_losses() -> Signal:
 
 func preview_balance(difference: int) -> void:
     battle_hud.set_preview(battle_state.balance + difference)
+
 
 func set_balance(value: int, animate := true) -> void:
     battle_hud.set_balance(value, animate)

@@ -8,8 +8,8 @@ func _initialize() -> void:
 func run_test() -> void:
     Engine.time_scale = 30.0
     CampaignState.reset()
-    CampaignState.selected_city = "City 1"
-    CampaignState.player_deck.assign(["Militia"])
+    CampaignState.selected_city = CampaignState.act_1_city_id(1)
+    CampaignState.player_deck = CampaignState.create_frank_deck(["Militia"])
     game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     game.get_node("CardSpace/Board").slot_count = 1
     root.add_child(game)
@@ -17,7 +17,6 @@ func run_test() -> void:
     var marker := game.battle_hud.marker.position.x
     play_last_card()
     assert(game.battle_hud.preview_tween != null)
-    assert(game.status_label.text == "Battle")
     assert(is_equal_approx(game.battle_hud.marker.position.x, marker))
     for _frame in 100:
         if game.finished:

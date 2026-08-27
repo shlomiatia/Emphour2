@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dl38kgy3xnhwt"]
 
-[ext_resource type="Script" uid="uid://uv1cyboafa0j" path="res://Scenes/Map/map.gd" id="1_map"]
+[ext_resource type="Script" uid="uid://bherbg4775b3g" path="res://Scenes/Map/map.gd" id="1_map"]
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
@@ -53,77 +53,119 @@ texture_mode = 1
 
 [node name="Cities" type="Node2D" parent="MapElements" unique_id=2003977789]
 
-[node name="City1" parent="MapElements/Cities" unique_id=923179646 instance=ExtResource("3_city")]
+[node name="Act1City1" parent="MapElements/Cities" unique_id=923179646 instance=ExtResource("3_city")]
 position = Vector2(891, 583)
-city_name = "Paris"
+city_id = "Act 1 City 1"
+display_name = "Paris"
 
-[node name="City2" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
+[node name="Act1City2" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
 position = Vector2(855, 450)
-city_name = "Amiens"
+city_id = "Act 1 City 2"
+display_name = "Amiens"
 
-[node name="City3" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
+[node name="Act1City3" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
 position = Vector2(738, 499)
-city_name = "Rouen"
+city_id = "Act 1 City 3"
+display_name = "Rouen"
 
-[node name="City4" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
+[node name="Act1City4" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
 position = Vector2(746, 618)
-city_name = "Boulogne"
+city_id = "Act 1 City 4"
+display_name = "Boulogne"
 
-[node name="City5" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
+[node name="Act1City5" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
 position = Vector2(679, 709)
-city_name = "Calais"
+city_id = "Act 1 City 5"
+display_name = "Calais"
 
-[node name="City6" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
+[node name="Act1City6" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
 position = Vector2(821, 777)
-city_name = "Abbeville"
+city_id = "Act 1 City 6"
+display_name = "Abbeville"
 
-[node name="London" parent="MapElements/Cities" unique_id=559746901 instance=ExtResource("3_city")]
+[node name="EnglandCity1" parent="MapElements/Cities" unique_id=559746901 instance=ExtResource("3_city")]
 position = Vector2(600, 390)
-city_name = "London"
+city_id = "Act 2 City 1"
+display_name = "London"
+faction = 2
+route_index = 1
 
-[node name="York" parent="MapElements/Cities" unique_id=580718290 instance=ExtResource("3_city")]
+[node name="EnglandCity2" parent="MapElements/Cities" unique_id=580718290 instance=ExtResource("3_city")]
 position = Vector2(575, 270)
-city_name = "York"
+city_id = "Act 2 City 2"
+display_name = "York"
+faction = 2
+route_index = 2
 
-[node name="Edinburgh" parent="MapElements/Cities" unique_id=2025580412 instance=ExtResource("3_city")]
+[node name="EnglandCity3" parent="MapElements/Cities" unique_id=2025580412 instance=ExtResource("3_city")]
 position = Vector2(540, 155)
-city_name = "Edinburgh"
+city_id = "Act 2 City 3"
+display_name = "Edinburgh"
+faction = 2
+route_index = 3
 
-[node name="Dublin" parent="MapElements/Cities" unique_id=1448484168 instance=ExtResource("3_city")]
+[node name="EnglandCity4" parent="MapElements/Cities" unique_id=1448484168 instance=ExtResource("3_city")]
 position = Vector2(420, 300)
-city_name = "Dublin"
+city_id = "Act 2 City 4"
+display_name = "Dublin"
+faction = 2
+route_index = 4
 
-[node name="Winchester" parent="MapElements/Cities" unique_id=399724753 instance=ExtResource("3_city")]
+[node name="EnglandCity5" parent="MapElements/Cities" unique_id=399724753 instance=ExtResource("3_city")]
 position = Vector2(565, 430)
-city_name = "Winchester"
+city_id = "Act 2 City 5"
+display_name = "Winchester"
+faction = 2
+route_index = 5
 
-[node name="Norwich" parent="MapElements/Cities" unique_id=1534712856 instance=ExtResource("3_city")]
+[node name="EnglandCity6" parent="MapElements/Cities" unique_id=1534712856 instance=ExtResource("3_city")]
 position = Vector2(650, 350)
-city_name = "Norwich"
+city_id = "Act 2 City 6"
+display_name = "Norwich"
+faction = 2
+route_index = 6
 
-[node name="Aachen" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
+[node name="HreCity1" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
 position = Vector2(930, 420)
-city_name = "Aachen"
+city_id = "Act 2 City 1"
+display_name = "Aachen"
+faction = 3
+route_index = 1
 
-[node name="Cologne" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
+[node name="HreCity2" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
 position = Vector2(1000, 400)
-city_name = "Cologne"
+city_id = "Act 2 City 2"
+display_name = "Cologne"
+faction = 3
+route_index = 2
 
-[node name="Frankfurt" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
+[node name="HreCity3" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
 position = Vector2(1050, 505)
-city_name = "Frankfurt"
+city_id = "Act 2 City 3"
+display_name = "Frankfurt"
+faction = 3
+route_index = 3
 
-[node name="Munich" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
+[node name="HreCity4" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
 position = Vector2(1125, 670)
-city_name = "Munich"
+city_id = "Act 2 City 4"
+display_name = "Munich"
+faction = 3
+route_index = 4
 
-[node name="Berlin" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
+[node name="HreCity5" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
 position = Vector2(1250, 290)
-city_name = "Berlin"
+city_id = "Act 2 City 5"
+display_name = "Berlin"
+faction = 3
+route_index = 5
 
-[node name="Vienna" parent="MapElements/Cities" unique_id=212844650 instance=ExtResource("3_city")]
+[node name="HreCity6" parent="MapElements/Cities" unique_id=212844650 instance=ExtResource("3_city")]
 position = Vector2(1250, 660)
-city_name = "Vienna"
+city_id = "Act 2 City 6"
+display_name = "Vienna"
+faction = 3
+route_index = 6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]
 
