@@ -46,6 +46,7 @@ func refresh() -> void:
     defence.text = str(data.defence)
     group_icon.texture = GROUP_ICONS["Nobility" if RewardRules.belongs_to(card_name, "Nobility") else "Peasants"]
     set_icons()
+    set_side(side)
     set_hidden(face_down)
 
 func set_icons() -> void:
@@ -55,10 +56,24 @@ func set_icons() -> void:
     defence_icon.visible = defence_icon.texture != null
     counter.visible = data.anti_attack != CardData.AttackType.NONE && !data.armored
 
+func set_side(value: int) -> void:
+    side = value
+    (art.material as ShaderMaterial).set_shader_parameter("enabled", side == GameRules.Side.PLAYER)
+
 func set_hidden(value: bool) -> void:
     face_down = value
     front.visible = !face_down
     back.visible = face_down
+
+func flip_face_up() -> Signal:
+    moving = true
+    var target_scale := scale
+    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(self, "scale:x", 0.05, 0.14)
+    tween.tween_callback(set_hidden.bind(false))
+    tween.tween_property(self, "scale:x", target_scale.x, 0.14)
+    tween.tween_callback(finish_move)
+    return tween.finished
 
 func set_preview_count(value: int) -> void:
     count.text = "x%d" % value

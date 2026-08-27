@@ -46,6 +46,7 @@ func add_card(card: Card) -> void:
         card.reparent(self)
     else:
         add_child(card)
+    card.set_side(side)
     card.set_hidden(face_down)
     card.scale = Vector2.ONE * (0.25 if face_down else 1.0)
     card.hover_enabled = hover_enabled

@@ -13,7 +13,7 @@ func start() -> void:
     active = true
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
-    game.turns.reveal_enemy_card()
+    await game.turns.reveal_enemy_card()
     game.set_status("Battle")
     await get_tree().create_timer(0.35).timeout
     await move_balance(game.battle.strength_difference())

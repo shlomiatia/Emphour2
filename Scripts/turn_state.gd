@@ -97,7 +97,7 @@ func clear_targets() -> void:
 
 func reveal_enemy_card() -> void:
     if pending_enemy:
-        pending_enemy.set_hidden(false)
+        await pending_enemy.flip_face_up()
         pending_enemy = null
     game.board.notify_state_changed()
 
@@ -105,8 +105,7 @@ func complete_round() -> void:
     if battle_needed():
         game.battle_state.start()
     else:
-        reveal_enemy_card()
-        await get_tree().create_timer(0.2).timeout
+        await reveal_enemy_card()
         start_round()
 
 func battle_needed() -> bool:

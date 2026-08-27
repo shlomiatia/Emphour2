@@ -1,16 +1,16 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://jifgtbiugvpy"]
 
-[ext_resource type="Script" path="res://Scenes/Intro/intro.gd" id="1_intro"]
+[ext_resource type="Script" uid="uid://cvqu8y8sgwx8v" path="res://Scenes/Intro/intro.gd" id="1_intro"]
 [ext_resource type="Theme" path="res://Themes/LargeParchmentText.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://Textures/King.png" id="3_king"]
+[ext_resource type="Texture2D" uid="uid://y1v3ebajqpdn" path="res://Textures/King.png" id="3_king"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="4_fade"]
 
-[node name="Intro" type="Node2D"]
+[node name="Intro" type="Node2D" unique_id=1769615737]
 script = ExtResource("1_intro")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1912862459]
 
-[node name="Content" type="Control" parent="CanvasLayer"]
+[node name="Content" type="Control" parent="CanvasLayer" unique_id=434931184]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Background" type="ColorRect" parent="CanvasLayer/Content"]
+[node name="Background" type="ColorRect" parent="CanvasLayer/Content" unique_id=1985136152]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="King" type="TextureRect" parent="CanvasLayer/Content"]
+[node name="King" type="TextureRect" parent="CanvasLayer/Content" unique_id=2009542984]
 layout_mode = 0
 offset_left = -48.0
 offset_top = 347.0
@@ -38,7 +38,7 @@ rotation = -0.0174533
 pivot_offset = Vector2(226, 249)
 texture = ExtResource("3_king")
 
-[node name="Text" type="Label" parent="CanvasLayer/Content"]
+[node name="Text" type="Label" parent="CanvasLayer/Content" unique_id=314251070]
 visible = false
 layout_mode = 0
 offset_left = 400.0
@@ -50,6 +50,6 @@ pivot_offset = Vector2(750, 0)
 theme = ExtResource("2_theme")
 autowrap_mode = 3
 
-[node name="Fade" parent="CanvasLayer" instance=ExtResource("4_fade")]
+[node name="Fade" parent="CanvasLayer" unique_id=1571277528 instance=ExtResource("4_fade")]
 
-[node name="ConfirmSound" type="AudioStreamPlayer" parent="."]
+[node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=93379657]
