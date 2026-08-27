@@ -1,10 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://dblk1bdntusy7"]
 
-[ext_resource type="Script" path="res://Entities/RewardOption/reward_option.gd" id="1_script"]
-[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="2_theme"]
-[ext_resource type="PackedScene" path="res://Entities/PanelTitle/PanelTitle.tscn" id="3_title"]
+[ext_resource type="Script" uid="uid://dvd00qi4b641h" path="res://Entities/RewardOption/reward_option.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="2_theme"]
+[ext_resource type="PackedScene" uid="uid://dk0oioyfkjskv" path="res://Entities/PanelTitle/PanelTitle.tscn" id="3_title"]
 [ext_resource type="PackedScene" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="4_arrow"]
-[ext_resource type="Theme" path="res://Themes/DarkBodyText.tres" id="5_dark"]
+[ext_resource type="Theme" uid="uid://dx0bq86r3qwga" path="res://Themes/DarkBodyText.tres" id="5_dark"]
 
 [sub_resource type="StyleBoxFlat" id="Style_panel"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -18,16 +18,15 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="RewardOption" type="Control"]
+[node name="RewardOption" type="Control" unique_id=1684282293]
 custom_minimum_size = Vector2(610, 610)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 610.0
 offset_bottom = 610.0
 script = ExtResource("1_script")
-option_id = "Peasants"
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=2091488618]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,38 +36,31 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("Style_panel")
 
-[node name="TitleBackground" parent="Panel" instance=ExtResource("3_title")]
+[node name="TitleBackground" parent="Panel" unique_id=323660179 instance=ExtResource("3_title")]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="Title" parent="Panel/TitleBackground" index="0"]
-custom_minimum_size = Vector2(0, 86)
-theme_override_colors/font_shadow_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-text = "Peasants"
-
-[node name="GroupIcon" type="TextureRect" parent="Panel/TitleBackground"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 18.0
-offset_right = 50.0
-offset_bottom = 52.0
+[node name="GroupIcon" type="TextureRect" parent="Panel/TitleBackground" unique_id=468412392]
+layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Offer" type="Node2D" parent="Panel"]
+[node name="Offer" type="Node2D" parent="Panel" unique_id=444855754]
 position = Vector2(305, 250)
 
-[node name="Arrow" parent="Panel/Offer" instance=ExtResource("4_arrow")]
+[node name="Arrow" parent="Panel/Offer" unique_id=952412163 instance=ExtResource("4_arrow")]
+layout_mode = 3
+anchors_preset = 0
 offset_left = -48.0
 offset_top = -32.0
 offset_right = 48.0
 offset_bottom = 32.0
 
-[node name="Description" type="Label" parent="Panel"]
+[node name="Description" type="Label" parent="Panel" unique_id=874120861]
+layout_mode = 0
 offset_left = 30.0
 offset_top = 370.0
 offset_right = 580.0
@@ -78,19 +70,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Loyalty" type="VBoxContainer" parent="Panel"]
+[node name="Loyalty" type="VBoxContainer" parent="Panel" unique_id=1880439636]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 438.0
 offset_right = 590.0
 offset_bottom = 566.0
 theme_override_constants/separation = 0
 
-[node name="Peasants" type="Control" parent="Panel/Loyalty"]
+[node name="Peasants" type="Control" parent="Panel/Loyalty" unique_id=1695162285]
 custom_minimum_size = Vector2(570, 64)
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Panel/Loyalty/Peasants"]
-offset_left = 0.0
+[node name="Name" type="Label" parent="Panel/Loyalty/Peasants" unique_id=557041718]
+layout_mode = 0
 offset_right = 90.0
 offset_bottom = 64.0
 theme = ExtResource("5_dark")
@@ -98,38 +91,42 @@ theme_override_font_sizes/font_size = 22
 text = "Peasants"
 vertical_alignment = 1
 
-[node name="Current" type="Label" parent="Panel/Loyalty/Peasants"]
+[node name="Current" type="Label" parent="Panel/Loyalty/Peasants" unique_id=1008216547]
+layout_mode = 0
 offset_left = 90.0
 offset_right = 237.0
 offset_bottom = 64.0
 theme = ExtResource("2_theme")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Arrow" parent="Panel/Loyalty/Peasants" instance=ExtResource("4_arrow")]
+[node name="Arrow" parent="Panel/Loyalty/Peasants" unique_id=470861198 instance=ExtResource("4_arrow")]
+anchors_preset = 0
 offset_left = 237.0
+offset_top = -8.0
 offset_right = 333.0
-offset_bottom = 64.0
+offset_bottom = 56.0
 
-[node name="Target" type="Label" parent="Panel/Loyalty/Peasants"]
+[node name="Target" type="Label" parent="Panel/Loyalty/Peasants" unique_id=1244307867]
+layout_mode = 0
 offset_left = 333.0
 offset_right = 480.0
 offset_bottom = 64.0
 theme = ExtResource("2_theme")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
 vertical_alignment = 1
 
-[node name="Nobility" type="Control" parent="Panel/Loyalty"]
+[node name="Nobility" type="Control" parent="Panel/Loyalty" unique_id=1820880019]
 custom_minimum_size = Vector2(570, 64)
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Panel/Loyalty/Nobility"]
-offset_left = 0.0
+[node name="Name" type="Label" parent="Panel/Loyalty/Nobility" unique_id=429901372]
+layout_mode = 0
 offset_right = 90.0
 offset_bottom = 64.0
 theme = ExtResource("5_dark")
@@ -137,41 +134,45 @@ theme_override_font_sizes/font_size = 22
 text = "Nobility"
 vertical_alignment = 1
 
-[node name="Current" type="Label" parent="Panel/Loyalty/Nobility"]
+[node name="Current" type="Label" parent="Panel/Loyalty/Nobility" unique_id=406674349]
+layout_mode = 0
 offset_left = 90.0
 offset_right = 237.0
 offset_bottom = 64.0
 theme = ExtResource("2_theme")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Arrow" parent="Panel/Loyalty/Nobility" instance=ExtResource("4_arrow")]
+[node name="Arrow" parent="Panel/Loyalty/Nobility" unique_id=931557053 instance=ExtResource("4_arrow")]
+anchors_preset = 0
 offset_left = 237.0
+offset_top = -8.0
 offset_right = 333.0
-offset_bottom = 64.0
+offset_bottom = 56.0
 
-[node name="Target" type="Label" parent="Panel/Loyalty/Nobility"]
+[node name="Target" type="Label" parent="Panel/Loyalty/Nobility" unique_id=2124398653]
+layout_mode = 0
 offset_left = 333.0
 offset_right = 480.0
 offset_bottom = 64.0
 theme = ExtResource("2_theme")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="." unique_id=1541253498]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_default_cursor_shape = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 flat = true
 
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]

@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="3_city"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
-[ext_resource type="Theme" path="res://Themes/PanelText.tres" id="8_small_parchment"]
+[ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="8_small_parchment"]
 [ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="9_europe_map"]
 [ext_resource type="PackedScene" uid="uid://dk0oioyfkjskv" path="res://Entities/PanelTitle/PanelTitle.tscn" id="10_title"]
-[ext_resource type="Texture2D" path="res://Textures/Peasants.png" id="11_peasants"]
-[ext_resource type="Texture2D" path="res://Textures/Nobility.png" id="12_nobility"]
+[ext_resource type="Texture2D" uid="uid://b4ntkswf0kjr2" path="res://Textures/Peasants.png" id="11_peasants"]
+[ext_resource type="Texture2D" uid="uid://c76vope318q0k" path="res://Textures/Nobility.png" id="12_nobility"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_header"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -126,9 +126,9 @@ theme_override_constants/separation = 128
 
 [node name="PeasantsContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer" unique_id=1055832925]
 layout_mode = 2
-theme_override_constants/separation = 32
+theme_override_constants/separation = 16
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=2017861872]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 texture = ExtResource("11_peasants")
@@ -144,16 +144,17 @@ vertical_alignment = 1
 [node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=465970467]
 layout_mode = 2
 theme = ExtResource("8_small_parchment")
+theme_override_colors/font_color = Color(0.9999592, 0.56896424, 0.5257008, 1)
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
+theme_override_constants/outline_size = 4
 text = "Neutral"
 vertical_alignment = 1
 
 [node name="NobilityContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer" unique_id=298819769]
 layout_mode = 2
-theme_override_constants/separation = 32
+theme_override_constants/separation = 16
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=1987740555]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 texture = ExtResource("12_nobility")
