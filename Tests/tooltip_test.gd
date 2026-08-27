@@ -6,7 +6,7 @@ func _initialize() -> void:
     run_test()
 
 func run_test() -> void:
-    game = load("res://Scenes/Battle/Battle.tscn").instantiate()
+    game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     root.add_child(game)
     await game.battle_ready
     var tooltip := game.get_node("CardTooltip") as CardTooltip

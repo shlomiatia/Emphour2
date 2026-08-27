@@ -5,13 +5,15 @@ func _initialize() -> void:
 
 func run_test() -> void:
     Engine.time_scale = 30.0
-    var game := load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
+    var game := load("res://Scenes/Battlefield/Battlefield.tscn").instantiate() as CardBattle
     root.add_child(game)
     await game.battle_ready
     verify_strength_difference(game)
     verify_hud(game)
     verify_defence_consumption(game)
+    verify_defence_matching(game)
     verify_loss_prediction(game)
+    verify_battlefield_faction(game)
     verify_enemy_deck_generation()
     verify_loyalty_rules()
     await verify_pre_casualty_balance(game)
@@ -29,6 +31,7 @@ func verify_strength_difference(game: CardBattle) -> void:
     assert(game.battle.strength_difference() == before + 1)
 
 func verify_hud(game: CardBattle) -> void:
+    assert(game.name == "Battlefield")
     assert(game.board.get_parent() == game.card_space)
     assert(game.player_hand.get_parent() == game.card_space)
     assert(game.card_space.follow_viewport_enabled)
@@ -52,6 +55,17 @@ func verify_defence_consumption(game: CardBattle) -> void:
     mantlet.free()
     militia.free()
 
+func verify_defence_matching(game: CardBattle) -> void:
+    var cavalry := create_rule_card("Light Cavalry")
+    var archer := create_rule_card("Archer")
+    var militia := create_rule_card("Militia")
+    var foot_knight := create_rule_card("Foot Knight")
+    var stakes := create_rule_card("Stakes")
+    var chosen := game.battle.matcher.choose(cavalry, [foot_knight, stakes], [cavalry, archer, militia], [foot_knight, stakes])
+    assert(chosen == stakes)
+    for card in [cavalry, archer, militia, foot_knight, stakes]:
+        card.free()
+
 func verify_loss_prediction(game: CardBattle) -> void:
     var attackers: Array[Card] = [create_rule_card("Archer"), create_rule_card("Archer"), create_rule_card("Light Cavalry")]
     var defenders: Array[Card] = [create_rule_card("Stakes"), create_rule_card("Stakes"), create_rule_card("Stakes")]
@@ -61,6 +75,15 @@ func verify_loss_prediction(game: CardBattle) -> void:
     for card in attackers + defenders:
         card.free()
     lone_defender.free()
+
+func verify_battlefield_faction(game: CardBattle) -> void:
+    var city := CampaignState.selected_city
+    CampaignState.selected_city = "London"
+    var enemy := game.create_card("Militia", GameRules.Side.ENEMY)
+    assert(enemy.faction == CampaignState.Faction.ENGLISH)
+    assert(game.battle_state.result_text(GameRules.Side.ENEMY).begins_with("English win"))
+    CampaignState.selected_city = city
+    enemy.free()
 
 func create_rule_card(card_name: String) -> Card:
     var card := Card.new()
@@ -123,7 +146,7 @@ func verify_loyalty_rules() -> void:
 func verify_pre_casualty_balance(game: CardBattle) -> void:
     var difference := game.battle.strength_difference()
     game.battle_state.active = true
-    await game.battle_state.move_balance(difference)
+    game.battle_state.move_balance(difference)
     await game.battle.resolve()
     assert(game.battle_state.balance == difference)
 
@@ -133,7 +156,7 @@ func verify_final_winners(game: CardBattle) -> void:
     assert(game.battle_state.balance_winner() == GameRules.Side.ENEMY)
     game.battle_state.balance = 0
     assert(game.battle_state.balance_winner() == -1)
-    assert(game.battle_state.result_text(GameRules.Side.ENEMY).begins_with("Game over"))
+    assert(game.battle_state.result_text(GameRules.Side.ENEMY).begins_with("Rebels win"))
     assert(game.battle_state.result_color(GameRules.Side.ENEMY) == BattleHud.ENEMY_COLOR)
 
 func verify_retry_state(game: CardBattle) -> void:
@@ -147,17 +170,17 @@ func verify_retry_state(game: CardBattle) -> void:
 
 func verify_game_over(game: CardBattle) -> void:
     game.battle_state.finish_game(GameRules.Side.ENEMY)
-    assert(game.status_label.text.begins_with("Game over"))
+    assert(game.status_label.text.begins_with("Rebels win"))
     assert(game.status_label.get_theme_color("font_color") == BattleHud.ENEMY_COLOR)
     assert(game.can_restart)
     game.can_restart = false
 
 func verify_score_victory(game: CardBattle) -> void:
     game.battle_state.balance = 4
-    await game.battle_state.move_balance(1)
+    game.battle_state.move_balance(1)
     await game.battle_state.finish(false)
     assert(game.battle_state.balance == 5)
     assert(game.finished)
-    assert(game.status_label.text == "Player wins")
+    assert(game.status_label.text == "Franks win")
     assert(game.status_label.get_theme_color("font_color") == BattleHud.PLAYER_COLOR)
     assert(is_equal_approx(game.battle_hud.marker.position.x, game.battle_hud.meter_position(5, game.battle_hud.marker)))

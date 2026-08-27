@@ -49,7 +49,7 @@ const FOREIGN_CITIES := {
 const DECLARATION_CITIES := {"London": Faction.ENGLISH, "Aachen": Faction.HRE}
 
 static var selected_city := ""
-static var start_in_act_2 := false
+static var start_in_act_2 := true
 static var player_deck: Array[String] = STARTING_DECK.duplicate()
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := STARTING_OWNERS.duplicate()
@@ -79,6 +79,9 @@ static func is_final_battle() -> bool:
 
 static func enemy_city() -> String:
 	return "City 7" if is_final_battle() else selected_city
+
+static func battlefield_faction() -> Faction:
+	return FOREIGN_CITIES.get(enemy_city(), Faction.REBELS)
 
 static func battle_slot_count() -> int:
 	return CITY_SLOTS.get(enemy_city(), 3)

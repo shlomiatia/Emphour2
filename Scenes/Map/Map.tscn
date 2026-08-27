@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c76vope318q0k" path="res://Textures/Nobility.png" id="12_nobility"]
 [ext_resource type="Texture2D" uid="uid://e4xg4101pw1w" path="res://Textures/-.png" id="13_road"]
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="14_panel"]
-[ext_resource type="PackedScene" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="15_loyalty_change"]
+[ext_resource type="PackedScene" uid="uid://bfx4r1xms2dwg" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="15_loyalty_change"]
 
 [node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
@@ -35,19 +35,19 @@ default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
 texture = ExtResource("13_road")
 texture_mode = 1
 
-[node name="EnglandRoad" type="Line2D" parent="MapElements/Roads"]
+[node name="EnglandRoad" type="Line2D" parent="MapElements/Roads" unique_id=710087149]
 texture_repeat = 2
+points = PackedVector2Array(420, 300, 565, 430, 600, 390, 650, 350, 575, 270, 540, 155)
 width = 8.0
 default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
-points = PackedVector2Array(420, 300, 565, 430, 600, 390, 650, 350, 575, 270, 540, 155)
 texture = ExtResource("13_road")
 texture_mode = 1
 
-[node name="HreRoad" type="Line2D" parent="MapElements/Roads"]
+[node name="HreRoad" type="Line2D" parent="MapElements/Roads" unique_id=461797503]
 texture_repeat = 2
+points = PackedVector2Array(930, 420, 1000, 400, 1050, 505, 1125, 670, 1250, 660, 1250, 290)
 width = 8.0
 default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
-points = PackedVector2Array(930, 420, 1000, 400, 1050, 505, 1125, 670, 1250, 660, 1250, 290)
 texture = ExtResource("13_road")
 texture_mode = 1
 
@@ -77,61 +77,65 @@ city_name = "Calais"
 position = Vector2(821, 777)
 city_name = "Abbeville"
 
-[node name="London" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="London" parent="MapElements/Cities" unique_id=559746901 instance=ExtResource("3_city")]
 position = Vector2(600, 390)
 city_name = "London"
 
-[node name="York" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="York" parent="MapElements/Cities" unique_id=580718290 instance=ExtResource("3_city")]
 position = Vector2(575, 270)
 city_name = "York"
 
-[node name="Edinburgh" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Edinburgh" parent="MapElements/Cities" unique_id=2025580412 instance=ExtResource("3_city")]
 position = Vector2(540, 155)
 city_name = "Edinburgh"
 
-[node name="Dublin" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Dublin" parent="MapElements/Cities" unique_id=1448484168 instance=ExtResource("3_city")]
 position = Vector2(420, 300)
 city_name = "Dublin"
 
-[node name="Winchester" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Winchester" parent="MapElements/Cities" unique_id=399724753 instance=ExtResource("3_city")]
 position = Vector2(565, 430)
 city_name = "Winchester"
 
-[node name="Norwich" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Norwich" parent="MapElements/Cities" unique_id=1534712856 instance=ExtResource("3_city")]
 position = Vector2(650, 350)
 city_name = "Norwich"
 
-[node name="Aachen" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Aachen" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
 position = Vector2(930, 420)
 city_name = "Aachen"
 
-[node name="Cologne" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Cologne" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
 position = Vector2(1000, 400)
 city_name = "Cologne"
 
-[node name="Frankfurt" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Frankfurt" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
 position = Vector2(1050, 505)
 city_name = "Frankfurt"
 
-[node name="Munich" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Munich" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
 position = Vector2(1125, 670)
 city_name = "Munich"
 
-[node name="Berlin" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Berlin" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
 position = Vector2(1250, 290)
 city_name = "Berlin"
 
-[node name="Vienna" parent="MapElements/Cities" instance=ExtResource("3_city")]
+[node name="Vienna" parent="MapElements/Cities" unique_id=212844650 instance=ExtResource("3_city")]
 position = Vector2(1250, 660)
 city_name = "Vienna"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]
 
 [node name="KingdomLoyalty" type="PanelContainer" parent="CanvasLayer" unique_id=106806148]
-offset_left = 664.0
-offset_top = 18.0
-offset_right = 1272.0
-offset_bottom = 134.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -360.0
+offset_top = 24.0
+offset_right = 360.0
+offset_bottom = 148.0
+grow_horizontal = 2
 theme_override_styles/panel = ExtResource("14_panel")
 
 [node name="PanelContent" type="VBoxContainer" parent="CanvasLayer/KingdomLoyalty" unique_id=1304133691]
@@ -203,32 +207,32 @@ theme_override_constants/outline_size = 3
 text = "Neutral"
 vertical_alignment = 1
 
-[node name="Tooltip" type="PanelContainer" parent="CanvasLayer"]
+[node name="Tooltip" type="PanelContainer" parent="CanvasLayer" unique_id=873779568]
 visible = false
 offset_right = 630.0
 offset_bottom = 170.0
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("14_panel")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Tooltip"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Tooltip" unique_id=970268000]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 8
 
-[node name="Content" type="VBoxContainer" parent="CanvasLayer/Tooltip/MarginContainer"]
+[node name="Content" type="VBoxContainer" parent="CanvasLayer/Tooltip/MarginContainer" unique_id=1846229970]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/Tooltip/MarginContainer/Content"]
+[node name="Title" type="Label" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=628724633]
 layout_mode = 2
 theme = ExtResource("8_small_parchment")
 text = "Declare war"
 
-[node name="English" parent="CanvasLayer/Tooltip/MarginContainer/Content" instance=ExtResource("15_loyalty_change")]
+[node name="English" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1093931706 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2
 
-[node name="Hre" parent="CanvasLayer/Tooltip/MarginContainer/Content" instance=ExtResource("15_loyalty_change")]
+[node name="Hre" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1210312400 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2
 
 [node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]

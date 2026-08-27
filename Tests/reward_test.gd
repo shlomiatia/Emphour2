@@ -19,7 +19,7 @@ func run_test() -> void:
 
 func open_reward() -> void:
 	CampaignState.selected_city = "City 3"
-	var game := load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
+	var game := load("res://Scenes/Battlefield/Battlefield.tscn").instantiate() as CardBattle
 	root.add_child(game)
 	current_scene = game
 	await game.battle_ready

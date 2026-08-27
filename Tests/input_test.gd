@@ -7,7 +7,7 @@ func _initialize() -> void:
 
 func run_test() -> void:
     Engine.time_scale = 30.0
-    game = load("res://Scenes/Battle/Battle.tscn").instantiate()
+    game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     root.add_child(game)
     await game.battle_ready
     var card := game.player_hand.get_cards()[-1]

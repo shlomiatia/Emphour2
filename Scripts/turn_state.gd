@@ -88,6 +88,7 @@ func finish_player_action() -> void:
     game.player_hand.set_draggable(false)
     clear_targets()
     game.draw_card(GameRules.Side.PLAYER)
+    game.battle.update_preview()
     complete_round()
 
 func clear_targets() -> void:

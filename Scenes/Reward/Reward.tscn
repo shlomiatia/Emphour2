@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
-[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="8_parchment"]
 [ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="11_europe_map"]
 
 [node name="Reward" type="Node2D" unique_id=179328459]
@@ -24,21 +23,11 @@ color = Color(0.015, 0.035, 0.08, 0.48)
 
 [node name="Title" type="Label" parent="CanvasLayer" unique_id=954811606]
 offset_left = 320.0
-offset_top = 34.0
+offset_top = 74.0
 offset_right = 1600.0
-offset_bottom = 106.0
+offset_bottom = 147.0
 theme = ExtResource("4_large_gold")
-text = "CHOOSE YOUR REWARD"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Instructions" type="Label" parent="CanvasLayer" unique_id=755069531]
-offset_left = 410.0
-offset_top = 112.0
-offset_right = 1510.0
-offset_bottom = 158.0
-theme = ExtResource("8_parchment")
-text = "Choose the people you will favor"
+text = "Choose your reward"
 horizontal_alignment = 1
 vertical_alignment = 1
 

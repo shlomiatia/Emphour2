@@ -19,19 +19,17 @@ func start() -> void:
     active = true
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
-    await game.turns.reveal_enemy_card()
-    await game.battle_hud.wait_for_preview()
     game.set_status("Battle", BattleHud.ENEMY_COLOR)
-    await get_tree().create_timer(MESSAGE_DURATION).timeout
-    game.set_status("")
-    await move_balance(game.battle.strength_difference())
+    var delay := get_tree().create_timer(MESSAGE_DURATION).timeout
+    await game.turns.reveal_enemy_card()
+    await delay
+    move_balance(game.battle.strength_difference())
     await game.battle.resolve()
     await finish(game.player_hand.get_card_count() == 0 && game.enemy_hand.get_card_count() == 0)
 
 func move_balance(difference: int) -> void:
     balance += difference
     game.set_balance(balance)
-    await get_tree().create_timer(0.45).timeout
 
 func finish(final_battle: bool) -> void:
     var winner := score_winner()
@@ -74,7 +72,9 @@ func finish_game(winner: int) -> void:
 func result_text(winner: int) -> String:
     if winner == -1:
         return "Draw"
-    return "Player wins" if winner == GameRules.Side.PLAYER else "Game over\nPress any key to restart level"
+    var faction := CampaignState.Faction.FRANKS if winner == GameRules.Side.PLAYER else CampaignState.battlefield_faction()
+    var text := "%s win" % CampaignState.faction_name(faction)
+    return text if winner == GameRules.Side.PLAYER else "%s\nPress any key to restart level" % text
 
 func result_color(winner: int) -> Color:
     if winner == GameRules.Side.PLAYER:
@@ -83,7 +83,7 @@ func result_color(winner: int) -> Color:
 
 func restart() -> void:
     restore_entry_state()
-    get_tree().change_scene_to_file("res://Scenes/Battle/Battle.tscn")
+    get_tree().change_scene_to_file("res://Scenes/Battlefield/Battlefield.tscn")
 
 func restore_entry_state() -> void:
     CampaignState.player_deck.assign(entry_deck)

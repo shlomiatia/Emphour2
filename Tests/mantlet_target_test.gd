@@ -11,7 +11,7 @@ func _initialize() -> void:
 func run_test() -> void:
     Engine.time_scale = 30.0
     CampaignState.reset()
-    game = load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
+    game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate() as CardBattle
     root.add_child(game)
     await game.battle_ready
     setup_cards()

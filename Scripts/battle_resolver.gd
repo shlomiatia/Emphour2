@@ -1,6 +1,7 @@
 class_name BattleResolver extends RefCounted
 
 var game: CardBattle
+var matcher := DefenceMatcher.new()
 
 func setup(card_game: CardBattle) -> void:
     game = card_game
@@ -12,8 +13,8 @@ func resolve() -> void:
     var defeated: Array[Card]
     var attackers := player_cards + enemy_cards
     await game.fade_losses()
-    for attacker in attackers:
-        await resolve_attack(attacker, player_cards, enemy_cards, used_defences, defeated)
+    for index in attackers.size():
+        await resolve_attack(attackers[index], player_cards, enemy_cards, used_defences, defeated, remaining_attackers(attackers, index))
     for card in defeated:
         await game.defeat_card(card)
 
@@ -30,12 +31,12 @@ func update_preview() -> void:
 func strength_difference() -> int:
     return total_strength(game.board.get_cards(GameRules.Side.PLAYER)) - total_strength(game.board.get_cards(GameRules.Side.ENEMY))
 
-func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Array[Card], used: Array[Card], defeated: Array[Card]) -> void:
+func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Array[Card], used: Array[Card], defeated: Array[Card], remaining: Array[Card]) -> void:
     if attacker.data.attack == 0:
         return
     var opponents := enemy_cards if attacker.side == GameRules.Side.PLAYER else player_cards
     var defenders := available_defenders(attacker, opponents, used)
-    var defender := await choose_defender(attacker, defenders)
+    var defender := await choose_defender(attacker, defenders, opponents, used, remaining)
     if defender:
         used.append(defender)
         game.audio.play_block()
@@ -50,17 +51,24 @@ func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Arra
         await attacker.attack_card(target)
         defeated.append(target)
 
+func remaining_attackers(cards: Array[Card], start: int) -> Array[Card]:
+    var result: Array[Card]
+    for index in range(start, cards.size()):
+        result.append(cards[index])
+    return result
+
 func available_defenders(attacker: Card, cards: Array[Card], used: Array[Card]) -> Array[Card]:
     var result: Array[Card] = cards.filter(func(card: Card) -> bool: return !used.has(card) && can_defend(attacker.data, card.data))
     return result
 
-func choose_defender(attacker: Card, cards: Array[Card]) -> Card:
+func choose_defender(attacker: Card, cards: Array[Card], opponents: Array[Card], used: Array[Card], attackers: Array[Card]) -> Card:
     if cards.is_empty():
         return null
     if attacker.side == GameRules.Side.ENEMY:
         return await game.choose_card(cards, "Choose a card to defend against %s" % attacker.card_name)
-    var chosen: Card = cards.pick_random()
-    return chosen
+    var defenders: Array[Card] = opponents.filter(func(card: Card) -> bool: return !used.has(card))
+    var player_attackers: Array[Card] = attackers.filter(func(card: Card) -> bool: return card.side == GameRules.Side.PLAYER && card.data.attack > 0)
+    return matcher.choose(attacker, cards, player_attackers, defenders)
 
 func available_targets(attacker: Card, cards: Array[Card], defeated: Array[Card]) -> Array[Card]:
     var result: Array[Card] = cards.filter(func(card: Card) -> bool: return !defeated.has(card) && !can_defend(attacker.data, card.data))
@@ -75,7 +83,7 @@ func choose_target(attacker: Card, cards: Array[Card]) -> Card:
     return chosen
 
 func can_defend(attacker: CardData, defender: CardData) -> bool:
-    return defender.defence > 0 && (defender.armored && attacker.attack_type != CardData.AttackType.ARMOR_PIERCING || defender.anti_attack == attacker.attack_type)
+    return matcher.can_defend(attacker, defender)
 
 func total_strength(cards: Array[Card]) -> int:
     return cards.reduce(func(sum: int, card: Card) -> int: return sum + card.data.strength, 0)
