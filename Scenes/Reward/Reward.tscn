@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://crfnlc550fhlc"]
 
 [ext_resource type="Script" uid="uid://xh6p2ucky4m3" path="res://Scenes/Reward/reward.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://Entities/RewardOption/RewardOption.tscn" id="3_option"]
+[ext_resource type="PackedScene" uid="uid://dblk1bdntusy7" path="res://Entities/RewardOption/RewardOption.tscn" id="3_option"]
 [ext_resource type="Theme" path="res://Themes/LargeGoldText.tres" id="4_large_gold"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
-[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="8_parchment"]
+[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="8_parchment"]
 [ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="11_europe_map"]
 
 [node name="Reward" type="Node2D" unique_id=179328459]

@@ -1,5 +1,5 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkil0qtxvy1g7"]
+[gd_scene format=3 uid="uid://bkil0qtxvy1g7"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Battle/Battle.tscn" id="1_battle"]
+[ext_resource type="PackedScene" uid="uid://155xx7s6y6ta" path="res://Scenes/Battle/Battle.tscn" id="1_battle"]
 
-[node name="Battle" instance=ExtResource("1_battle")]
+[node name="Battle" unique_id=2080916722 instance=ExtResource("1_battle")]

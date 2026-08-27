@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://mwa45cj2iwgm"]
 
-[ext_resource type="Script" path="res://Entities/BattleHud/battle_hud.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Textures/dead.png" id="2_dead"]
+[ext_resource type="Script" uid="uid://blfo5sq13qdsq" path="res://Entities/BattleHud/battle_hud.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dw30egba8iumd" path="res://Textures/dead.png" id="2_dead"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_meter"]
 bg_color = Color(0.95, 0.92, 0.8, 1)
@@ -15,6 +15,13 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBox_preview"]
+bg_color = Color(0.97, 0.88, 0.66, 0.38)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [sub_resource type="StyleBoxFlat" id="StyleBox_marker"]
 bg_color = Color(0.98, 0.95, 0.84, 1)
 border_width_left = 3
@@ -27,58 +34,52 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_preview"]
-bg_color = Color(0.97, 0.88, 0.66, 0.38)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[node name="BattleHud" type="Control"]
+[node name="BattleHud" type="Control" unique_id=1154999015]
 custom_minimum_size = Vector2(1920, 126)
 layout_mode = 3
+anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 126.0
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="EnemyLoss1" type="Sprite2D" parent="."]
+[node name="EnemyLoss1" type="Sprite2D" parent="." unique_id=1514474784]
 visible = false
 modulate = Color(0.9, 0.26, 0.22, 1)
 position = Vector2(640, 69)
 texture = ExtResource("2_dead")
 
-[node name="EnemyLoss2" type="Sprite2D" parent="."]
+[node name="EnemyLoss2" type="Sprite2D" parent="." unique_id=1901100818]
 visible = false
 modulate = Color(0.9, 0.26, 0.22, 1)
 position = Vector2(608, 69)
 texture = ExtResource("2_dead")
 
-[node name="EnemyLoss3" type="Sprite2D" parent="."]
+[node name="EnemyLoss3" type="Sprite2D" parent="." unique_id=1872693596]
 visible = false
 modulate = Color(0.9, 0.26, 0.22, 1)
 position = Vector2(576, 69)
 texture = ExtResource("2_dead")
 
-[node name="PlayerLoss1" type="Sprite2D" parent="."]
+[node name="PlayerLoss1" type="Sprite2D" parent="." unique_id=1503124902]
 visible = false
 modulate = Color(0.24, 0.58, 0.95, 1)
 position = Vector2(1252, 69)
 texture = ExtResource("2_dead")
 
-[node name="PlayerLoss2" type="Sprite2D" parent="."]
+[node name="PlayerLoss2" type="Sprite2D" parent="." unique_id=2114493769]
 visible = false
 modulate = Color(0.24, 0.58, 0.95, 1)
 position = Vector2(1284, 69)
 texture = ExtResource("2_dead")
 
-[node name="PlayerLoss3" type="Sprite2D" parent="."]
+[node name="PlayerLoss3" type="Sprite2D" parent="." unique_id=1755600244]
 visible = false
 modulate = Color(0.24, 0.58, 0.95, 1)
 position = Vector2(1316, 69)
 texture = ExtResource("2_dead")
 
-[node name="Meter" type="Panel" parent="."]
+[node name="Meter" type="Panel" parent="." unique_id=567412384]
 layout_mode = 0
 offset_left = 700.0
 offset_top = 61.0
@@ -87,25 +88,25 @@ offset_bottom = 77.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBox_meter")
 
-[node name="EnemyHalf" type="ColorRect" parent="Meter"]
+[node name="EnemyHalf" type="ColorRect" parent="Meter" unique_id=1383436219]
 z_index = 1
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 0.0
+anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 3.0
 offset_top = -5.0
 offset_bottom = 5.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.82, 0.22, 0.18, 1)
 
-[node name="PlayerHalf" type="ColorRect" parent="Meter"]
+[node name="PlayerHalf" type="ColorRect" parent="Meter" unique_id=1978764620]
 z_index = 1
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 1.0
@@ -113,11 +114,12 @@ anchor_bottom = 0.5
 offset_top = -5.0
 offset_right = -3.0
 offset_bottom = 5.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.18, 0.48, 0.86, 1)
 
-[node name="Center" type="ColorRect" parent="Meter"]
+[node name="Center" type="ColorRect" parent="Meter" unique_id=489707162]
 z_index = 2
 layout_mode = 0
 offset_left = 257.0
@@ -127,7 +129,7 @@ offset_bottom = 23.0
 mouse_filter = 2
 color = Color(0.97, 0.88, 0.66, 1)
 
-[node name="Preview" type="Panel" parent="Meter"]
+[node name="Preview" type="Panel" parent="Meter" unique_id=358010686]
 z_index = 3
 layout_mode = 0
 offset_left = 244.0
@@ -137,7 +139,7 @@ offset_bottom = 23.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBox_preview")
 
-[node name="Marker" type="Panel" parent="Meter"]
+[node name="Marker" type="Panel" parent="Meter" unique_id=1853935722]
 z_index = 4
 layout_mode = 0
 offset_left = 248.0

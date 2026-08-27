@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://csab0iffw26jr"]
+[gd_scene format=3 uid="uid://csab0iffw26jr"]
 
 [ext_resource type="Texture2D" uid="uid://dgqt0te5o3uwv" path="res://Textures/Europe.png" id="1_europe"]
-[ext_resource type="Shader" path="res://Shaders/map_wind.gdshader" id="2_wind"]
+[ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="2_wind"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_map_wind"]
 shader = ExtResource("2_wind")
@@ -17,7 +17,7 @@ shader_parameter/opacity = 0.045
 shader_parameter/corner_roundness = 0.18
 
 [node name="MapWindOverlay" type="Sprite2D" unique_id=1032547625]
+modulate = Color(0.075, 0.15, 0.06, 1)
 material = SubResource("ShaderMaterial_map_wind")
 position = Vector2(1035, 624)
 texture = ExtResource("1_europe")
-modulate = Color(0.075, 0.15, 0.06, 1)

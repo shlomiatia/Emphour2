@@ -14,25 +14,17 @@
 [ext_resource type="Texture2D" uid="uid://checyg32ikd72" path="res://Textures/Stone.png" id="8_pvwcp"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
-[ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
+[ext_resource type="PackedScene" uid="uid://mwa45cj2iwgm" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
 [ext_resource type="Script" uid="uid://cy1o1oww5aoqh" path="res://Scripts/loyalty_events.gd" id="14_loyalty"]
 [ext_resource type="Script" uid="uid://bidf16fg4sulc" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="15_panel"]
 [ext_resource type="Theme" path="res://Themes/GoldText.tres" id="16_gold"]
 [ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
 [ext_resource type="PackedScene" uid="uid://bhecmvucxkodd" path="res://Entities/BattleWindOverlay/BattleWindOverlay.tscn" id="18_wind"]
-[ext_resource type="Shader" uid="uid://dyfgrenf2ywqr" path="res://Shaders/haze.gdshader" id="19_haze"]
 [ext_resource type="PackedScene" path="res://Entities/Deck/Deck.tscn" id="20_deck"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_haze"]
-shader = ExtResource("19_haze")
-shader_parameter/speed = 0.25
-shader_parameter/intensity = 0.0250000011875
-shader_parameter/blur_amount = 0.0
-shader_parameter/modulate_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_instructions"]
 bg_color = Color(0.839216, 0.745098, 0.6, 1)
@@ -51,7 +43,6 @@ script = ExtResource("1_battle")
 enemy_deck = SubResource("Resource_enemy_deck")
 
 [node name="Sky" type="Sprite2D" parent="." unique_id=733791362]
-material = SubResource("ShaderMaterial_haze")
 position = Vector2(960, 540)
 texture = ExtResource("3_6tmns")
 
@@ -130,7 +121,6 @@ position = Vector2(960, 410)
 row_spacing = 80.0
 
 [node name="BattleHud" parent="CardLayer" unique_id=548796464 instance=ExtResource("13_hud")]
-anchors_preset = 0
 offset_top = 350.0
 offset_bottom = 476.0
 

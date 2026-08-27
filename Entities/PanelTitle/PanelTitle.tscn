@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dk0oioyfkjskv"]
 
-[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="1_theme"]
+[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="1_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_title"]
 content_margin_left = 16.0
