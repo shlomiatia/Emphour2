@@ -26,7 +26,7 @@ func setup_roads() -> void:
     setup_road($MapElements/Roads/Road, CampaignState.Faction.FRANKS)
     setup_road($MapElements/Roads/EnglandRoad, CampaignState.Faction.ENGLISH)
     setup_road($MapElements/Roads/HRERoad, CampaignState.Faction.HRE)
-    for index in 5:
+    for index in 4:
         add_road(CampaignState.act_1_city_id(index + 1), CampaignState.act_1_city_id(index + 2))
         add_road(CampaignState.act_1_city_id(index + 2), CampaignState.act_1_city_id(index + 1))
 

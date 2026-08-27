@@ -9,8 +9,6 @@ static func create_offer(faction: CampaignState.Faction, level: int, deck: Array
 static func rewards(level: int) -> Array[Dictionary]:
     if level == 5:
         return [{"new": "Crossbowman"}, {"from": 1, "new": "Crossbowman"}, {"tier": 4}, {"from": 3, "tier": 4}]
-    if level == 6:
-        return [{"new": "Crossbowman"}, {"from": 1, "new": "Crossbowman"}, {"tier": 4}, {"from": 2, "tier": 4}]
     return [{"tier": 1}] if level == 1 else [{"from": level - 1, "tier": level}]
 
 static func pick_source(faction: int, reward: Dictionary, deck: Array) -> CampaignCard:

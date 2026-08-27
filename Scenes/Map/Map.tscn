@@ -76,11 +76,6 @@ position = Vector2(679, 709)
 city_id = "Act 1 City 5"
 display_name = "Calais"
 
-[node name="Act1City6" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
-position = Vector2(821, 777)
-city_id = "Act 1 City 6"
-display_name = "Abbeville"
-
 [node name="EnglandCity1" parent="MapElements/Cities" unique_id=559746901 instance=ExtResource("3_city")]
 position = Vector2(600, 390)
 city_id = "Act 2 City 1"
@@ -116,13 +111,6 @@ display_name = "Winchester"
 faction = 2
 route_index = 5
 
-[node name="EnglandCity6" parent="MapElements/Cities" unique_id=1534712856 instance=ExtResource("3_city")]
-position = Vector2(650, 350)
-city_id = "Act 2 City 6"
-display_name = "Norwich"
-faction = 2
-route_index = 6
-
 [node name="HRECity1" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
 position = Vector2(930, 420)
 city_id = "Act 2 City 1"
@@ -157,13 +145,6 @@ city_id = "Act 2 City 5"
 display_name = "Berlin"
 faction = 3
 route_index = 5
-
-[node name="HRECity6" parent="MapElements/Cities" unique_id=212844650 instance=ExtResource("3_city")]
-position = Vector2(1250, 660)
-city_id = "Act 2 City 6"
-display_name = "Vienna"
-faction = 3
-route_index = 6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]
 

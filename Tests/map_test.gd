@@ -43,7 +43,7 @@ func verify_route() -> void:
     assert(!find_city(CampaignState.Faction.HRE, 1).attackable)
 
 func verify_boss() -> void:
-    CampaignState.act_2_progress = 6
+    CampaignState.act_2_progress = 5
     await open_map()
     var host := map.get_node("MapElements/Cities/Act1City1") as CampaignCity
     assert(host.attackable)

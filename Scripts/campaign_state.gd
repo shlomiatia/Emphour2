@@ -6,7 +6,7 @@ enum Relation {WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBAR
 
 const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Light Cavalry", "Militia", "Militia", "Militia", "Militia", "Militia", "Militia"]
 const ACT_2_STARTING_DECK: Array[String] = ["Archer", "Crossbowman", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman", "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"]
-const CITY_SLOTS := {"Act 1 City 1": 3, "Act 1 City 2": 3, "Act 1 City 3": 4, "Act 1 City 4": 4, "Act 1 City 5": 5, "Act 1 City 6": 5, "Act 1 Boss": 5, "Act 2 City 1": 3, "Act 2 City 2": 3, "Act 2 City 3": 4, "Act 2 City 4": 4, "Act 2 City 5": 5, "Act 2 City 6": 5, "Act 2 Boss": 5}
+const CITY_SLOTS := {"Act 1 City 1": 3, "Act 1 City 2": 3, "Act 1 City 3": 4, "Act 1 City 4": 4, "Act 1 City 5": 5, "Act 1 Boss": 5, "Act 2 City 1": 3, "Act 2 City 2": 3, "Act 2 City 3": 4, "Act 2 City 4": 4, "Act 2 City 5": 5, "Act 2 Boss": 5}
 
 static var selected_city := ""
 static var start_in_act_2 := true
@@ -35,7 +35,7 @@ static func create_act_2_deck() -> Array[CampaignCard]:
 
 static func create_act_1_owners() -> Dictionary:
     var owners := {}
-    for index in 6:
+    for index in 5:
         owners[act_1_city_id(index + 1)] = Faction.REBELS
     return owners
 
@@ -83,7 +83,7 @@ static func battlefield_faction() -> Faction:
 static func map_city_id(base_id: String) -> String:
     if base_id != act_1_city_id(1):
         return base_id
-    if is_act_2() && act_2_progress == 6 && !act_2_boss_defeated:
+    if is_act_2() && act_2_progress == 5 && !act_2_boss_defeated:
         return "Act 2 Boss"
     if !is_act_2() && city_owner[act_1_city_id(1)] == Faction.REBELS && city_owner.values().count(Faction.FRANKS) == city_owner.size() - 1:
         return "Act 1 Boss"
@@ -105,7 +105,7 @@ static func can_declare_war(faction: Faction, route_index: int) -> bool:
 static func can_attack_act_2(faction: Faction, route_index: int) -> bool:
     if !is_act_2() || faction != faction_at_war():
         return false
-    return route_index == act_2_progress + 1 && route_index <= 6
+    return route_index == act_2_progress + 1 && route_index <= 5
 
 static func capture_selected_city() -> void:
     if is_act_2():
@@ -126,7 +126,7 @@ static func capture_act_2_city() -> void:
     act_2_progress = maxi(act_2_progress, city_number(selected_city))
 
 static func act_2_reward_level(faction: Faction) -> int:
-    var levels := [2, 3, 4, 5, 6, 6] if faction == faction_at_war() else [1, 2, 3, 4, 5, 5]
+    var levels := [2, 3, 4, 5, 6] if faction == faction_at_war() else [1, 2, 3, 4, 5]
     return levels[city_number(selected_city) - 1]
 
 static func city_number(city_id: String) -> int:

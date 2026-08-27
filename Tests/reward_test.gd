@@ -23,7 +23,7 @@ func verify_rewards() -> void:
 func verify_act_1_boss() -> void:
     CampaignState.start_in_act_2 = false
     CampaignState.reset()
-    for index in 6:
+    for index in 5:
         CampaignState.selected_city = CampaignState.act_1_city_id(index + 1)
         CampaignState.capture_selected_city()
         if index == 4:
@@ -35,10 +35,10 @@ func verify_act_1_boss() -> void:
 
 func verify_act_2_levels() -> void:
     setup_act_2()
-    for index in 6:
+    for index in 5:
         CampaignState.selected_city = CampaignState.act_2_city_id(index + 1)
-        assert(CampaignState.act_2_reward_level(CampaignState.Faction.ENGLISH) == [2, 3, 4, 5, 6, 6][index])
-        assert(CampaignState.act_2_reward_level(CampaignState.Faction.HRE) == [1, 2, 3, 4, 5, 5][index])
+        assert(CampaignState.act_2_reward_level(CampaignState.Faction.ENGLISH) == [2, 3, 4, 5, 6][index])
+        assert(CampaignState.act_2_reward_level(CampaignState.Faction.HRE) == [1, 2, 3, 4, 5][index])
 
 func verify_act_2_factions() -> void:
     var deck: Array[CampaignCard] = [CampaignCard.new("Militia", CampaignState.Faction.FRANKS)]
@@ -63,9 +63,7 @@ func verify_act_2_priority() -> void:
 
 func verify_act_2_paths() -> void:
     assert(Act2RewardRules.rewards(5).size() == 4)
-    assert(Act2RewardRules.rewards(6).size() == 4)
     assert(Act2RewardRules.rewards(5).count({"new": "Crossbowman"}) == 1)
-    assert(Act2RewardRules.rewards(6).count({"tier": 4}) == 1)
 
 func verify_act_2_screen() -> void:
     setup_act_2()
