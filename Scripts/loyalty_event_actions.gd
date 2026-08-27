@@ -27,12 +27,10 @@ func refuse(card: Card) -> void:
 
 func desert(card: Card) -> void:
     CampaignState.player_deck.erase(card.card_name)
-    CampaignState.lose_loyalty(card_group(card))
     await card.move_to(card.global_position + Vector2(0, -400), true)
     card.queue_free()
 
 func betray(card: Card) -> void:
-    CampaignState.lose_loyalty(card_group(card))
     await card.move_to(game.enemy_hand.global_position, false, Vector2.ONE * 0.25)
     card.set_side(GameRules.Side.ENEMY)
     game.enemy_hand.add_card(card)

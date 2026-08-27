@@ -35,19 +35,14 @@ const CITY_SLOTS := {
 
 static var selected_city := ""
 static var player_deck: Array[String] = STARTING_DECK.duplicate()
-static var public_loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
-static var internal_loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
+static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := STARTING_OWNERS.duplicate()
 
 static func change_loyalty(group: String, amount: int) -> void:
-	public_loyalty[group] = clampi(public_loyalty[group] + amount, Relation.WAR, Relation.MILITARY_ALLIANCE)
-	internal_loyalty[group] = clampi(internal_loyalty[group] + amount, Relation.WAR, Relation.MILITARY_ALLIANCE)
+	loyalty[group] = clampi(loyalty[group] + amount, Relation.WAR, Relation.MILITARY_ALLIANCE)
 
-static func public_loyalty_after(group: String, amount: int) -> int:
-	return clampi(public_loyalty[group] + amount, Relation.WAR, Relation.MILITARY_ALLIANCE)
-
-static func lose_loyalty(group: String) -> void:
-	internal_loyalty[group] = clampi(internal_loyalty[group] - 1, Relation.WAR, Relation.MILITARY_ALLIANCE)
+static func loyalty_after(group: String, amount: int) -> int:
+	return clampi(loyalty[group] + amount, Relation.WAR, Relation.MILITARY_ALLIANCE)
 
 static func capture_selected_city() -> void:
 	if !city_owner.has(selected_city):
@@ -66,8 +61,14 @@ static func enemy_city() -> String:
 static func battle_slot_count() -> int:
 	return CITY_SLOTS.get(enemy_city(), 3)
 
+static func crossbowman_unlocked(city_name := selected_city) -> bool:
+	return city_number(city_name) >= 4
+
+static func city_number(city_name: String) -> int:
+	return int(city_name.trim_prefix("City "))
+
 static func loyal_group() -> String:
-	return "Peasants" if public_loyalty["Peasants"] >= public_loyalty["Nobility"] else "Nobility"
+	return "Peasants" if loyalty["Peasants"] >= loyalty["Nobility"] else "Nobility"
 
 static func disloyal_group() -> String:
 	return "Nobility" if loyal_group() == "Peasants" else "Peasants"
@@ -81,6 +82,5 @@ static func faction_color(faction: Faction) -> Color:
 static func reset() -> void:
 	selected_city = ""
 	player_deck.assign(STARTING_DECK)
-	public_loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
-	internal_loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
+	loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 	city_owner = STARTING_OWNERS.duplicate()

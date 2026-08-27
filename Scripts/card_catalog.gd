@@ -1,13 +1,13 @@
 class_name CardCatalog extends RefCounted
 
 const CARDS: Array[String] = [
-    "Archer", "Crossbowman", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman",
+    "Militia", "Archer", "Crossbowman", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman",
     "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"
 ]
 
 static func get_value(card_name: String) -> float:
     if card_name == "Crossbowman":
-        return 2.5
+        return 2.0
     var data := get_data(card_name)
     return float(data.strength + data.attack + data.defence)
 

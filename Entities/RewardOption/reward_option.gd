@@ -36,8 +36,8 @@ func setup_loyalty(selected_group: String, visible: bool) -> void:
 	set_change(1, "Nobility", 1 if selected_group == "Nobility" else -1)
 
 func set_change(index: int, group: String, amount: int) -> void:
-	set_label(current_labels[index], CampaignState.public_loyalty[group])
-	set_label(target_labels[index], CampaignState.public_loyalty_after(group, amount))
+	set_label(current_labels[index], CampaignState.loyalty[group])
+	set_label(target_labels[index], CampaignState.loyalty_after(group, amount))
 
 func set_label(label: Label, value: int) -> void:
 	label.text = RelationData.loyalty_name(value)

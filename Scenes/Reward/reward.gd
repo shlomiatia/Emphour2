@@ -18,7 +18,7 @@ func create_options() -> void:
 		create_final_options()
 		return
 	for group in ["Peasants", "Nobility"]:
-		offers[group] = RewardRules.create_offer(group, CampaignState.public_loyalty[group], CampaignState.player_deck)
+		offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck, CampaignState.crossbowman_unlocked())
 	peasants.setup(offers["Peasants"])
 	nobility.setup(offers["Nobility"])
 	peasants.setup_loyalty("Peasants", true)

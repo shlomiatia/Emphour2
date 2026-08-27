@@ -53,10 +53,10 @@ func verify_desertion() -> void:
     var old_count := CampaignState.player_deck.count(card_name)
     var hand_count := game.player_hand.get_card_count()
     var group := game.loyalty_events.card_group(card)
+    var old_loyalty: int = CampaignState.loyalty[group]
     await game.loyalty_events.execute(card, LoyaltyRules.Event.DESERT)
     assert(CampaignState.player_deck.count(card_name) == old_count - 1)
-    assert(CampaignState.public_loyalty[group] == CampaignState.Relation.NEUTRAL)
-    assert(CampaignState.internal_loyalty[group] == CampaignState.Relation.NEUTRAL - 1)
+    assert(CampaignState.loyalty[group] == old_loyalty)
     assert(game.player_hand.get_card_count() == hand_count)
 
 func verify_betrayal() -> void:
@@ -64,11 +64,11 @@ func verify_betrayal() -> void:
     var old_count := game.enemy_hand.get_card_count()
     var hand_count := game.player_hand.get_card_count()
     var group := game.loyalty_events.card_group(card)
-    var old_loyalty: int = CampaignState.internal_loyalty[group]
+    var old_loyalty: int = CampaignState.loyalty[group]
     await game.loyalty_events.execute(card, LoyaltyRules.Event.BETRAY)
     assert(card.side == GameRules.Side.ENEMY)
     assert(game.enemy_hand.get_card_count() == old_count + 1)
-    assert(CampaignState.internal_loyalty[group] == old_loyalty - 1)
+    assert(CampaignState.loyalty[group] == old_loyalty)
     assert(game.player_hand.get_card_count() == hand_count)
 
 func verify_tracked_replacement() -> void:

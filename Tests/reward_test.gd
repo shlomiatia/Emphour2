@@ -33,7 +33,7 @@ func verify_rules() -> void:
 	var deck: Array[String] = ["Archer", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman", "Swordman", "Spearman"]
 	for group in ["Peasants", "Nobility"]:
 		for loyalty in 6:
-			var offer := RewardRules.create_offer(group, loyalty, deck)
+			var offer := RewardRules.create_offer(group, loyalty, deck, true)
 			var rule := RewardRules.get_reward(group, loyalty)
 			assert(RewardRules.get_group_cards(group, rule["tier"]).has(offer["new"]))
 			if rule["upgrade"] && !offer["old"].is_empty():
@@ -43,10 +43,15 @@ func verify_rules() -> void:
 
 func verify_crossbowman_rewards() -> void:
 	var deck: Array[String] = ["Archer"]
-	var new_offer := RewardRules.create_offer("Peasants", 4, deck)
-	var upgrade := RewardRules.create_offer("Peasants", 5, deck)
-	assert(RewardRules.TIERS[2.5] == ["Crossbowman"])
-	assert(new_offer == {"old": "", "new": "Crossbowman"})
+	var upgrade := RewardRules.create_offer("Peasants", 5, deck, true)
+	assert(RewardRules.get_reward("Peasants", 4) == {"upgrade": false, "from": 0, "tier": 2})
+	assert(RewardRules.get_reward("Peasants", 5) == {"upgrade": true, "from": 1, "tier": 2})
+	assert(RewardRules.TIERS[2].has("Crossbowman"))
+	assert(!CampaignState.crossbowman_unlocked("City 3"))
+	assert(CampaignState.crossbowman_unlocked("City 4"))
+	assert(!RewardRules.get_group_cards("Peasants", 2, false).has("Crossbowman"))
+	assert(RewardRules.get_group_cards("Peasants", 2, true).has("Crossbowman"))
+	assert(RewardRules.get_upgrade_cards("Peasants", "Archer", 2, false).is_empty())
 	assert(upgrade == {"old": "Archer", "new": "Crossbowman"})
 
 func verify_upgrade_fallback() -> void:
@@ -98,9 +103,7 @@ func verify_choice() -> void:
 	await process_frame
 	assert(CampaignState.player_deck.count(offer["old"]) == (old_count - 1 if !offer["old"].is_empty() else old_count))
 	assert(CampaignState.player_deck.has(offer["new"]))
-	assert(CampaignState.public_loyalty["Peasants"] == -1)
-	assert(CampaignState.public_loyalty["Nobility"] == 1)
-	assert(CampaignState.internal_loyalty["Peasants"] == -1)
-	assert(CampaignState.internal_loyalty["Nobility"] == 1)
+	assert(CampaignState.loyalty["Peasants"] == -1)
+	assert(CampaignState.loyalty["Nobility"] == 1)
 	assert(CampaignState.city_owner["City 3"] == CampaignState.Faction.FRANKS)
 	assert(current_scene is CampaignMap)

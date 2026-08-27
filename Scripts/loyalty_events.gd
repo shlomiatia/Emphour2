@@ -42,7 +42,7 @@ func run_final_events() -> void:
         await check_candidate(candidate, group)
 
 func run_regular_events() -> void:
-    for group in CampaignState.internal_loyalty:
+    for group in CampaignState.loyalty:
         var cards := eligible_cards(group)
         if !cards.is_empty():
             await check_card(cards.pick_random(), group)
@@ -50,13 +50,13 @@ func run_regular_events() -> void:
 func check_card(card: Card, group: String) -> void:
     if !is_instance_valid(card):
         return
-    var result := LoyaltyRules.roll(CampaignState.internal_loyalty[group])
+    var result := LoyaltyRules.roll(CampaignState.loyalty[group])
     log_check(result, card.card_name)
     if result["event"] != -1:
         await run_card_event(card, result["event"], true)
 
 func check_candidate(candidate: Dictionary, group: String) -> void:
-    var result := LoyaltyRules.roll(CampaignState.internal_loyalty[group])
+    var result := LoyaltyRules.roll(CampaignState.loyalty[group])
     log_check(result, candidate["name"])
     if result["event"] == -1:
         return
@@ -119,4 +119,4 @@ func log_check(result: Dictionary, card_name: String) -> void:
     checks_completed += 1
     var chances: Array = result["chances"]
     var event_name: String = "None" if result["event"] == -1 else LoyaltyRules.Event.keys()[result["event"]].capitalize()
-    print("Loyalty check: roll=%d effective_loyalty=%d chances=[refuse=%d%%, desert=%d%%, betray=%d%%] card_to_remove=%s result=%s" % [result["roll"], result["effective_loyalty"], chances[0], chances[1], chances[2], card_name, event_name])
+    print("Loyalty check: roll=%d loyalty=%d chances=[refuse=%d%%, desert=%d%%, betray=%d%%] card_to_remove=%s result=%s" % [result["roll"], result["loyalty"], chances[0], chances[1], chances[2], card_name, event_name])
