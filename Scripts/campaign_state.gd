@@ -168,7 +168,7 @@ static func faction_color(faction: Faction) -> Color:
         Faction.REBELS: return Color("#f5eee2")
         Faction.ENGLISH: return Color("#792311")
         Faction.HRE: return Color("#b5860e")
-    return Color("#0099db")
+    return Color("#1b3c67")
 
 static func start_act_2() -> void:
     arc = Arc.FOREIGN_RELATIONS
