@@ -15,13 +15,16 @@ func run_test() -> void:
     assert(tooltip.get_hovered_card(card.global_position) != null)
     tooltip.hovered_card = card
     tooltip.show_tooltip()
-    assert(tooltip.panel.visible)
-    assert(!tooltip.description.text.is_empty())
+    assert(tooltip.data_tooltip.visible)
+    assert(!tooltip.data_tooltip.description.text.is_empty())
     assert(tooltip.get_hovered_card(game.enemy_hand.get_cards()[0].global_position) == null)
     tooltip.hovered_card = game.board.get_cards(GameRules.Side.ENEMY)[0]
     tooltip.show_tooltip()
-    assert(!tooltip.description.visible)
-    assert(tooltip.cards.get_child_count() == 2)
-    assert((tooltip.cards.get_child(0) as Card).count.text == "x2")
-    assert((tooltip.cards.get_child(1) as Card).count.text == "x1")
+    assert(tooltip.enemy_tooltip.visible)
+    assert(tooltip.enemy_tooltip.cards.get_child_count() == 2)
+    var counts := {}
+    for preview in tooltip.enemy_tooltip.cards.get_children():
+        counts[preview.card_name] = preview.count.text
+    assert(counts["Militia"] == "x2")
+    assert(counts["Archer"] == "x1")
     quit()

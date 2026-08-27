@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7rgeifyj5455"]
 
-[ext_resource type="Theme" uid="uid://dx0bq86r3qwga" path="res://Themes/DarkBodyText.tres" id="1_theme"]
+[ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="1_theme"]
 
 [node name="Label" type="Label" unique_id=1369376511]
 offset_right = 28.0

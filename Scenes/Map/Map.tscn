@@ -10,18 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b4ntkswf0kjr2" path="res://Textures/Peasants.png" id="11_peasants"]
 [ext_resource type="Texture2D" uid="uid://c76vope318q0k" path="res://Textures/Nobility.png" id="12_nobility"]
 [ext_resource type="Texture2D" uid="uid://e4xg4101pw1w" path="res://Textures/-.png" id="13_road"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBox_header"]
-bg_color = Color(0.839216, 0.745098, 0.6, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.352941, 0.286275, 0.196078, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="14_panel"]
 
 [node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
@@ -78,13 +67,14 @@ offset_left = 664.0
 offset_top = 18.0
 offset_right = 1272.0
 offset_bottom = 134.0
-theme_override_styles/panel = SubResource("StyleBox_header")
+theme_override_styles/panel = ExtResource("14_panel")
 
 [node name="PanelContent" type="VBoxContainer" parent="CanvasLayer/KingdomLoyalty" unique_id=1304133691]
 layout_mode = 2
 
 [node name="TitleBackground" parent="CanvasLayer/KingdomLoyalty/PanelContent" unique_id=373315012 instance=ExtResource("10_title")]
 layout_mode = 2
+title = "KINGDOM LOYALTY"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent" unique_id=1932809427]
 layout_mode = 2

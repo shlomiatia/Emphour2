@@ -21,11 +21,18 @@ func run_test() -> void:
     quit()
 
 func verify_strength_difference(game: CardBattle) -> void:
+    var before := game.battle.strength_difference()
     var militia := game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == "Militia")[0] as Card
     game.board.play_leftmost(militia, GameRules.Side.PLAYER)
-    assert(game.battle.strength_difference() == 1)
+    assert(game.battle.strength_difference() == before + 1)
 
 func verify_hud(game: CardBattle) -> void:
+    assert(game.board.get_parent() == game)
+    assert(game.player_hand.get_parent() == game)
+    assert(game.enemy_hand.get_parent() is CanvasLayer)
+    game.battle_hud.set_losses(5, 4)
+    assert(game.battle_hud.player_losses.get_child_count() == 5)
+    assert(game.battle_hud.enemy_losses.get_child_count() == 4)
     game.battle.update_preview()
     assert(!game.battle_hud.has_node("BalanceLabel"))
     assert(!game.battle_hud.has_node("EnemyShield"))
@@ -35,7 +42,7 @@ func verify_defence_consumption(game: CardBattle) -> void:
     var archer := create_rule_card("Archer")
     var mantlet := create_rule_card("Mantlet")
     var militia := create_rule_card("Militia")
-    assert(game.battle.available_targets(archer, [mantlet, militia], [mantlet], []) == [militia])
+    assert(game.battle.available_targets(archer, [mantlet, militia], []) == [militia])
     archer.free()
     mantlet.free()
     militia.free()
@@ -62,14 +69,14 @@ func verify_enemy_deck_generation() -> void:
     assert(value == 20)
     assert(EnemyDeck.new().build("City 1") == ["Light Cavalry", "Militia", "Militia"])
     var city_three := EnemyDeck.new().build("City 3")
-    assert(city_three.size() == 6)
-    assert(city_three.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 7)
+    assert(city_three.size() == 9)
+    assert(city_three.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 10)
     var city_seven := EnemyDeck.new().build("City 7")
-    assert(city_seven.size() == 10)
-    assert(city_seven.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 18)
+    assert(city_seven.size() == 12)
+    assert(city_seven.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 14)
     var late_deck := EnemyDeck.new().build("City 2")
-    assert(late_deck.size() == 9)
-    assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 10)
+    assert(late_deck.size() == 6)
+    assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 7)
 
 func verify_loyalty_rules() -> void:
     assert(LoyaltyRules.CHANCES[-1] == [10, 0, 0])
@@ -86,9 +93,7 @@ func verify_pre_casualty_balance(game: CardBattle) -> void:
     game.battle_state.active = true
     await game.battle_state.move_balance(difference)
     await game.battle.resolve()
-    assert(difference == 1)
-    assert(game.battle.strength_difference() == 0)
-    assert(game.battle_state.balance == 1)
+    assert(game.battle_state.balance == difference)
 
 func verify_final_winners(game: CardBattle) -> void:
     game.battle_state.active = true

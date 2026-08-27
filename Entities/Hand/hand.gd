@@ -29,10 +29,9 @@ func move_card(card: Card, props: Dictionary, delta: float, index: int) -> void:
         return
     var hovered := card.hovering && card.hover_enabled
     var target_position: Vector2 = props["position"] + (hover_offset if hovered else Vector2.ZERO)
-    var weight := minf(delta * 10.0, 1.0)
-    card.position = card.position.lerp(target_position, weight)
-    card.scale = card.scale.lerp(Vector2.ONE * (0.25 if face_down else 1.0), weight)
-    card.rotation = lerp_angle(card.rotation, 0.0 if hovered else float(props["rotation"]), weight)
+    var target_scale := Vector2.ONE * (0.25 if face_down else 1.0)
+    var target_rotation := 0.0 if hovered else float(props["rotation"])
+    CardMotion.approach(card, target_position, target_scale, target_rotation, delta)
     card.z_index = 100 if hovered else index + 5
 
 func get_card_props(index: int, count: int) -> Dictionary:
@@ -60,10 +59,8 @@ func add_drawn_card(card: Card, source: Node2D) -> void:
     card.moving = true
     var props := get_card_props(get_card_count() - 1, get_card_count())
     var target_scale := Vector2.ONE * (0.25 if face_down else 1.0)
-    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-    tween.tween_property(card, "position", props["position"], 0.45)
-    tween.parallel().tween_property(card, "scale", target_scale, 0.45)
-    tween.parallel().tween_property(card, "rotation", props["rotation"], 0.45)
+    var target := to_global(props["position"])
+    var tween := CardMotion.transform(card, target, target_scale, props["rotation"], Tween.EASE_OUT)
     tween.tween_callback(finish_draw.bind(card))
 
 func finish_draw(card: Card) -> void:

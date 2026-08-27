@@ -4,21 +4,11 @@
 [ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="2_theme"]
 [ext_resource type="PackedScene" uid="uid://dk0oioyfkjskv" path="res://Entities/PanelTitle/PanelTitle.tscn" id="3_title"]
 [ext_resource type="PackedScene" uid="uid://b7rgeifyj5455" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="4_arrow"]
-[ext_resource type="Theme" uid="uid://dx0bq86r3qwga" path="res://Themes/DarkBodyText.tres" id="5_dark"]
+[ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="5_dark"]
 [ext_resource type="PackedScene" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="6_loyalty_change"]
 [ext_resource type="Texture2D" path="res://Textures/Nobility.png" id="7_nobility"]
 
-[sub_resource type="StyleBoxFlat" id="Style_panel"]
-bg_color = Color(0.839216, 0.745098, 0.6, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.352941, 0.286275, 0.196078, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="8_panel"]
 
 [node name="RewardOption" type="Control" unique_id=1684282293]
 custom_minimum_size = Vector2(610, 610)
@@ -36,7 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("Style_panel")
+theme_override_styles/panel = ExtResource("8_panel")
 
 [node name="TitleBackground" parent="Panel" unique_id=323660179 instance=ExtResource("3_title")]
 layout_mode = 1

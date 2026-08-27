@@ -35,8 +35,8 @@ func verify_refusal() -> void:
     var card := find_card("Archer")
     var deck := CampaignState.player_deck.duplicate()
     game.loyalty_events.show_message(card, LoyaltyRules.Event.REFUSE)
-    assert(game.event_panel.visible)
-    assert(game.event_message.text.contains("refuses to fight"))
+    assert(game.loyalty_events.visible)
+    assert(game.loyalty_events.message.text.contains("refuses to fight"))
     await game.loyalty_events.execute(card, LoyaltyRules.Event.REFUSE)
     assert(CampaignState.player_deck == deck)
 

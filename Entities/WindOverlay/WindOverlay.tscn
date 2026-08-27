@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://bhecmvucxkodd"]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Texture2D" uid="uid://bq3rkneg1oemu" path="res://Textures/Background.png" id="1_background"]
+[ext_resource type="Script" path="res://Entities/WindOverlay/wind_overlay.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="2_wind"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wind"]
+resource_local_to_scene = true
 shader = ExtResource("2_wind")
 shader_parameter/wind_dir_angle = 0.0
 shader_parameter/wind_speed = 16.0
@@ -16,8 +17,7 @@ shader_parameter/threshold = 0.7
 shader_parameter/opacity = 0.045
 shader_parameter/corner_roundness = 0.18
 
-[node name="BattleWindOverlay" type="Sprite2D" unique_id=845983157]
+[node name="WindOverlay" type="Sprite2D"]
 modulate = Color(0.075, 0.15, 0.06, 1)
 material = SubResource("ShaderMaterial_wind")
-position = Vector2(960, 540)
-texture = ExtResource("1_background")
+script = ExtResource("1_script")

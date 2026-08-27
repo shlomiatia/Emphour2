@@ -1,8 +1,0 @@
-[gd_resource type="Theme" format=3 uid="uid://dx0bq86r3qwga"]
-
-[ext_resource type="FontFile" uid="uid://blgdr3wpr6u6u" path="res://Fonts/MedievalSharp.ttf" id="1_font"]
-
-[resource]
-Label/colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-Label/font_sizes/font_size = 32
-Label/fonts/font = ExtResource("1_font")

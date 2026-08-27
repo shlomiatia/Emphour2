@@ -26,6 +26,6 @@ func run_test() -> void:
 
 func play_last_card() -> void:
     var card := game.player_hand.get_cards()[0]
-    var slot := game.board.get_row_slots(game.board.player_row)[0]
+    var slot := game.board.get_row_slots(Board.PLAYER_ROW)[0]
     game.turns.card_clicked(card)
     game.turns.target_clicked(slot)

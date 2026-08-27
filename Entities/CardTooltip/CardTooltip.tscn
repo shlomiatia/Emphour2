@@ -1,37 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://Entities/CardTooltip/card_tooltip.gd" id="1_script"]
-[ext_resource type="Theme" path="res://Themes/PanelText.tres" id="2_theme"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip"]
-bg_color = Color(0.839216, 0.745098, 0.6, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.352941, 0.286275, 0.196078, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardDataTooltip.tscn" id="2_data"]
+[ext_resource type="PackedScene" path="res://Entities/CardTooltip/EnemyCardsTooltip.tscn" id="3_enemy"]
 
 [node name="CardTooltip" type="CanvasLayer"]
 layer = 2
 script = ExtResource("1_script")
 
-[node name="Panel" type="Panel" parent="."]
-visible = false
-offset_right = 1.0
-offset_bottom = 1.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
-mouse_filter = 2
+[node name="CardDataTooltip" parent="." instance=ExtResource("2_data")]
 
-[node name="Description" type="Label" parent="Panel"]
-offset_left = 14.0
-offset_top = 12.0
-offset_right = 15.0
-offset_bottom = 13.0
-theme = ExtResource("2_theme")
-mouse_filter = 2
-
-[node name="Cards" type="Node2D" parent="Panel"]
+[node name="EnemyCardsTooltip" parent="." instance=ExtResource("3_enemy")]

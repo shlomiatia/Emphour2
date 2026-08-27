@@ -22,10 +22,7 @@ func _process(delta: float) -> void:
 func move_card(card: Card, delta: float) -> void:
     if card.moving:
         return
-    var weight := minf(delta * 10.0, 1.0)
-    card.position = card.position.lerp(Vector2.ZERO, weight)
-    card.scale = card.scale.lerp(Vector2.ONE, weight)
-    card.rotation = lerp_angle(card.rotation, 0.0, weight)
+    CardMotion.approach(card, Vector2.ZERO, Vector2.ONE, 0.0, delta)
     if !card.attacking:
         card.z_index = 2
 
@@ -35,7 +32,6 @@ func place(card: Card) -> void:
     card.draggable = false
     card.hover_enabled = false
     card.set_hovering(false)
-    card.set_selectable(false)
     if from_enemy_hand:
         card.move_to_line(global_position)
 
@@ -64,7 +60,7 @@ func set_hovering(value: bool) -> void:
 
 func refresh_border() -> void:
     border.self_modulate = Color.WHITE if targetable && hovering else row_color
-    border.modulate = Color("#fee761") if targetable && hovering else Color.WHITE
+    border.modulate = Card.HIGHLIGHT_COLOR if targetable && hovering else Color.WHITE
     var card := get_card()
     if card:
         card.set_highlighted(targetable && hovering)

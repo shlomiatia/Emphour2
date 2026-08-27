@@ -1,27 +1,23 @@
 class_name CardBattle extends Node2D
 
-const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
-
 @export var enemy_deck: EnemyDeck
-@onready var board: Board = $CardLayer/Board
+@onready var board: Board = $Board
 @onready var shaking_camera: ShakingCamera = $ShakingCamera
-@onready var player_hand: CardHand = $CardLayer/PlayerHand
-@onready var enemy_hand: CardHand = $CardLayer/EnemyHand
+@onready var player_hand: CardHand = $PlayerHand
+@onready var enemy_hand: CardHand = $Interface/EnemyHand
 @onready var player_discard: DiscardPile = $Interface/PlayerDiscard/Pile
 @onready var enemy_discard: DiscardPile = $Interface/EnemyDiscard/Pile
 @onready var player_deck: CardDeck = $Interface/PlayerDeck/Pile
 @onready var enemy_deck_pile: CardDeck = $Interface/EnemyDeck/Pile
-@onready var battle: BattleResolver = $BattleResolver
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
-@onready var loyalty_events: LoyaltyEvents = $LoyaltyEvents
-@onready var status_label: Label = $CardLayer/StatusBackground/MarginContainer/Status
-@onready var battle_hud: BattleHud = $CardLayer/BattleHud
-@onready var event_panel: Panel = $Interface/Event
-@onready var event_message: Label = $Interface/Event/Message
-@onready var audio: GameAudio = Audio
+@onready var loyalty_events: LoyaltyEvents = $Interface/LoyaltyEvents
+@onready var status_label: Label = $Interface/StatusBackground/MarginContainer/Status
+@onready var battle_hud: BattleHud = $Interface/BattleHud
+@onready var audio: GameAudio = get_node("/root/Audio")
 @onready var fade: Fade = $Interface/Fade
 
+var battle := BattleResolver.new()
 var selectable_cards: Array[Card]
 var player_draw_pile: Array[String]
 var enemy_draw_pile: Array[String]
@@ -62,10 +58,6 @@ func _input(event: InputEvent) -> void:
         CampaignState.reset()
         get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
         return
-    if selectable_cards.is_empty() || !(event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed):
-        return
-    var slot := board.get_target_at(event.position)
-    var card := slot.get_card() if slot else null
 
 func _on_target_chosen(slot: CardSlot) -> void:
     var card := slot.get_card()
@@ -79,12 +71,13 @@ func setup_draw_pile(names: Array[String], pile: Array[String]) -> void:
     pile.shuffle()
 
 func draw_cards(hand: CardHand, side: int, count: int) -> void:
+    var pile := get_draw_pile(side)
+    var deck := get_deck(side)
     for _card in count:
-        var pile := get_draw_pile(side)
         if pile.is_empty():
             return
-        hand.add_drawn_card(create_card(pile.pop_back(), side), get_deck(side))
-        get_deck(side).set_card_count(pile.size())
+        hand.add_drawn_card(create_card(pile.pop_back(), side), deck)
+        deck.set_card_count(pile.size())
 
 func draw_card(side: int) -> void:
     draw_cards(player_hand if side == GameRules.Side.PLAYER else enemy_hand, side, 1)
@@ -96,10 +89,7 @@ func get_deck(side: int) -> CardDeck:
     return player_deck if side == GameRules.Side.PLAYER else enemy_deck_pile
 
 func create_card(card_name: String, side: int) -> Card:
-    var card := CARD_SCENE.instantiate() as Card
-    card.card_name = card_name
-    card.side = side
-    return card
+    return CardFactory.create(card_name, side)
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(cards)
@@ -115,7 +105,7 @@ func defeat_card(card: Card) -> void:
     card.reparent(self)
     board.notify_state_changed()
     await card.fade_out()
-    get_discard(card.side).add_defeated(card)
+    get_discard(card.side).add_card(card)
 
 func shake_camera() -> void:
     shaking_camera.shake()
@@ -124,7 +114,8 @@ func discard_card(card: Card) -> void:
     var discard := get_discard(card.side)
     card.reparent(self)
     discard.add_card(card, false)
-    card.move_to_discard(discard.global_position)
+    await card.move_to(discard.global_position, true, Vector2.ZERO)
+    card.queue_free()
 
 func get_discard(side: int) -> DiscardPile:
     return player_discard if side == GameRules.Side.PLAYER else enemy_discard

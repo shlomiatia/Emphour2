@@ -35,6 +35,7 @@ func verify_campaign() -> void:
 	assert(road.get_point_count() == cities.get_child_count())
 	assert(!map.get_node_or_null("CanvasLayer/ForeignRelations"))
 	assert(!map.get_node_or_null("CanvasLayer/Tooltip"))
+	assert(map.get_node("CanvasLayer/KingdomLoyalty/PanelContent/TitleBackground/MarginContainer/Title").text == "KINGDOM LOYALTY")
 	for city in cities.get_children():
 		assert(city.get_node("Name").text == city.city_name)
 	assert(cities.get_node("City1/Marker").modulate == Color("#f5eee2"))

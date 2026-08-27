@@ -1,31 +1,36 @@
 class_name Board extends Node2D
 
-const ROW_COUNT := 2
+const PLAYER_ROW := 1
+const ENEMY_ROW := 0
 
-@export var player_row := 1
-@export var enemy_row := 0
+@export var slot_scene: PackedScene
 @export_range(1, 5) var slot_count := 3:
     set(value):
         slot_count = value
-        if is_inside_tree():
-            refresh_slots()
+        if is_node_ready():
+            rebuild_slots()
 @export var row_spacing := 8.0
+@export var slot_spacing := 195.0
 
 var dragged_card: Card
 var highlighted_target: CardSlot
+var slots: Array[CardSlot]
 
 signal target_chosen(slot: CardSlot)
 signal state_changed
 
 func _ready() -> void:
-    refresh_slots()
-    refresh_rows()
+    rebuild_slots()
 
 func _process(_delta: float) -> void:
     var target := get_overlap_target(dragged_card) if dragged_card else get_target_at(get_viewport().get_mouse_position())
+    if target == highlighted_target:
+        return
+    if highlighted_target:
+        highlighted_target.set_hovering(false)
     highlighted_target = target
-    for slot in get_slots():
-        slot.set_hovering(slot == target)
+    if highlighted_target:
+        highlighted_target.set_hovering(true)
 
 func _unhandled_input(event: InputEvent) -> void:
     if !(event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed):
@@ -35,25 +40,34 @@ func _unhandled_input(event: InputEvent) -> void:
         target_chosen.emit(target)
         get_viewport().set_input_as_handled()
 
-func refresh_rows() -> void:
-    for slot in get_slots():
-        slot.set_active(slot.row == player_row, slot.row == enemy_row)
-
-func refresh_slots() -> void:
+func rebuild_slots() -> void:
     var rows := $Rows.get_children()
     var row_height := get_row_height()
+    clear_slots(rows)
     for row_index in rows.size():
         var row := rows[row_index] as Node2D
         row.position.y = (row_index - (rows.size() - 1) / 2.0) * row_height
-        var slots := row.get_children()
-        var first := (slots.size() - slot_count) / 2
-        for index in slots.size():
-            var slot := slots[index] as CardSlot
-            slot.visible = index >= first && index < first + slot_count
+        for column in slot_count:
+            var slot := slot_scene.instantiate() as CardSlot
+            slot.row = row_index
+            slot.column = column
+            slot.position.x = (column - (slot_count - 1) / 2.0) * slot_spacing
+            row.add_child(slot)
+            slots.append(slot)
+    refresh_rows()
+
+func clear_slots(rows: Array[Node]) -> void:
+    slots.clear()
+    for row in rows:
+        for slot in row.get_children():
+            slot.free()
+
+func refresh_rows() -> void:
+    for slot in slots:
+        slot.set_active(slot.row == PLAYER_ROW, slot.row == ENEMY_ROW)
 
 func get_row_height() -> float:
-    var slot := $Rows.get_child(0).get_child(0) as CardSlot
-    return slot.slot_size.y + row_spacing
+    return Card.SIZE.y + row_spacing
 
 func play_leftmost(card: Card, side: int) -> bool:
     for slot in get_row_slots(get_side_row(side)):
@@ -94,7 +108,7 @@ func reveal_enemy_cards() -> void:
 
 func enable_player_targets(full_row: bool) -> void:
     clear_targets()
-    for slot in get_row_slots(player_row):
+    for slot in get_row_slots(PLAYER_ROW):
         if full_row || !slot.get_card():
             slot.set_targetable(true)
 
@@ -111,6 +125,8 @@ func set_dragged_card(card: Card) -> void:
 
 func clear_targets() -> void:
     dragged_card = null
+    if highlighted_target:
+        highlighted_target.set_hovering(false)
     highlighted_target = null
     for slot in get_slots():
         slot.set_targetable(false)
@@ -134,14 +150,10 @@ func notify_state_changed() -> void:
     state_changed.emit()
 
 func get_side_row(side: int) -> int:
-    return player_row if side == GameRules.Side.PLAYER else enemy_row
+    return PLAYER_ROW if side == GameRules.Side.PLAYER else ENEMY_ROW
 
 func get_row_slots(row: int) -> Array[CardSlot]:
     return get_slots().filter(func(slot: CardSlot) -> bool: return slot.row == row && slot.visible)
 
 func get_slots() -> Array[CardSlot]:
-    var result: Array[CardSlot]
-    for row in $Rows.get_children():
-        for slot in row.get_children():
-            result.append(slot)
-    return result
+    return slots

@@ -6,37 +6,39 @@
 [ext_resource type="PackedScene" uid="uid://bsql53vleifh1" path="res://Entities/Board/Board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
 [ext_resource type="PackedScene" uid="uid://bk2gqm65aj5b3" path="res://Entities/DiscardPile/DiscardPile.tscn" id="5_discard"]
-[ext_resource type="Script" uid="uid://b0q3qtboon4wt" path="res://Scripts/battle_resolver.gd" id="6_battle"]
 [ext_resource type="Texture2D" uid="uid://cgk5tbhwp2p4b" path="res://Textures/Shrub.png" id="6_bsx7d"]
 [ext_resource type="Texture2D" uid="uid://cey4ynggjuuxw" path="res://Textures/Stones.png" id="7_io1xx"]
 [ext_resource type="Script" uid="uid://c6ngpnt2iur5a" path="res://Scripts/turn_state.gd" id="7_turn"]
 [ext_resource type="Script" uid="uid://cna2jv3ibfvv4" path="res://Scripts/battle_state.gd" id="8_battle_state"]
 [ext_resource type="Texture2D" uid="uid://checyg32ikd72" path="res://Textures/Stone.png" id="8_pvwcp"]
+[ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="9_0fd0c"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
 [ext_resource type="PackedScene" uid="uid://mwa45cj2iwgm" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
-[ext_resource type="Script" uid="uid://cy1o1oww5aoqh" path="res://Scripts/loyalty_events.gd" id="14_loyalty"]
+[ext_resource type="PackedScene" path="res://Entities/LoyaltyEvents/LoyaltyEvents.tscn" id="14_loyalty"]
 [ext_resource type="Script" uid="uid://bidf16fg4sulc" path="res://Scripts/enemy_deck.gd" id="15_enemy_deck"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="15_panel"]
-[ext_resource type="Theme" path="res://Themes/GoldText.tres" id="16_gold"]
 [ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
-[ext_resource type="PackedScene" uid="uid://bhecmvucxkodd" path="res://Entities/BattleWindOverlay/BattleWindOverlay.tscn" id="18_wind"]
+[ext_resource type="PackedScene" path="res://Entities/WindOverlay/WindOverlay.tscn" id="18_wind"]
 [ext_resource type="PackedScene" path="res://Entities/Deck/Deck.tscn" id="20_deck"]
+[ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="21_panel"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_instructions"]
-bg_color = Color(0.839216, 0.745098, 0.6, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.352941, 0.286275, 0.196078, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsx7d"]
+resource_local_to_scene = true
+shader = ExtResource("9_0fd0c")
+shader_parameter/wind_dir_angle = 0.0
+shader_parameter/wind_speed = 16.0
+shader_parameter/patch_width_px = 240.0
+shader_parameter/patch_height_px = 28.0
+shader_parameter/band_spacing_px = 9.0
+shader_parameter/pixel_size_px = 1.0
+shader_parameter/rotation_degrees = -15.0
+shader_parameter/threshold = 0.7
+shader_parameter/opacity = 0.045
+shader_parameter/corner_roundness = 0.18
 
 [node name="Battle" type="Node2D" unique_id=891812253]
 script = ExtResource("1_battle")
@@ -110,21 +112,20 @@ texture = ExtResource("8_pvwcp")
 position = Vector2(721, -326)
 texture = ExtResource("8_pvwcp")
 
-[node name="BattleWindOverlay" parent="." unique_id=177503165 instance=ExtResource("18_wind")]
+[node name="WindOverlay" parent="." unique_id=177503165 instance=ExtResource("18_wind")]
+material = SubResource("ShaderMaterial_bsx7d")
+position = Vector2(960, 540)
+texture = ExtResource("2_background")
 
 [node name="ShakingCamera" parent="." unique_id=518469472 instance=ExtResource("16_shake")]
 
-[node name="CardLayer" type="CanvasLayer" parent="." unique_id=780174864]
+[node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
 
-[node name="Board" parent="CardLayer" unique_id=1079065982 instance=ExtResource("3_board")]
-position = Vector2(960, 410)
-row_spacing = 80.0
-
-[node name="BattleHud" parent="CardLayer" unique_id=548796464 instance=ExtResource("13_hud")]
+[node name="BattleHud" parent="Interface" unique_id=548796464 instance=ExtResource("13_hud")]
 offset_top = 350.0
 offset_bottom = 476.0
 
-[node name="EnemyHand" parent="CardLayer" unique_id=245630305 instance=ExtResource("4_hand")]
+[node name="EnemyHand" parent="Interface" unique_id=245630305 instance=ExtResource("4_hand")]
 position = Vector2(960, 65)
 side = 1
 face_down = true
@@ -134,10 +135,7 @@ arc_direction = -1.0
 hover_enabled = false
 hover_offset = Vector2(0, 0)
 
-[node name="PlayerHand" parent="CardLayer" unique_id=1302264869 instance=ExtResource("4_hand")]
-position = Vector2(960, 954)
-
-[node name="StatusBackground" type="PanelContainer" parent="CardLayer" unique_id=101215224]
+[node name="StatusBackground" type="PanelContainer" parent="Interface" unique_id=101215224]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -148,21 +146,19 @@ offset_bottom = 789.0
 grow_horizontal = 2
 size_flags_horizontal = 6
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBox_instructions")
+theme_override_styles/panel = ExtResource("21_panel")
 
-[node name="MarginContainer" type="MarginContainer" parent="CardLayer/StatusBackground" unique_id=720213118]
+[node name="MarginContainer" type="MarginContainer" parent="Interface/StatusBackground" unique_id=720213118]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="Status" type="Label" parent="CardLayer/StatusBackground/MarginContainer" unique_id=2036854357]
+[node name="Status" type="Label" parent="Interface/StatusBackground/MarginContainer" unique_id=2036854357]
 layout_mode = 2
 theme = ExtResource("15_panel")
 text = "Preparing game"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Interface" type="CanvasLayer" parent="." unique_id=1403568732]
 
 [node name="EnemyDiscard" type="Control" parent="Interface" unique_id=946180786]
 layout_mode = 3
@@ -175,7 +171,6 @@ grow_horizontal = 0
 
 [node name="Pile" parent="Interface/EnemyDiscard" unique_id=224881315 instance=ExtResource("5_discard")]
 position = Vector2(48, 48)
-side = 1
 
 [node name="EnemyDeck" type="Control" parent="Interface" unique_id=152432272]
 layout_mode = 3
@@ -213,45 +208,21 @@ grow_vertical = 0
 [node name="Pile" parent="Interface/PlayerDeck" unique_id=130204133 instance=ExtResource("20_deck")]
 position = Vector2(48, 48)
 
-[node name="Event" type="Panel" parent="Interface" unique_id=953333336]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -330.0
-offset_top = -100.0
-offset_right = 330.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Message" type="Label" parent="Interface/Event" unique_id=384897743]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("16_gold")
-text = "A unit refuses to fight.
-Press any key to continue."
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="LoyaltyEvents" parent="Interface" unique_id=383739355 instance=ExtResource("14_loyalty")]
 
 [node name="Fade" parent="Interface" unique_id=1328492879 instance=ExtResource("12_fade")]
 
-[node name="CardTooltip" parent="." unique_id=782447997 instance=ExtResource("11_tooltip")]
+[node name="Board" parent="." unique_id=1079065982 instance=ExtResource("3_board")]
+position = Vector2(960, 410)
+row_spacing = 80.0
 
-[node name="BattleResolver" type="Node" parent="." unique_id=1327443828]
-script = ExtResource("6_battle")
+[node name="PlayerHand" parent="." unique_id=1302264869 instance=ExtResource("4_hand")]
+position = Vector2(960, 954)
+
+[node name="CardTooltip" parent="." unique_id=782447997 instance=ExtResource("11_tooltip")]
 
 [node name="BattleState" type="Node" parent="." unique_id=740540934]
 script = ExtResource("8_battle_state")
 
 [node name="TurnState" type="Node" parent="." unique_id=2008914432]
 script = ExtResource("7_turn")
-
-[node name="LoyaltyEvents" type="Node" parent="." unique_id=1954826993]
-script = ExtResource("14_loyalty")

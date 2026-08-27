@@ -2,6 +2,7 @@ extends SceneTree
 
 var game: CardBattle
 var militia: Card
+var mantlet: Card
 var selection_checked := false
 
 func _initialize() -> void:
@@ -27,7 +28,7 @@ func setup_cards() -> void:
     clear_cards()
     var archer_one := add_card("Archer", GameRules.Side.PLAYER)
     var archer_two := add_card("Archer", GameRules.Side.PLAYER)
-    var mantlet := add_card("Mantlet", GameRules.Side.ENEMY)
+    mantlet = add_card("Mantlet", GameRules.Side.ENEMY)
     militia = add_card("Militia", GameRules.Side.ENEMY)
     game.board.play_leftmost(archer_one, GameRules.Side.PLAYER)
     game.board.play_leftmost(archer_two, GameRules.Side.PLAYER)
@@ -58,6 +59,6 @@ func select_militia() -> void:
     assert(names == ["Militia"])
     var slot := militia.get_parent().get_parent() as CardSlot
     assert(slot.targetable)
-    assert(game.board.get_target_at(mantlet.global_position) == slot)
+    assert(game.board.get_target_at(militia.global_position) == slot)
     selection_checked = true
     game.board.target_chosen.emit(slot)

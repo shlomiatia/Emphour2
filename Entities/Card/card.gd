@@ -1,5 +1,7 @@
 class_name Card extends Node2D
 
+const SIZE := Vector2(182, 253)
+const HIGHLIGHT_COLOR := Color("#fee761")
 const ATTACK_ICONS := {
     CardData.AttackType.MISSILE: preload("res://Textures/Missle.png"),
     CardData.AttackType.CAVALRY: preload("res://Textures/Cavalry.png"),
@@ -25,7 +27,6 @@ const GROUP_ICONS := {"Peasants": preload("res://Textures/Peasants.png"), "Nobil
 var data: CardData
 var draggable := false
 var dragging := false
-var selectable := false
 var hovering := false
 var hover_enabled := false
 var disabled := false
@@ -69,21 +70,11 @@ func set_hidden(value: bool) -> void:
     back.visible = face_down
 
 func flip_face_up() -> Signal:
-    moving = true
-    var target_scale := scale
-    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-    tween.tween_property(self, "scale:x", 0.05, 0.14)
-    tween.tween_callback(set_hidden.bind(false))
-    tween.tween_property(self, "scale:x", target_scale.x, 0.14)
-    tween.tween_callback(finish_move)
-    return tween.finished
+    return CardMotion.flip_face_up(self)
 
 func set_preview_count(value: int) -> void:
     count.text = "x%d" % value
     count.show()
-
-func set_selectable(value: bool) -> void:
-    selectable = value
 
 func set_disabled(value: bool) -> void:
     disabled = value
@@ -94,7 +85,7 @@ func set_highlighted(value: bool) -> void:
     refresh_color()
 
 func refresh_color() -> void:
-    var color := Color("#fee761") if highlighted else Color(0.45, 0.45, 0.45) if disabled else Color.WHITE
+    var color := HIGHLIGHT_COLOR if highlighted else Color(0.45, 0.45, 0.45) if disabled else Color.WHITE
     front.modulate = color
     back.modulate = color
 
@@ -102,64 +93,32 @@ func set_hovering(value: bool) -> void:
     hovering = value
 
 func contains_point(point: Vector2) -> bool:
-    return Rect2(-91, -126.5, 182, 253).has_point(to_local(point))
+    return Rect2(-SIZE / 2.0, SIZE).has_point(to_local(point))
 
 func get_global_rect() -> Rect2:
-    var points := [Vector2(-91, -126.5), Vector2(91, -126.5), Vector2(91, 126.5), Vector2(-91, 126.5)]
+    var points := [Vector2(-SIZE.x, -SIZE.y) / 2.0, Vector2(SIZE.x, -SIZE.y) / 2.0, SIZE / 2.0, Vector2(-SIZE.x, SIZE.y) / 2.0]
     var result := Rect2(global_transform * points[0], Vector2.ZERO)
     for point in points:
         result = result.expand(global_transform * point)
     return result
 
 func fade_out() -> void:
-    var tween := create_tween()
-    tween.set_ease(Tween.EASE_OUT)
-    tween.set_trans(Tween.TRANS_SINE)
-    tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.3)
-    await tween.finished
+    await CardMotion.fade_out(self)
 
 func move_to(target: Vector2, fade := false, target_scale := Vector2.ONE) -> void:
-    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-    tween.tween_property(self, "global_position", target, 0.45)
-    tween.parallel().tween_property(self, "scale", target_scale, 0.45)
-    if fade:
-        tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
-    await tween.finished
-
-func move_to_discard(target: Vector2) -> void:
-    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-    tween.tween_property(self, "global_position", target, 0.45)
-    tween.parallel().tween_property(self, "scale", Vector2.ZERO, 0.45)
-    tween.parallel().tween_property(self, "modulate:a", 0.0, 0.45)
-    tween.tween_callback(queue_free)
+    await CardMotion.move_to(self, target, fade, target_scale)
 
 func move_to_line(target: Vector2) -> void:
-    moving = true
-    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-    tween.tween_property(self, "global_position", target, 0.45)
-    tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.45)
-    tween.parallel().tween_property(self, "rotation", 0.0, 0.45)
-    tween.tween_callback(finish_move)
+    CardMotion.move_to_line(self, target)
 
 func finish_move() -> void:
     moving = false
 
 func retreat_out(side_to_retreat: int) -> void:
-    var target_y := 1280.0 if side_to_retreat == GameRules.Side.PLAYER else -200.0
-    var tween := create_tween()
-    tween.set_ease(Tween.EASE_OUT)
-    tween.set_trans(Tween.TRANS_SINE)
-    tween.tween_property(self, "global_position:y", target_y, 0.3)
+    CardMotion.retreat_out(self, side_to_retreat)
 
 func attack_card(defender: Card) -> Signal:
-    attacking = true
-    z_index = 100
-    var start := global_position
-    var tween := create_tween()
-    tween.tween_property(self, "global_position", defender.global_position, 0.18)
-    tween.tween_property(self, "global_position", start, 0.18)
-    tween.tween_callback(finish_attack)
-    return tween.finished
+    return CardMotion.attack(self, defender)
 
 func finish_attack() -> void:
     attacking = false

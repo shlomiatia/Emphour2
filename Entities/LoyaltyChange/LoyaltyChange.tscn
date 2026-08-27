@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="1_parchment"]
 [ext_resource type="PackedScene" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="2_arrow"]
-[ext_resource type="Theme" path="res://Themes/DarkBodyText.tres" id="3_dark"]
+[ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="3_dark"]
 [ext_resource type="Texture2D" path="res://Textures/Peasants.png" id="4_icon"]
 
 [node name="LoyaltyChange" type="HBoxContainer"]

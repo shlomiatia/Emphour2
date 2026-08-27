@@ -5,57 +5,12 @@
 
 [node name="Board" type="Node2D" unique_id=1311631284]
 script = ExtResource("1_script")
+slot_scene = ExtResource("2_slot")
 row_spacing = 120.0
+slot_spacing = 195.0
 
 [node name="Rows" type="Node2D" parent="." unique_id=1436301784]
 
 [node name="Row0" type="Node2D" parent="Rows" unique_id=2147208673]
-position = Vector2(0, -186.5)
-
-[node name="Slot0" parent="Rows/Row0" unique_id=595748678 instance=ExtResource("2_slot")]
-visible = false
-position = Vector2(-390, 0)
-
-[node name="Slot1" parent="Rows/Row0" unique_id=1772672411 instance=ExtResource("2_slot")]
-position = Vector2(-195, 0)
-column = 1
-
-[node name="Slot2" parent="Rows/Row0" unique_id=498374170 instance=ExtResource("2_slot")]
-column = 2
-
-[node name="Slot3" parent="Rows/Row0" unique_id=1577855547 instance=ExtResource("2_slot")]
-position = Vector2(195, 0)
-column = 3
-
-[node name="Slot4" parent="Rows/Row0" unique_id=32886123 instance=ExtResource("2_slot")]
-visible = false
-position = Vector2(390, 0)
-column = 4
 
 [node name="Row1" type="Node2D" parent="Rows" unique_id=313786224]
-position = Vector2(0, 186.5)
-
-[node name="Slot0" parent="Rows/Row1" unique_id=1210887993 instance=ExtResource("2_slot")]
-visible = false
-position = Vector2(-390, 0)
-row = 1
-
-[node name="Slot1" parent="Rows/Row1" unique_id=1735597675 instance=ExtResource("2_slot")]
-position = Vector2(-195, 0)
-row = 1
-column = 1
-
-[node name="Slot2" parent="Rows/Row1" unique_id=815567543 instance=ExtResource("2_slot")]
-row = 1
-column = 2
-
-[node name="Slot3" parent="Rows/Row1" unique_id=1562930724 instance=ExtResource("2_slot")]
-position = Vector2(195, 0)
-row = 1
-column = 3
-
-[node name="Slot4" parent="Rows/Row1" unique_id=1778797612 instance=ExtResource("2_slot")]
-visible = false
-position = Vector2(390, 0)
-row = 1
-column = 4

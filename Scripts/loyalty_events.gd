@@ -1,6 +1,8 @@
-class_name LoyaltyEvents extends Node
+class_name LoyaltyEvents extends Panel
 
 signal continued
+
+@onready var message: Label = $Message
 
 var game: CardBattle
 var waiting := false
@@ -24,7 +26,7 @@ func run() -> void:
     else:
         await run_regular_events()
     running = false
-    game.event_panel.hide()
+    hide()
 
 func run_final_events() -> void:
     var group := CampaignState.disloyal_group()
@@ -61,8 +63,8 @@ func eligible_cards(group: String) -> Array[Card]:
 
 func show_message(card: Card, event: int) -> void:
     var actions := ["refuses to fight", "deserts your army", "betrays you"]
-    game.event_message.text = "%s %s.\nPress any key to continue." % [card.card_name, actions[event]]
-    game.event_panel.show()
+    message.text = "%s %s.\nPress any key to continue." % [card.card_name, actions[event]]
+    show()
 
 func wait_for_input() -> void:
     waiting = true

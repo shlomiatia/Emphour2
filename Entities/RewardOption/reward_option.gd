@@ -1,10 +1,7 @@
 class_name RewardOption extends Control
 
-const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
-
 @export var group_name := "Peasants"
-@export var option_id := "Peasants"
-@onready var title: Label = $Panel/TitleBackground/MarginContainer/Title
+@onready var title: PanelTitle = $Panel/TitleBackground
 @onready var offer_root: Node2D = $Panel/Offer
 @onready var arrow: Control = $Panel/Offer/Arrow
 @onready var description: Label = $Panel/Description
@@ -20,7 +17,7 @@ signal chosen(group: String)
 
 func setup(value: Dictionary) -> void:
 	offer = value
-	title.text = offer.get("title", group_name)
+	title.title = offer.get("title", group_name)
 	group_icon.texture = load("res://Textures/%s.png" % group_name)
 	if !offer["old"].is_empty():
 		add_card(offer["old"], Vector2(-128, 0))
@@ -47,15 +44,14 @@ func set_label(label: Label, value: int) -> void:
 	label.add_theme_color_override("font_color", RelationData.color(value))
 
 func add_card(card_name: String, position_value: Vector2) -> void:
-	var card := CARD_SCENE.instantiate() as Card
-	card.card_name = card_name
+	var card := CardFactory.create(card_name, GameRules.Side.PLAYER)
 	card.position = position_value
 	card.scale = Vector2.ONE * 0.86
 	offer_root.add_child(card)
 	cards.append(card)
 
 func _on_button_pressed() -> void:
-	chosen.emit(option_id)
+	chosen.emit(group_name)
 
 func _on_button_mouse_entered() -> void:
 	set_highlighted(true)

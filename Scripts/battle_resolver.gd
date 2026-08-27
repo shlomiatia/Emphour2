@@ -1,4 +1,4 @@
-class_name BattleResolver extends Node
+class_name BattleResolver extends RefCounted
 
 var game: CardBattle
 
@@ -25,8 +25,7 @@ func update_preview() -> void:
     var player_losses := potential_losses(enemy_cards, player_cards)
     var enemy_losses := potential_losses(player_cards, enemy_cards)
     game.set_losses(player_losses, enemy_losses)
-    if !game.battle_state.active:
-        game.preview_balance(total_strength(player_cards) - total_strength(enemy_cards))
+    game.preview_balance(total_strength(player_cards) - total_strength(enemy_cards))
 
 func strength_difference() -> int:
     return total_strength(game.board.get_cards(GameRules.Side.PLAYER)) - total_strength(game.board.get_cards(GameRules.Side.ENEMY))
@@ -43,7 +42,7 @@ func resolve_attack(attacker: Card, player_cards: Array[Card], enemy_cards: Arra
         game.shake_camera()
         await attacker.attack_card(defender)
         return
-    var targets := available_targets(attacker, opponents, used, defeated)
+    var targets := available_targets(attacker, opponents, defeated)
     var target := await choose_target(attacker, targets)
     if target:
         game.audio.play_attack()
@@ -63,7 +62,7 @@ func choose_defender(attacker: Card, cards: Array[Card]) -> Card:
     var chosen: Card = cards.pick_random()
     return chosen
 
-func available_targets(attacker: Card, cards: Array[Card], used: Array[Card], defeated: Array[Card]) -> Array[Card]:
+func available_targets(attacker: Card, cards: Array[Card], defeated: Array[Card]) -> Array[Card]:
     var result: Array[Card] = cards.filter(func(card: Card) -> bool: return !defeated.has(card) && !can_defend(attacker.data, card.data))
     return result
 

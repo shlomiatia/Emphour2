@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://xh6p2ucky4m3" path="res://Scenes/Reward/reward.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://dblk1bdntusy7" path="res://Entities/RewardOption/RewardOption.tscn" id="3_option"]
-[ext_resource type="Theme" path="res://Themes/LargeGoldText.tres" id="4_large_gold"]
+[ext_resource type="Theme" path="res://Themes/LargeParchmentText.tres" id="4_large_gold"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
@@ -54,7 +54,6 @@ offset_top = 190.0
 offset_right = 1650.0
 offset_bottom = 800.0
 group_name = "Nobility"
-option_id = "Nobility"
 
 [node name="Fade" parent="CanvasLayer" unique_id=2032149417 instance=ExtResource("5_fade")]
 
