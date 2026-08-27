@@ -1,9 +1,10 @@
 class_name CardBattle extends Node2D
 
 @export var enemy_deck: EnemyDeck
-@onready var board: Board = $Board
+@onready var card_space: CanvasLayer = $CardSpace
+@onready var board: Board = $CardSpace/Board
 @onready var shaking_camera: ShakingCamera = $ShakingCamera
-@onready var player_hand: CardHand = $PlayerHand
+@onready var player_hand: CardHand = $CardSpace/PlayerHand
 @onready var enemy_hand: CardHand = $Interface/EnemyHand
 @onready var player_discard: DiscardPile = $Interface/PlayerDiscard/Pile
 @onready var enemy_discard: DiscardPile = $Interface/EnemyDiscard/Pile
@@ -11,13 +12,14 @@ class_name CardBattle extends Node2D
 @onready var enemy_deck_pile: CardDeck = $Interface/EnemyDeck/Pile
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
-@onready var loyalty_events: LoyaltyEvents = $Interface/LoyaltyEvents
+@onready var loyalty_events: LoyaltyEvents = $Overlay/LoyaltyEvents
 @onready var status_label: Label = $Interface/StatusBackground/MarginContainer/Status
 @onready var battle_hud: BattleHud = $Interface/BattleHud
 @onready var audio: GameAudio = get_node("/root/Audio")
-@onready var fade: Fade = $Interface/Fade
+@onready var fade: Fade = $Overlay/Fade
 
 var battle := BattleResolver.new()
+var draws := BattleDraws.new()
 var selectable_cards: Array[Card]
 var player_draw_pile: Array[String]
 var enemy_draw_pile: Array[String]
@@ -25,25 +27,27 @@ var finished := false
 var can_restart := false
 
 signal card_chosen(card: Card)
+signal battle_ready
 
 func _ready() -> void:
     audio.start_music()
     board.slot_count = CampaignState.battle_slot_count()
     setup_states()
     connect_signals()
-    setup_draw_pile(CampaignState.player_deck, player_draw_pile)
-    setup_draw_pile(enemy_deck.build(CampaignState.enemy_city()), enemy_draw_pile)
-    draw_cards(player_hand, GameRules.Side.PLAYER, 5)
-    draw_cards(enemy_hand, GameRules.Side.ENEMY, 5)
+    draws.setup_piles(CampaignState.player_deck, enemy_deck.build(CampaignState.enemy_city()))
     set_balance(0, false)
+    await draws.draw_opening_hands()
     await loyalty_events.run()
     turns.start_round()
+    await get_tree().process_frame
+    battle_ready.emit()
 
 func setup_states() -> void:
     battle.setup(self)
     battle_state.setup(self)
     turns.setup(self)
     loyalty_events.setup(self)
+    draws.setup(self)
 
 func connect_signals() -> void:
     board.target_chosen.connect(_on_target_chosen)
@@ -55,8 +59,7 @@ func connect_signals() -> void:
 
 func _input(event: InputEvent) -> void:
     if can_restart && event.is_pressed():
-        CampaignState.reset()
-        get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
+        battle_state.restart()
         return
 
 func _on_target_chosen(slot: CardSlot) -> void:
@@ -66,27 +69,8 @@ func _on_target_chosen(slot: CardSlot) -> void:
     else:
         turns.target_clicked(slot)
 
-func setup_draw_pile(names: Array[String], pile: Array[String]) -> void:
-    pile.assign(names)
-    pile.shuffle()
-
-func draw_cards(hand: CardHand, side: int, count: int) -> void:
-    var pile := get_draw_pile(side)
-    var deck := get_deck(side)
-    for _card in count:
-        if pile.is_empty():
-            return
-        hand.add_drawn_card(create_card(pile.pop_back(), side), deck)
-        deck.set_card_count(pile.size())
-
-func draw_card(side: int) -> void:
-    draw_cards(player_hand if side == GameRules.Side.PLAYER else enemy_hand, side, 1)
-
-func get_draw_pile(side: int) -> Array[String]:
-    return player_draw_pile if side == GameRules.Side.PLAYER else enemy_draw_pile
-
-func get_deck(side: int) -> CardDeck:
-    return player_deck if side == GameRules.Side.PLAYER else enemy_deck_pile
+func draw_card(side: int) -> Card:
+    return draws.draw_card(side)
 
 func create_card(card_name: String, side: int) -> Card:
     return CardFactory.create(card_name, side)
@@ -102,7 +86,7 @@ func choose_card(cards: Array[Card], prompt: String) -> Card:
 
 func defeat_card(card: Card) -> void:
     battle_hud.remove_loss(card.side)
-    card.reparent(self)
+    card.reparent(card_space)
     board.notify_state_changed()
     await card.fade_out()
     get_discard(card.side).add_card(card)
@@ -112,7 +96,7 @@ func shake_camera() -> void:
 
 func discard_card(card: Card) -> void:
     var discard := get_discard(card.side)
-    card.reparent(self)
+    card.reparent(card_space)
     discard.add_card(card, false)
     await card.move_to(discard.global_position, true, Vector2.ZERO)
     card.queue_free()
@@ -132,5 +116,6 @@ func preview_balance(difference: int) -> void:
 func set_balance(value: int, animate := true) -> void:
     battle_hud.set_balance(value, animate)
 
-func set_status(value: String) -> void:
+func set_status(value: String, color := BattleHud.NORMAL_COLOR) -> void:
     status_label.text = value
+    status_label.add_theme_color_override("font_color", color)

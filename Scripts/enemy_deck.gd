@@ -6,11 +6,15 @@ const CITY_DECKS := {
 }
 
 const CITY_RULES := {
-	"City 3": [9, 10], "City 4": [10, 11],
-	"City 5": [10, 12], "City 6": [11, 13], "City 7": [12, 14]
+	"City 3": [10, 12],
+    "City 4": [12, 14],
+	"City 5": [10, 17],
+    "City 6": [13, 18],
+    "City 7": [13, 20]
 }
 const DEFAULT_DECK: Array[String] = ["Archer", "Militia", "Militia"]
 const LEVEL_ONE_WEIGHTS := {"Militia": 6, "Archer": 2, "Stakes": 1, "Mantlet": 1}
+const VALUE_SCALE := 2
 
 func build(city_name: String) -> Array[String]:
 	if city_name.is_empty():
@@ -25,45 +29,57 @@ func build(city_name: String) -> Array[String]:
 	push_error("No enemy deck rule for %s" % city_name)
 	return []
 
-static func generate(count: int, value: int, pool: Array[String]) -> Array[String]:
+static func generate(count: int, value: float, pool: Array[String]) -> Array[String]:
 	var memo := {}
-	if count < 1 || pool.is_empty() || !can_fill(count, value, pool, memo):
-		push_error("Enemy deck cannot satisfy count %d and value %d" % [count, value])
+	var budget := roundi(value * VALUE_SCALE)
+	if count < 1 || pool.is_empty() || !can_fill(count, budget, pool, memo):
+		push_error("Enemy deck cannot satisfy count %d and value %.1f" % [count, value])
 		return []
-	return fill_deck(count, value, pool, memo)
+	return fill_deck(count, budget, pool, memo)
 
-static func fill_deck(count: int, value: int, pool: Array[String], memo: Dictionary) -> Array[String]:
+static func fill_deck(count: int, budget: int, pool: Array[String], memo: Dictionary) -> Array[String]:
 	var deck: Array[String]
 	while deck.size() < count:
-		var card := pick_card(count - deck.size(), value, pool, memo)
+		var card := pick_card(count - deck.size(), budget, pool, memo)
 		deck.append(card)
-		value -= CardCatalog.get_value(card)
+		budget -= value_units(card)
 	return deck
 
-static func pick_card(count: int, value: int, pool: Array[String], memo: Dictionary) -> String:
+static func pick_card(count: int, budget: int, pool: Array[String], memo: Dictionary) -> String:
 	var choices: Array[String]
 	for card in pool:
-		if can_fill(count - 1, value - CardCatalog.get_value(card), pool, memo):
+		if can_fill(count - 1, budget - value_units(card), pool, memo):
 			choices.append(card)
-	return pick_weighted(choices)
+	return pick_weighted(choices, budget)
 
-static func pick_weighted(choices: Array[String]) -> String:
+static func pick_weighted(choices: Array[String], budget: int) -> String:
 	var total := 0
 	for card in choices:
 		total += LEVEL_ONE_WEIGHTS.get(card, 1)
 	var roll := randi_range(1, total)
+	var remaining_roll := roll
 	for card in choices:
-		roll -= LEVEL_ONE_WEIGHTS.get(card, 1)
-		if roll <= 0:
+		remaining_roll -= LEVEL_ONE_WEIGHTS.get(card, 1)
+		if remaining_roll <= 0:
+			print_roll(roll, total, choices, card, budget - value_units(card))
 			return card
 	return choices[0]
 
+static func print_roll(roll: int, total: int, choices: Array[String], selected: String, remaining: int) -> void:
+	var chances: Array[String]
+	for card in choices:
+		chances.append("%s=%.1f%%" % [card, LEVEL_ONE_WEIGHTS.get(card, 1) * 100.0 / total])
+	print("Enemy deck roll: roll=%d/%d selected=%s remaining=%.1f chances=[%s]" % [roll, total, selected, remaining / float(VALUE_SCALE), ", ".join(chances)])
+
 static func can_fill(count: int, value: int, pool: Array[String], memo: Dictionary) -> bool:
 	if count == 0:
-		return value == 0
+		return value == 0 || value == 1
 	if count < 0 || value < 0:
 		return false
 	var key := Vector2i(count, value)
 	if !memo.has(key):
-		memo[key] = pool.any(func(card: String) -> bool: return can_fill(count - 1, value - CardCatalog.get_value(card), pool, memo))
+		memo[key] = pool.any(func(card: String) -> bool: return can_fill(count - 1, value - value_units(card), pool, memo))
 	return memo[key]
+
+static func value_units(card_name: String) -> int:
+	return roundi(CardCatalog.get_value(card_name) * VALUE_SCALE)

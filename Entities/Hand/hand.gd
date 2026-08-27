@@ -66,6 +66,7 @@ func add_drawn_card(card: Card, source: Node2D) -> void:
 func finish_draw(card: Card) -> void:
     card.finish_move()
     card.z_index = get_cards().find(card) + 5
+    card.draw_finished.emit()
 
 func get_card_at(point: Vector2) -> Card:
     var cards := get_cards()

@@ -11,9 +11,9 @@ func run_test() -> void:
     CampaignState.selected_city = "City 1"
     CampaignState.player_deck.assign(["Militia"])
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
-    game.get_node("Board").slot_count = 1
+    game.get_node("CardSpace/Board").slot_count = 1
     root.add_child(game)
-    await process_frame
+    await game.battle_ready
     play_last_card()
     for _frame in 100:
         if game.finished:

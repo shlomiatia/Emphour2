@@ -8,8 +8,7 @@ func _initialize() -> void:
 func run_test() -> void:
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
     root.add_child(game)
-    for _frame in 10:
-        await process_frame
+    await game.battle_ready
     var tooltip := game.get_node("CardTooltip") as CardTooltip
     var card := game.player_hand.get_cards()[0]
     assert(tooltip.get_hovered_card(card.global_position) != null)
@@ -17,6 +16,14 @@ func run_test() -> void:
     tooltip.show_tooltip()
     assert(tooltip.data_tooltip.visible)
     assert(!tooltip.data_tooltip.description.text.is_empty())
+    var armored := CardCatalog.get_data("Foot Knight")
+    assert(tooltip.data_tooltip.get_description(armored).contains("Block 1 non armor piercing attack"))
+    var crossbowman := game.create_card("Crossbowman", GameRules.Side.PLAYER)
+    game.add_child(crossbowman)
+    await process_frame
+    assert(crossbowman.attack_icon.texture == load("res://Textures/Armor.png"))
+    assert(crossbowman.attack_counter.visible)
+    crossbowman.queue_free()
     assert(tooltip.get_hovered_card(game.enemy_hand.get_cards()[0].global_position) == null)
     tooltip.hovered_card = game.board.get_cards(GameRules.Side.ENEMY)[0]
     tooltip.show_tooltip()

@@ -5,9 +5,11 @@ const CARDS: Array[String] = [
     "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"
 ]
 
-static func get_value(card_name: String) -> int:
+static func get_value(card_name: String) -> float:
+    if card_name == "Crossbowman":
+        return 2.5
     var data := get_data(card_name)
-    return data.strength + data.attack + data.defence
+    return float(data.strength + data.attack + data.defence)
 
 static func get_data(card_name: String) -> CardData:
     match card_name:

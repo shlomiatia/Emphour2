@@ -16,6 +16,8 @@ func get_description(data: CardData) -> String:
         lines.append("%s attack" % get_attack_name(data.attack_type))
     if data.anti_attack != CardData.AttackType.NONE:
         lines.append("Block 1 %s attack" % get_attack_name(data.anti_attack))
+    if data.armored:
+        lines.append("Block 1 non armor piercing attack")
     return "\n".join(lines)
 
 func get_attack_name(type: CardData.AttackType) -> String:

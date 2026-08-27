@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/EnemyCardsTooltip.tscn" id="3_enemy"]
 
 [node name="CardTooltip" type="CanvasLayer"]
-layer = 2
+layer = 4
 script = ExtResource("1_script")
 
 [node name="CardDataTooltip" parent="." instance=ExtResource("2_data")]

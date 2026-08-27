@@ -5,7 +5,7 @@ const HIGHLIGHT_COLOR := Color("#fee761")
 const ATTACK_ICONS := {
     CardData.AttackType.MISSILE: preload("res://Textures/Missle.png"),
     CardData.AttackType.CAVALRY: preload("res://Textures/Cavalry.png"),
-    CardData.AttackType.ARMOR_PIERCING: preload("res://Textures/Missle.png")
+    CardData.AttackType.ARMOR_PIERCING: preload("res://Textures/Armor.png")
 }
 const GROUP_ICONS := {"Peasants": preload("res://Textures/Peasants.png"), "Nobility": preload("res://Textures/Nobility.png")}
 @export var card_name := "Militia"
@@ -21,6 +21,7 @@ const GROUP_ICONS := {"Peasants": preload("res://Textures/Peasants.png"), "Nobil
 @onready var defence: Label = $Front/Defence
 @onready var attack_icon: Sprite2D = $Front/AttackIcon
 @onready var defence_icon: Sprite2D = $Front/DefenceIcon
+@onready var attack_counter: Sprite2D = $Front/AttackCounter
 @onready var counter: Sprite2D = $Front/Counter
 @onready var group_icon: Sprite2D = $Front/GroupIcon
 
@@ -33,6 +34,8 @@ var disabled := false
 var highlighted := false
 var attacking := false
 var moving := false
+
+signal draw_finished
 
 func _ready() -> void:
     add_to_group("cards")
@@ -58,6 +61,7 @@ func set_icons() -> void:
     defence_icon.texture = preload("res://Textures/Armor.png") if data.armored else ATTACK_ICONS.get(data.anti_attack)
     attack_icon.visible = attack_icon.texture != null
     defence_icon.visible = defence_icon.texture != null
+    attack_counter.visible = data.attack_type == CardData.AttackType.ARMOR_PIERCING
     counter.visible = data.anti_attack != CardData.AttackType.NONE && !data.armored
 
 func set_side(value: int) -> void:

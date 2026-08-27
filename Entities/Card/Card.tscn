@@ -99,6 +99,13 @@ position = Vector2(0, 110.5)
 scale = Vector2(0.55, 0.55)
 texture = ExtResource("8_missile")
 
+[node name="AttackCounter" type="Sprite2D" parent="Front"]
+visible = false
+modulate = Color(0.894118, 0.231373, 0.266667, 1)
+position = Vector2(0, 110.5)
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("11_x")
+
 [node name="DefenceIcon" type="Sprite2D" parent="Front" unique_id=1558045746]
 visible = false
 position = Vector2(60, 110.5)

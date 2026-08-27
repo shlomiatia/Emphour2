@@ -1,13 +1,10 @@
 [gd_scene format=3 uid="uid://dblk1bdntusy7"]
 
 [ext_resource type="Script" uid="uid://dvd00qi4b641h" path="res://Entities/RewardOption/reward_option.gd" id="1_script"]
-[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="2_theme"]
 [ext_resource type="PackedScene" uid="uid://dk0oioyfkjskv" path="res://Entities/PanelTitle/PanelTitle.tscn" id="3_title"]
 [ext_resource type="PackedScene" uid="uid://b7rgeifyj5455" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="4_arrow"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="5_dark"]
 [ext_resource type="PackedScene" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="6_loyalty_change"]
-[ext_resource type="Texture2D" path="res://Textures/Nobility.png" id="7_nobility"]
-
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="8_panel"]
 
 [node name="RewardOption" type="Control" unique_id=1684282293]
@@ -68,12 +65,6 @@ layout_mode = 2
 
 [node name="Nobility" parent="Panel/Loyalty" unique_id=1820880019 instance=ExtResource("6_loyalty_change")]
 layout_mode = 2
-
-[node name="Icon" parent="Panel/Loyalty/Nobility/Group" unique_id=199445907]
-texture = ExtResource("7_nobility")
-
-[node name="Name" parent="Panel/Loyalty/Nobility/Group" unique_id=429901372]
-text = "Nobility"
 
 [node name="GroupIcon" type="TextureRect" parent="Panel" unique_id=468412392]
 layout_mode = 0

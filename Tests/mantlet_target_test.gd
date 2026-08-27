@@ -13,7 +13,7 @@ func run_test() -> void:
     CampaignState.reset()
     game = load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
     root.add_child(game)
-    await process_frame
+    await game.battle_ready
     setup_cards()
     verify_card_input()
     process_frame.connect(select_militia)

@@ -9,8 +9,7 @@ func run_test() -> void:
     Engine.time_scale = 30.0
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
     root.add_child(game)
-    for _frame in 10:
-        await process_frame
+    await game.battle_ready
     var card := game.player_hand.get_cards()[-1]
     send_click(card.global_position)
     assert(game.turns.selected_card == card)

@@ -11,7 +11,7 @@ func run_test() -> void:
     CampaignState.selected_city = "City 1"
     game = load("res://Scenes/Battle/Battle.tscn").instantiate()
     root.add_child(game)
-    await process_frame
+    await game.battle_ready
     verify_opening()
     verify_mantlet_rule()
     await play_first_card()
@@ -56,7 +56,8 @@ func play_first_card() -> void:
     slot.set_hovering(false)
     assert(card.front.modulate == Color.WHITE)
     assert(card.position.distance_to(Vector2.ZERO) > 1.0)
-    await process_frame
+    while game.board.get_cards(GameRules.Side.ENEMY)[0].face_down:
+        await process_frame
 
 func verify_reveal() -> void:
     assert(!game.board.get_cards(GameRules.Side.ENEMY)[0].face_down)

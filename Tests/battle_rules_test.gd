@@ -7,7 +7,7 @@ func run_test() -> void:
     Engine.time_scale = 30.0
     var game := load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
     root.add_child(game)
-    await process_frame
+    await game.battle_ready
     verify_strength_difference(game)
     verify_hud(game)
     verify_defence_consumption(game)
@@ -16,6 +16,8 @@ func run_test() -> void:
     verify_loyalty_rules()
     await verify_pre_casualty_balance(game)
     verify_final_winners(game)
+    verify_game_over(game)
+    verify_retry_state(game)
     await verify_score_victory(game)
     game.free()
     quit()
@@ -27,8 +29,11 @@ func verify_strength_difference(game: CardBattle) -> void:
     assert(game.battle.strength_difference() == before + 1)
 
 func verify_hud(game: CardBattle) -> void:
-    assert(game.board.get_parent() == game)
-    assert(game.player_hand.get_parent() == game)
+    assert(game.board.get_parent() == game.card_space)
+    assert(game.player_hand.get_parent() == game.card_space)
+    assert(game.card_space.follow_viewport_enabled)
+    assert(game.card_space.layer > game.get_node("Interface").layer)
+    assert(game.get_node("Overlay").layer > game.card_space.layer)
     assert(game.enemy_hand.get_parent() is CanvasLayer)
     game.battle_hud.set_losses(5, 4)
     assert(game.battle_hud.player_losses.get_child_count() == 5)
@@ -64,19 +69,24 @@ func create_rule_card(card_name: String) -> Card:
 
 func verify_enemy_deck_generation() -> void:
     var deck := EnemyDeck.generate(8, 20, CardCatalog.CARDS)
-    var value: int = deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0)
+    var value: float = deck.reduce(func(sum: float, card: String) -> float: return sum + CardCatalog.get_value(card), 0.0)
     assert(deck.size() == 8)
-    assert(value == 20)
+    assert(value == 20.0 || value == 19.5)
+    assert(CardCatalog.get_value("Crossbowman") == 2.5)
+    assert(EnemyDeck.generate(1, 3, ["Crossbowman"]) == ["Crossbowman"])
     assert(EnemyDeck.new().build("City 1") == ["Light Cavalry", "Militia", "Militia"])
-    var city_three := EnemyDeck.new().build("City 3")
-    assert(city_three.size() == 9)
-    assert(city_three.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 10)
-    var city_seven := EnemyDeck.new().build("City 7")
-    assert(city_seven.size() == 12)
-    assert(city_seven.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 14)
+    verify_generated_city("City 3")
+    verify_generated_city("City 7")
     var late_deck := EnemyDeck.new().build("City 2")
     assert(late_deck.size() == 6)
     assert(late_deck.reduce(func(sum: int, card: String) -> int: return sum + CardCatalog.get_value(card), 0) == 7)
+
+func verify_generated_city(city_name: String) -> void:
+    var deck := EnemyDeck.new().build(city_name)
+    var rule: Array = EnemyDeck.CITY_RULES[city_name]
+    var value: float = deck.reduce(func(sum: float, card: String) -> float: return sum + CardCatalog.get_value(card), 0.0)
+    assert(deck.size() == rule[0])
+    assert(value == rule[1] || value == rule[1] - 0.5)
 
 func verify_loyalty_rules() -> void:
     assert(LoyaltyRules.CHANCES[-1] == [10, 0, 0])
@@ -85,6 +95,9 @@ func verify_loyalty_rules() -> void:
     assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 15) == LoyaltyRules.Event.DESERT)
     assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 35) == LoyaltyRules.Event.REFUSE)
     assert(LoyaltyRules.event_for_roll(LoyaltyRules.CHANCES[-3], 36) == -1)
+    var check := LoyaltyRules.roll(3)
+    assert(check["effective_loyalty"] == 0)
+    assert(check["chances"] == [0, 0, 0])
     assert(RewardRules.belongs_to("Militia", "Peasants"))
     assert(RewardRules.belongs_to("Knight", "Nobility"))
 
@@ -101,6 +114,27 @@ func verify_final_winners(game: CardBattle) -> void:
     assert(game.battle_state.balance_winner() == GameRules.Side.ENEMY)
     game.battle_state.balance = 0
     assert(game.battle_state.balance_winner() == -1)
+    assert(game.battle_state.result_text(GameRules.Side.ENEMY).begins_with("Game over"))
+    assert(game.battle_state.result_color(GameRules.Side.ENEMY) == BattleHud.ENEMY_COLOR)
+
+func verify_retry_state(game: CardBattle) -> void:
+    var deck := game.battle_state.entry_deck.duplicate()
+    var public_loyalty := game.battle_state.entry_public_loyalty.duplicate()
+    var internal_loyalty := game.battle_state.entry_internal_loyalty.duplicate()
+    CampaignState.player_deck.clear()
+    CampaignState.public_loyalty["Peasants"] = -5
+    CampaignState.internal_loyalty["Nobility"] = -5
+    game.battle_state.restore_entry_state()
+    assert(CampaignState.player_deck == deck)
+    assert(CampaignState.public_loyalty == public_loyalty)
+    assert(CampaignState.internal_loyalty == internal_loyalty)
+
+func verify_game_over(game: CardBattle) -> void:
+    game.battle_state.finish_game(GameRules.Side.ENEMY)
+    assert(game.status_label.text.begins_with("Game over"))
+    assert(game.status_label.get_theme_color("font_color") == BattleHud.ENEMY_COLOR)
+    assert(game.can_restart)
+    game.can_restart = false
 
 func verify_score_victory(game: CardBattle) -> void:
     game.battle_state.balance = 4
@@ -108,5 +142,6 @@ func verify_score_victory(game: CardBattle) -> void:
     await game.battle_state.finish(false)
     assert(game.battle_state.balance == 5)
     assert(game.finished)
-    assert(game.status_label.text == "PLAYER VICTORY")
+    assert(game.status_label.text == "Player win")
+    assert(game.status_label.get_theme_color("font_color") == BattleHud.PLAYER_COLOR)
     assert(is_equal_approx(game.battle_hud.marker.position.x, game.battle_hud.meter_position(5, game.battle_hud.marker)))

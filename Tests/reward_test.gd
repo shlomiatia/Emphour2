@@ -22,7 +22,7 @@ func open_reward() -> void:
 	var game := load("res://Scenes/Battle/Battle.tscn").instantiate() as CardBattle
 	root.add_child(game)
 	current_scene = game
-	await process_frame
+	await game.battle_ready
 	game.battle_state.finish_game(GameRules.Side.PLAYER)
 	for frame in 60:
 		await process_frame
@@ -39,6 +39,15 @@ func verify_rules() -> void:
 			if rule["upgrade"] && !offer["old"].is_empty():
 				assert(RewardRules.get_upgrade_cards(group, offer["old"], rule["tier"]).has(offer["new"]))
 	verify_upgrade_fallback()
+	verify_crossbowman_rewards()
+
+func verify_crossbowman_rewards() -> void:
+	var deck: Array[String] = ["Archer"]
+	var new_offer := RewardRules.create_offer("Peasants", 4, deck)
+	var upgrade := RewardRules.create_offer("Peasants", 5, deck)
+	assert(RewardRules.TIERS[2.5] == ["Crossbowman"])
+	assert(new_offer == {"old": "", "new": "Crossbowman"})
+	assert(upgrade == {"old": "Archer", "new": "Crossbowman"})
 
 func verify_upgrade_fallback() -> void:
 	var offer := RewardRules.create_offer("Nobility", 3, ["Horse Archer"])

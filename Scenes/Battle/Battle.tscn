@@ -26,7 +26,7 @@
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsx7d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fd0c"]
 resource_local_to_scene = true
 shader = ExtResource("9_0fd0c")
 shader_parameter/wind_dir_angle = 0.0
@@ -113,7 +113,7 @@ position = Vector2(721, -326)
 texture = ExtResource("8_pvwcp")
 
 [node name="WindOverlay" parent="." unique_id=177503165 instance=ExtResource("18_wind")]
-material = SubResource("ShaderMaterial_bsx7d")
+material = SubResource("ShaderMaterial_0fd0c")
 position = Vector2(960, 540)
 texture = ExtResource("2_background")
 
@@ -124,16 +124,6 @@ texture = ExtResource("2_background")
 [node name="BattleHud" parent="Interface" unique_id=548796464 instance=ExtResource("13_hud")]
 offset_top = 350.0
 offset_bottom = 476.0
-
-[node name="EnemyHand" parent="Interface" unique_id=245630305 instance=ExtResource("4_hand")]
-position = Vector2(960, 65)
-side = 1
-face_down = true
-card_spacing = 40.0
-angle_step_degrees = 3.0
-arc_direction = -1.0
-hover_enabled = false
-hover_offset = Vector2(0, 0)
 
 [node name="StatusBackground" type="PanelContainer" parent="Interface" unique_id=101215224]
 anchors_preset = 5
@@ -159,6 +149,16 @@ theme = ExtResource("15_panel")
 text = "Preparing game"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EnemyHand" parent="Interface" unique_id=245630305 instance=ExtResource("4_hand")]
+position = Vector2(960, 65)
+side = 1
+face_down = true
+card_spacing = 40.0
+angle_step_degrees = 3.0
+arc_direction = -1.0
+hover_enabled = false
+hover_offset = Vector2(0, 0)
 
 [node name="EnemyDiscard" type="Control" parent="Interface" unique_id=946180786]
 layout_mode = 3
@@ -208,16 +208,23 @@ grow_vertical = 0
 [node name="Pile" parent="Interface/PlayerDeck" unique_id=130204133 instance=ExtResource("20_deck")]
 position = Vector2(48, 48)
 
-[node name="LoyaltyEvents" parent="Interface" unique_id=383739355 instance=ExtResource("14_loyalty")]
+[node name="CardSpace" type="CanvasLayer" parent="." unique_id=738472351]
+layer = 2
+follow_viewport_enabled = true
 
-[node name="Fade" parent="Interface" unique_id=1328492879 instance=ExtResource("12_fade")]
-
-[node name="Board" parent="." unique_id=1079065982 instance=ExtResource("3_board")]
+[node name="Board" parent="CardSpace" unique_id=1079065982 instance=ExtResource("3_board")]
 position = Vector2(960, 410)
 row_spacing = 80.0
 
-[node name="PlayerHand" parent="." unique_id=1302264869 instance=ExtResource("4_hand")]
+[node name="PlayerHand" parent="CardSpace" unique_id=1302264869 instance=ExtResource("4_hand")]
 position = Vector2(960, 954)
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=859963412]
+layer = 3
+
+[node name="LoyaltyEvents" parent="Overlay" unique_id=383739355 instance=ExtResource("14_loyalty")]
+
+[node name="Fade" parent="Overlay" unique_id=1328492879 instance=ExtResource("12_fade")]
 
 [node name="CardTooltip" parent="." unique_id=782447997 instance=ExtResource("11_tooltip")]
 

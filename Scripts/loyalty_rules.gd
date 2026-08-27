@@ -14,11 +14,11 @@ const CHANCES := {
 	-5: [30, 20, 15]
 }
 
-static func roll(loyalty: int) -> Array[int]:
-	var chances: Array = CHANCES.get(clampi(loyalty, -5, 0), [0, 0, 0])
-	var roll := randi_range(1, 100)
-	var event := event_for_roll(chances, roll)
-	return [] if event == -1 else [event]
+static func roll(loyalty: int) -> Dictionary:
+	var effective := clampi(loyalty, -5, 0)
+	var chances: Array = CHANCES.get(effective, [0, 0, 0])
+	var value := randi_range(1, 100)
+	return {"roll": value, "effective_loyalty": effective, "chances": chances, "event": event_for_roll(chances, value)}
 
 static func event_for_roll(chances: Array, roll: int) -> int:
 	if roll <= chances[Event.BETRAY]:
