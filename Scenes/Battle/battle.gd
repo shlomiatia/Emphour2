@@ -73,7 +73,8 @@ func draw_card(side: int) -> Card:
     return draws.draw_card(side)
 
 func create_card(card_name: String, side: int) -> Card:
-    return CardFactory.create(card_name, side)
+    var faction := CampaignState.Faction.FRANKS if side == GameRules.Side.PLAYER else CampaignState.Faction.REBELS
+    return CardFactory.create(card_name, side, faction)
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(cards)

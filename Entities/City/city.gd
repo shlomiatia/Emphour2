@@ -9,6 +9,8 @@ class_name CampaignCity extends Area2D
 var attackable := false
 
 signal clicked(city: CampaignCity)
+signal hovered(city: CampaignCity)
+signal unhovered(city: CampaignCity)
 
 func _ready() -> void:
 	name_label.text = city_name
@@ -27,11 +29,13 @@ func set_attackable(value: bool) -> void:
 func _on_mouse_entered() -> void:
 	if attackable:
 		animation_player.play("Large")
+		hovered.emit(self)
 	z_index = 2
 
 func _on_mouse_exited() -> void:
 	if attackable:
 		animation_player.play("Pulse")
+		unhovered.emit(self)
 	z_index = 0
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_index: int) -> void:

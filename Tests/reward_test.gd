@@ -90,6 +90,8 @@ func verify_options() -> void:
 	assert(reward.nobility.description.text == "Add %s to deck." % nobility["new"])
 
 func verify_loyalty_changes() -> void:
+	assert(reward.peasants.get_node("Panel/Loyalty/Peasants/Group/Name").text == "Peasants")
+	assert(reward.peasants.get_node("Panel/Loyalty/Nobility/Group/Name").text == "Nobility")
 	assert(reward.peasants.current_labels[0].text == "Neutral")
 	assert(reward.peasants.target_labels[0].text == "At Ease")
 	assert(reward.nobility.current_labels[0].text == "Neutral")

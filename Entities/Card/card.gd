@@ -8,8 +8,14 @@ const ATTACK_ICONS := {
     CardData.AttackType.ARMOR_PIERCING: preload("res://Textures/Armor.png")
 }
 const GROUP_ICONS := {"Peasants": preload("res://Textures/Peasants.png"), "Nobility": preload("res://Textures/Nobility.png")}
+const FACTION_PALETTES := {
+    CampaignState.Faction.FRANKS: [Color("#173967"), Color("#0d203a"), Color("#5a8ed6")],
+    CampaignState.Faction.ENGLISH: [Color("#a22633"), Color("#651720"), Color("#f77622")],
+    CampaignState.Faction.HRE: [Color("#bd6d18"), Color("#7c430d"), Color("#fee761")]
+}
 @export var card_name := "Militia"
 @export var side: int = GameRules.Side.PLAYER
+@export var faction: CampaignState.Faction = CampaignState.Faction.FRANKS
 @export var face_down := false
 @onready var front: Node2D = $Front
 @onready var back: Node2D = $Back
@@ -54,6 +60,7 @@ func refresh() -> void:
     group_icon.texture = GROUP_ICONS["Nobility" if RewardRules.belongs_to(card_name, "Nobility") else "Peasants"]
     set_icons()
     set_side(side)
+    set_faction(faction)
     set_hidden(face_down)
 
 func set_icons() -> void:
@@ -66,7 +73,17 @@ func set_icons() -> void:
 
 func set_side(value: int) -> void:
     side = value
-    (art.material as ShaderMaterial).set_shader_parameter("is_disabled", side != GameRules.Side.PLAYER)
+
+func set_faction(value: CampaignState.Faction) -> void:
+    faction = value
+    var material := art.material as ShaderMaterial
+    material.set_shader_parameter("is_colored", FACTION_PALETTES.has(faction))
+    if !FACTION_PALETTES.has(faction):
+        return
+    var palette: Array = FACTION_PALETTES[faction]
+    material.set_shader_parameter("replace_0", palette[0])
+    material.set_shader_parameter("replace_1", palette[1])
+    material.set_shader_parameter("replace_2", palette[2])
 
 func set_hidden(value: bool) -> void:
     face_down = value

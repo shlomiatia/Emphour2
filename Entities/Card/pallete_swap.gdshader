@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform bool is_disabled;
+uniform bool is_colored;
 uniform vec4 original_0: source_color;
 uniform vec4 original_1: source_color;
 uniform vec4 original_2: source_color;
@@ -25,7 +25,7 @@ vec4 swap_color(vec4 color) {
 }
 
 void fragment() {
-	if (!is_disabled) {
+	if (is_colored) {
 		vec4 swapped_color = swap_color(texture(TEXTURE, UV));
 		COLOR = swapped_color * modulate;
 	}

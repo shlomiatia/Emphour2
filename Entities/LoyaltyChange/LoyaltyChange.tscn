@@ -1,36 +1,37 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bfx4r1xms2dwg"]
 
-[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="1_parchment"]
-[ext_resource type="PackedScene" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="2_arrow"]
+[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="1_parchment"]
+[ext_resource type="PackedScene" uid="uid://b7rgeifyj5455" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="2_arrow"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="3_dark"]
-[ext_resource type="Texture2D" path="res://Textures/Peasants.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://b4ntkswf0kjr2" path="res://Textures/Peasants.png" id="4_icon"]
 
-[node name="LoyaltyChange" type="HBoxContainer"]
+[node name="LoyaltyChange" type="HBoxContainer" unique_id=2039382546]
 custom_minimum_size = Vector2(570, 64)
 theme_override_constants/separation = 52
 
-[node name="Group" type="HBoxContainer" parent="."]
+[node name="Group" type="HBoxContainer" parent="." unique_id=1427389380]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Icon" type="TextureRect" parent="Group"]
+[node name="Icon" type="TextureRect" parent="Group" unique_id=1232314270]
 custom_maximum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("4_icon")
 
-[node name="Name" type="Label" parent="Group"]
+[node name="Name" type="Label" parent="Group" unique_id=2029161488]
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 theme = ExtResource("3_dark")
 theme_override_font_sizes/font_size = 22
 text = "Peasants"
 vertical_alignment = 1
 
-[node name="Change" type="HBoxContainer" parent="."]
+[node name="Change" type="HBoxContainer" parent="." unique_id=575262553]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Current" type="Label" parent="Change"]
+[node name="Current" type="Label" parent="Change" unique_id=2023284371]
 layout_mode = 2
 theme = ExtResource("1_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
@@ -40,12 +41,12 @@ text = "Neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Arrow" parent="Change" instance=ExtResource("2_arrow")]
+[node name="Arrow" parent="Change" unique_id=459325806 instance=ExtResource("2_arrow")]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -4)
 
-[node name="Target" type="Label" parent="Change"]
+[node name="Target" type="Label" parent="Change" unique_id=2071257615]
 layout_mode = 2
 theme = ExtResource("1_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
