@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://byxk0sbymsvg1"]
 
 [ext_resource type="Script" uid="uid://v5pwu4100sj" path="res://Entities/TutorialMessage/tutorial_message.gd" id="1_script"]
-[ext_resource type="Theme" path="res://Themes/LargeParchmentText.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://dd7vusjtyhb6i" path="res://Themes/LargeParchmentText.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://y1v3ebajqpdn" path="res://Textures/King.png" id="3_king"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/SinWavePosition.tscn" id="4_position"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/SinWaveRotation.tscn" id="5_rotation"]
