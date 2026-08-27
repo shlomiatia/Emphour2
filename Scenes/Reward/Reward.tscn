@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cwvrdd6amts8" path="res://Audio/confirm1.mp3" id="6_confirm"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="7_card_tooltip"]
 [ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="11_europe_map"]
+[ext_resource type="PackedScene" path="res://Entities/TutorialMessage/TutorialMessage.tscn" id="12_tutorial"]
 
 [node name="Reward" type="Node2D" unique_id=179328459]
 script = ExtResource("1_script")
@@ -50,6 +51,8 @@ group_name = "Nobility"
 
 [node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=132062752]
 stream = ExtResource("6_confirm")
+
+[node name="TutorialMessage" parent="." instance=ExtResource("12_tutorial")]
 
 [connection signal="chosen" from="CanvasLayer/Peasants" to="." method="_on_option_chosen"]
 [connection signal="chosen" from="CanvasLayer/Nobility" to="." method="_on_option_chosen"]

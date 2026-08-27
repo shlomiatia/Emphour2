@@ -6,7 +6,7 @@ const TEXTS := [
 	"Rebels in Paris? Sacrebleu!",
 	"General, defeat them — and all the others...",
 	"Paint the map of Europe blue.",
-	"For the Franks!"
+	"Viva la Franks!"
 ]
 
 const MOUTH_OPEN := [false, false, true, true, true, true]

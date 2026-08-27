@@ -1,9 +1,19 @@
 class_name RewardScreen extends Node2D
 
+const TUTORIAL_ID := "reward_loyalty"
+const TUTORIAL_TEXTS := [
+    "General, you won!",
+    "The nobility and peasants are offering rewards",
+    "Selecting a reward will improve faction loyalty",
+    "This will yield better rewards!",
+    "But the other faction won't like it..."
+]
+
 @onready var peasants: RewardOption = $CanvasLayer/Peasants
 @onready var nobility: RewardOption = $CanvasLayer/Nobility
 @onready var fade: Fade = $CanvasLayer/Fade
 @onready var confirm_sound: AudioStreamPlayer = $ConfirmSound
+@onready var tutorial: TutorialMessage = $TutorialMessage
 
 var offers := {}
 var input_disabled := false
@@ -12,6 +22,12 @@ var final_reward := false
 func _ready() -> void:
     final_reward = CampaignState.is_final_battle()
     create_options()
+    show_tutorial()
+
+func show_tutorial() -> void:
+    if final_reward || CampaignState.is_act_2() || !CampaignState.start_tutorial(TUTORIAL_ID):
+        return
+    tutorial.show_messages(TUTORIAL_TEXTS)
 
 func create_options() -> void:
     if final_reward:

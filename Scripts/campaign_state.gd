@@ -13,6 +13,7 @@ static var arc := Arc.FRANCE
 static var foreign_loyalty := {Faction.ENGLISH: Relation.NEUTRAL, Faction.HRE: Relation.NEUTRAL}
 static var act_2_progress := 0
 static var act_2_boss_defeated := false
+static var seen_tutorials := {}
 
 static func create_frank_deck(names: Array[String]) -> Array[CampaignCard]:
     return create_deck(names, Faction.FRANKS)
@@ -179,5 +180,12 @@ static func reset() -> void:
     foreign_loyalty = {Faction.ENGLISH: Relation.NEUTRAL, Faction.HRE: Relation.NEUTRAL}
     act_2_progress = 0
     act_2_boss_defeated = false
+    seen_tutorials = {}
     if start_in_act_2:
         start_act_2()
+
+static func start_tutorial(tutorial_id: String) -> bool:
+    if seen_tutorials.has(tutorial_id):
+        return false
+    seen_tutorials[tutorial_id] = true
+    return true
