@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://btorxy7bi5341" path="res://Scenes/Battlefield/battlefield.gd" id="1_battle"]
 [ext_resource type="Texture2D" uid="uid://bq3rkneg1oemu" path="res://Textures/Background.png" id="2_background"]
-[ext_resource type="Texture2D" uid="uid://doavcnalvqtv1" path="res://Textures/Sky.png" id="3_6tmns"]
+[ext_resource type="Texture2D" uid="uid://buj87rw3e6yrv" path="res://Textures/Sky.png" id="3_6tmns"]
 [ext_resource type="PackedScene" uid="uid://bsql53vleifh1" path="res://Entities/Board/Board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
 [ext_resource type="PackedScene" uid="uid://bk2gqm65aj5b3" path="res://Entities/DiscardPile/DiscardPile.tscn" id="5_discard"]
@@ -26,7 +26,7 @@
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fd0c"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yynmq"]
 resource_local_to_scene = true
 shader = ExtResource("9_0fd0c")
 shader_parameter/wind_dir_angle = 0.0
@@ -45,7 +45,7 @@ script = ExtResource("1_battle")
 enemy_deck = SubResource("Resource_enemy_deck")
 
 [node name="Sky" type="Sprite2D" parent="." unique_id=733791362]
-position = Vector2(960, 540)
+position = Vector2(960, 69)
 texture = ExtResource("3_6tmns")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
@@ -113,7 +113,7 @@ position = Vector2(721, -326)
 texture = ExtResource("8_pvwcp")
 
 [node name="WindOverlay" parent="." unique_id=177503165 instance=ExtResource("18_wind")]
-material = SubResource("ShaderMaterial_0fd0c")
+material = SubResource("ShaderMaterial_yynmq")
 position = Vector2(960, 540)
 texture = ExtResource("2_background")
 

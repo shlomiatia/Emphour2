@@ -231,9 +231,11 @@ text = "Declare war"
 
 [node name="English" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1093931706 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2
+Group/Name:custom_minimum_size = Vector2(200, 0)
 
 [node name="Hre" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1210312400 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2
+Group/Name:custom_minimum_size = Vector2(200, 0)
 
 [node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]
 

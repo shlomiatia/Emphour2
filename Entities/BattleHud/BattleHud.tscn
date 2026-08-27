@@ -44,7 +44,7 @@ mouse_filter = 2
 script = ExtResource("1_script")
 loss_icon_scene = ExtResource("2_loss")
 
-[node name="EnemyLosses" type="HBoxContainer" parent="."]
+[node name="EnemyLosses" type="HBoxContainer" parent="." unique_id=411312279]
 layout_mode = 0
 offset_left = 500.0
 offset_top = 55.0
@@ -52,7 +52,7 @@ offset_right = 680.0
 offset_bottom = 83.0
 alignment = 2
 
-[node name="PlayerLosses" type="HBoxContainer" parent="."]
+[node name="PlayerLosses" type="HBoxContainer" parent="." unique_id=995234607]
 layout_mode = 0
 offset_left = 1240.0
 offset_top = 55.0
