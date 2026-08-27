@@ -74,6 +74,7 @@ func verify_act_2_screen() -> void:
     await process_frame
     assert(!screen.peasants.loyalty.visible && !screen.nobility.loyalty.visible)
     assert(screen.peasants.title.title == "English" && screen.nobility.title.title == "Germans")
+    assert(screen.peasants.faction_shield.visible && screen.nobility.faction_shield.visible)
     screen.queue_free()
 
 func setup_act_2() -> void:

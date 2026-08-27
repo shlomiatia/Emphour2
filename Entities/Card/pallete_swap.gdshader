@@ -9,7 +9,7 @@ uniform vec4 replace_1: source_color;
 uniform vec4 replace_2: source_color;
 uniform vec4 modulate: source_color = vec4(1, 1, 1, 1);
 
-const float precision = 0.21;
+const float precision = 0.1;
 
 vec4 swap_color(vec4 color) {
 	vec4 original_colors[3] = vec4[3](original_0, original_1, original_2);

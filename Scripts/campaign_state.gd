@@ -9,7 +9,7 @@ const ACT_2_STARTING_DECK: Array[String] = ["Archer", "Crossbowman", "Mantlet", 
 const CITY_SLOTS := {"Act 1 City 1": 3, "Act 1 City 2": 3, "Act 1 City 3": 4, "Act 1 City 4": 4, "Act 1 City 5": 5, "Act 1 City 6": 5, "Act 1 Boss": 5, "Act 2 City 1": 3, "Act 2 City 2": 3, "Act 2 City 3": 4, "Act 2 City 4": 4, "Act 2 City 5": 5, "Act 2 City 6": 5, "Act 2 Boss": 5}
 
 static var selected_city := ""
-static var start_in_act_2 := true
+static var start_in_act_2 := false
 static var player_deck: Array[CampaignCard] = create_frank_deck(STARTING_DECK)
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := create_act_1_owners()

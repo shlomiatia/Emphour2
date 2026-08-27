@@ -7,6 +7,7 @@ class_name RewardOption extends Control
 @onready var description: Label = $Panel/Description
 @onready var loyalty: VBoxContainer = $Panel/Loyalty
 @onready var group_icon: TextureRect = $Panel/GroupIcon
+@onready var faction_shield: TextureRect = $Panel/FactionShield
 @onready var current_labels := [$Panel/Loyalty/Peasants/Change/Current, $Panel/Loyalty/Nobility/Change/Current]
 @onready var target_labels := [$Panel/Loyalty/Peasants/Change/Target, $Panel/Loyalty/Nobility/Change/Target]
 
@@ -19,6 +20,9 @@ func setup(value: Dictionary) -> void:
 	offer = value
 	title.title = offer.get("title", group_name)
 	group_icon.visible = !offer.has("faction")
+	faction_shield.visible = offer.has("faction")
+	if faction_shield.visible:
+		faction_shield.modulate = CampaignState.faction_color(offer["faction"])
 	if group_icon.visible:
 		group_icon.texture = load("res://Textures/%s.png" % group_name)
 	if !offer["old"].is_empty():

@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="5_dark"]
 [ext_resource type="PackedScene" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="6_loyalty_change"]
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="8_panel"]
+[ext_resource type="Texture2D" path="res://Textures/Shield.png" id="9_shield"]
 
 [node name="RewardOption" type="Control" unique_id=1684282293]
 custom_minimum_size = Vector2(610, 610)
@@ -72,6 +73,17 @@ offset_left = 6.0
 offset_top = 4.0
 offset_right = 59.0
 offset_bottom = 57.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FactionShield" type="TextureRect" parent="Panel" unique_id=145163435]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 59.0
+offset_bottom = 57.0
+texture = ExtResource("9_shield")
 expand_mode = 1
 stretch_mode = 5
 
