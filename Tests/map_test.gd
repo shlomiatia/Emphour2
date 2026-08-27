@@ -30,7 +30,9 @@ func open_map() -> void:
 
 func verify_campaign() -> void:
 	var cities := map.get_node("MapElements/Cities")
+	var road := map.get_node("MapElements/Roads/Road") as Line2D
 	assert(cities.get_child_count() == 6)
+	assert(road.get_point_count() == cities.get_child_count())
 	assert(!map.get_node_or_null("CanvasLayer/ForeignRelations"))
 	assert(!map.get_node_or_null("CanvasLayer/Tooltip"))
 	for city in cities.get_children():

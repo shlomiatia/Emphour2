@@ -38,55 +38,12 @@ color = Color(0.32, 0.22, 0.08, 0.12)
 
 [node name="Roads" type="Node2D" parent="MapElements" unique_id=669451369]
 
-[node name="Road1" type="Line2D" parent="MapElements/Roads" unique_id=1337790449]
+[node name="Road" type="Line2D" parent="MapElements/Roads" unique_id=1337790449]
 texture_repeat = 2
-points = PackedVector2Array(891, 583, 864, 472)
 width = 8.0
 default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
 texture = ExtResource("13_road")
 texture_mode = 1
-metadata/source_city = 1
-metadata/target_city = 2
-
-[node name="Road2" type="Line2D" parent="MapElements/Roads" unique_id=1593756111]
-texture_repeat = 2
-points = PackedVector2Array(864, 472, 738, 499)
-width = 8.0
-default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
-texture = ExtResource("13_road")
-texture_mode = 1
-metadata/source_city = 2
-metadata/target_city = 3
-
-[node name="Road3" type="Line2D" parent="MapElements/Roads" unique_id=1864216985]
-texture_repeat = 2
-points = PackedVector2Array(738, 499, 766, 619)
-width = 8.0
-default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
-texture = ExtResource("13_road")
-texture_mode = 1
-metadata/source_city = 3
-metadata/target_city = 4
-
-[node name="Road4" type="Line2D" parent="MapElements/Roads" unique_id=324206234]
-texture_repeat = 2
-points = PackedVector2Array(766, 619, 679, 709)
-width = 8.0
-default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
-texture = ExtResource("13_road")
-texture_mode = 1
-metadata/source_city = 4
-metadata/target_city = 5
-
-[node name="Road5" type="Line2D" parent="MapElements/Roads" unique_id=635525019]
-texture_repeat = 2
-points = PackedVector2Array(679, 709, 819, 745)
-width = 8.0
-default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
-texture = ExtResource("13_road")
-texture_mode = 1
-metadata/source_city = 5
-metadata/target_city = 6
 
 [node name="Cities" type="Node2D" parent="MapElements" unique_id=2003977789]
 
@@ -95,7 +52,7 @@ position = Vector2(891, 583)
 city_name = "Paris"
 
 [node name="City2" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
-position = Vector2(864, 472)
+position = Vector2(855, 450)
 city_name = "Amiens"
 
 [node name="City3" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
@@ -103,7 +60,7 @@ position = Vector2(738, 499)
 city_name = "Rouen"
 
 [node name="City4" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
-position = Vector2(766, 619)
+position = Vector2(746, 618)
 city_name = "Boulogne"
 
 [node name="City5" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
@@ -111,7 +68,7 @@ position = Vector2(679, 709)
 city_name = "Calais"
 
 [node name="City6" parent="MapElements/Cities" unique_id=161964905 instance=ExtResource("3_city")]
-position = Vector2(819, 745)
+position = Vector2(821, 777)
 city_name = "Abbeville"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1215635652]

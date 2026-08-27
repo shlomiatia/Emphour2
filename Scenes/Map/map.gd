@@ -17,11 +17,13 @@ func city_key(index: int) -> String:
 	return "City %d" % index
 
 func setup_roads() -> void:
-	for road in $MapElements/Roads.get_children():
-		var source := city_key(road.get_meta("source_city"))
-		var target := city_key(road.get_meta("target_city"))
-		add_road(source, target)
-		add_road(target, source)
+	var cities := $MapElements/Cities.get_children()
+	var road := $MapElements/Roads/Road as Line2D
+	for city in cities:
+		road.add_point(city.position)
+	for index in cities.size() - 1:
+		add_road(city_key(index + 1), city_key(index + 2))
+		add_road(city_key(index + 2), city_key(index + 1))
 
 func add_road(source: String, target: String) -> void:
 	if !roads.has(source):
