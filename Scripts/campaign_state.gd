@@ -161,13 +161,13 @@ static func other_foreign_faction(faction: Faction) -> Faction:
     return Faction.HRE if faction == Faction.ENGLISH else Faction.ENGLISH
 
 static func faction_name(faction: Faction) -> String:
-    return "English" if faction == Faction.ENGLISH else "Holy Roman Empire" if faction == Faction.HRE else "Franks" if faction == Faction.FRANKS else "Rebels"
+    return "English" if faction == Faction.ENGLISH else "Germans" if faction == Faction.HRE else "Franks" if faction == Faction.FRANKS else "Rebels"
 
 static func faction_color(faction: Faction) -> Color:
     match faction:
         Faction.REBELS: return Color("#f5eee2")
-        Faction.ENGLISH: return Color("#e43b44")
-        Faction.HRE: return Color("#feae34")
+        Faction.ENGLISH: return Color("#792311")
+        Faction.HRE: return Color("#b5860e")
     return Color("#0099db")
 
 static func start_act_2() -> void:

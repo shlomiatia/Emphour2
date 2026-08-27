@@ -37,15 +37,13 @@ texture_mode = 1
 
 [node name="EnglandRoad" type="Line2D" parent="MapElements/Roads" unique_id=710087149]
 texture_repeat = 2
-points = PackedVector2Array(420, 300, 565, 430, 600, 390, 650, 350, 575, 270, 540, 155)
 width = 8.0
 default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
 texture = ExtResource("13_road")
 texture_mode = 1
 
-[node name="HreRoad" type="Line2D" parent="MapElements/Roads" unique_id=461797503]
+[node name="HRERoad" type="Line2D" parent="MapElements/Roads" unique_id=461797503]
 texture_repeat = 2
-points = PackedVector2Array(930, 420, 1000, 400, 1050, 505, 1125, 670, 1250, 660, 1250, 290)
 width = 8.0
 default_color = Color(0.0941176, 0.0784314, 0.145098, 0.72)
 texture = ExtResource("13_road")
@@ -125,42 +123,42 @@ display_name = "Norwich"
 faction = 2
 route_index = 6
 
-[node name="HreCity1" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
+[node name="HRECity1" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
 position = Vector2(930, 420)
 city_id = "Act 2 City 1"
 display_name = "Aachen"
 faction = 3
 route_index = 1
 
-[node name="HreCity2" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
+[node name="HRECity2" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
 position = Vector2(1000, 400)
 city_id = "Act 2 City 2"
 display_name = "Cologne"
 faction = 3
 route_index = 2
 
-[node name="HreCity3" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
+[node name="HRECity3" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
 position = Vector2(1050, 505)
 city_id = "Act 2 City 3"
 display_name = "Frankfurt"
 faction = 3
 route_index = 3
 
-[node name="HreCity4" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
+[node name="HRECity4" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
 position = Vector2(1125, 670)
 city_id = "Act 2 City 4"
 display_name = "Munich"
 faction = 3
 route_index = 4
 
-[node name="HreCity5" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
+[node name="HRECity5" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
 position = Vector2(1250, 290)
 city_id = "Act 2 City 5"
 display_name = "Berlin"
 faction = 3
 route_index = 5
 
-[node name="HreCity6" parent="MapElements/Cities" unique_id=212844650 instance=ExtResource("3_city")]
+[node name="HRECity6" parent="MapElements/Cities" unique_id=212844650 instance=ExtResource("3_city")]
 position = Vector2(1250, 660)
 city_id = "Act 2 City 6"
 display_name = "Vienna"
@@ -274,7 +272,7 @@ text = "Declare war"
 [node name="English" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1093931706 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2
 
-[node name="Hre" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1210312400 instance=ExtResource("15_loyalty_change")]
+[node name="HRE" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1210312400 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2
 
 [node name="Fade" parent="CanvasLayer" unique_id=48680904 instance=ExtResource("5_fade")]

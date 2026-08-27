@@ -10,7 +10,7 @@ const SHIELD := preload("res://Textures/Shield.png")
 @onready var second_status: Label = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/NobilityStatus
 @onready var tooltip: PanelContainer = $CanvasLayer/Tooltip
 @onready var tooltip_title: Label = $CanvasLayer/Tooltip/MarginContainer/Content/Title
-@onready var tooltip_changes := [$CanvasLayer/Tooltip/MarginContainer/Content/English, $CanvasLayer/Tooltip/MarginContainer/Content/Hre]
+@onready var tooltip_changes := [$CanvasLayer/Tooltip/MarginContainer/Content/English, $CanvasLayer/Tooltip/MarginContainer/Content/HRE]
 @onready var fade: Fade = $CanvasLayer/Fade
 @onready var confirm_sound: AudioStreamPlayer = $ConfirmSound
 
@@ -23,14 +23,25 @@ func _ready() -> void:
     update_header()
 
 func setup_roads() -> void:
-    var road := $MapElements/Roads/Road as Line2D
-    $MapElements/Roads/EnglandRoad.visible = CampaignState.is_act_2()
-    $MapElements/Roads/HreRoad.visible = CampaignState.is_act_2()
-    for index in 6:
-        road.add_point($MapElements/Cities.get_child(index).position)
-        if index > 0:
-            add_road(CampaignState.act_1_city_id(index), CampaignState.act_1_city_id(index + 1))
-            add_road(CampaignState.act_1_city_id(index + 1), CampaignState.act_1_city_id(index))
+    setup_road($MapElements/Roads/Road, CampaignState.Faction.FRANKS)
+    setup_road($MapElements/Roads/EnglandRoad, CampaignState.Faction.ENGLISH)
+    setup_road($MapElements/Roads/HRERoad, CampaignState.Faction.HRE)
+    for index in 5:
+        add_road(CampaignState.act_1_city_id(index + 1), CampaignState.act_1_city_id(index + 2))
+        add_road(CampaignState.act_1_city_id(index + 2), CampaignState.act_1_city_id(index + 1))
+
+func setup_road(road: Line2D, faction: CampaignState.Faction) -> void:
+    var cities: Array[CampaignCity] = []
+    road.clear_points()
+    road.visible = faction == CampaignState.Faction.FRANKS || CampaignState.is_act_2()
+    for child in $MapElements/Cities.get_children():
+        var city := child as CampaignCity
+        if city.faction == faction:
+            cities.append(city)
+    if faction != CampaignState.Faction.FRANKS:
+        cities.sort_custom(func(first: CampaignCity, second: CampaignCity) -> bool: return first.route_index < second.route_index)
+    for city in cities:
+        road.add_point(city.position)
 
 func add_road(source: String, target: String) -> void:
     if !roads.has(source):

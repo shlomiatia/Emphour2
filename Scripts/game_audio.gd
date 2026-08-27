@@ -3,7 +3,7 @@ class_name GameAudio extends Node
 @onready var effects: AudioStreamPlayer = $Effects
 @onready var music: AudioStreamPlayer = $Music
 
-const MUSIC_TRACKS: Array[AudioStream] = [preload("res://Audio/music1.mp3"), preload("res://Audio/music2.mp3"), preload("res://Audio/music3.mp3")]
+const MUSIC_TRACKS: Array[AudioStream] = [preload("res://Audio/music1.mp3"), preload("res://Audio/music2.mp3")]
 const CARD_SOUNDS: Array[AudioStream] = [preload("res://Audio/playcard1.wav"), preload("res://Audio/playcard2.mp3"), preload("res://Audio/playcard3.mp3")]
 const ATTACK_SOUNDS: Array[AudioStream] = [preload("res://Audio/attack1.ogg"), preload("res://Audio/attack2.ogg"), preload("res://Audio/attack3.mp3")]
 const BLOCK_SOUNDS: Array[AudioStream] = [preload("res://Audio/block1.mp3"), preload("res://Audio/block2.mp3"), preload("res://Audio/block3.mp3")]
