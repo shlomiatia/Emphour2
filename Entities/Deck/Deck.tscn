@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Entities/Deck/deck.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Textures/CardBack.png" id="2_back"]
+[ext_resource type="Theme" path="res://Themes/ParchmentText.tres" id="3_theme"]
+
+[node name="Deck" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_back")
+
+[node name="Count" type="Label" parent="."]
+offset_left = 18.0
+offset_top = -18.0
+offset_right = 78.0
+offset_bottom = 22.0
+theme = ExtResource("3_theme")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

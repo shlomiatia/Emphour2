@@ -7,8 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://b4ahuyc0m8c2o" path="res://Entities/Hand/Hand.tscn" id="4_hand"]
 [ext_resource type="PackedScene" uid="uid://bk2gqm65aj5b3" path="res://Entities/DiscardPile/DiscardPile.tscn" id="5_discard"]
 [ext_resource type="Script" uid="uid://b0q3qtboon4wt" path="res://Scripts/battle_resolver.gd" id="6_battle"]
+[ext_resource type="Texture2D" uid="uid://cgk5tbhwp2p4b" path="res://Textures/Shrub.png" id="6_bsx7d"]
+[ext_resource type="Texture2D" uid="uid://cey4ynggjuuxw" path="res://Textures/Stones.png" id="7_io1xx"]
 [ext_resource type="Script" uid="uid://c6ngpnt2iur5a" path="res://Scripts/turn_state.gd" id="7_turn"]
 [ext_resource type="Script" uid="uid://cna2jv3ibfvv4" path="res://Scripts/battle_state.gd" id="8_battle_state"]
+[ext_resource type="Texture2D" uid="uid://checyg32ikd72" path="res://Textures/Stone.png" id="8_pvwcp"]
 [ext_resource type="PackedScene" path="res://Entities/CardTooltip/CardTooltip.tscn" id="11_tooltip"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="12_fade"]
 [ext_resource type="PackedScene" path="res://Entities/BattleHud/BattleHud.tscn" id="13_hud"]
@@ -19,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://Entities/ShakingCamera/ShakingCamera.tscn" id="16_shake"]
 [ext_resource type="PackedScene" uid="uid://bhecmvucxkodd" path="res://Entities/BattleWindOverlay/BattleWindOverlay.tscn" id="18_wind"]
 [ext_resource type="Shader" uid="uid://dyfgrenf2ywqr" path="res://Shaders/haze.gdshader" id="19_haze"]
+[ext_resource type="PackedScene" path="res://Entities/Deck/Deck.tscn" id="20_deck"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
@@ -54,6 +58,66 @@ texture = ExtResource("3_6tmns")
 [node name="Background" type="Sprite2D" parent="." unique_id=1309436336]
 position = Vector2(960, 540)
 texture = ExtResource("2_background")
+
+[node name="Shrub" type="Sprite2D" parent="Background" unique_id=1734797718]
+position = Vector2(-802, 425)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub2" type="Sprite2D" parent="Background" unique_id=276016039]
+position = Vector2(-555, 230)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub3" type="Sprite2D" parent="Background" unique_id=1989484872]
+position = Vector2(489, -341)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub4" type="Sprite2D" parent="Background" unique_id=1531142296]
+position = Vector2(817, -194)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub5" type="Sprite2D" parent="Background" unique_id=2086568043]
+position = Vector2(600, 38)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub6" type="Sprite2D" parent="Background" unique_id=1756507813]
+position = Vector2(853, 272)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub7" type="Sprite2D" parent="Background" unique_id=1059902339]
+position = Vector2(786, 442)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub8" type="Sprite2D" parent="Background" unique_id=477135830]
+position = Vector2(-672, -274)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub9" type="Sprite2D" parent="Background" unique_id=801470064]
+position = Vector2(-833, -86)
+texture = ExtResource("6_bsx7d")
+
+[node name="Shrub10" type="Sprite2D" parent="Background" unique_id=611776949]
+position = Vector2(-735, 134)
+texture = ExtResource("6_bsx7d")
+
+[node name="Stones" type="Sprite2D" parent="Background" unique_id=1696305117]
+position = Vector2(660, 262)
+texture = ExtResource("7_io1xx")
+
+[node name="Stones2" type="Sprite2D" parent="Background" unique_id=1579951119]
+position = Vector2(-803, 206)
+texture = ExtResource("7_io1xx")
+
+[node name="Stones3" type="Sprite2D" parent="Background" unique_id=1909897756]
+position = Vector2(-687, -154)
+texture = ExtResource("7_io1xx")
+
+[node name="Stone" type="Sprite2D" parent="Background" unique_id=764837477]
+position = Vector2(-721, -33)
+texture = ExtResource("8_pvwcp")
+
+[node name="Stone2" type="Sprite2D" parent="Background" unique_id=1902239486]
+position = Vector2(721, -326)
+texture = ExtResource("8_pvwcp")
 
 [node name="BattleWindOverlay" parent="." unique_id=177503165 instance=ExtResource("18_wind")]
 
@@ -123,6 +187,15 @@ grow_horizontal = 0
 position = Vector2(48, 48)
 side = 1
 
+[node name="EnemyDeck" type="Control" parent="Interface" unique_id=152432272]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="Pile" parent="Interface/EnemyDeck" unique_id=157197841 instance=ExtResource("20_deck")]
+position = Vector2(48, 48)
+
 [node name="PlayerDiscard" type="Control" parent="Interface" unique_id=1172753045]
 layout_mode = 3
 anchors_preset = 3
@@ -136,6 +209,18 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="Pile" parent="Interface/PlayerDiscard" unique_id=702495137 instance=ExtResource("5_discard")]
+position = Vector2(48, 48)
+
+[node name="PlayerDeck" type="Control" parent="Interface" unique_id=130213336]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+offset_right = 96.0
+grow_vertical = 0
+
+[node name="Pile" parent="Interface/PlayerDeck" unique_id=130204133 instance=ExtResource("20_deck")]
 position = Vector2(48, 48)
 
 [node name="Event" type="Panel" parent="Interface" unique_id=953333336]

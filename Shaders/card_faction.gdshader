@@ -23,8 +23,8 @@ vec4 map_color(vec4 color) {
 
 void fragment() {
 	vec4 color = texture(TEXTURE, UV);
-	COLOR = color;
 	if (enabled) {
-		COLOR = map_color(color);
+		color = map_color(color);
 	}
+	COLOR *= color;
 }

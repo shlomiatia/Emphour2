@@ -51,6 +51,25 @@ func add_card(card: Card) -> void:
     card.scale = Vector2.ONE * (0.25 if face_down else 1.0)
     card.hover_enabled = hover_enabled
 
+func add_drawn_card(card: Card, source: Node2D) -> void:
+    add_card(card)
+    card.position = to_local(source.global_position)
+    card.scale = Vector2.ONE * 0.18
+    card.rotation = 0.0
+    card.z_index = get_card_count() + 100
+    card.moving = true
+    var props := get_card_props(get_card_count() - 1, get_card_count())
+    var target_scale := Vector2.ONE * (0.25 if face_down else 1.0)
+    var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+    tween.tween_property(card, "position", props["position"], 0.45)
+    tween.parallel().tween_property(card, "scale", target_scale, 0.45)
+    tween.parallel().tween_property(card, "rotation", props["rotation"], 0.45)
+    tween.tween_callback(finish_draw.bind(card))
+
+func finish_draw(card: Card) -> void:
+    card.finish_move()
+    card.z_index = get_cards().find(card) + 5
+
 func get_card_at(point: Vector2) -> Card:
     var cards := get_cards()
     cards.reverse()

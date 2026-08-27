@@ -9,9 +9,9 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var arrow: Control = $Panel/Offer/Arrow
 @onready var description: Label = $Panel/Description
 @onready var loyalty: VBoxContainer = $Panel/Loyalty
-@onready var group_icon: TextureRect = $Panel/TitleBackground/GroupIcon
-@onready var current_labels := [$Panel/Loyalty/Peasants/Current, $Panel/Loyalty/Nobility/Current]
-@onready var target_labels := [$Panel/Loyalty/Peasants/Target, $Panel/Loyalty/Nobility/Target]
+@onready var group_icon: TextureRect = $Panel/GroupIcon
+@onready var current_labels := [$Panel/Loyalty/Peasants/Change/Current, $Panel/Loyalty/Nobility/Change/Current]
+@onready var target_labels := [$Panel/Loyalty/Peasants/Change/Target, $Panel/Loyalty/Nobility/Change/Target]
 
 var offer: Dictionary
 var cards: Array[Card]

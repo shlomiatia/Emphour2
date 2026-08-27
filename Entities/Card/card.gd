@@ -38,6 +38,9 @@ func _ready() -> void:
     data = CardCatalog.get_data(card_name)
     refresh()
 
+func _process(_delta: float) -> void:
+    (art.material as ShaderMaterial).set_shader_parameter("modulate", modulate * front.modulate)
+
 func refresh() -> void:
     art.texture = load("res://Textures/Cards/" + card_name + ".png")
     title.text = card_name
@@ -58,7 +61,7 @@ func set_icons() -> void:
 
 func set_side(value: int) -> void:
     side = value
-    (art.material as ShaderMaterial).set_shader_parameter("enabled", side == GameRules.Side.PLAYER)
+    (art.material as ShaderMaterial).set_shader_parameter("is_disabled", side != GameRules.Side.PLAYER)
 
 func set_hidden(value: bool) -> void:
     face_down = value

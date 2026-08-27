@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctqwgnyda807l"
-path="res://.godot/imported/Deck.png-b76cb0f8701c251aacf40926306d8d14.ctex"
+uid="uid://checyg32ikd72"
+path="res://.godot/imported/Stone.png-1c4c227e1b316cb3fe3ee7f14f76ee52.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Deck.png"
-dest_files=["res://.godot/imported/Deck.png-b76cb0f8701c251aacf40926306d8d14.ctex"]
+source_file="res://Textures/Stone.png"
+dest_files=["res://.godot/imported/Stone.png-1c4c227e1b316cb3fe3ee7f14f76ee52.ctex"]
 
 [params]
 

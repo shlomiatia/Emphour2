@@ -61,7 +61,7 @@ func eligible_cards(group: String) -> Array[Card]:
 
 func show_message(card: Card, event: int) -> void:
     var actions := ["refuses to fight", "deserts your army", "betrays you"]
-    game.event_message.text = "%s %s.\nPress any key or mouse button" % [card.card_name, actions[event]]
+    game.event_message.text = "%s %s.\nPress any key to continue." % [card.card_name, actions[event]]
     game.event_panel.show()
 
 func wait_for_input() -> void:

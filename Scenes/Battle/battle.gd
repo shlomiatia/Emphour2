@@ -9,6 +9,8 @@ const CARD_SCENE := preload("res://Entities/Card/Card.tscn")
 @onready var enemy_hand: CardHand = $CardLayer/EnemyHand
 @onready var player_discard: DiscardPile = $Interface/PlayerDiscard/Pile
 @onready var enemy_discard: DiscardPile = $Interface/EnemyDiscard/Pile
+@onready var player_deck: CardDeck = $Interface/PlayerDeck/Pile
+@onready var enemy_deck_pile: CardDeck = $Interface/EnemyDeck/Pile
 @onready var battle: BattleResolver = $BattleResolver
 @onready var battle_state: BattleState = $BattleState
 @onready var turns: TurnState = $TurnState
@@ -81,13 +83,17 @@ func draw_cards(hand: CardHand, side: int, count: int) -> void:
         var pile := get_draw_pile(side)
         if pile.is_empty():
             return
-        hand.add_card(create_card(pile.pop_back(), side))
+        hand.add_drawn_card(create_card(pile.pop_back(), side), get_deck(side))
+        get_deck(side).set_card_count(pile.size())
 
 func draw_card(side: int) -> void:
     draw_cards(player_hand if side == GameRules.Side.PLAYER else enemy_hand, side, 1)
 
 func get_draw_pile(side: int) -> Array[String]:
     return player_draw_pile if side == GameRules.Side.PLAYER else enemy_draw_pile
+
+func get_deck(side: int) -> CardDeck:
+    return player_deck if side == GameRules.Side.PLAYER else enemy_deck_pile
 
 func create_card(card_name: String, side: int) -> Card:
     var card := CARD_SCENE.instantiate() as Card
