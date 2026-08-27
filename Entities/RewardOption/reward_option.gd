@@ -13,6 +13,7 @@ class_name RewardOption extends Control
 
 var offer: Dictionary
 var cards: Array[Card]
+var choice_id := ""
 
 signal chosen(group: String)
 
@@ -68,7 +69,7 @@ func add_card(card_name: String, position_value: Vector2, faction: CampaignState
 	cards.append(card)
 
 func _on_button_pressed() -> void:
-	chosen.emit(group_name)
+	chosen.emit(choice_id if !choice_id.is_empty() else group_name)
 
 func _on_button_mouse_entered() -> void:
 	set_highlighted(true)

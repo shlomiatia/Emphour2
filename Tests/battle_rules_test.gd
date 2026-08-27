@@ -8,34 +8,36 @@ func _initialize() -> void:
 func verify_decks() -> void:
     CampaignState.start_in_act_2 = false
     CampaignState.reset()
-    verify_deck(CampaignState.act_1_city_id(1), EnemyDeck.ACT_1_CITY_DECKS)
-    verify_deck(CampaignState.act_1_city_id(3), EnemyDeck.ACT_1_CITY_RULES)
+    verify_deck(CampaignState.act_1_city_id(1))
+    verify_deck(CampaignState.act_1_city_id(3))
     verify_act_1_boss_decks()
     verify_act_2_keeps_deck()
     CampaignState.start_act_2()
-    verify_deck(CampaignState.act_2_city_id(1), EnemyDeck.ACT_2_CITY_DECKS)
-    verify_deck(CampaignState.act_2_city_id(3), EnemyDeck.ACT_2_CITY_RULES)
-    verify_deck("Act 2 Boss", EnemyDeck.ACT_2_CITY_RULES)
+    verify_deck(CampaignState.act_2_city_id(1))
+    verify_deck(CampaignState.act_2_city_id(3))
+    verify_deck("Act 2 Boss")
 
-func verify_deck(city_id: String, rules: Dictionary) -> void:
+func verify_deck(city_id: String) -> void:
     var deck := EnemyDeck.new().build(city_id)
-    var rule: Array = rules[city_id]
-    if rule[0] is String:
-        assert(deck == rule)
+    var rule := CampaignBalance.city_rule(city_id)
+    assert(CampaignBalance.city_slots(city_id) == rule["slots"])
+    if rule.has("deck"):
+        assert(deck == rule["deck"])
         return
-    assert(deck.size() == rule[0])
-    assert(value(deck) == rule[1])
+    assert(deck.size() == rule["count"])
+    assert(value(deck) == rule["value"])
 
 func verify_act_1_boss_decks() -> void:
     CampaignState.loyalty["Nobility"] = -1
-    verify_group_deck("Nobility", EnemyDeck.ACT_1_BOSS_NOBILITY_RULE)
+    verify_group_deck("Nobility")
     CampaignState.loyalty = {"Peasants": -1, "Nobility": 0}
-    verify_group_deck("Peasants", EnemyDeck.ACT_1_BOSS_PEASANTS_RULE)
+    verify_group_deck("Peasants")
 
-func verify_group_deck(group: String, rule: Array) -> void:
+func verify_group_deck(group: String) -> void:
     var deck := EnemyDeck.new().build("Act 1 Boss")
-    assert(deck.size() == rule[0])
-    assert(value(deck) == rule[1])
+    var rule := CampaignBalance.city_rule("Act 1 Boss")
+    assert(deck.size() == rule["%s_count" % group.to_lower()])
+    assert(value(deck) == rule["%s_value" % group.to_lower()])
     assert(deck.all(func(card_name: String) -> bool: return RewardRules.belongs_to(card_name, group)))
 
 func verify_act_2_keeps_deck() -> void:

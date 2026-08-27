@@ -6,16 +6,10 @@ enum Event {
 	BETRAY
 }
 
-const CHANCES := {
-	-1: [10, 0, 0],
-	-2: [15, 5, 0],
-	-3: [20, 10, 5],
-	-4: [25, 15, 10],
-	-5: [30, 20, 15]
-}
-
 static func roll(loyalty: int) -> Dictionary:
-	var chances: Array = CHANCES.get(loyalty, [0, 0, 0])
+	var chances := CampaignBalance.loyalty_chances(loyalty)
+	if chances.is_empty():
+		chances = [0, 0, 0]
 	var value := randi_range(1, 100)
 	return {"roll": value, "loyalty": loyalty, "chances": chances, "event": event_for_roll(chances, value)}
 

@@ -1,7 +1,5 @@
 class_name EnemyDeckPicker extends RefCounted
 
-const LEVEL_ONE_WEIGHTS := {"Militia": 6, "Archer": 2, "Stakes": 1, "Mantlet": 1}
-
 static func generate(count: int, value: int, pool: Array[String]) -> Array[String]:
 	var memo := {}
 	if count < 1 || pool.is_empty() || !can_fill(count, value, pool, memo):
@@ -52,12 +50,12 @@ static func pick_tier_card(cards: Array[String], tier: int, budget: int) -> Stri
 static func total_weight(cards: Array[String]) -> int:
 	var total := 0
 	for card in cards:
-		total += LEVEL_ONE_WEIGHTS.get(card, 1)
+		total += CampaignBalance.tier_one_weight(card)
 	return total
 
 static func select_card(cards: Array[String], tier: int, roll: int) -> String:
 	for card in cards:
-		roll -= LEVEL_ONE_WEIGHTS.get(card, 1) if tier == 1 else 1
+		roll -= CampaignBalance.tier_one_weight(card) if tier == 1 else 1
 		if roll <= 0:
 			return card
 	return cards[0]
@@ -71,7 +69,7 @@ static func print_tier_roll(roll: int, tiers: Array[int], selected: int) -> void
 static func print_card_roll(roll: int, total: int, cards: Array[String], tier: int, selected: String, remaining: int) -> void:
 	var chances: Array[String]
 	for card in cards:
-		var weight: int = LEVEL_ONE_WEIGHTS.get(card, 1) if tier == 1 else 1
+		var weight: int = CampaignBalance.tier_one_weight(card) if tier == 1 else 1
 		chances.append("%s=%.1f%%" % [card, weight * 100.0 / total])
 	print("Enemy card roll: tier=%d roll=%d/%d selected=%s remaining=%d chances=[%s]" % [tier, roll, total, selected, remaining, ", ".join(chances)])
 

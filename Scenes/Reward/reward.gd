@@ -21,7 +21,7 @@ func create_options() -> void:
         create_act_2_options()
         return
     for group in ["Peasants", "Nobility"]:
-        offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck, CampaignState.crossbowman_unlocked())
+        offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck)
     peasants.setup(offers["Peasants"])
     nobility.setup(offers["Nobility"])
     peasants.setup_loyalty("Peasants", true)
@@ -33,18 +33,23 @@ func create_act_2_options() -> void:
 
 func setup_act_2_option(option: RewardOption, faction: CampaignState.Faction) -> void:
     option.group_name = CampaignState.faction_name(faction)
-    offers[option.group_name] = Act2RewardRules.create_offer(faction, CampaignState.act_2_reward_level(faction), CampaignState.player_deck)
+    option.choice_id = ""
+    offers[option.group_name] = Act2RewardRules.create_offer(faction, CampaignState.city_number(CampaignState.selected_city) - 1, CampaignState.player_deck)
     option.setup(offers[option.group_name])
     option.setup_loyalty("", false)
 
 func create_final_options() -> void:
     var group := CampaignState.loyal_group()
-    offers["Peasants"] = RewardRules.create_final_offer(group, false, CampaignState.player_deck)
-    offers["Nobility"] = RewardRules.create_final_offer(group, true, CampaignState.player_deck)
-    peasants.setup(offers["Peasants"])
-    nobility.setup(offers["Nobility"])
+    setup_boss_option(peasants, group, "boss_1", 1)
+    setup_boss_option(nobility, group, "boss_2", 2)
     peasants.setup_loyalty("Peasants", false)
     nobility.setup_loyalty("Nobility", false)
+
+func setup_boss_option(option: RewardOption, group: String, key: String, index: int) -> void:
+    option.group_name = group
+    option.choice_id = key
+    offers[key] = RewardRules.create_boss_offer(group, index, CampaignState.player_deck)
+    option.setup(offers[key])
 
 func _on_option_chosen(group: String) -> void:
     if input_disabled:

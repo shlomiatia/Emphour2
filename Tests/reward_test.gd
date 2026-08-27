@@ -7,6 +7,8 @@ func _initialize() -> void:
     verify_act_2_upgrade()
     verify_act_2_priority()
     verify_act_2_paths()
+    verify_exclusions()
+    verify_boss_rewards()
     await verify_act_2_screen()
     verify_act_1_boss()
     quit()
@@ -37,33 +39,49 @@ func verify_act_2_levels() -> void:
     setup_act_2()
     for index in 5:
         CampaignState.selected_city = CampaignState.act_2_city_id(index + 1)
-        assert(CampaignState.act_2_reward_level(CampaignState.Faction.ENGLISH) == [2, 3, 4, 5, 6][index])
-        assert(CampaignState.act_2_reward_level(CampaignState.Faction.HRE) == [1, 2, 3, 4, 5][index])
+        assert(!Act2RewardRules.rewards("War", index).is_empty())
+        assert(!Act2RewardRules.rewards("Ally", index).is_empty())
 
 func verify_act_2_factions() -> void:
     var deck: Array[CampaignCard] = [CampaignCard.new("Militia", CampaignState.Faction.FRANKS)]
-    var offer := Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 1, deck)
+    var offer := Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 0, deck)
     RewardRules.apply_offer(offer, deck)
     assert(deck.back().faction == CampaignState.Faction.ENGLISH)
 
 func verify_act_2_upgrade() -> void:
     var deck := act_2_upgrade_deck()
-    var offer := Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 2, deck)
+    var offer := Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 0, deck)
     RewardRules.apply_offer(offer, deck)
     assert(!deck.has(offer["source"]))
     assert(deck.back().faction == CampaignState.Faction.ENGLISH)
 
 func verify_act_2_priority() -> void:
     var deck := act_2_upgrade_deck()
-    assert(Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 2, deck)["source"].faction == CampaignState.Faction.FRANKS)
+    assert(Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 0, deck)["source"].faction == CampaignState.Faction.FRANKS)
     deck.erase(deck.filter(func(card: CampaignCard) -> bool: return card.faction == CampaignState.Faction.FRANKS)[0])
-    assert(Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 2, deck)["source"].faction == CampaignState.Faction.ENGLISH)
+    assert(Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 0, deck)["source"].faction == CampaignState.Faction.ENGLISH)
     deck.erase(deck.filter(func(card: CampaignCard) -> bool: return card.faction == CampaignState.Faction.ENGLISH)[0])
-    assert(Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 2, deck)["source"].faction == CampaignState.Faction.HRE)
+    assert(Act2RewardRules.create_offer(CampaignState.Faction.ENGLISH, 0, deck)["source"].faction == CampaignState.Faction.HRE)
 
 func verify_act_2_paths() -> void:
-    assert(Act2RewardRules.rewards(5).size() == 4)
-    assert(Act2RewardRules.rewards(5).count({"new": "Crossbowman"}) == 1)
+    assert(Act2RewardRules.rewards("War", 4).size() == 4)
+    assert(Act2RewardRules.rewards("War", 4).has("new:Crossbowman"))
+
+func verify_boss_rewards() -> void:
+    CampaignState.start_in_act_2 = false
+    CampaignState.reset()
+    CampaignState.selected_city = "Act 1 Boss"
+    var deck := CampaignState.create_frank_deck(["Archer"])
+    var add := RewardRules.create_boss_offer("Peasants", 1, deck)
+    var upgrade := RewardRules.create_boss_offer("Peasants", 2, deck)
+    assert(add["new"] == "Crossbowman")
+    assert(upgrade["old"] == "Archer" && upgrade["new"] == "Crossbowman")
+
+func verify_exclusions() -> void:
+    CampaignState.selected_city = CampaignState.act_1_city_id(3)
+    var reward := RewardRules.parse_rule("new:2")
+    var cards := RewardRules.target_cards("Peasants", reward, "", CampaignBalance.city_exclusions(CampaignState.selected_city))
+    assert(!cards.has("Crossbowman"))
 
 func verify_act_2_screen() -> void:
     setup_act_2()

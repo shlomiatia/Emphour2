@@ -4,13 +4,9 @@ enum Faction {FRANKS, REBELS, ENGLISH, HRE}
 enum Arc {FRANCE, FOREIGN_RELATIONS}
 enum Relation {WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBARGO, NEUTRAL, TRADE_PACT, NON_AGGRESSION_PACT, OPEN_BORDERS, DEFENSIVE_ALLIANCE, MILITARY_ALLIANCE}
 
-const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Light Cavalry", "Militia", "Militia", "Militia", "Militia", "Militia", "Militia"]
-const ACT_2_STARTING_DECK: Array[String] = ["Archer", "Crossbowman", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman", "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"]
-const CITY_SLOTS := {"Act 1 City 1": 3, "Act 1 City 2": 3, "Act 1 City 3": 4, "Act 1 City 4": 4, "Act 1 City 5": 5, "Act 1 Boss": 5, "Act 2 City 1": 3, "Act 2 City 2": 3, "Act 2 City 3": 4, "Act 2 City 4": 4, "Act 2 City 5": 5, "Act 2 Boss": 5}
-
 static var selected_city := ""
-static var start_in_act_2 := true
-static var player_deck: Array[CampaignCard] = create_frank_deck(STARTING_DECK)
+static var start_in_act_2 := false
+static var player_deck: Array[CampaignCard] = create_frank_deck(CampaignBalance.deck("act_1"))
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := create_act_1_owners()
 static var arc := Arc.FRANCE
@@ -28,10 +24,7 @@ static func create_deck(names: Array[String], faction: Faction) -> Array[Campaig
     return deck
 
 static func create_act_2_deck() -> Array[CampaignCard]:
-    var deck: Array[CampaignCard]
-    for index in ACT_2_STARTING_DECK.size():
-        deck.append(CampaignCard.new(ACT_2_STARTING_DECK[index], Faction.FRANKS))
-    return deck
+    return create_frank_deck(CampaignBalance.deck("act_2"))
 
 static func create_act_1_owners() -> Dictionary:
     var owners := {}
@@ -67,7 +60,7 @@ static func foreign_relations_active() -> bool:
     return is_act_2()
 
 static func battle_slot_count() -> int:
-    return CITY_SLOTS.get(selected_city, 3)
+    return CampaignBalance.city_slots(selected_city)
 
 static func faction_at_war() -> Faction:
     for faction in foreign_loyalty:
@@ -125,15 +118,8 @@ static func capture_act_2_city() -> void:
         return
     act_2_progress = maxi(act_2_progress, city_number(selected_city))
 
-static func act_2_reward_level(faction: Faction) -> int:
-    var levels := [2, 3, 4, 5, 6] if faction == faction_at_war() else [1, 2, 3, 4, 5]
-    return levels[city_number(selected_city) - 1]
-
 static func city_number(city_id: String) -> int:
     return int(city_id.get_slice(" ", 3))
-
-static func crossbowman_unlocked(city_id := selected_city) -> bool:
-    return is_act_2() || city_number(city_id) >= 4
 
 static func change_loyalty(group: String, amount: int) -> void:
     loyalty[group] = loyalty_after(group, amount)
@@ -186,7 +172,7 @@ static func start_act_2() -> void:
 
 static func reset() -> void:
     selected_city = ""
-    player_deck = create_frank_deck(STARTING_DECK)
+    player_deck = create_frank_deck(CampaignBalance.deck("act_1"))
     loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
     city_owner = create_act_1_owners()
     arc = Arc.FRANCE
