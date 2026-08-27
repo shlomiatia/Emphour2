@@ -125,6 +125,10 @@ static func capture_act_2_city() -> void:
         return
     act_2_progress = maxi(act_2_progress, city_number(selected_city))
 
+static func act_2_reward_level(faction: Faction) -> int:
+    var levels := [2, 3, 4, 5, 6, 6] if faction == faction_at_war() else [1, 2, 3, 4, 5, 5]
+    return levels[city_number(selected_city) - 1]
+
 static func city_number(city_id: String) -> int:
     return int(city_id.get_slice(" ", 3))
 

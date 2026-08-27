@@ -24,11 +24,15 @@ static func create_final_offer(group: String, upgrade: bool, deck: Array) -> Dic
     return {"old": old_name, "new": card_name, "title": group if !upgrade else "%s Upgrade" % group}
 
 static func apply_offer(offer: Dictionary, deck: Array) -> void:
+    if offer.has("source") && offer["source"] != null:
+        deck.erase(offer["source"])
+        deck.append(CampaignCard.new(offer["new"], offer["faction"]))
+        return
     for entry in deck:
         if card_name(entry) == offer["old"]:
             deck.erase(entry)
             break
-    deck.append(CampaignCard.new(offer["new"], CampaignState.Faction.FRANKS))
+    deck.append(CampaignCard.new(offer["new"], offer.get("faction", CampaignState.Faction.FRANKS)))
 
 static func get_reward(group: String, loyalty: int) -> Dictionary:
     var data := get_data()

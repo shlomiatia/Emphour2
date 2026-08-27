@@ -92,7 +92,7 @@ func restore_entry_state() -> void:
 func open_rewards() -> void:
     await get_tree().create_timer(MESSAGE_DURATION).timeout
     await game.fade.fade_out()
-    if CampaignState.is_act_2():
+    if CampaignState.is_act_2() && CampaignState.is_act_2_boss():
         CampaignState.capture_selected_city()
         get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
         return

@@ -18,15 +18,25 @@ signal chosen(group: String)
 func setup(value: Dictionary) -> void:
 	offer = value
 	title.title = offer.get("title", group_name)
-	group_icon.texture = load("res://Textures/%s.png" % group_name)
+	group_icon.visible = !offer.has("faction")
+	if group_icon.visible:
+		group_icon.texture = load("res://Textures/%s.png" % group_name)
 	if !offer["old"].is_empty():
-		add_card(offer["old"], Vector2(-128, 0))
-		add_card(offer["new"], Vector2(128, 0))
+		add_card(offer["old"], Vector2(-128, 0), offer.get("old_faction", CampaignState.Faction.FRANKS))
+		add_card(offer["new"], Vector2(128, 0), offer.get("faction", CampaignState.Faction.FRANKS))
 		arrow.show()
 	else:
-		add_card(offer["new"], Vector2.ZERO)
+		add_card(offer["new"], Vector2.ZERO, offer.get("faction", CampaignState.Faction.FRANKS))
 		arrow.hide()
-	description.text = "Add %s to deck." % offer["new"] if offer["old"].is_empty() else "Upgrade 1 %s from deck to %s." % [offer["old"], offer["new"]]
+	description.text = offer_text()
+
+func offer_text() -> String:
+	if !offer.has("faction"):
+		return "Add %s to deck." % offer["new"] if offer["old"].is_empty() else "Upgrade 1 %s from deck to %s." % [offer["old"], offer["new"]]
+	var faction := CampaignState.faction_name(offer["faction"])
+	if offer["old"].is_empty():
+		return "Add %s %s to deck." % [faction, offer["new"]]
+	return "Upgrade 1 %s %s to %s %s." % [CampaignState.faction_name(offer["old_faction"]), offer["old"], faction, offer["new"]]
 
 func setup_loyalty(selected_group: String, visible: bool) -> void:
 	loyalty.visible = visible
@@ -46,8 +56,8 @@ func set_label(label: Label, value: int) -> void:
 	label.text = RelationData.loyalty_name(value)
 	label.add_theme_color_override("font_color", RelationData.color(value))
 
-func add_card(card_name: String, position_value: Vector2) -> void:
-	var card := CardFactory.create(card_name, GameRules.Side.PLAYER)
+func add_card(card_name: String, position_value: Vector2, faction: CampaignState.Faction) -> void:
+	var card := CardFactory.create(card_name, GameRules.Side.PLAYER, faction)
 	card.position = position_value
 	card.scale = Vector2.ONE * 0.86
 	offer_root.add_child(card)

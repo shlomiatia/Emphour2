@@ -17,12 +17,25 @@ func create_options() -> void:
     if final_reward:
         create_final_options()
         return
+    if CampaignState.is_act_2():
+        create_act_2_options()
+        return
     for group in ["Peasants", "Nobility"]:
         offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck, CampaignState.crossbowman_unlocked())
     peasants.setup(offers["Peasants"])
     nobility.setup(offers["Nobility"])
     peasants.setup_loyalty("Peasants", true)
     nobility.setup_loyalty("Nobility", true)
+
+func create_act_2_options() -> void:
+    setup_act_2_option(peasants, CampaignState.Faction.ENGLISH)
+    setup_act_2_option(nobility, CampaignState.Faction.HRE)
+
+func setup_act_2_option(option: RewardOption, faction: CampaignState.Faction) -> void:
+    option.group_name = CampaignState.faction_name(faction)
+    offers[option.group_name] = Act2RewardRules.create_offer(faction, CampaignState.act_2_reward_level(faction), CampaignState.player_deck)
+    option.setup(offers[option.group_name])
+    option.setup_loyalty("", false)
 
 func create_final_options() -> void:
     var group := CampaignState.loyal_group()
@@ -38,7 +51,7 @@ func _on_option_chosen(group: String) -> void:
         return
     input_disabled = true
     RewardRules.apply_offer(offers[group], CampaignState.player_deck)
-    if !final_reward:
+    if !final_reward && !CampaignState.is_act_2():
         apply_loyalty(group)
     CampaignState.capture_selected_city()
     confirm_sound.play()
