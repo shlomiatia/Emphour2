@@ -1,15 +1,15 @@
 class_name CampaignState extends RefCounted
 
-enum Faction { FRANKS, REBELS, ENGLISH, HRE }
-enum Arc { FRANCE, FOREIGN_RELATIONS }
-enum Relation { WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBARGO, NEUTRAL, TRADE_PACT, NON_AGGRESSION_PACT, OPEN_BORDERS, DEFENSIVE_ALLIANCE, MILITARY_ALLIANCE }
+enum Faction {FRANKS, REBELS, ENGLISH, HRE}
+enum Arc {FRANCE, FOREIGN_RELATIONS}
+enum Relation {WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBARGO, NEUTRAL, TRADE_PACT, NON_AGGRESSION_PACT, OPEN_BORDERS, DEFENSIVE_ALLIANCE, MILITARY_ALLIANCE}
 
 const STARTING_DECK: Array[String] = ["Archer", "Mantlet", "Stakes", "Light Cavalry", "Militia", "Militia", "Militia", "Militia", "Militia", "Militia"]
 const ACT_2_STARTING_DECK: Array[String] = ["Archer", "Crossbowman", "Mantlet", "Stakes", "Horse Archer", "Light Cavalry", "Axeman", "Swordman", "Spearman", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"]
 const CITY_SLOTS := {"Act 1 City 1": 3, "Act 1 City 2": 3, "Act 1 City 3": 4, "Act 1 City 4": 4, "Act 1 City 5": 5, "Act 1 City 6": 5, "Act 1 Boss": 5, "Act 2 City 1": 3, "Act 2 City 2": 3, "Act 2 City 3": 4, "Act 2 City 4": 4, "Act 2 City 5": 5, "Act 2 City 6": 5, "Act 2 Boss": 5}
 
 static var selected_city := ""
-static var start_in_act_2 := false
+static var start_in_act_2 := true
 static var player_deck: Array[CampaignCard] = create_frank_deck(STARTING_DECK)
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := create_act_1_owners()
@@ -30,7 +30,7 @@ static func create_deck(names: Array[String], faction: Faction) -> Array[Campaig
 static func create_act_2_deck() -> Array[CampaignCard]:
     var deck: Array[CampaignCard]
     for index in ACT_2_STARTING_DECK.size():
-        deck.append(CampaignCard.new(ACT_2_STARTING_DECK[index], Faction.ENGLISH if index % 2 == 0 else Faction.HRE))
+        deck.append(CampaignCard.new(ACT_2_STARTING_DECK[index], Faction.FRANKS))
     return deck
 
 static func create_act_1_owners() -> Dictionary:
@@ -172,7 +172,8 @@ static func faction_color(faction: Faction) -> Color:
 
 static func start_act_2() -> void:
     arc = Arc.FOREIGN_RELATIONS
-    player_deck = create_act_2_deck()
+    if start_in_act_2:
+        player_deck = create_act_2_deck()
     foreign_loyalty = {Faction.ENGLISH: Relation.NEUTRAL, Faction.HRE: Relation.NEUTRAL}
     act_2_progress = 0
     act_2_boss_defeated = false

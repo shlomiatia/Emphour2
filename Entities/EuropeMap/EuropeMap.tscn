@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c5nnwocwa43vu" path="res://Textures/Wave.png" id="4_iryji"]
 [ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="5_06ubw"]
 [ext_resource type="Texture2D" uid="uid://nfcfp4bwjyuv" path="res://Textures/Tree.png" id="5_vneyi"]
+[ext_resource type="Texture2D" uid="uid://b8v3vgs0p70r7" path="res://Textures/Mountain.png" id="6_ec37h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_haze"]
 shader = ExtResource("4_haze")
@@ -339,8 +340,233 @@ position = Vector2(685, 43)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree30" type="Sprite2D" parent="Europe/Trees" unique_id=1417431701]
-position = Vector2(-418, -559)
+position = Vector2(10, -458)
 texture = ExtResource("5_vneyi")
+
+[node name="Mountains" type="Node2D" parent="Europe" unique_id=635100383]
+
+[node name="Mountain" type="Sprite2D" parent="Europe/Mountains" unique_id=149624434]
+position = Vector2(-567, 266)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain2" type="Sprite2D" parent="Europe/Mountains" unique_id=1320610914]
+position = Vector2(-539, 279)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain3" type="Sprite2D" parent="Europe/Mountains" unique_id=1457783080]
+position = Vector2(-506, 272)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain4" type="Sprite2D" parent="Europe/Mountains" unique_id=101914659]
+position = Vector2(-479, 284)
+rotation = 0.017453292
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain5" type="Sprite2D" parent="Europe/Mountains" unique_id=1301485938]
+position = Vector2(-447, 292)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain6" type="Sprite2D" parent="Europe/Mountains" unique_id=445209648]
+position = Vector2(-509, 304)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain7" type="Sprite2D" parent="Europe/Mountains" unique_id=1356623099]
+position = Vector2(-595, 254)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain8" type="Sprite2D" parent="Europe/Mountains" unique_id=94270513]
+position = Vector2(-623, 240)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain9" type="Sprite2D" parent="Europe/Mountains" unique_id=1682995230]
+position = Vector2(-651, 250)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain10" type="Sprite2D" parent="Europe/Mountains" unique_id=60133143]
+position = Vector2(-679, 236)
+rotation = 0.017453292
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain11" type="Sprite2D" parent="Europe/Mountains" unique_id=416381522]
+position = Vector2(70, 75)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain12" type="Sprite2D" parent="Europe/Mountains" unique_id=481864214]
+position = Vector2(160, 74)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain13" type="Sprite2D" parent="Europe/Mountains" unique_id=791988584]
+position = Vector2(46, 92)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain14" type="Sprite2D" parent="Europe/Mountains" unique_id=548019336]
+position = Vector2(132, 59)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain15" type="Sprite2D" parent="Europe/Mountains" unique_id=1398127443]
+position = Vector2(18, 104)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain16" type="Sprite2D" parent="Europe/Mountains" unique_id=1733109247]
+position = Vector2(46, 119)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain17" type="Sprite2D" parent="Europe/Mountains" unique_id=1497485564]
+position = Vector2(19, 132)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain18" type="Sprite2D" parent="Europe/Mountains" unique_id=1784665605]
+position = Vector2(47, 145)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain19" type="Sprite2D" parent="Europe/Mountains" unique_id=350807963]
+position = Vector2(31, 61)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain20" type="Sprite2D" parent="Europe/Mountains" unique_id=1200091576]
+position = Vector2(193, 81)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain21" type="Sprite2D" parent="Europe/Mountains" unique_id=1254865012]
+position = Vector2(158, 46)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain22" type="Sprite2D" parent="Europe/Mountains" unique_id=1872120652]
+position = Vector2(20, 157)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain23" type="Sprite2D" parent="Europe/Mountains" unique_id=363081797]
+position = Vector2(42, 177)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain24" type="Sprite2D" parent="Europe/Mountains" unique_id=171430221]
+position = Vector2(67, 193)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain25" type="Sprite2D" parent="Europe/Mountains" unique_id=1862260169]
+position = Vector2(96, 62)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain26" type="Sprite2D" parent="Europe/Mountains" unique_id=1424611432]
+position = Vector2(566, 74)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain27" type="Sprite2D" parent="Europe/Mountains" unique_id=1635350785]
+position = Vector2(596, 65)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain28" type="Sprite2D" parent="Europe/Mountains" unique_id=80945594]
+position = Vector2(623, 79)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain29" type="Sprite2D" parent="Europe/Mountains" unique_id=134928293]
+position = Vector2(643, 70)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain30" type="Sprite2D" parent="Europe/Mountains" unique_id=695286825]
+position = Vector2(668, 87)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain31" type="Sprite2D" parent="Europe/Mountains" unique_id=897853315]
+position = Vector2(695, 101)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain32" type="Sprite2D" parent="Europe/Mountains" unique_id=729062669]
+position = Vector2(508, 49)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain33" type="Sprite2D" parent="Europe/Mountains" unique_id=1953508200]
+position = Vector2(484, 62)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain34" type="Sprite2D" parent="Europe/Mountains" unique_id=903563385]
+position = Vector2(459, 47)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain35" type="Sprite2D" parent="Europe/Mountains" unique_id=1823722609]
+position = Vector2(433, 32)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain36" type="Sprite2D" parent="Europe/Mountains" unique_id=2115245380]
+position = Vector2(567, 44)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain37" type="Sprite2D" parent="Europe/Mountains" unique_id=2030130964]
+position = Vector2(443, 74)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain38" type="Sprite2D" parent="Europe/Mountains" unique_id=1952039097]
+position = Vector2(634, 109)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain39" type="Sprite2D" parent="Europe/Mountains" unique_id=1951963172]
+position = Vector2(406, 44)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain40" type="Sprite2D" parent="Europe/Mountains" unique_id=465087234]
+position = Vector2(370, 46)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain41" type="Sprite2D" parent="Europe/Mountains" unique_id=1826446318]
+position = Vector2(345, 29)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain42" type="Sprite2D" parent="Europe/Mountains" unique_id=1044521696]
+position = Vector2(316, 37)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain43" type="Sprite2D" parent="Europe/Mountains" unique_id=869106793]
+position = Vector2(290, 21)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain44" type="Sprite2D" parent="Europe/Mountains" unique_id=213689023]
+position = Vector2(323, 2)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain45" type="Sprite2D" parent="Europe/Mountains" unique_id=740140680]
+position = Vector2(536, 63)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain46" type="Sprite2D" parent="Europe/Mountains" unique_id=600210287]
+position = Vector2(544, -553)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain47" type="Sprite2D" parent="Europe/Mountains" unique_id=162096344]
+position = Vector2(569, -535)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain48" type="Sprite2D" parent="Europe/Mountains" unique_id=439132008]
+position = Vector2(598, -541)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain49" type="Sprite2D" parent="Europe/Mountains" unique_id=1753681521]
+position = Vector2(656, -515)
+texture = ExtResource("6_ec37h")
+
+[node name="Mountain50" type="Sprite2D" parent="Europe/Mountains" unique_id=2045382968]
+position = Vector2(626, -528)
+texture = ExtResource("6_ec37h")
 
 [node name="WindOverlay" parent="." unique_id=389009123 instance=ExtResource("2_map_wind")]
 material = SubResource("ShaderMaterial_iryji")

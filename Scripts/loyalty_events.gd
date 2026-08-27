@@ -19,6 +19,7 @@ func setup(card_battle: CardBattle) -> void:
 func _input(event: InputEvent) -> void:
     if waiting && event.is_pressed() && !(event is InputEventKey && event.echo):
         get_viewport().set_input_as_handled()
+        hide()
         continued.emit()
 
 func run() -> void:

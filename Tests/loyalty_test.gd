@@ -6,7 +6,8 @@ func _initialize() -> void:
     run_test()
 
 func run_test() -> void:
-    CampaignState.start_act_2()
+    CampaignState.start_in_act_2 = true
+    CampaignState.reset()
     game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     root.add_child(game)
     await game.battle_ready
