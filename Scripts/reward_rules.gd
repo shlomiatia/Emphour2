@@ -23,7 +23,7 @@ static func reward_level(group: String, city_index: int) -> int:
     return maxi(1, city_index - 1) if CampaignState.loyalty[group] < CampaignState.loyalty[other] else city_index
 
 static func reward_rule(scope: String, group: String, index: int) -> Dictionary:
-    var key := clampi(index, 0, 4) + 1 if scope == "Act1" else clampi(index, 1, 2)
+    var key := clampi(index, 1, 5) if scope == "Act1" else clampi(index, 1, 2)
     return parse_rule(CampaignBalance.rewards("%s_%s_%d" % [scope, group, key]).pick_random())
 
 static func parse_rule(value: String) -> Dictionary:

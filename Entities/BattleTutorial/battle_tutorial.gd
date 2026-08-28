@@ -35,7 +35,7 @@ func run() -> void:
     await say("Nothing will move until one battle line is full", line_rect())
     await say("Our opponent played a card in secret", enemy_rect())
     await say("Let's deploy a militia by dragging to our battle line")
-    restrict("Militia", player_slot(0))
+    restrict("Militia")
     stage = 1
     await action_done
     await game.turns.player_action_started
@@ -43,7 +43,7 @@ func run() -> void:
     await say("But the light cavalry have a charge attack", attack_rect())
     await say("It will kill the militia once the battle starts")
     await say("Let's deploy stakes")
-    restrict("Stakes", player_slot(1))
+    restrict("Stakes")
     stage = 2
     await action_done
     await game.turns.player_action_started
@@ -58,7 +58,7 @@ func run() -> void:
     message.hide_message()
     await say("They don't have a card that blocks missile attacks!")
     await say("Deploy an archer. This will fill the battle line and start the battle")
-    restrict("Archer", player_slot(2))
+    restrict("Archer")
     stage = 3
 
 func after_player_action() -> void:
@@ -107,8 +107,7 @@ func choice_selected() -> void:
     if active && stage == 5:
         message.hide_message()
 
-func restrict(card_name: String, slot: CardSlot) -> void:
-    game.turns.set_allowed_slots([slot], false)
+func restrict(card_name: String) -> void:
     game.player_hand.set_draggable_cards(game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == card_name))
 
 func say(text: String, rect := Rect2()) -> void:
