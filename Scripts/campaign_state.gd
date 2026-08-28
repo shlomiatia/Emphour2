@@ -6,7 +6,7 @@ enum Relation {WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBAR
 enum Intro {OPENING, ACT_2, ENDING}
 
 static var selected_city := ""
-static var start_in_act_2 := true
+static var start_in_act_2 := false
 static var player_deck: Array[CampaignCard] = create_frank_deck(CampaignBalance.deck("act_1"))
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := create_act_1_owners()

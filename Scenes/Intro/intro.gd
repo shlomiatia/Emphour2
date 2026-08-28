@@ -18,6 +18,7 @@ const ACT_2_TEXTS := [
 const ENDING_TEXTS := [
 	"intro.ending.victorious",
 	"intro.ending.shame",
+	"intro.ending.trust",
 	"intro.ending.life",
 	"intro.ending.general",
 	"intro.ending.never",

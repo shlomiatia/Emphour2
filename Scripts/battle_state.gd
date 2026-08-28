@@ -82,7 +82,7 @@ func finish_game(winner: int) -> void:
 
 func result_text(winner: int) -> String:
     if winner == -1:
-        return tr("battle.draw")
+        return tr("battle.restart") % tr("battle.draw")
     var faction := CampaignState.Faction.FRANKS if winner == GameRules.Side.PLAYER else CampaignState.battlefield_faction()
     var text := tr("battle.win") % CampaignState.faction_name(faction)
     return text if winner == GameRules.Side.PLAYER else tr("battle.restart") % text

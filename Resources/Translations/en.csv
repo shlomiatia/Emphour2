@@ -2,8 +2,8 @@ keys,en
 ui.title,Double Crossed
 ui.start,Press any key to start
 ui.choose_reward,Choose your reward
-ui.kingdom_loyalty,KINGDOM LOYALTY
-ui.foreign_relations,FOREIGN RELATIONS
+ui.kingdom_loyalty,Kingdom Loyalty
+ui.foreign_relations,Foreign Loyalty
 ui.declare_war,Declare war
 ui.preparing_game,Preparing game
 group.peasants,Peasants
@@ -35,7 +35,6 @@ card.swordman,Swordsman
 card.spearman,Spearman
 card.foot_knight,Foot Knight
 card.lancer,Lancer
-card.heavy_cavalry,Heavy Cavalry
 card.heavy_cav,Heavy Cav
 card.knight,Knight
 city.paris,Paris
@@ -54,39 +53,40 @@ city.cologne,Cologne
 city.mainz,Mainz
 city.regensburg,Regensburg
 reward.add,Add %s to deck.
-reward.upgrade,Upgrade 1 %s from deck to %s.
+reward.upgrade,Upgrade %s from deck to %s.
 tooltip.declare_war,Declare war on the %s
 tooltip.strength,Strength: %s
 tooltip.attack,%s attack
-tooltip.block,Block 1 %s attack
-tooltip.block_non_armor_piercing,Block 1 non-armor-piercing attack
+tooltip.block,Blocks 1 %s attack
+tooltip.block_non_armor_piercing,Blocks 1 non-armor-piercing attack
 attack.charge,Charge
 turn.choose_card,Choose a card
-turn.discard_or_replace,Discard or choose a card to replace
+turn.discard_or_replace,Discard or replace a card
 turn.play_card,Play a card
 battle.start,Battle
 battle.defend,Choose a card to defend against %s
 battle.kill,Choose a card for %s to kill
-battle.draw,Draw\nPress any key to restart the level
+battle.draw,Draw
 battle.win,%s win
 battle.restart,%s\nPress any key to restart the level
-tutorial.reward.won,General, you won!
+tutorial.reward.won,"General, you won!"
 tutorial.reward.offers,The Nobility and Peasants are offering rewards.
 tutorial.reward.loyalty,Selecting a reward will improve faction loyalty.
-tutorial.reward.better,This will yield better rewards!
+tutorial.reward.better,This will yield even better rewards!
 tutorial.reward.other,But the other faction will not like it...
-tutorial.reward.levies,General, we can raise levies from the %s.
+tutorial.reward.levies,"General, we can raise levies from the %s."
 tutorial.reward.allies,Or accept weaker but loyal allied contingents.
 tutorial.reward.choice,The choice is yours.
-tutorial.act1_boss,General, the %s are trying to take Paris!
-tutorial.act1_treason,It's treason, then...
+tutorial.act1_boss,"General, the %s are trying to take Paris!"
+tutorial.act1_treason,"It's treason, then..."
 tutorial.act1_defeat,Defeat these traitorous toads!
-tutorial.act2_boss,General, the %s has double-crossed us!
+tutorial.act2_boss,"General, the %s has double-crossed us!"
 tutorial.act2_invaded,They invaded Paris while we fought the %s...
 tutorial.act2_destroy,Destroy these backstabbing rats!
-tutorial.battle.ways,General, there are two ways to win battles.
+tutorial.battle.ways,"General, there are several ways to win battles."
 tutorial.battle.meter,Move the balance of power all the way to the right.
-tutorial.battle.cards_run_out,Or have it on the right when your cards run out.
+tutorial.battle.cards_run_out,Or have it on the right when all cards run out.
+tutorial.battle.kill_all,Or... just kill them all!
 tutorial.battle.line_full,Nothing will move until one battle line is full.
 tutorial.battle.secret,Our opponent played a card in secret.
 tutorial.battle.deploy_militia,Let's deploy a militia by dragging it to our battle line.
@@ -102,26 +102,26 @@ tutorial.battle.no_missile_block,They do not have a card that blocks missile att
 tutorial.battle.deploy_archer,Deploy an archer. This will fill the battle line and start the battle.
 tutorial.battle.discard,You can discard instead of replacing by dragging to the discard pile.
 tutorial.battle.turn,You must play or discard a card each turn.
-tutorial.battle.equal,Our strength is now equal.
-tutorial.battle.good_luck,But I trust you to win the battle now.\nGood luck!
+tutorial.battle.good_luck,I trust you to win the battle now.\nGood luck!
 tutorial.battle.replace_stakes,We do not need the stakes anymore. Let's replace them.
-tutorial.battle.enemy_favor,The balance of power moved in the enemy's favor, so let's weaken them.
+tutorial.battle.enemy_favor,"The balance of power moved in the enemy's favor, so let's weaken them."
 tutorial.battle.kill_cavalry,Kill the light cavalry by clicking it!
 intro.opening.millennium,"1,000 AD — a new millennium begins."
 intro.opening.king,King Robert the Pious is troubled...
 intro.opening.rebels,Rebels in Paris? Sacrebleu!
-intro.opening.general,General, defeat them — and all the others...
+intro.opening.general,"General, defeat them — and all the others..."
 intro.opening.map,Paint the map of Europe blue.
-intro.opening.franks,Long live the Franks!
-intro.act2.secured,General, we have secured our kingdom.
+intro.opening.franks,Viva la Franks!
+intro.act2.secured,"General, we have secured our kingdom."
 intro.act2.expand,It's time to expand.
 intro.act2.war,England and the Holy Roman Empire are at war.
 intro.act2.ally,We should ally with one against the other.
 intro.act2.carefully,Choose carefully.
-intro.ending.victorious,General, we are victorious.
-intro.ending.shame,It's a shame that we can trust no one.
+intro.ending.victorious,"General, we are victorious."
+intro.ending.shame,It's a shame that we can...
+intro.ending.trust,Trust no one.
 intro.ending.life,C'est la vie.
-intro.ending.general,A Frankish general conquering Europe...
+intro.ending.general,A Frank general conquering Europe...
 intro.ending.never,This will probably never happen again.
 intro.ending.thanks,Thanks for playing!\nPress any key to restart the game.
 loyalty.refuses,refuses to fight in the battle!

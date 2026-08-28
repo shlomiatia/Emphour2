@@ -15,11 +15,6 @@ run/main_scene="res://Scenes/Title/Title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
-[internationalization]
-
-locale/fallback="en"
-locale/translations=PackedStringArray("res://Resources/Translations/en.en.translation")
-
 [autoload]
 
 Audio="*res://Scripts/GameAudio.tscn"
@@ -30,6 +25,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://Resources/Translations/en.en.translation")
 
 [physics]
 
