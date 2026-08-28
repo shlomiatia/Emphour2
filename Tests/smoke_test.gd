@@ -28,7 +28,7 @@ func run_test() -> void:
 
 func verify_opening() -> void:
     assert(game.player_hand.get_card_count() == 5)
-    assert(game.enemy_hand.get_card_count() == EnemyDeck.new().build(CampaignState.selected_city).size() - 1)
+    assert(game.enemy_hand.get_card_count() == mini(game.tutorial.enemy_cards(EnemyDeck.new().build(CampaignState.selected_city)).size(), 5) - 1)
     assert(game.board.get_cards(GameRules.Side.ENEMY).size() == 1)
     assert(game.board.get_cards(GameRules.Side.ENEMY)[0].face_down)
 

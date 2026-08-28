@@ -17,6 +17,7 @@ class_name CardBattle extends Node2D
 @onready var battle_hud: BattleHud = $Interface/BattleHud
 @onready var audio: GameAudio = get_node("/root/Audio")
 @onready var fade: Fade = $Overlay/Fade
+@onready var tutorial: BattleTutorial = $BattleTutorial
 
 var battle := BattleResolver.new()
 var draws := BattleDraws.new()
@@ -34,11 +35,12 @@ func _ready() -> void:
     board.slot_count = CampaignState.battle_slot_count()
     setup_states()
     connect_signals()
-    draws.setup_piles(CampaignState.player_deck, enemy_deck.build(CampaignState.selected_city))
+    draws.setup_piles(CampaignState.player_deck, tutorial.enemy_cards(enemy_deck.build(CampaignState.selected_city)))
     set_balance(0, false)
     await draws.draw_opening_hands()
     await loyalty_events.run()
     turns.start_round()
+    tutorial.start()
     await get_tree().process_frame
     battle_ready.emit()
 
@@ -54,6 +56,7 @@ func setup_states() -> void:
     turns.setup(self)
     loyalty_events.setup(self)
     draws.setup(self)
+    tutorial.setup(self)
 
 func connect_signals() -> void:
     board.target_chosen.connect(_on_target_chosen)
@@ -83,10 +86,11 @@ func create_card(card_name: String, side: int) -> Card:
     return CardFactory.create(card_name, side, faction)
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
-    selectable_cards.assign(cards)
+    selectable_cards.assign(tutorial.prepare_choices(cards))
     set_status(prompt)
     board.enable_card_targets(selectable_cards)
     var chosen: Card = await card_chosen
+    tutorial.choice_selected()
     board.clear_targets()
     selectable_cards.clear()
     return chosen

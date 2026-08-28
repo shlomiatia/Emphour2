@@ -1,9 +1,14 @@
 class_name TurnState extends Node
 
+signal player_action_started
+
 var game: CardBattle
 var pending_enemy: Card
 var selected_card: Card
 var accepting_action := false
+var forced_enemy_cards: Array[String]
+var allowed_slots: Array[CardSlot]
+var discard_allowed := true
 
 func setup(card_game: CardBattle) -> void:
     game = card_game
@@ -24,7 +29,7 @@ func play_enemy_card() -> void:
     pending_enemy = null
     if game.enemy_hand.get_card_count() == 0:
         return
-    pending_enemy = game.enemy_hand.get_cards().pick_random()
+    pending_enemy = choose_enemy_card()
     game.audio.play_card()
     pending_enemy.set_hidden(true)
     if !game.board.play_leftmost(pending_enemy, GameRules.Side.ENEMY):
@@ -34,6 +39,21 @@ func play_enemy_card() -> void:
             game.discard_card(game.board.replace_random(pending_enemy, GameRules.Side.ENEMY))
     game.draw_card(GameRules.Side.ENEMY)
 
+func choose_enemy_card() -> Card:
+    if !forced_enemy_cards.is_empty():
+        var name: String = forced_enemy_cards.pop_front()
+        for card in game.enemy_hand.get_cards():
+            if card.card_name == name:
+                return card
+    return game.enemy_hand.get_cards().pick_random()
+
+func set_enemy_plays(cards: Array[String]) -> void:
+    forced_enemy_cards = cards.duplicate()
+
+func set_allowed_slots(slots: Array[CardSlot], can_discard: bool) -> void:
+    allowed_slots = slots
+    discard_allowed = can_discard
+
 func discard_enemy_card() -> void:
     game.discard_card(pending_enemy)
     pending_enemy = null
@@ -42,6 +62,7 @@ func begin_player_action() -> void:
     accepting_action = true
     game.player_hand.set_draggable(true)
     game.set_status("Choose a card")
+    player_action_started.emit()
 
 func card_clicked(card: Card) -> void:
     if !accepting_action || card.get_parent() != game.player_hand:
@@ -53,8 +74,10 @@ func card_clicked(card: Card) -> void:
 func enable_targets() -> void:
     var full_row := game.board.is_full(GameRules.Side.PLAYER)
     game.board.enable_player_targets(full_row)
+    if !allowed_slots.is_empty():
+        game.board.limit_targets(allowed_slots)
     game.board.set_dragged_card(selected_card)
-    game.player_discard.set_targetable(full_row)
+    game.player_discard.set_targetable(full_row && discard_allowed)
     game.player_discard.set_dragged_card(selected_card)
     game.set_status("Discard or choose a card to replace" if full_row else "Play a card")
 
@@ -95,6 +118,7 @@ func finish_player_action() -> void:
     accepting_action = false
     game.player_hand.set_draggable(false)
     clear_targets()
+    await game.tutorial.after_player_action()
     game.draw_card(GameRules.Side.PLAYER)
     game.battle.update_preview()
     complete_round()

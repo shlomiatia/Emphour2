@@ -112,6 +112,10 @@ func enable_player_targets(full_row: bool) -> void:
         if full_row || !slot.get_card():
             slot.set_targetable(true)
 
+func limit_targets(slots_to_enable: Array[CardSlot]) -> void:
+    for slot in get_slots():
+        slot.set_targetable(slot.targetable && slots_to_enable.has(slot))
+
 func enable_card_targets(cards: Array[Card]) -> void:
     clear_targets()
     for slot in get_slots():

@@ -49,6 +49,10 @@ func finish(final_battle: bool) -> void:
         await get_tree().create_timer(0.35).timeout
         finish_game(balance_winner())
         return
+    if await game.tutorial.after_battle():
+        active = false
+        start()
+        return
     active = false
     game.battle.update_preview()
     await get_tree().create_timer(0.35).timeout

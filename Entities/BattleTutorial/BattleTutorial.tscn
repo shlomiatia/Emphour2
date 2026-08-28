@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Entities/BattleTutorial/battle_tutorial.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Entities/TutorialMessage/TutorialMessage.tscn" id="2_message"]
+
+[node name="BattleTutorial" type="Node" unique_id=160201098]
+script = ExtResource("1_script")
+
+[node name="TutorialMessage" parent="." unique_id=160201099 instance=ExtResource("2_message")]
+layer = 4

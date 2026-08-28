@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://Entities/WindOverlay/WindOverlay.tscn" id="18_wind"]
 [ext_resource type="PackedScene" path="res://Entities/Deck/Deck.tscn" id="20_deck"]
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="21_panel"]
+[ext_resource type="PackedScene" path="res://Entities/BattleTutorial/BattleTutorial.tscn" id="22_tutorial"]
 
 [sub_resource type="Resource" id="Resource_enemy_deck"]
 script = ExtResource("15_enemy_deck")
@@ -227,6 +228,8 @@ layer = 3
 [node name="Fade" parent="Overlay" unique_id=1328492879 instance=ExtResource("12_fade")]
 
 [node name="CardTooltip" parent="." unique_id=782447997 instance=ExtResource("11_tooltip")]
+
+[node name="BattleTutorial" parent="." unique_id=307988121 instance=ExtResource("22_tutorial")]
 
 [node name="BattleState" type="Node" parent="." unique_id=740540934]
 script = ExtResource("8_battle_state")

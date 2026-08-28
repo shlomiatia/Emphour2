@@ -8,7 +8,7 @@ func _initialize() -> void:
 func run_test() -> void:
     Engine.time_scale = 30.0
     CampaignState.reset()
-    CampaignState.selected_city = CampaignState.act_1_city_id(1)
+    CampaignState.selected_city = ""
     CampaignState.player_deck = CampaignState.create_frank_deck(["Militia"])
     game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     game.get_node("CardSpace/Board").slot_count = 1

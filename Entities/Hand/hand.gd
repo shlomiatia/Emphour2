@@ -84,6 +84,14 @@ func set_draggable(value: bool) -> void:
         interaction.stop()
     for card in get_cards():
         card.draggable = value
+        if value:
+            card.set_disabled(false)
+
+func set_draggable_cards(cards: Array[Card]) -> void:
+    interaction.stop()
+    for card in get_cards():
+        card.draggable = cards.has(card)
+        card.set_disabled(!cards.has(card))
 
 func get_cards() -> Array[Card]:
     var result: Array[Card]

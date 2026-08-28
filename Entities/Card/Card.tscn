@@ -21,8 +21,8 @@ shader_parameter/original_0 = Color(0.309804, 0.360784, 0.192157, 1)
 shader_parameter/original_1 = Color(0.145098, 0.192157, 0.105882, 1)
 shader_parameter/original_2 = Color(0.619608, 0.709804, 0.529412, 1)
 shader_parameter/replace_0 = Color(0.090196, 0.223529, 0.403922, 1)
-shader_parameter/replace_1 = Color(0.05098, 0.12549, 0.227451, 1)
-shader_parameter/replace_2 = Color(0.352941, 0.552941, 0.839216, 1)
+shader_parameter/replace_1 = Color(0.05490196, 0.13333334, 0.24313726, 1)
+shader_parameter/replace_2 = Color(0.3764706, 0.58431375, 0.8627451, 1)
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
 [node name="Card" type="Node2D" unique_id=580931423]

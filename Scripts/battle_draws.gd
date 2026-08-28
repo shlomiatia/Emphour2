@@ -3,6 +3,7 @@ class_name BattleDraws extends RefCounted
 const DRAW_DELAY := 0.15
 
 var game: CardBattle
+var forced_draws := {}
 
 func setup(card_battle: CardBattle) -> void:
     game = card_battle
@@ -12,6 +13,9 @@ func setup_piles(player_cards: Array[CampaignCard], enemy_names: Array[String]) 
     setup_pile(enemy_names, game.enemy_draw_pile)
     game.player_deck.set_card_count(game.player_draw_pile.size())
     game.enemy_deck_pile.set_card_count(game.enemy_draw_pile.size())
+
+func force_draws(side: int, names: Array[String]) -> void:
+    forced_draws[side] = names.duplicate()
 
 func setup_pile(cards: Array, pile: Array) -> void:
     pile.assign(cards)
@@ -47,12 +51,20 @@ func draw_card(side: int) -> Card:
     if pile.is_empty():
         return null
     var deck: CardDeck = get_deck(side)
-    var entry: Variant = pile.pop_back()
+    var entry: Variant = take_entry(pile, side)
     var card: Card = CardFactory.create_campaign_card(entry, side) if side == GameRules.Side.PLAYER else game.create_card(entry, side)
     var hand: CardHand = game.player_hand if side == GameRules.Side.PLAYER else game.enemy_hand
     hand.add_drawn_card(card, deck)
     deck.set_card_count(pile.size())
     return card
+
+func take_entry(pile: Array, side: int) -> Variant:
+    var forced: Array = forced_draws.get(side, [])
+    if forced.is_empty():
+        return pile.pop_back()
+    var name := forced.pop_front() as String
+    var index := pile.find_custom(func(entry: Variant) -> bool: return entry.card_name == name if entry is CampaignCard else entry == name)
+    return pile.pop_at(index) if index >= 0 else pile.pop_back()
 
 func get_draw_pile(side: int) -> Array:
     return game.player_draw_pile if side == GameRules.Side.PLAYER else game.enemy_draw_pile

@@ -8,12 +8,17 @@ const HOVER_DELAY := 0.45
 var hovered_card: Card
 var hover_started := 0
 
+signal enemy_card_hovered(card: Card)
+signal enemy_tooltip_shown
+
 func _process(_delta: float) -> void:
     var card := get_hovered_card(get_viewport().get_mouse_position())
     if card != hovered_card:
         hovered_card = card
         hover_started = Time.get_ticks_msec()
         hide_tooltips()
+        if is_hidden_enemy_card(card):
+            enemy_card_hovered.emit(card)
     elif hovered_card && !has_visible_tooltip() && Time.get_ticks_msec() - hover_started >= HOVER_DELAY * 1000:
         show_tooltip()
 
@@ -29,6 +34,7 @@ func show_tooltip() -> void:
     if is_hidden_enemy_card(hovered_card):
         enemy_tooltip.show_cards(get_possible_card_names(), hovered_card.side)
         position_tooltip(enemy_tooltip)
+        enemy_tooltip_shown.emit()
         return
     data_tooltip.show_data(hovered_card.data)
     position_tooltip(data_tooltip)
@@ -38,7 +44,7 @@ func can_show_for(card: Card) -> bool:
 
 func is_hidden_enemy_card(card: Card) -> bool:
     var game := get_parent() as CardBattle
-    return game && card.face_down && game.board.get_cards(GameRules.Side.ENEMY).has(card)
+    return game && card && card.face_down && game.board.get_cards(GameRules.Side.ENEMY).has(card)
 
 func is_dragging() -> bool:
     var game := get_parent() as CardBattle

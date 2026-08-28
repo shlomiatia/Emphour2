@@ -9,9 +9,9 @@ const ATTACK_ICONS := {
 }
 const GROUP_ICONS := {"Peasants": preload("res://Textures/Peasants.png"), "Nobility": preload("res://Textures/Nobility.png")}
 const FACTION_PALETTES := {
-    CampaignState.Faction.FRANKS: [Color("#173967"), Color("#0d203a"), Color("#5a8ed6")],
-    CampaignState.Faction.ENGLISH: [Color("#a22633"), Color("#651720"), Color("#f77622")],
-    CampaignState.Faction.HRE: [Color("#bd6d18"), Color("#7c430d"), Color("#fee761")]
+    CampaignState.Faction.FRANKS: [Color("#173967"), Color("#0b1c36"), Color("#5d85be")],
+    CampaignState.Faction.ENGLISH: [Color("#a22633"), Color("#520d15"), Color("#d86a76")],
+    CampaignState.Faction.HRE: [Color("#bd6d18"), Color("#603405"), Color("#e4a25a")]
 }
 @export var card_name := "Militia"
 @export var side: int = GameRules.Side.PLAYER
