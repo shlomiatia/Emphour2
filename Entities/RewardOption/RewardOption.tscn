@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://dk0oioyfkjskv" path="res://Entities/PanelTitle/PanelTitle.tscn" id="3_title"]
 [ext_resource type="PackedScene" uid="uid://b7rgeifyj5455" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="4_arrow"]
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="5_dark"]
-[ext_resource type="PackedScene" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="6_loyalty_change"]
+[ext_resource type="PackedScene" uid="uid://bfx4r1xms2dwg" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="6_loyalty_change"]
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="8_panel"]
-[ext_resource type="Texture2D" path="res://Textures/Shield.png" id="9_shield"]
+[ext_resource type="Texture2D" uid="uid://gjf0egb2xubn" path="res://Textures/Shield.png" id="9_shield"]
 
 [node name="RewardOption" type="Control" unique_id=1684282293]
 custom_minimum_size = Vector2(610, 610)

@@ -10,8 +10,8 @@ const TUTORIAL_TEXTS := [
     "But the other faction won't like it..."
 ]
 const ACT_2_TUTORIAL_TEXTS := [
-    "General, we can press levies from %s",
-    "Or accept weaker but loyal allies contigents",
+    "General, we can press levies from the %s",
+    "Or accept weaker but loyal ally contigents",
     "The choice is yours"
 ]
 

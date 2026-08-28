@@ -49,7 +49,7 @@ func show_boss_tutorial() -> void:
     if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 2 Boss" && CampaignState.start_tutorial(ACT_2_BOSS_TUTORIAL_ID):
         var ally := CampaignState.faction_name(CampaignState.other_foreign_faction(CampaignState.act_2_boss_warring_faction))
         var enemy := CampaignState.faction_name(CampaignState.act_2_boss_warring_faction)
-        tutorial.show_messages(["General, the %s has double crossed us!" % ally, "They invaded Paris while we fought %s..." % enemy, "Destroy these back stabbing rats!"])
+        tutorial.show_messages(["General, the %s has double crossed us!" % ally, "They invaded Paris while we fought the %s..." % enemy, "Destroy these back stabbing rats!"])
 
 func setup_roads() -> void:
     setup_road($MapElements/Roads/Road, CampaignState.Faction.FRANKS)
