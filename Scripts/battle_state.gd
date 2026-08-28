@@ -74,6 +74,7 @@ func finish_game(winner: int) -> void:
     game.finished = true
     game.player_hand.set_draggable(false)
     game.set_status(result_text(winner), result_color(winner))
+    game.audio.play_result(winner == GameRules.Side.PLAYER)
     if winner == GameRules.Side.PLAYER:
         open_rewards()
     else:

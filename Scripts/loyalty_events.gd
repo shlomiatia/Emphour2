@@ -109,7 +109,7 @@ func eligible_foreign_cards(factions: Array[int]) -> Array[Card]:
     return game.player_hand.get_cards().filter(func(card: Card) -> bool: return !card.is_queued_for_deletion() && factions.has(card.faction))
 
 func show_message(card: Card, event: int) -> void:
-    message.text = "%s %s.\nPress any key to continue." % [CardCatalog.display_name(card.card_name), ["refuses to fight", "deserts your army", "betrays you"][event]]
+    message.text = "%s %s.\nPress any key to continue." % [CardCatalog.display_name(card.card_name), ["refuses to fight in the battle!", "has deserted your army!", "has betrayed you and fights for our enemies!"][event]]
     show()
 
 func wait_for_input() -> void:

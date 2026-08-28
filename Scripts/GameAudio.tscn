@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://Scripts/game_audio.gd" id="1_audio"]
+[ext_resource type="AudioStream" path="res://Audio/resource1.wav" id="2_win"]
+[ext_resource type="AudioStream" path="res://Audio/capture1.ogg" id="3_loss"]
 
 [node name="GameAudio" type="Node"]
 script = ExtResource("1_audio")
@@ -10,3 +12,9 @@ script = ExtResource("1_audio")
 [node name="Push" type="AudioStreamPlayer" parent="."]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+
+[node name="Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_win")
+
+[node name="Loss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_loss")

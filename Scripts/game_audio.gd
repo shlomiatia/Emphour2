@@ -3,6 +3,8 @@ class_name GameAudio extends Node
 @onready var effects: AudioStreamPlayer = $Effects
 @onready var music: AudioStreamPlayer = $Music
 @onready var push: AudioStreamPlayer = $Push
+@onready var win: AudioStreamPlayer = $Win
+@onready var loss: AudioStreamPlayer = $Loss
 
 const MUSIC_TRACKS: Array[AudioStream] = [preload("res://Audio/music1.mp3"), preload("res://Audio/music2.mp3"), preload("res://Audio/music3.mp3")]
 const MUSIC_FADE_TIME := 0.6
@@ -60,6 +62,9 @@ func play_block() -> void:
 func play_push() -> void:
     push.stream = PUSH_SOUNDS.pick_random()
     push.play()
+
+func play_result(player_won: bool) -> void:
+    (win if player_won else loss).play()
 
 func play_random(sounds: Array[AudioStream]) -> void:
     play_sound(sounds.pick_random())
