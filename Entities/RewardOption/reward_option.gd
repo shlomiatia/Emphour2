@@ -1,6 +1,7 @@
 class_name RewardOption extends Control
 
 @export var group_name := "Peasants"
+@onready var panel: Panel = $Panel
 @onready var title: PanelTitle = $Panel/TitleBackground
 @onready var offer_root: Node2D = $Panel/Offer
 @onready var arrow: Control = $Panel/Offer/Arrow
@@ -78,5 +79,4 @@ func _on_button_mouse_exited() -> void:
 	set_highlighted(false)
 
 func set_highlighted(value: bool) -> void:
-	for card in cards:
-		card.set_highlighted(value)
+	panel.modulate = Card.HIGHLIGHT_COLOR if value else Color.WHITE
