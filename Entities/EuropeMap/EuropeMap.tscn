@@ -16,7 +16,7 @@ shader_parameter/intensity = 0.0250000011875
 shader_parameter/blur_amount = 0.0
 shader_parameter/modulate_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iryji"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ec37h"]
 resource_local_to_scene = true
 shader = ExtResource("5_06ubw")
 shader_parameter/wind_dir_angle = 0.0
@@ -569,7 +569,7 @@ position = Vector2(626, -528)
 texture = ExtResource("6_ec37h")
 
 [node name="WindOverlay" parent="." unique_id=389009123 instance=ExtResource("2_map_wind")]
-material = SubResource("ShaderMaterial_iryji")
+material = SubResource("ShaderMaterial_ec37h")
 position = Vector2(1035, 648)
 texture = ExtResource("1_europe")
 patch_width = 120.0

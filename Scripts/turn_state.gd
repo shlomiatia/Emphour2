@@ -46,7 +46,7 @@ func begin_player_action() -> void:
 func card_clicked(card: Card) -> void:
     if !accepting_action || card.get_parent() != game.player_hand:
         return
-    game.audio.play_select()
+    game.audio.play_card()
     selected_card = card
     enable_targets()
 
