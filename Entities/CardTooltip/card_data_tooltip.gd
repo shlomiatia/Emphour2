@@ -21,4 +21,6 @@ func get_description(data: CardData) -> String:
     return "\n".join(lines)
 
 func get_attack_name(type: CardData.AttackType) -> String:
+    if type == CardData.AttackType.CAVALRY:
+        return "Charge"
     return CardData.AttackType.keys()[type].capitalize()

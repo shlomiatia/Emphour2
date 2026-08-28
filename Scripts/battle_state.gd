@@ -29,6 +29,8 @@ func start() -> void:
 
 func move_balance(difference: int) -> void:
     balance += difference
+    if difference != 0:
+        game.audio.play_push()
     game.set_balance(balance)
 
 func finish(final_battle: bool) -> void:
@@ -71,7 +73,7 @@ func finish_game(winner: int) -> void:
 
 func result_text(winner: int) -> String:
     if winner == -1:
-        return "Draw"
+        return "Draw\nPress any key to restart level"
     var faction := CampaignState.Faction.FRANKS if winner == GameRules.Side.PLAYER else CampaignState.battlefield_faction()
     var text := "%s win" % CampaignState.faction_name(faction)
     return text if winner == GameRules.Side.PLAYER else "%s\nPress any key to restart level" % text

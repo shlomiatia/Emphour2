@@ -28,8 +28,15 @@ func play_enemy_card() -> void:
     game.audio.play_card()
     pending_enemy.set_hidden(true)
     if !game.board.play_leftmost(pending_enemy, GameRules.Side.ENEMY):
-        game.discard_card(game.board.replace_random(pending_enemy, GameRules.Side.ENEMY))
+        if randf() < 0.5:
+            discard_enemy_card()
+        else:
+            game.discard_card(game.board.replace_random(pending_enemy, GameRules.Side.ENEMY))
     game.draw_card(GameRules.Side.ENEMY)
+
+func discard_enemy_card() -> void:
+    game.discard_card(pending_enemy)
+    pending_enemy = null
 
 func begin_player_action() -> void:
     accepting_action = true
@@ -39,6 +46,7 @@ func begin_player_action() -> void:
 func card_clicked(card: Card) -> void:
     if !accepting_action || card.get_parent() != game.player_hand:
         return
+    game.audio.play_select()
     selected_card = card
     enable_targets()
 
@@ -114,9 +122,7 @@ func battle_needed() -> bool:
     var enemy_has_cards := game.enemy_hand.get_card_count() > 0
     if !player_has_cards && !enemy_has_cards:
         return true
-    if player_has_cards && enemy_has_cards:
-        return game.board.is_full(GameRules.Side.PLAYER) && game.board.is_full(GameRules.Side.ENEMY)
-    return game.board.is_full(GameRules.Side.PLAYER if player_has_cards else GameRules.Side.ENEMY)
+    return game.board.is_full(GameRules.Side.PLAYER) || game.board.is_full(GameRules.Side.ENEMY)
 
 func enemy_defeated() -> bool:
     return game.enemy_hand.get_card_count() == 0 && game.board.get_cards(GameRules.Side.ENEMY).is_empty()

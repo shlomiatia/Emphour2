@@ -128,7 +128,7 @@ func _on_city_hovered(city: CampaignCity) -> void:
     if !CampaignState.can_declare_war(city.faction, city.route_index):
         return
     tooltip.position = city.global_position + Vector2(30, -55)
-    tooltip_title.text = "Declare war on %s" % CampaignState.faction_name(city.faction)
+    tooltip_title.text = "Declare war on the %s" % CampaignState.faction_name(city.faction)
     set_tooltip_change(0, city.faction, CampaignState.Relation.WAR)
     set_tooltip_change(1, CampaignState.other_foreign_faction(city.faction), CampaignState.Relation.MILITARY_ALLIANCE)
     tooltip.show()

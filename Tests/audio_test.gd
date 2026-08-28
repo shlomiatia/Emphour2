@@ -7,6 +7,7 @@ func _initialize() -> void:
     await process_frame
     await verify_track_order()
     await verify_intro_map_boundary()
+    await verify_selection_sounds()
     quit()
 
 func verify_track_order() -> void:
@@ -32,6 +33,19 @@ func verify_intro_map_boundary() -> void:
     map.queue_free()
     await process_frame
     audio.stop_music()
+
+func verify_selection_sounds() -> void:
+    var map := await create_map()
+    var reward := load("res://Scenes/Reward/Reward.tscn").instantiate() as RewardScreen
+    root.add_child(reward)
+    await process_frame
+    assert(map.confirm_sound.stream == load("res://Audio/click.wav"))
+    assert(reward.confirm_sound.stream == load("res://Audio/buy.ogg"))
+    assert(GameAudio.SELECT_SOUND == load("res://Audio/click2.wav"))
+    assert(GameAudio.PUSH_SOUNDS.size() == 3)
+    assert(BattleState.new().result_text(-1).contains("Press any key to restart level"))
+    map.queue_free()
+    reward.queue_free()
 
 func create_intro() -> Intro:
     var intro := load("res://Scenes/Intro/Intro.tscn").instantiate() as Intro
