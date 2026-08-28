@@ -29,6 +29,12 @@ static func city_exclusions(city_id: String) -> Array[String]:
         result.append(card_name)
     return result
 
+static func reward_exclusions(city_id: String) -> Array[String]:
+    var result: Array[String]
+    for card_name in city_rule(city_id).get("reward_exclude", []):
+        result.append(card_name)
+    return result
+
 static func deck(name: String) -> Array[String]:
     return strings("starting_decks", name)
 

@@ -213,7 +213,7 @@ layer = 2
 follow_viewport_enabled = true
 
 [node name="Board" parent="CardSpace" unique_id=1079065982 instance=ExtResource("3_board")]
-position = Vector2(960, 410)
+position = Vector2(960, 419)
 row_spacing = 80.0
 
 [node name="PlayerHand" parent="CardSpace" unique_id=1302264869 instance=ExtResource("4_hand")]

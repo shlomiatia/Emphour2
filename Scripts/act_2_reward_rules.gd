@@ -22,6 +22,7 @@ static func pick_card(reward: Dictionary, source: CampaignCard) -> String:
     var cards := available_cards(reward)
     if source != null:
         cards = cards.filter(func(card_name: String) -> bool: return RewardRules.can_upgrade(source.card_name, card_name))
+    assert(!cards.is_empty(), "No eligible Act 2 reward cards")
     return cards.pick_random()
 
 static func eligible(card_name: String, reward: Dictionary) -> bool:
@@ -33,5 +34,5 @@ static func eligible(card_name: String, reward: Dictionary) -> bool:
 static func available_cards(reward: Dictionary) -> Array:
     if reward["specific"]:
         return [reward["target"]]
-    var excluded := CampaignBalance.city_exclusions(CampaignState.selected_city)
+    var excluded := CampaignBalance.reward_exclusions(CampaignState.selected_city)
     return RewardRules.tier_cards(RewardRules.target_tier(reward)).filter(func(card_name: String) -> bool: return !excluded.has(card_name))

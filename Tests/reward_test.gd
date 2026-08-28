@@ -80,8 +80,10 @@ func verify_boss_rewards() -> void:
 func verify_exclusions() -> void:
     CampaignState.selected_city = CampaignState.act_1_city_id(3)
     var reward := RewardRules.parse_rule("new:2")
-    var cards := RewardRules.target_cards("Peasants", reward, "", CampaignBalance.city_exclusions(CampaignState.selected_city))
-    assert(!cards.has("Crossbowman"))
+    var cards := RewardRules.target_cards("Peasants", reward, "", CampaignBalance.reward_exclusions(CampaignState.selected_city))
+    assert(cards.has("Crossbowman"))
+    var offer := RewardRules.create_offer("Nobility", 2, CampaignState.player_deck)
+    assert(!offer["new"].is_empty())
 
 func verify_act_2_screen() -> void:
     setup_act_2()

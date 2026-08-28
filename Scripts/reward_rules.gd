@@ -4,16 +4,18 @@ const NOBILITY := ["Horse Archer", "Light Cavalry", "Foot Knight", "Lancer", "He
 
 static func create_offer(group: String, loyalty: int, deck: Array) -> Dictionary:
     var reward := reward_rule("Act1", group, loyalty)
-    var excluded := CampaignBalance.city_exclusions(CampaignState.selected_city)
+    var excluded := CampaignBalance.reward_exclusions(CampaignState.selected_city)
     var old_name := pick_old_card(group, reward, deck, excluded)
     var choices := target_cards(group, reward, old_name, excluded)
+    assert(!choices.is_empty(), "No eligible %s reward cards" % group)
     return {"old": old_name, "new": choices.pick_random()}
 
 static func create_boss_offer(group: String, index: int, deck: Array) -> Dictionary:
     var reward := reward_rule("Act1Boss", group, index)
-    var excluded := CampaignBalance.city_exclusions(CampaignState.selected_city)
+    var excluded := CampaignBalance.reward_exclusions(CampaignState.selected_city)
     var old_name := pick_old_card(group, reward, deck, excluded)
     var choices := target_cards(group, reward, old_name, excluded)
+    assert(!choices.is_empty(), "No eligible %s reward cards" % group)
     return {"old": old_name, "new": choices.pick_random(), "title": group}
 
 static func reward_rule(scope: String, group: String, index: int) -> Dictionary:
