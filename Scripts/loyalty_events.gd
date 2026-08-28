@@ -1,13 +1,12 @@
-class_name LoyaltyEvents extends Panel
+class_name LoyaltyEvents extends CanvasLayer
 
-signal continued
+const TUTORIAL_ID := "loyalty_event_%d"
 
-@onready var message: Label = $Message
+@onready var tutorial: TutorialMessage = $TutorialMessage
 
 var game: CardBattle
 var actions := LoyaltyEventActions.new()
 var deck_candidates := LoyaltyDeckCandidates.new()
-var waiting := false
 var running := false
 var checks_completed := 0
 
@@ -15,12 +14,6 @@ func setup(card_battle: CardBattle) -> void:
     game = card_battle
     actions.setup(game)
     deck_candidates.setup(game)
-
-func _input(event: InputEvent) -> void:
-    if waiting && event.is_pressed() && !(event is InputEventKey && event.echo):
-        get_viewport().set_input_as_handled()
-        hide()
-        continued.emit()
 
 func run() -> void:
     if running:
@@ -33,7 +26,6 @@ func run() -> void:
     else:
         await run_regular_events()
     running = false
-    hide()
 
 func run_foreign_events() -> void:
     var factions := CampaignState.negative_foreign_factions()
@@ -91,7 +83,7 @@ func run_candidate_event(candidate: Dictionary, event: int) -> void:
 
 func run_card_event(card: Card, event: int, from_hand := true) -> void:
     show_message(card, event)
-    await wait_for_input()
+    await tutorial.completed
     if is_instance_valid(card):
         await actions.execute(card, event)
         if from_hand:
@@ -109,13 +101,17 @@ func eligible_foreign_cards(factions: Array[int]) -> Array[Card]:
     return game.player_hand.get_cards().filter(func(card: Card) -> bool: return !card.is_queued_for_deletion() && factions.has(card.faction))
 
 func show_message(card: Card, event: int) -> void:
-    message.text = "%s %s.\nPress any key to continue." % [CardCatalog.display_name(card.card_name), ["refuses to fight in the battle!", "has deserted your army!", "has betrayed you and fights for our enemies!"][event]]
-    show()
+    var text := "%s %s." % [CardCatalog.display_name(card.card_name), event_text(event)]
+    if CampaignState.start_tutorial(TUTORIAL_ID % event):
+        tutorial.show_messages(["...", text, insult(event)], [TutorialMessage.KingMode.SHOCKED, TutorialMessage.KingMode.OPEN, TutorialMessage.KingMode.OPEN])
+        return
+    tutorial.show_messages([text], [TutorialMessage.KingMode.HIDDEN])
 
-func wait_for_input() -> void:
-    waiting = true
-    await continued
-    waiting = false
+func event_text(event: int) -> String:
+    return ["refuses to fight in the battle!", "has deserted your army!", "has betrayed you and fights for our enemies!"][event]
+
+func insult(event: int) -> String:
+    return ["Cowardly dogs!", "Insolent pigs!", "Treacherous snakes!"][event]
 
 func log_check(result: Dictionary, card_name: String) -> void:
     checks_completed += 1

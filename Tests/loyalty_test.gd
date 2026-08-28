@@ -17,6 +17,7 @@ func run_test() -> void:
     verify_foreign_eligibility()
     verify_positive_loyalty_skip()
     verify_boss_loyalty()
+    verify_event_messages()
     await verify_regular_loyalty()
     quit()
 
@@ -34,7 +35,7 @@ func verify_positive_loyalty_skip() -> void:
     CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] = CampaignState.Relation.MILITARY_ALLIANCE
     assert(CampaignState.negative_foreign_factions().is_empty())
     game.loyalty_events.run_foreign_events()
-    assert(!game.loyalty_events.waiting)
+    assert(!game.loyalty_events.tutorial.visible)
 
 func verify_boss_loyalty() -> void:
     CampaignState.declare_war(CampaignState.Faction.ENGLISH)
@@ -42,6 +43,26 @@ func verify_boss_loyalty() -> void:
     var factions := CampaignState.negative_foreign_factions()
     assert(factions.has(CampaignState.Faction.ENGLISH))
     assert(factions.has(CampaignState.Faction.HRE))
+
+func verify_event_messages() -> void:
+    CampaignState.seen_tutorials = {}
+    var card := CardFactory.create("Archer", GameRules.Side.PLAYER)
+    game.loyalty_events.show_message(card, LoyaltyRules.Event.REFUSE)
+    assert(game.loyalty_events.tutorial.text.text == "...")
+    assert(game.loyalty_events.tutorial.king.texture == game.loyalty_events.tutorial.shocked_king)
+    game.loyalty_events.tutorial.advance()
+    assert(game.loyalty_events.tutorial.text.text.contains("refuses to fight"))
+    game.loyalty_events.tutorial.advance()
+    assert(game.loyalty_events.tutorial.text.text == "Cowardly dogs!")
+    assert(game.loyalty_events.tutorial.king.texture == game.loyalty_events.tutorial.open_king)
+    game.loyalty_events.tutorial.advance()
+    game.loyalty_events.show_message(card, LoyaltyRules.Event.DESERT)
+    assert(game.loyalty_events.tutorial.text.text == "...")
+    game.loyalty_events.tutorial.advance()
+    game.loyalty_events.tutorial.advance()
+    game.loyalty_events.tutorial.advance()
+    game.loyalty_events.show_message(card, LoyaltyRules.Event.REFUSE)
+    assert(!game.loyalty_events.tutorial.king.visible)
 
 func verify_regular_loyalty() -> void:
     for card in game.player_hand.get_cards():

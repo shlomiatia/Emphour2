@@ -51,7 +51,11 @@ func verify_boss() -> void:
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.WAR)
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.WAR)
     assert(map.tutorial.visible)
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "...")
+    assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.shocked_king)
+    map.tutorial.advance()
     assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the HRE has double crossed us!")
+    assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.open_king)
 
 func verify_act_1_boss_tutorial() -> void:
     CampaignState.start_in_act_2 = false
@@ -61,4 +65,7 @@ func verify_act_1_boss_tutorial() -> void:
         CampaignState.capture_selected_city()
     await open_map()
     assert(map.tutorial.visible)
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "...")
+    map.tutorial.advance()
     assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the Nobility are trying to take Paris!")
+    assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.open_king)

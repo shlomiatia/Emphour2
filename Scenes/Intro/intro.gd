@@ -24,7 +24,11 @@ const ENDING_TEXTS := [
 	"Thanks for playing!\n Press any key to restart game"
 ]
 
-const MOUTH_OPEN := [false, false, true, true, true, true]
+const CLOSED_KING_TEXTS := [
+	"1,000 AD — a new millennium begins.",
+	"King Robert the Pious is troubled...",
+	"Thanks for playing!\n Press any key to restart game"
+]
 const SOUNDS := [
 	preload("res://Audio/confirm1.mp3"),
 	preload("res://Audio/confirm2.mp3"),
@@ -36,6 +40,9 @@ const SOUNDS := [
 @onready var fade: Fade = $CanvasLayer/Fade
 @onready var confirm_sound: AudioStreamPlayer = $ConfirmSound
 @onready var audio: GameAudio = get_node("/root/Audio")
+
+@export var open_king: Texture2D
+@export var closed_king: Texture2D
 
 var current_index := 0
 var input_disabled := false
@@ -66,7 +73,7 @@ func play_confirm_sound() -> void:
 func show_current_text() -> void:
 	text.text = texts[current_index]
 	text.show()
-	king.texture = load("res://Textures/KingOpenMouth.png") if MOUTH_OPEN[current_index] else load("res://Textures/King.png")
+	king.texture = closed_king if CLOSED_KING_TEXTS.has(text.text) else open_king
 
 func start_game() -> void:
 	if CampaignState.intro == CampaignState.Intro.ENDING:
