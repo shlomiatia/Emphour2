@@ -14,13 +14,13 @@ func setup(value: CardBattle) -> void:
     active = CampaignState.selected_city == CampaignState.act_1_city_id(1)
     if !active:
         return
-    game.draws.force_draws(GameRules.Side.PLAYER, ["Militia", "Stakes", "Archer", "Light Cavalry", "Light Cavalry"])
-    game.turns.set_enemy_plays(["Light Cavalry", "Militia", "Militia", "Stakes"])
+    game.draws.force_draws(GameRules.Side.PLAYER, ["Militia", "Stakes", "Archer", "Light Cavalry", "Militia", "Light Cavalry", "Militia", "Militia", "Mantlet"])
+    game.turns.set_enemy_plays(["Light Cavalry", "Militia", "Militia", "Militia"])
 
 func enemy_cards(cards: Array[String]) -> Array[String]:
     if !active:
         return cards
-    var result: Array[String] = ["Light Cavalry", "Militia", "Militia", "Stakes"]
+    var result: Array[String] = ["Light Cavalry", "Militia", "Militia", "Militia"]
     return result
 
 func start() -> void:
@@ -87,8 +87,9 @@ func after_battle() -> bool:
         return false
     game.turns.play_enemy_card()
     game.turns.begin_player_action()
-    await say("We don't need the stakes anymore, let's replace it with light cavalry")
-    restrict("Light Cavalry", player_slot(1))
+    await say("We don't need the stakes anymore, let's replace it")
+    game.turns.set_allowed_slots([player_slot(1)], false)
+    game.player_hand.set_draggable_cards(game.player_hand.get_cards())
     stage = 4
     await replacement_done
     return true

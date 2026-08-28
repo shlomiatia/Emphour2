@@ -37,12 +37,14 @@ func setup(value: Dictionary) -> void:
 	description.text = offer_text()
 
 func offer_text() -> String:
+	var old_name := CardCatalog.display_name(offer["old"])
+	var new_name := CardCatalog.display_name(offer["new"])
 	if !offer.has("faction"):
-		return "Add %s to deck." % offer["new"] if offer["old"].is_empty() else "Upgrade 1 %s from deck to %s." % [offer["old"], offer["new"]]
+		return "Add %s to deck." % new_name if offer["old"].is_empty() else "Upgrade 1 %s from deck to %s." % [old_name, new_name]
 	var faction := CampaignState.faction_name(offer["faction"])
 	if offer["old"].is_empty():
-		return "Add %s %s to deck." % [faction, offer["new"]]
-	return "Upgrade 1 %s %s to %s %s." % [CampaignState.faction_name(offer["old_faction"]), offer["old"], faction, offer["new"]]
+		return "Add %s %s to deck." % [faction, new_name]
+	return "Upgrade 1 %s %s to %s %s." % [CampaignState.faction_name(offer["old_faction"]), old_name, faction, new_name]
 
 func setup_loyalty(selected_group: String, visible: bool) -> void:
 	loyalty.visible = visible

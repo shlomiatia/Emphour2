@@ -3,6 +3,7 @@ extends SceneTree
 func _initialize() -> void:
     verify_decks()
     verify_factions()
+    verify_preview_losses()
     quit()
 
 func verify_decks() -> void:
@@ -57,5 +58,16 @@ func verify_factions() -> void:
         assert(CampaignState.player_deck[index].faction == expected)
     CampaignState.declare_war(CampaignState.Faction.ENGLISH)
     assert(CampaignState.battlefield_faction() == CampaignState.Faction.ENGLISH)
+    CampaignState.prepare_act_2_boss()
     CampaignState.selected_city = "Act 2 Boss"
     assert(CampaignState.battlefield_faction() == CampaignState.Faction.HRE)
+
+func verify_preview_losses() -> void:
+    var cavalry := card("Light Cavalry")
+    var matcher := DefenceMatcher.new()
+    assert(matcher.preview_losses([cavalry, card("Light Cavalry")], [card("Stakes")]) == 0)
+
+func card(card_name: String) -> Card:
+    var result := Card.new()
+    result.data = CardCatalog.get_data(card_name)
+    return result

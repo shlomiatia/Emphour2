@@ -11,6 +11,13 @@ static func get_value(card_name: String) -> float:
     var data := get_data(card_name)
     return float(data.strength + data.attack + data.defence)
 
+static func display_name(card_name: String) -> String:
+    if card_name == "Crossbowman":
+        return "Crossbow"
+    if card_name == "Heavy Cavalry":
+        return "Heavy Cav"
+    return card_name
+
 static func get_data(card_name: String) -> CardData:
     match card_name:
         "Archer":

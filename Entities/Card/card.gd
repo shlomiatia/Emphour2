@@ -54,7 +54,7 @@ func _process(_delta: float) -> void:
 
 func refresh() -> void:
     art.texture = load("res://Textures/Cards/" + card_name + ".png")
-    title.text = card_name
+    title.text = CardCatalog.display_name(card_name)
     strength.text = str(data.strength)
     attack.text = str(data.attack)
     defence.text = str(data.defence)

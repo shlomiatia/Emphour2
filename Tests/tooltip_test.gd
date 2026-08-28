@@ -23,6 +23,7 @@ func run_test() -> void:
     var crossbowman := game.create_card("Crossbowman", GameRules.Side.PLAYER)
     game.add_child(crossbowman)
     await process_frame
+    assert(crossbowman.title.text == "Crossbow")
     assert(crossbowman.attack_icon.texture == load("res://Textures/Armor.png"))
     assert(crossbowman.attack_counter.visible)
     crossbowman.queue_free()
@@ -38,4 +39,5 @@ func run_test() -> void:
     assert(counts["Militia"] == "x2")
     assert(counts["Archer"] == "x1")
     assert(!counts.has("Crossbowman"))
+    assert(CardCatalog.display_name("Heavy Cavalry") == "Heavy Cav")
     quit()

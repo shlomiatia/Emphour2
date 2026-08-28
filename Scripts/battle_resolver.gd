@@ -57,27 +57,25 @@ func remaining_attackers(cards: Array[Card], start: int) -> Array[Card]:
     return result
 
 func available_defenders(attacker: Card, cards: Array[Card], used: Array[Card]) -> Array[Card]:
-    var result: Array[Card] = cards.filter(func(card: Card) -> bool: return !used.has(card) && can_defend(attacker.data, card.data))
-    return result
+    return matcher.available_defenders(attacker.data, cards, used)
 
 func choose_defender(attacker: Card, cards: Array[Card], opponents: Array[Card], used: Array[Card], attackers: Array[Card]) -> Card:
     if cards.is_empty():
         return null
     if attacker.side == GameRules.Side.ENEMY:
-        return await game.choose_card(cards, "Choose a card to defend against %s" % attacker.card_name)
+        return await game.choose_card(cards, "Choose a card to defend against %s" % CardCatalog.display_name(attacker.card_name))
     var defenders: Array[Card] = opponents.filter(func(card: Card) -> bool: return !used.has(card))
     var player_attackers: Array[Card] = attackers.filter(func(card: Card) -> bool: return card.side == GameRules.Side.PLAYER && card.data.attack > 0)
     return matcher.choose(attacker, cards, player_attackers, defenders)
 
 func available_targets(attacker: Card, cards: Array[Card], defeated: Array[Card]) -> Array[Card]:
-    var result: Array[Card] = cards.filter(func(card: Card) -> bool: return !defeated.has(card) && !can_defend(attacker.data, card.data))
-    return result
+    return matcher.available_targets(attacker.data, cards, defeated)
 
 func choose_target(attacker: Card, cards: Array[Card]) -> Card:
     if cards.is_empty():
         return null
     if attacker.side == GameRules.Side.PLAYER:
-        return await game.choose_card(cards, "Choose a card for %s to kill" % attacker.card_name)
+        return await game.choose_card(cards, "Choose a card for %s to kill" % CardCatalog.display_name(attacker.card_name))
     var chosen: Card = cards.pick_random()
     return chosen
 
@@ -88,13 +86,4 @@ func total_strength(cards: Array[Card]) -> int:
     return cards.reduce(func(sum: int, card: Card) -> int: return sum + card.data.strength, 0)
 
 func potential_losses(attackers: Array[Card], defenders: Array[Card]) -> int:
-    var losses := 0
-    for type in [CardData.AttackType.MISSILE, CardData.AttackType.CAVALRY, CardData.AttackType.ARMOR_PIERCING]:
-        losses += maxi(total_attack(attackers, type) - total_defence(defenders, type), 0)
-    return mini(losses, defenders.size())
-
-func total_attack(cards: Array[Card], type: CardData.AttackType) -> int:
-    return cards.filter(func(card: Card) -> bool: return card.data.attack_type == type).reduce(func(sum: int, card: Card) -> int: return sum + card.data.attack, 0)
-
-func total_defence(cards: Array[Card], type: CardData.AttackType) -> int:
-    return cards.filter(func(card: Card) -> bool: return card.data.anti_attack == type || card.data.armored && type != CardData.AttackType.ARMOR_PIERCING).reduce(func(sum: int, card: Card) -> int: return sum + card.data.defence, 0)
+    return matcher.preview_losses(attackers, defenders)

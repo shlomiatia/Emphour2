@@ -10,20 +10,19 @@ const CARD_SOUNDS: Array[AudioStream] = [preload("res://Audio/playcard1.wav"), p
 const ATTACK_SOUNDS: Array[AudioStream] = [preload("res://Audio/attack1.ogg"), preload("res://Audio/attack2.ogg"), preload("res://Audio/attack3.mp3")]
 const BLOCK_SOUNDS: Array[AudioStream] = [preload("res://Audio/block1.mp3"), preload("res://Audio/block2.mp3"), preload("res://Audio/block3.mp3")]
 const PUSH_SOUNDS: Array[AudioStream] = [preload("res://Audio/whoosh1.wav"), preload("res://Audio/whoosh2.wav"), preload("res://Audio/whoosh3.wav")]
-var music_index := 0
+var music_index := -1
 var music_fade: Tween
 
 func _ready() -> void:
     music.finished.connect(replay_music)
 
 func start_general_music() -> void:
-    play_track(2 if CampaignState.is_act_2() else 0)
+    start_music()
 
 func start_boss_music() -> void:
-    play_track(1)
+    start_music()
 
 func stop_music() -> void:
-    music_index = 0
     if is_fading_music():
         return
     if !music.playing:
@@ -39,7 +38,15 @@ func stop_faded_music() -> void:
     reset_music_volume()
 
 func replay_music() -> void:
-    play_track(music_index)
+    play_track(next_track())
+
+func start_music() -> void:
+    if music.playing && !is_fading_music():
+        return
+    replay_music()
+
+func next_track() -> int:
+    return (music_index + 1) % MUSIC_TRACKS.size()
 
 func play_card() -> void:
     play_random(CARD_SOUNDS)

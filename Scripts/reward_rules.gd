@@ -19,12 +19,8 @@ static func create_boss_offer(group: String, index: int, deck: Array) -> Diction
     return {"old": old_name, "new": choices.pick_random(), "title": group}
 
 static func reward_level(group: String, city_index: int) -> int:
-    if city_index == 1:
-        return 1
     var other := "Nobility" if group == "Peasants" else "Peasants"
-    if CampaignState.loyalty[group] >= CampaignState.loyalty[other]:
-        return city_index
-    return city_index - 1
+    return maxi(1, city_index - 1) if CampaignState.loyalty[group] < CampaignState.loyalty[other] else city_index
 
 static func reward_rule(scope: String, group: String, index: int) -> Dictionary:
     var key := clampi(index, 0, 4) + 1 if scope == "Act1" else clampi(index, 1, 2)

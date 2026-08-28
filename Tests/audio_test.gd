@@ -11,41 +11,42 @@ func _initialize() -> void:
     quit()
 
 func verify_track_order() -> void:
-    CampaignState.start_in_act_2 = false
-    CampaignState.reset()
-    audio.stop_music()
+    reset_music()
     audio.start_general_music()
     assert(audio.music.stream == GameAudio.MUSIC_TRACKS[0])
     audio.replay_music()
-    assert(audio.music.stream == GameAudio.MUSIC_TRACKS[0])
+    assert(audio.music.stream == GameAudio.MUSIC_TRACKS[1])
     audio.start_boss_music()
     assert(audio.music.stream == GameAudio.MUSIC_TRACKS[1])
+    audio.replay_music()
+    assert(audio.music.stream == GameAudio.MUSIC_TRACKS[2])
     audio.stop_music()
+    await create_timer(GameAudio.MUSIC_FADE_TIME + 0.1).timeout
     audio.start_general_music()
     assert(audio.music.stream == GameAudio.MUSIC_TRACKS[0])
-    CampaignState.start_in_act_2 = true
-    CampaignState.reset()
-    audio.start_general_music()
-    assert(audio.music.stream == GameAudio.MUSIC_TRACKS[2])
     audio.stop_music()
     await create_timer(GameAudio.MUSIC_FADE_TIME + 0.1).timeout
     assert(!audio.music.playing)
     assert(audio.music.volume_db == 0.0)
-    CampaignState.start_in_act_2 = false
-    CampaignState.reset()
 
 func verify_intro_map_boundary() -> void:
+    reset_music()
     audio.start_boss_music()
     var intro := await create_intro()
     await create_timer(GameAudio.MUSIC_FADE_TIME + 0.1).timeout
     assert(!audio.music.playing)
     var map := await create_map()
     assert(audio.music.playing)
-    assert(audio.music.stream == GameAudio.MUSIC_TRACKS[0])
+    assert(audio.music.stream == GameAudio.MUSIC_TRACKS[1])
     intro.queue_free()
     map.queue_free()
     await process_frame
     audio.stop_music()
+
+func reset_music() -> void:
+    audio.music.stop()
+    audio.music_index = -1
+    audio.reset_music_volume()
 
 func verify_selection_sounds() -> void:
     var map := await create_map()

@@ -16,6 +16,11 @@ func run_test() -> void:
     assert(hand_has("Militia"))
     assert(hand_has("Archer"))
     assert(hand_has("Stakes"))
+    assert(game.player_hand.get_cards().slice(0, 3).map(func(card: Card) -> String: return card.card_name) == ["Militia", "Stakes", "Archer"])
+    var last_card: Card
+    while !game.player_draw_pile.is_empty():
+        last_card = game.draw_card(GameRules.Side.PLAYER)
+    assert(last_card.card_name == "Mantlet")
     assert(game.board.get_cards(GameRules.Side.ENEMY)[0].card_name == "Light Cavalry")
     quit()
 
