@@ -47,7 +47,6 @@ func is_dragging() -> bool:
 func get_possible_card_names() -> Array[String]:
     var game := get_parent() as CardBattle
     var result: Array[String]
-    result.assign(game.enemy_draw_pile)
     for card in game.enemy_hand.get_cards() + game.board.get_cards(GameRules.Side.ENEMY):
         if card.face_down:
             result.append(card.card_name)

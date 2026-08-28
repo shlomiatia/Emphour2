@@ -7,7 +7,7 @@ static func create_offer(faction: CampaignState.Faction, city_index: int, deck: 
     return {"old": "" if source == null else source.card_name, "old_faction": -1 if source == null else source.faction, "source": source, "new": pick_card(reward, source), "faction": faction, "title": CampaignState.faction_name(faction)}
 
 static func rewards(relation: String, city_index: int) -> Array[String]:
-    return CampaignBalance.rewards("Act2_%s_%d" % [relation, city_index])
+    return CampaignBalance.rewards("Act2_%s_%d" % [relation, clampi(city_index, 1, 5)])
 
 static func pick_source(faction: int, reward: Dictionary, deck: Array) -> CampaignCard:
     if !reward["upgrade"]:
@@ -35,4 +35,4 @@ static func available_cards(reward: Dictionary) -> Array:
     if reward["specific"]:
         return [reward["target"]]
     var excluded := CampaignBalance.reward_exclusions(CampaignState.selected_city)
-    return RewardRules.tier_cards(RewardRules.target_tier(reward)).filter(func(card_name: String) -> bool: return !excluded.has(card_name))
+    return RewardRules.tier_cards(RewardRules.target_tier(reward)).filter(func(card_name: String) -> bool: return !excluded.has(card_name) && !reward["excluded"].has(card_name))

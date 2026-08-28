@@ -8,6 +8,7 @@
 [ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="5_06ubw"]
 [ext_resource type="Texture2D" uid="uid://nfcfp4bwjyuv" path="res://Textures/Tree.png" id="5_vneyi"]
 [ext_resource type="Texture2D" uid="uid://b8v3vgs0p70r7" path="res://Textures/Mountain.png" id="6_ec37h"]
+[ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/SinWavePosition.tscn" id="7_wave_position"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_haze"]
 shader = ExtResource("4_haze")
@@ -46,6 +47,10 @@ offset_bottom = 20.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.35
+
 [node name="Wave2" type="TextureRect" parent="Mediterranean" unique_id=473615812]
 texture_repeat = 2
 offset_left = -794.0
@@ -54,6 +59,11 @@ offset_right = -743.0
 offset_bottom = 35.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave2" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.42
+time_offset = 0.9
 
 [node name="Wave3" type="TextureRect" parent="Mediterranean" unique_id=1271934505]
 texture_repeat = 2
@@ -64,6 +74,11 @@ offset_bottom = -479.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave3" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.38
+time_offset = 1.8
+
 [node name="Wave4" type="TextureRect" parent="Mediterranean" unique_id=1073298483]
 texture_repeat = 2
 offset_left = -191.0
@@ -72,6 +87,11 @@ offset_right = -140.0
 offset_bottom = -464.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave4" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.46
+time_offset = 2.7
 
 [node name="Wave5" type="TextureRect" parent="Mediterranean" unique_id=1730810397]
 texture_repeat = 2
@@ -82,6 +102,11 @@ offset_bottom = 339.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave5" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.4
+time_offset = 3.6
+
 [node name="Wave6" type="TextureRect" parent="Mediterranean" unique_id=998615961]
 texture_repeat = 2
 offset_left = -230.0
@@ -90,6 +115,11 @@ offset_right = -179.0
 offset_bottom = 354.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave6" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.44
+time_offset = 4.5
 
 [node name="Wave7" type="TextureRect" parent="Mediterranean" unique_id=475991968]
 texture_repeat = 2
@@ -100,6 +130,11 @@ offset_bottom = 164.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave7" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.36
+time_offset = 5.4
+
 [node name="Wave8" type="TextureRect" parent="Mediterranean" unique_id=1960296322]
 texture_repeat = 2
 offset_left = 808.0
@@ -108,6 +143,11 @@ offset_right = 859.0
 offset_bottom = 179.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave8" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.45
+time_offset = 6.3
 
 [node name="Wave9" type="TextureRect" parent="Mediterranean" unique_id=111573413]
 texture_repeat = 2
@@ -118,6 +158,11 @@ offset_bottom = -531.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave9" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.39
+time_offset = 7.2
+
 [node name="Wave10" type="TextureRect" parent="Mediterranean" unique_id=1632062275]
 texture_repeat = 2
 offset_left = -953.0
@@ -126,6 +171,11 @@ offset_right = -902.0
 offset_bottom = -516.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave10" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.43
+time_offset = 8.1
 
 [node name="Wave11" type="TextureRect" parent="Mediterranean" unique_id=564852014]
 texture_repeat = 2
@@ -136,6 +186,11 @@ offset_bottom = 253.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave11" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.37
+time_offset = 9.0
+
 [node name="Wave12" type="TextureRect" parent="Mediterranean" unique_id=2066158611]
 texture_repeat = 2
 offset_left = 199.0
@@ -144,6 +199,11 @@ offset_right = 250.0
 offset_bottom = 268.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave12" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.47
+time_offset = 9.9
 
 [node name="Wave13" type="TextureRect" parent="Mediterranean" unique_id=809168651]
 texture_repeat = 2
@@ -154,6 +214,11 @@ offset_bottom = 391.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave13" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.41
+time_offset = 10.8
+
 [node name="Wave14" type="TextureRect" parent="Mediterranean" unique_id=1547206910]
 texture_repeat = 2
 offset_left = 51.0
@@ -162,6 +227,11 @@ offset_right = 102.0
 offset_bottom = 406.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave14" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.34
+time_offset = 11.7
 
 [node name="Wave15" type="TextureRect" parent="Mediterranean" unique_id=913001714]
 texture_repeat = 2
@@ -172,6 +242,11 @@ offset_bottom = -500.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave15" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.48
+time_offset = 12.6
+
 [node name="Wave16" type="TextureRect" parent="Mediterranean" unique_id=139934025]
 texture_repeat = 2
 offset_left = 291.0
@@ -180,6 +255,11 @@ offset_right = 342.0
 offset_bottom = -485.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave16" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.4
+time_offset = 13.5
 
 [node name="Wave17" type="TextureRect" parent="Mediterranean" unique_id=1743741488]
 texture_repeat = 2
@@ -190,6 +270,11 @@ offset_bottom = -271.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave17" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.43
+time_offset = 14.4
+
 [node name="Wave18" type="TextureRect" parent="Mediterranean" unique_id=1427968245]
 texture_repeat = 2
 offset_left = -585.0
@@ -198,6 +283,11 @@ offset_right = -534.0
 offset_bottom = -256.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave18" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.36
+time_offset = 15.3
 
 [node name="Wave19" type="TextureRect" parent="Mediterranean" unique_id=343702909]
 texture_repeat = 2
@@ -208,6 +298,11 @@ offset_bottom = 396.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
 
+[node name="SinWavePosition" parent="Mediterranean/Wave19" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(5, 0)
+speed = 0.46
+time_offset = 16.2
+
 [node name="Wave20" type="TextureRect" parent="Mediterranean" unique_id=85660305]
 texture_repeat = 2
 offset_left = 559.0
@@ -216,6 +311,11 @@ offset_right = 610.0
 offset_bottom = 411.0
 texture = ExtResource("4_iryji")
 stretch_mode = 1
+
+[node name="SinWavePosition" parent="Mediterranean/Wave20" instance=ExtResource("7_wave_position")]
+magnitude = Vector2(-4, 0)
+speed = 0.38
+time_offset = 17.1
 
 [node name="Europe" type="Sprite2D" parent="." unique_id=388544906]
 position = Vector2(1035, 648)

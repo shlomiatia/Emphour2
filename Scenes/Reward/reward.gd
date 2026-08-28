@@ -66,7 +66,7 @@ func create_act_2_options() -> void:
 func setup_act_2_option(option: RewardOption, faction: CampaignState.Faction) -> void:
     option.group_name = CampaignState.faction_name(faction)
     option.choice_id = ""
-    offers[option.group_name] = Act2RewardRules.create_offer(faction, CampaignState.city_number(CampaignState.selected_city) - 1, CampaignState.player_deck)
+    offers[option.group_name] = Act2RewardRules.create_offer(faction, CampaignState.city_number(CampaignState.selected_city), CampaignState.player_deck)
     option.setup(offers[option.group_name])
     option.setup_loyalty("", false)
 

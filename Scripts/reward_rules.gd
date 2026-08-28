@@ -19,12 +19,21 @@ static func create_boss_offer(group: String, index: int, deck: Array) -> Diction
     return {"old": old_name, "new": choices.pick_random(), "title": group}
 
 static func reward_rule(scope: String, group: String, index: int) -> Dictionary:
-    return parse_rule(CampaignBalance.rewards("%s_%s_%d" % [scope, group, clampi(index, 0, 5)]).pick_random())
+    var key := clampi(index, 0, 4) + 1 if scope == "Act1" else clampi(index, 1, 2)
+    return parse_rule(CampaignBalance.rewards("%s_%s_%d" % [scope, group, key]).pick_random())
 
 static func parse_rule(value: String) -> Dictionary:
     var parts := value.split(":")
-    var target := parts[-1]
-    return {"upgrade": parts[0] == "upgrade", "from": int(parts[1]) if parts.size() == 3 else 0, "target": target, "specific": !target.is_valid_int()}
+    var upgrade := parts[0] == "upgrade"
+    var target_index := 2 if upgrade else 1
+    var target := parts[target_index]
+    return {"upgrade": upgrade, "from": int(parts[1]) if upgrade else 0, "target": target, "specific": !target.is_valid_int(), "excluded": exclusions(parts, target_index)}
+
+static func exclusions(parts: PackedStringArray, target_index: int) -> Array[String]:
+    var result: Array[String]
+    for card_name in parts.slice(target_index + 2):
+        result.append(card_name)
+    return result
 
 static func apply_offer(offer: Dictionary, deck: Array) -> void:
     if offer.has("source") && offer["source"] != null:
@@ -53,7 +62,7 @@ static func target_cards(group: String, reward: Dictionary, old_name := "", excl
     var result: Array[String]
     var cards := [reward["target"]] if reward["specific"] else tier_cards(target_tier(reward))
     for card_name in cards:
-        if !reward["specific"] && excluded.has(card_name):
+        if !reward["specific"] && (excluded.has(card_name) || reward["excluded"].has(card_name)):
             continue
         if belongs_to(card_name, group) && (old_name.is_empty() || can_upgrade(old_name, card_name)):
             result.append(card_name)

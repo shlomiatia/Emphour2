@@ -29,7 +29,11 @@ static func create_deck(names: Array[String], faction: Faction) -> Array[Campaig
     return deck
 
 static func create_act_2_deck() -> Array[CampaignCard]:
-    return create_frank_deck(CampaignBalance.deck("act_2"))
+    var deck: Array[CampaignCard]
+    for index in CampaignBalance.deck("act_2").size():
+        var faction := Faction.ENGLISH if index % 2 == 0 else Faction.HRE
+        deck.append(CampaignCard.new(CampaignBalance.deck("act_2")[index], faction))
+    return deck
 
 static func create_act_1_owners() -> Dictionary:
     var owners := {}
@@ -76,6 +80,8 @@ static func faction_at_war() -> Faction:
 static func battlefield_faction() -> Faction:
     if !is_act_2():
         return Faction.REBELS
+    if is_act_2_boss() && act_2_boss_prepared:
+        return other_foreign_faction(act_2_boss_warring_faction)
     return faction_at_war()
 
 static func map_city_id(base_id: String) -> String:
@@ -92,7 +98,7 @@ static func map_owner(base_id: String, faction: Faction, route_index: int) -> Fa
     if city_id == "Act 1 Boss":
         return Faction.REBELS
     if city_id == "Act 2 Boss":
-        return Faction.FRANKS if act_2_boss_defeated else battlefield_faction()
+        return Faction.FRANKS if act_2_boss_defeated else other_foreign_faction(act_2_boss_warring_faction)
     var conquered_faction := act_2_boss_warring_faction if act_2_boss_prepared else faction_at_war()
     if faction != Faction.FRANKS && is_act_2() && faction == conquered_faction && route_index <= act_2_progress:
         return Faction.FRANKS
@@ -163,7 +169,6 @@ static func prepare_act_2_boss() -> void:
         return
     act_2_boss_warring_faction = faction_at_war()
     foreign_loyalty[other_foreign_faction(act_2_boss_warring_faction)] = Relation.WAR
-    foreign_loyalty[act_2_boss_warring_faction] = Relation.NEUTRAL
     act_2_boss_prepared = true
 
 static func faction_name(faction: Faction) -> String:

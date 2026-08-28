@@ -27,6 +27,7 @@ func run_test() -> void:
     assert(crossbowman.attack_counter.visible)
     crossbowman.queue_free()
     assert(tooltip.get_hovered_card(game.enemy_hand.get_cards()[0].global_position) == null)
+    game.enemy_draw_pile.append("Crossbowman")
     tooltip.hovered_card = game.board.get_cards(GameRules.Side.ENEMY)[0]
     tooltip.show_tooltip()
     assert(tooltip.enemy_tooltip.visible)
@@ -36,4 +37,5 @@ func run_test() -> void:
         counts[preview.card_name] = preview.count.text
     assert(counts["Militia"] == "x2")
     assert(counts["Archer"] == "x1")
+    assert(!counts.has("Crossbowman"))
     quit()

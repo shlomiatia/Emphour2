@@ -12,9 +12,15 @@ func run_test() -> void:
     root.add_child(game)
     await game.battle_ready
     CampaignState.declare_war(CampaignState.Faction.ENGLISH)
+    add_foreign_card(CampaignState.Faction.ENGLISH)
+    add_foreign_card(CampaignState.Faction.HRE)
     verify_foreign_eligibility()
     verify_positive_loyalty_skip()
+    verify_boss_loyalty()
     quit()
+
+func add_foreign_card(faction: CampaignState.Faction) -> void:
+    game.player_hand.add_card(CardFactory.create("Archer", GameRules.Side.PLAYER, faction))
 
 func verify_foreign_eligibility() -> void:
     var factions: Array[int] = [CampaignState.Faction.ENGLISH]
@@ -28,3 +34,10 @@ func verify_positive_loyalty_skip() -> void:
     assert(CampaignState.negative_foreign_factions().is_empty())
     game.loyalty_events.run_foreign_events()
     assert(!game.loyalty_events.waiting)
+
+func verify_boss_loyalty() -> void:
+    CampaignState.declare_war(CampaignState.Faction.ENGLISH)
+    CampaignState.prepare_act_2_boss()
+    var factions := CampaignState.negative_foreign_factions()
+    assert(factions.has(CampaignState.Faction.ENGLISH))
+    assert(factions.has(CampaignState.Faction.HRE))

@@ -49,7 +49,7 @@ func verify_boss() -> void:
     assert(find_city(CampaignState.Faction.ENGLISH, 1).marker.modulate == CampaignState.faction_color(CampaignState.Faction.FRANKS))
     assert(find_city(CampaignState.Faction.HRE, 1).marker.modulate == CampaignState.faction_color(CampaignState.Faction.HRE))
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.WAR)
-    assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.NEUTRAL)
+    assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.WAR)
     assert(map.tutorial.visible)
     assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the HRE has double crossed us!")
 
