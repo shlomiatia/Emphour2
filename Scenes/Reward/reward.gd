@@ -1,12 +1,18 @@
 class_name RewardScreen extends Node2D
 
 const TUTORIAL_ID := "reward_loyalty"
+const ACT_2_TUTORIAL_ID := "act_2_reward"
 const TUTORIAL_TEXTS := [
     "General, you won!",
     "The nobility and peasants are offering rewards",
     "Selecting a reward will improve faction loyalty",
     "This will yield better rewards!",
     "But the other faction won't like it..."
+]
+const ACT_2_TUTORIAL_TEXTS := [
+    "General, we can press levies from %s",
+    "Or accept weaker but loyal allies contigents",
+    "The choice is yours"
 ]
 
 @onready var peasants: RewardOption = $CanvasLayer/Peasants
@@ -25,9 +31,19 @@ func _ready() -> void:
     show_tutorial()
 
 func show_tutorial() -> void:
-    if final_reward || CampaignState.is_act_2() || !CampaignState.start_tutorial(TUTORIAL_ID):
+    if final_reward:
         return
-    tutorial.show_messages(TUTORIAL_TEXTS)
+    if CampaignState.is_act_2():
+        if CampaignState.start_tutorial(ACT_2_TUTORIAL_ID):
+            tutorial.show_messages(act_2_tutorial_texts())
+        return
+    if CampaignState.start_tutorial(TUTORIAL_ID):
+        tutorial.show_messages(TUTORIAL_TEXTS)
+
+func act_2_tutorial_texts() -> Array:
+    var texts := ACT_2_TUTORIAL_TEXTS.duplicate()
+    texts[0] = texts[0] % CampaignState.faction_name(CampaignState.faction_at_war())
+    return texts
 
 func create_options() -> void:
     if final_reward:
@@ -77,7 +93,7 @@ func _on_option_chosen(group: String) -> void:
     CampaignState.capture_selected_city()
     confirm_sound.play()
     await fade.fade_out()
-    get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
+    get_tree().change_scene_to_file("res://Scenes/Intro/Intro.tscn" if final_reward else "res://Scenes/Map/Map.tscn")
 
 func apply_loyalty(group: String) -> void:
     var other := "Nobility" if group == "Peasants" else "Peasants"

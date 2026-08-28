@@ -8,6 +8,21 @@ const TEXTS := [
 	"Paint the map of Europe blue.",
 	"Viva la Franks!"
 ]
+const ACT_2_TEXTS := [
+	"General, we secured our kingdom",
+	"It's time to expand",
+	"England and the Holy Roman Empire are at war",
+	"We should ally with one against the other",
+	"Choose carefully"
+]
+const ENDING_TEXTS := [
+	"General, we are victiouries",
+	"It's a shame we can trust no one",
+	"C'est la vie.",
+	"Frank general conquering Europe...",
+	"This will probably never happen again",
+	"Thanks for playing!\n Press any key to restart game"
+]
 
 const MOUTH_OPEN := [false, false, true, true, true, true]
 const SOUNDS := [
@@ -20,11 +35,15 @@ const SOUNDS := [
 @onready var king: TextureRect = $CanvasLayer/Content/King
 @onready var fade: Fade = $CanvasLayer/Fade
 @onready var confirm_sound: AudioStreamPlayer = $ConfirmSound
+@onready var audio: GameAudio = get_node("/root/Audio")
 
 var current_index := 0
 var input_disabled := false
+var texts := TEXTS
 
 func _ready() -> void:
+	audio.stop_music()
+	texts = current_texts()
 	await get_tree().create_timer(1.0).timeout
 	show_current_text()
 
@@ -34,7 +53,7 @@ func _input(event: InputEvent) -> void:
 
 func advance() -> void:
 	play_confirm_sound()
-	if current_index < TEXTS.size() - 1:
+	if current_index < texts.size() - 1:
 		current_index += 1
 		show_current_text()
 	else:
@@ -45,11 +64,29 @@ func play_confirm_sound() -> void:
 	confirm_sound.play()
 
 func show_current_text() -> void:
-	text.text = TEXTS[current_index]
+	text.text = texts[current_index]
 	text.show()
 	king.texture = load("res://Textures/KingOpenMouth.png") if MOUTH_OPEN[current_index] else load("res://Textures/King.png")
 
 func start_game() -> void:
+	if CampaignState.intro == CampaignState.Intro.ENDING:
+		restart_game()
+		return
 	input_disabled = true
+	CampaignState.intro = CampaignState.Intro.OPENING
+	audio.restart_music()
 	await fade.fade_out()
 	get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
+
+func restart_game() -> void:
+	input_disabled = true
+	CampaignState.reset()
+	await fade.fade_out()
+	get_tree().change_scene_to_file("res://Scenes/Intro/Intro.tscn")
+
+func current_texts() -> Array:
+	if CampaignState.intro == CampaignState.Intro.ACT_2:
+		return ACT_2_TEXTS
+	if CampaignState.intro == CampaignState.Intro.ENDING:
+		return ENDING_TEXTS
+	return TEXTS

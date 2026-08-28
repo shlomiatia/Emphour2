@@ -12,6 +12,7 @@ func run_test() -> void:
     verify_declaration()
     verify_route()
     verify_boss()
+    await verify_act_1_boss_tutorial()
     quit()
 
 func open_map() -> void:
@@ -49,3 +50,17 @@ func verify_boss() -> void:
     assert(host.attackable)
     assert(CampaignState.map_city_id(host.city_id) == "Act 2 Boss")
     assert(host.marker.modulate == CampaignState.faction_color(CampaignState.Faction.HRE))
+    assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.WAR)
+    assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.NEUTRAL)
+    assert(map.tutorial.visible)
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the HRE has double crossed us!")
+
+func verify_act_1_boss_tutorial() -> void:
+    CampaignState.start_in_act_2 = false
+    CampaignState.reset()
+    for index in 5:
+        CampaignState.selected_city = CampaignState.act_1_city_id(index + 1)
+        CampaignState.capture_selected_city()
+    await open_map()
+    assert(map.tutorial.visible)
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the Nobility are trying to take Paris!")

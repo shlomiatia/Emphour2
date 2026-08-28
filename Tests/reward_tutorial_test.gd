@@ -11,6 +11,14 @@ func verify_tutorial() -> void:
 	verify_screen(screen)
 	advance(screen)
 	await verify_seen_tutorial(screen)
+	CampaignState.start_in_act_2 = true
+	CampaignState.reset()
+	CampaignState.declare_war(CampaignState.Faction.ENGLISH)
+	CampaignState.selected_city = CampaignState.act_2_city_id(1)
+	var act_2_screen := await create_screen()
+	assert(act_2_screen.tutorial.visible)
+	assert((act_2_screen.tutorial.get_node("Message/Text") as Label).text == "General, we can press levies from English")
+	act_2_screen.queue_free()
 
 func verify_screen(screen: RewardScreen) -> void:
 	assert(screen.tutorial.visible)

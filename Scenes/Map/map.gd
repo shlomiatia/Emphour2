@@ -1,6 +1,8 @@
 class_name CampaignMap extends Node2D
 
 const SHIELD := preload("res://Textures/Shield.png")
+const ACT_1_BOSS_TUTORIAL_ID := "act_1_boss"
+const ACT_2_BOSS_TUTORIAL_ID := "act_2_boss"
 @onready var title: Label = $CanvasLayer/KingdomLoyalty/PanelContent/TitleBackground/MarginContainer/Title
 @onready var first_icon: TextureRect = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer/Icon
 @onready var second_icon: TextureRect = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/Icon
@@ -13,14 +15,29 @@ const SHIELD := preload("res://Textures/Shield.png")
 @onready var tooltip_changes := [$CanvasLayer/Tooltip/MarginContainer/Content/English, $CanvasLayer/Tooltip/MarginContainer/Content/HRE]
 @onready var fade: Fade = $CanvasLayer/Fade
 @onready var confirm_sound: AudioStreamPlayer = $ConfirmSound
+@onready var tutorial: TutorialMessage = $TutorialMessage
 
 var roads := {}
 var input_disabled := false
 
 func _ready() -> void:
+    prepare_boss()
     setup_roads()
     setup_cities()
     update_header()
+    show_boss_tutorial()
+
+func prepare_boss() -> void:
+    if CampaignState.is_act_2() && CampaignState.act_2_progress == 5 && !CampaignState.act_2_boss_defeated:
+        CampaignState.prepare_act_2_boss()
+
+func show_boss_tutorial() -> void:
+    if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 1 Boss" && CampaignState.start_tutorial(ACT_1_BOSS_TUTORIAL_ID):
+        tutorial.show_messages(["General, the %s are trying to take Paris!" % CampaignState.disloyal_group(), "It's treason, then...", "Defeat these traitor toads!"])
+    if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 2 Boss" && CampaignState.start_tutorial(ACT_2_BOSS_TUTORIAL_ID):
+        var ally := CampaignState.faction_name(CampaignState.other_foreign_faction(CampaignState.act_2_boss_warring_faction))
+        var enemy := CampaignState.faction_name(CampaignState.act_2_boss_warring_faction)
+        tutorial.show_messages(["General, the %s has double crossed us!" % ally, "They invaded Paris while we fought %s..." % enemy, "Destroy these back stabbing rats!"])
 
 func setup_roads() -> void:
     setup_road($MapElements/Roads/Road, CampaignState.Faction.FRANKS)

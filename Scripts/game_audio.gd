@@ -17,6 +17,14 @@ func start_music() -> void:
         music.stream = MUSIC_TRACKS[music_index]
         music.play()
 
+func restart_music() -> void:
+    music_index = 0
+    music.stream = MUSIC_TRACKS[music_index]
+    music.play()
+
+func stop_music() -> void:
+    music.stop()
+
 func play_card() -> void:
     play_random(CARD_SOUNDS)
 

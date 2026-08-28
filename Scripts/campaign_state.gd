@@ -3,6 +3,7 @@ class_name CampaignState extends RefCounted
 enum Faction {FRANKS, REBELS, ENGLISH, HRE}
 enum Arc {FRANCE, FOREIGN_RELATIONS}
 enum Relation {WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBARGO, NEUTRAL, TRADE_PACT, NON_AGGRESSION_PACT, OPEN_BORDERS, DEFENSIVE_ALLIANCE, MILITARY_ALLIANCE}
+enum Intro {OPENING, ACT_2, ENDING}
 
 static var selected_city := ""
 static var start_in_act_2 := false
@@ -10,9 +11,12 @@ static var player_deck: Array[CampaignCard] = create_frank_deck(CampaignBalance.
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := create_act_1_owners()
 static var arc := Arc.FRANCE
+static var intro := Intro.OPENING
 static var foreign_loyalty := {Faction.ENGLISH: Relation.NEUTRAL, Faction.HRE: Relation.NEUTRAL}
 static var act_2_progress := 0
 static var act_2_boss_defeated := false
+static var act_2_boss_prepared := false
+static var act_2_boss_warring_faction := Faction.REBELS
 static var seen_tutorials := {}
 
 static func create_frank_deck(names: Array[String]) -> Array[CampaignCard]:
@@ -72,7 +76,7 @@ static func faction_at_war() -> Faction:
 static func battlefield_faction() -> Faction:
     if !is_act_2():
         return Faction.REBELS
-    return other_foreign_faction(faction_at_war()) if is_act_2_boss() else faction_at_war()
+    return faction_at_war()
 
 static func map_city_id(base_id: String) -> String:
     if base_id != act_1_city_id(1):
@@ -107,6 +111,7 @@ static func capture_selected_city() -> void:
         return
     if is_act_1_boss():
         start_act_2()
+        intro = Intro.ACT_2
         return
     if city_owner.has(selected_city):
         city_owner[selected_city] = Faction.FRANKS
@@ -116,6 +121,7 @@ static func capture_selected_city() -> void:
 static func capture_act_2_city() -> void:
     if is_act_2_boss():
         act_2_boss_defeated = true
+        intro = Intro.ENDING
         return
     act_2_progress = maxi(act_2_progress, city_number(selected_city))
 
@@ -151,6 +157,14 @@ static func declare_war(faction: Faction) -> void:
 static func other_foreign_faction(faction: Faction) -> Faction:
     return Faction.HRE if faction == Faction.ENGLISH else Faction.ENGLISH
 
+static func prepare_act_2_boss() -> void:
+    if act_2_boss_prepared:
+        return
+    act_2_boss_warring_faction = faction_at_war()
+    foreign_loyalty[other_foreign_faction(act_2_boss_warring_faction)] = Relation.WAR
+    foreign_loyalty[act_2_boss_warring_faction] = Relation.NEUTRAL
+    act_2_boss_prepared = true
+
 static func faction_name(faction: Faction) -> String:
     return "English" if faction == Faction.ENGLISH else "HRE" if faction == Faction.HRE else "Franks" if faction == Faction.FRANKS else "Rebels"
 
@@ -168,6 +182,8 @@ static func start_act_2() -> void:
     foreign_loyalty = {Faction.ENGLISH: Relation.NEUTRAL, Faction.HRE: Relation.NEUTRAL}
     act_2_progress = 0
     act_2_boss_defeated = false
+    act_2_boss_prepared = false
+    act_2_boss_warring_faction = Faction.REBELS
     for city in city_owner:
         city_owner[city] = Faction.FRANKS
 
@@ -177,9 +193,12 @@ static func reset() -> void:
     loyalty = {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
     city_owner = create_act_1_owners()
     arc = Arc.FRANCE
+    intro = Intro.OPENING
     foreign_loyalty = {Faction.ENGLISH: Relation.NEUTRAL, Faction.HRE: Relation.NEUTRAL}
     act_2_progress = 0
     act_2_boss_defeated = false
+    act_2_boss_prepared = false
+    act_2_boss_warring_faction = Faction.REBELS
     seen_tutorials = {}
     if start_in_act_2:
         start_act_2()

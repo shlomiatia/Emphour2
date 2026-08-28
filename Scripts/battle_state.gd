@@ -94,6 +94,6 @@ func open_rewards() -> void:
     await game.fade.fade_out()
     if CampaignState.is_act_2() && CampaignState.is_act_2_boss():
         CampaignState.capture_selected_city()
-        get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
+        get_tree().change_scene_to_file("res://Scenes/Intro/Intro.tscn")
         return
     get_tree().change_scene_to_file("res://Scenes/Reward/Reward.tscn")

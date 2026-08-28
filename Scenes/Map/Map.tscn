@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://e4xg4101pw1w" path="res://Textures/-.png" id="13_road"]
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="14_panel"]
 [ext_resource type="PackedScene" uid="uid://bfx4r1xms2dwg" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="15_loyalty_change"]
+[ext_resource type="PackedScene" uid="uid://byxk0sbymsvg1" path="res://Entities/TutorialMessage/TutorialMessage.tscn" id="16_tutorial"]
 
 [node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
@@ -260,3 +261,5 @@ layout_mode = 2
 
 [node name="ConfirmSound" type="AudioStreamPlayer" parent="." unique_id=1313794689]
 stream = ExtResource("6_confirm")
+
+[node name="TutorialMessage" parent="." unique_id=2124597028 instance=ExtResource("16_tutorial")]
