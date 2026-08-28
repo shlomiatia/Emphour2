@@ -59,9 +59,14 @@ func run_final_events() -> void:
 
 func run_regular_events() -> void:
     for group in CampaignState.loyalty:
+        deck_candidates.capture_group(group)
         var cards := eligible_group_cards(group)
         if !cards.is_empty():
             await check_card(cards.pick_random(), CampaignState.loyalty[group])
+        else:
+            var candidates := deck_candidates.get_eligible()
+            if !candidates.is_empty():
+                await check_candidate(candidates.pick_random(), CampaignState.loyalty[group])
 
 func check_card(card: Card, value: int) -> void:
     if is_instance_valid(card):

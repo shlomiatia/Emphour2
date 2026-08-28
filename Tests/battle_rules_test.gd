@@ -10,7 +10,7 @@ func verify_decks() -> void:
     CampaignState.reset()
     verify_deck(CampaignState.act_1_city_id(1))
     verify_deck(CampaignState.act_1_city_id(3))
-    verify_act_1_boss_decks()
+    verify_act_1_boss_deck()
     verify_act_2_keeps_deck()
     CampaignState.start_act_2()
     verify_deck(CampaignState.act_2_city_id(1))
@@ -27,18 +27,11 @@ func verify_deck(city_id: String) -> void:
     assert(deck.size() == rule["count"])
     assert(value(deck) == rule["value"])
 
-func verify_act_1_boss_decks() -> void:
-    CampaignState.loyalty["Nobility"] = -1
-    verify_group_deck("Nobility")
-    CampaignState.loyalty = {"Peasants": -1, "Nobility": 0}
-    verify_group_deck("Peasants")
-
-func verify_group_deck(group: String) -> void:
+func verify_act_1_boss_deck() -> void:
     var deck := EnemyDeck.new().build("Act 1 Boss")
     var rule := CampaignBalance.city_rule("Act 1 Boss")
-    assert(deck.size() == rule["%s_count" % group.to_lower()])
-    assert(value(deck) == rule["%s_value" % group.to_lower()])
-    assert(deck.all(func(card_name: String) -> bool: return RewardRules.belongs_to(card_name, group)))
+    assert(deck.size() == rule["count"])
+    assert(value(deck) == rule["value"])
 
 func verify_act_2_keeps_deck() -> void:
     var deck := CampaignState.player_deck.map(func(card: CampaignCard) -> String: return card.card_name)

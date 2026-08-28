@@ -17,6 +17,7 @@ func run_test() -> void:
     verify_foreign_eligibility()
     verify_positive_loyalty_skip()
     verify_boss_loyalty()
+    await verify_regular_loyalty()
     quit()
 
 func add_foreign_card(faction: CampaignState.Faction) -> void:
@@ -41,3 +42,15 @@ func verify_boss_loyalty() -> void:
     var factions := CampaignState.negative_foreign_factions()
     assert(factions.has(CampaignState.Faction.ENGLISH))
     assert(factions.has(CampaignState.Faction.HRE))
+
+func verify_regular_loyalty() -> void:
+    for card in game.player_hand.get_cards():
+        card.queue_free()
+    await game.get_tree().process_frame
+    CampaignState.arc = CampaignState.Arc.FRANCE
+    CampaignState.loyalty = {"Peasants": 0, "Nobility": 0}
+    game.player_hand.add_card(CardFactory.create("Archer", GameRules.Side.PLAYER))
+    game.player_draw_pile.assign([CampaignCard.new("Knight", CampaignState.Faction.FRANKS)])
+    game.loyalty_events.checks_completed = 0
+    await game.loyalty_events.run_regular_events()
+    assert(game.loyalty_events.checks_completed == 2)
