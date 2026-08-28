@@ -86,7 +86,7 @@ func create_card(card_name: String, side: int) -> Card:
     return CardFactory.create(card_name, side, faction)
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
-    selectable_cards.assign(tutorial.prepare_choices(cards))
+    selectable_cards.assign(await tutorial.prepare_choices(cards))
     set_status(prompt)
     board.enable_card_targets(selectable_cards)
     var chosen: Card = await card_chosen

@@ -97,6 +97,7 @@ func prepare_choices(cards: Array[Card]) -> Array[Card]:
     if !active || stage != 3:
         return cards
     var targets := cards.filter(func(card: Card) -> bool: return card.card_name == "Light Cavalry")
+    await say("The balance of power moved in the enemy favor, so let's weaken them", game.battle_hud.preview.get_global_rect())
     message.show_action("Kill the light cavalry by clicking on it!", targets[0].get_global_rect())
     stage = 5
     return targets

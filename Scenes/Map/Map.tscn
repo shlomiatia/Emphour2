@@ -78,7 +78,7 @@ city_id = "Act 1 City 5"
 display_name = "Tours"
 
 [node name="EnglandCity1" parent="MapElements/Cities" unique_id=559746901 instance=ExtResource("3_city")]
-position = Vector2(600, 390)
+position = Vector2(569, 406)
 city_id = "Act 2 City 1"
 display_name = "Winchester"
 faction = 2
@@ -113,28 +113,28 @@ faction = 2
 route_index = 5
 
 [node name="HRECity1" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
-position = Vector2(980, 553)
+position = Vector2(1039, 530)
 city_id = "Act 2 City 1"
 display_name = "Trier"
 faction = 3
 route_index = 1
 
 [node name="HRECity2" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
-position = Vector2(963, 425)
+position = Vector2(1022, 402)
 city_id = "Act 2 City 2"
 display_name = "Aachen"
 faction = 3
 route_index = 2
 
 [node name="HRECity3" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
-position = Vector2(1076, 410)
+position = Vector2(1159, 338)
 city_id = "Act 2 City 3"
 display_name = "Cologne"
 faction = 3
 route_index = 3
 
 [node name="HRECity4" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
-position = Vector2(1116, 531)
+position = Vector2(1175, 508)
 city_id = "Act 2 City 4"
 display_name = "Mainz"
 faction = 3
