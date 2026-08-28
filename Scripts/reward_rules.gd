@@ -2,8 +2,8 @@ class_name RewardRules extends RefCounted
 
 const NOBILITY := ["Horse Archer", "Light Cavalry", "Foot Knight", "Lancer", "Heavy Cavalry", "Knight"]
 
-static func create_offer(group: String, loyalty: int, deck: Array) -> Dictionary:
-    var reward := reward_rule("Act1", group, loyalty)
+static func create_offer(group: String, city_index: int, deck: Array) -> Dictionary:
+    var reward := reward_rule("Act1", group, reward_level(group, city_index))
     var excluded := CampaignBalance.reward_exclusions(CampaignState.selected_city)
     var old_name := pick_old_card(group, reward, deck, excluded)
     var choices := target_cards(group, reward, old_name, excluded)
@@ -17,6 +17,14 @@ static func create_boss_offer(group: String, index: int, deck: Array) -> Diction
     var choices := target_cards(group, reward, old_name, excluded)
     assert(!choices.is_empty(), "No eligible %s reward cards" % group)
     return {"old": old_name, "new": choices.pick_random(), "title": group}
+
+static func reward_level(group: String, city_index: int) -> int:
+    if city_index == 1:
+        return 1
+    var other := "Nobility" if group == "Peasants" else "Peasants"
+    if CampaignState.loyalty[group] >= CampaignState.loyalty[other]:
+        return city_index
+    return city_index - 1
 
 static func reward_rule(scope: String, group: String, index: int) -> Dictionary:
     var key := clampi(index, 0, 4) + 1 if scope == "Act1" else clampi(index, 1, 2)

@@ -53,7 +53,7 @@ func create_options() -> void:
         create_act_2_options()
         return
     for group in ["Peasants", "Nobility"]:
-        offers[group] = RewardRules.create_offer(group, CampaignState.loyalty[group], CampaignState.player_deck)
+        offers[group] = RewardRules.create_offer(group, CampaignState.city_number(CampaignState.selected_city), CampaignState.player_deck)
     peasants.setup(offers["Peasants"])
     nobility.setup(offers["Nobility"])
     peasants.setup_loyalty("Peasants", true)

@@ -2,6 +2,7 @@ extends SceneTree
 
 func _initialize() -> void:
     verify_rewards()
+    verify_reward_levels()
     verify_act_2_levels()
     verify_act_2_factions()
     verify_act_2_upgrade()
@@ -15,12 +16,21 @@ func _initialize() -> void:
 
 func verify_rewards() -> void:
     CampaignState.reset()
+    CampaignState.loyalty = {"Peasants": 1, "Nobility": -1}
     var deck := CampaignState.create_frank_deck(["Archer", "Horse Archer"])
-    var offer := RewardRules.create_offer("Peasants", 5, deck)
+    var offer := RewardRules.create_offer("Peasants", 2, deck)
     var count := deck.size()
     RewardRules.apply_offer(offer, deck)
     assert(deck.size() == count)
     assert(deck.all(func(entry: CampaignCard) -> bool: return entry.faction == CampaignState.Faction.FRANKS))
+
+func verify_reward_levels() -> void:
+    CampaignState.reset()
+    assert(RewardRules.reward_level("Peasants", 1) == 1 && RewardRules.reward_level("Nobility", 1) == 1)
+    CampaignState.loyalty = {"Peasants": 1, "Nobility": -1}
+    assert(RewardRules.reward_level("Peasants", 3) == 3 && RewardRules.reward_level("Nobility", 3) == 2)
+    CampaignState.loyalty = {"Peasants": 0, "Nobility": 0}
+    assert(RewardRules.reward_level("Peasants", 4) == 4 && RewardRules.reward_level("Nobility", 4) == 4)
 
 func verify_act_1_boss() -> void:
     CampaignState.start_in_act_2 = false
