@@ -12,7 +12,6 @@ func resolve() -> void:
     var used_defences: Array[Card]
     var defeated: Array[Card]
     var attackers := player_cards + enemy_cards
-    await game.fade_losses()
     for index in attackers.size():
         await resolve_attack(attackers[index], player_cards, enemy_cards, used_defences, defeated, remaining_attackers(attackers, index))
     for card in defeated:

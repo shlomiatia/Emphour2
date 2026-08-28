@@ -23,7 +23,11 @@ func start() -> void:
     var delay := get_tree().create_timer(MESSAGE_DURATION).timeout
     await game.turns.reveal_enemy_card()
     await delay
-    move_balance(game.battle.strength_difference())
+    var difference := game.battle.strength_difference()
+    game.fade_losses()
+    move_balance(difference)
+    if difference != 0:
+        await game.audio.push.finished
     await game.battle.resolve()
     await finish(game.player_hand.get_card_count() == 0 && game.enemy_hand.get_card_count() == 0)
 
