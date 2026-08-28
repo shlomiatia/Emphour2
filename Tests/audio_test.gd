@@ -56,7 +56,7 @@ func verify_selection_sounds() -> void:
     assert(map.confirm_sound.stream == load("res://Audio/click.wav"))
     assert(reward.confirm_sound.stream == load("res://Audio/buy.ogg"))
     assert(GameAudio.PUSH_SOUNDS.size() == 3)
-    assert(BattleState.new().result_text(-1).contains("Press any key to restart level"))
+    assert(BattleState.new().result_text(-1).contains("Press any key to restart the level"))
     map.queue_free()
     reward.queue_free()
 

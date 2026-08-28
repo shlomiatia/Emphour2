@@ -16,7 +16,7 @@ signal hovered(city: CampaignCity)
 signal unhovered(city: CampaignCity)
 
 func _ready() -> void:
-    name_label.text = display_name
+    name_label.text = tr(display_name)
 
 func apply_owner(faction: CampaignState.Faction) -> void:
     marker.modulate = CampaignState.faction_color(faction)

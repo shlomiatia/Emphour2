@@ -1,33 +1,33 @@
 class_name Intro extends Node2D
 
 const TEXTS := [
-	"1,000 AD — a new millennium begins.",
-	"King Robert the Pious is troubled...",
-	"Rebels in Paris? Sacrebleu!",
-	"General, defeat them — and all the others...",
-	"Paint the map of Europe blue.",
-	"Viva la Franks!"
+	"intro.opening.millennium",
+	"intro.opening.king",
+	"intro.opening.rebels",
+	"intro.opening.general",
+	"intro.opening.map",
+	"intro.opening.franks"
 ]
 const ACT_2_TEXTS := [
-	"General, we secured our kingdom",
-	"It's time to expand",
-	"England and the Holy Roman Empire are at war",
-	"We should ally with one against the other",
-	"Choose carefully"
+	"intro.act2.secured",
+	"intro.act2.expand",
+	"intro.act2.war",
+	"intro.act2.ally",
+	"intro.act2.carefully"
 ]
 const ENDING_TEXTS := [
-	"General, we are victiouries",
-	"It's a shame we can trust no one",
-	"C'est la vie.",
-	"Frank general conquering Europe...",
-	"This will probably never happen again",
-	"Thanks for playing!\n Press any key to restart game"
+	"intro.ending.victorious",
+	"intro.ending.shame",
+	"intro.ending.life",
+	"intro.ending.general",
+	"intro.ending.never",
+	"intro.ending.thanks"
 ]
 
 const CLOSED_KING_TEXTS := [
-	"1,000 AD — a new millennium begins.",
-	"King Robert the Pious is troubled...",
-	"Thanks for playing!\n Press any key to restart game"
+	"intro.opening.millennium",
+	"intro.opening.king",
+	"intro.ending.thanks"
 ]
 const SOUNDS := [
 	preload("res://Audio/confirm1.mp3"),
@@ -71,9 +71,9 @@ func play_confirm_sound() -> void:
 	confirm_sound.play()
 
 func show_current_text() -> void:
-	text.text = texts[current_index]
+	text.text = tr(texts[current_index])
 	text.show()
-	king.texture = closed_king if CLOSED_KING_TEXTS.has(text.text) else open_king
+	king.texture = closed_king if CLOSED_KING_TEXTS.has(texts[current_index]) else open_king
 
 func start_game() -> void:
 	if CampaignState.intro == CampaignState.Intro.ENDING:

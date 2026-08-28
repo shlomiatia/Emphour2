@@ -30,6 +30,8 @@ func _ready() -> void:
     show_boss_tutorial()
 
 func prepare_boss() -> void:
+    if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 1 Boss":
+        CampaignState.prepare_act_1_boss()
     if CampaignState.is_act_2() && CampaignState.act_2_progress == 5 && !CampaignState.act_2_boss_defeated:
         CampaignState.prepare_act_2_boss()
 
@@ -45,11 +47,11 @@ func boss_available() -> bool:
 
 func show_boss_tutorial() -> void:
     if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 1 Boss" && CampaignState.start_tutorial(ACT_1_BOSS_TUTORIAL_ID):
-        tutorial.show_messages(["...", "General, the %s are trying to take Paris!" % CampaignState.disloyal_group(), "It's treason, then...", "Defeat these traitor toads!"], [TutorialMessage.KingMode.SHOCKED])
+        tutorial.show_messages(["...", tr("tutorial.act1_boss") % CampaignState.group_name(CampaignState.disloyal_group()), tr("tutorial.act1_treason"), tr("tutorial.act1_defeat")], [TutorialMessage.KingMode.SHOCKED])
     if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 2 Boss" && CampaignState.start_tutorial(ACT_2_BOSS_TUTORIAL_ID):
         var ally := CampaignState.faction_name(CampaignState.other_foreign_faction(CampaignState.act_2_boss_warring_faction))
         var enemy := CampaignState.faction_name(CampaignState.act_2_boss_warring_faction)
-        tutorial.show_messages(["...", "General, the %s has double crossed us!" % ally, "They invaded Paris while we fought the %s..." % enemy, "Destroy these back stabbing rats!"], [TutorialMessage.KingMode.SHOCKED])
+        tutorial.show_messages(["...", tr("tutorial.act2_boss") % ally, tr("tutorial.act2_invaded") % enemy, tr("tutorial.act2_destroy")], [TutorialMessage.KingMode.SHOCKED])
 
 func setup_roads() -> void:
     setup_road($MapElements/Roads/Road, CampaignState.Faction.FRANKS)
@@ -107,7 +109,7 @@ func is_attackable(city: CampaignCity) -> bool:
 
 func update_header() -> void:
     if CampaignState.is_act_2():
-        title.text = "FOREIGN RELATIONS"
+        title.text = tr("ui.foreign_relations")
         set_foreign_label(first_name, first_icon, first_status, CampaignState.Faction.ENGLISH)
         set_foreign_label(second_name, second_icon, second_status, CampaignState.Faction.HRE)
         return
@@ -128,9 +130,9 @@ func _on_city_hovered(city: CampaignCity) -> void:
     if !CampaignState.can_declare_war(city.faction, city.route_index):
         return
     tooltip.position = city.global_position + Vector2(30, -55)
-    tooltip_title.text = "Declare war on the %s" % CampaignState.faction_name(city.faction)
-    set_tooltip_change(0, city.faction, CampaignState.Relation.WAR)
-    set_tooltip_change(1, CampaignState.other_foreign_faction(city.faction), CampaignState.Relation.MILITARY_ALLIANCE)
+    tooltip_title.text = tr("tooltip.declare_war") % CampaignState.faction_name(city.faction)
+    set_tooltip_change(0, CampaignState.Faction.ENGLISH, CampaignState.Relation.WAR if city.faction == CampaignState.Faction.ENGLISH else CampaignState.Relation.MILITARY_ALLIANCE)
+    set_tooltip_change(1, CampaignState.Faction.HRE, CampaignState.Relation.WAR if city.faction == CampaignState.Faction.HRE else CampaignState.Relation.MILITARY_ALLIANCE)
     tooltip.show()
 
 func set_tooltip_change(index: int, faction: CampaignState.Faction, target: int) -> void:

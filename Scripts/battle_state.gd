@@ -19,7 +19,7 @@ func start() -> void:
     active = true
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
-    game.set_status("Battle", BattleHud.ENEMY_COLOR)
+    game.set_status(tr("battle.start"), BattleHud.ENEMY_COLOR)
     var delay := get_tree().create_timer(MESSAGE_DURATION).timeout
     await game.turns.reveal_enemy_card()
     await delay
@@ -82,10 +82,10 @@ func finish_game(winner: int) -> void:
 
 func result_text(winner: int) -> String:
     if winner == -1:
-        return "Draw\nPress any key to restart level"
+        return tr("battle.draw")
     var faction := CampaignState.Faction.FRANKS if winner == GameRules.Side.PLAYER else CampaignState.battlefield_faction()
-    var text := "%s win" % CampaignState.faction_name(faction)
-    return text if winner == GameRules.Side.PLAYER else "%s\nPress any key to restart level" % text
+    var text := tr("battle.win") % CampaignState.faction_name(faction)
+    return text if winner == GameRules.Side.PLAYER else tr("battle.restart") % text
 
 func result_color(winner: int) -> Color:
     if winner == GameRules.Side.PLAYER:

@@ -37,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_theme")
 theme_override_font_sizes/font_size = 256
-text = "Double Crossed"
+text = "ui.title"
 horizontal_alignment = 1
 
 [node name="ClickToStart" type="Label" parent="CanvasLayer" unique_id=1362911146]
@@ -53,7 +53,7 @@ offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_theme")
-text = "Press any key to start"
+text = "ui.start"
 horizontal_alignment = 1
 
 [node name="Blink" parent="CanvasLayer/ClickToStart" unique_id=1439525570 instance=ExtResource("4_blink")]

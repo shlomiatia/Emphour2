@@ -55,95 +55,95 @@ texture_mode = 1
 [node name="Act1City1" parent="MapElements/Cities" unique_id=923179646 instance=ExtResource("3_city")]
 position = Vector2(891, 583)
 city_id = "Act 1 City 1"
-display_name = "Paris"
+display_name = "city.paris"
 
 [node name="Act1City2" parent="MapElements/Cities" unique_id=938524976 instance=ExtResource("3_city")]
 position = Vector2(855, 450)
 city_id = "Act 1 City 2"
-display_name = "Reims"
+display_name = "city.reims"
 
 [node name="Act1City3" parent="MapElements/Cities" unique_id=97150354 instance=ExtResource("3_city")]
 position = Vector2(738, 499)
 city_id = "Act 1 City 3"
-display_name = "Rouen"
+display_name = "city.rouen"
 
 [node name="Act1City4" parent="MapElements/Cities" unique_id=1479279828 instance=ExtResource("3_city")]
 position = Vector2(746, 618)
 city_id = "Act 1 City 4"
-display_name = "Orleans"
+display_name = "city.orleans"
 
 [node name="Act1City5" parent="MapElements/Cities" unique_id=1987419721 instance=ExtResource("3_city")]
 position = Vector2(679, 709)
 city_id = "Act 1 City 5"
-display_name = "Tours"
+display_name = "city.tours"
 
 [node name="EnglandCity1" parent="MapElements/Cities" unique_id=559746901 instance=ExtResource("3_city")]
 position = Vector2(569, 406)
 city_id = "Act 2 City 1"
-display_name = "Winchester"
+display_name = "city.winchester"
 faction = 2
 route_index = 1
 
 [node name="EnglandCity2" parent="MapElements/Cities" unique_id=580718290 instance=ExtResource("3_city")]
 position = Vector2(661, 174)
 city_id = "Act 2 City 2"
-display_name = "York"
+display_name = "city.york"
 faction = 2
 route_index = 2
 
 [node name="EnglandCity3" parent="MapElements/Cities" unique_id=2025580412 instance=ExtResource("3_city")]
 position = Vector2(693, 238)
 city_id = "Act 2 City 3"
-display_name = "Lincoln"
+display_name = "city.lincoln"
 faction = 2
 route_index = 3
 
 [node name="EnglandCity4" parent="MapElements/Cities" unique_id=1448484168 instance=ExtResource("3_city")]
 position = Vector2(721, 304)
 city_id = "Act 2 City 4"
-display_name = "Norwich"
+display_name = "city.norwich"
 faction = 2
 route_index = 4
 
 [node name="EnglandCity5" parent="MapElements/Cities" unique_id=399724753 instance=ExtResource("3_city")]
 position = Vector2(686, 366)
 city_id = "Act 2 City 5"
-display_name = "London"
+display_name = "city.london"
 faction = 2
 route_index = 5
 
 [node name="HRECity1" parent="MapElements/Cities" unique_id=1502107040 instance=ExtResource("3_city")]
 position = Vector2(1039, 530)
 city_id = "Act 2 City 1"
-display_name = "Trier"
+display_name = "city.trier"
 faction = 3
 route_index = 1
 
 [node name="HRECity2" parent="MapElements/Cities" unique_id=977267538 instance=ExtResource("3_city")]
 position = Vector2(1022, 402)
 city_id = "Act 2 City 2"
-display_name = "Aachen"
+display_name = "city.aachen"
 faction = 3
 route_index = 2
 
 [node name="HRECity3" parent="MapElements/Cities" unique_id=1149724752 instance=ExtResource("3_city")]
 position = Vector2(1159, 338)
 city_id = "Act 2 City 3"
-display_name = "Cologne"
+display_name = "city.cologne"
 faction = 3
 route_index = 3
 
 [node name="HRECity4" parent="MapElements/Cities" unique_id=2051075440 instance=ExtResource("3_city")]
 position = Vector2(1175, 508)
 city_id = "Act 2 City 4"
-display_name = "Mainz"
+display_name = "city.mainz"
 faction = 3
 route_index = 4
 
 [node name="HRECity5" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
 position = Vector2(1233, 639)
 city_id = "Act 2 City 5"
-display_name = "Regensburg"
+display_name = "city.regensburg"
 faction = 3
 route_index = 5
 
@@ -165,7 +165,7 @@ layout_mode = 2
 
 [node name="TitleBackground" parent="CanvasLayer/KingdomLoyalty/PanelContent" unique_id=373315012 instance=ExtResource("10_title")]
 layout_mode = 2
-title = "KINGDOM LOYALTY"
+title = "ui.kingdom_loyalty"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent" unique_id=1932809427]
 layout_mode = 2
@@ -192,7 +192,7 @@ stretch_mode = 5
 [node name="Peasants" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=1887101475]
 layout_mode = 2
 theme = ExtResource("8_small_parchment")
-text = "Peasants"
+text = "group.peasants"
 vertical_alignment = 1
 
 [node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=465970467]
@@ -201,7 +201,7 @@ theme = ExtResource("8_small_parchment")
 theme_override_colors/font_color = Color(0.9999592, 0.56896424, 0.5257008, 1)
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 4
-text = "Neutral"
+text = "relation.neutral"
 vertical_alignment = 1
 
 [node name="NobilityContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer" unique_id=298819769]
@@ -218,7 +218,7 @@ stretch_mode = 5
 [node name="Nobility" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=26332371]
 layout_mode = 2
 theme = ExtResource("8_small_parchment")
-text = "Nobility"
+text = "group.nobility"
 vertical_alignment = 1
 
 [node name="NobilityStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=670872147]
@@ -226,7 +226,7 @@ layout_mode = 2
 theme = ExtResource("8_small_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 3
-text = "Neutral"
+text = "relation.neutral"
 vertical_alignment = 1
 
 [node name="Tooltip" type="PanelContainer" parent="CanvasLayer" unique_id=873779568]
@@ -249,7 +249,7 @@ layout_mode = 2
 [node name="Title" type="Label" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=628724633]
 layout_mode = 2
 theme = ExtResource("8_small_parchment")
-text = "Declare war"
+text = "ui.declare_war"
 
 [node name="English" parent="CanvasLayer/Tooltip/MarginContainer/Content" unique_id=1093931706 instance=ExtResource("15_loyalty_change")]
 layout_mode = 2

@@ -17,7 +17,7 @@ func verify_tutorial() -> void:
 	CampaignState.selected_city = CampaignState.act_2_city_id(1)
 	var act_2_screen := await create_screen()
 	assert(act_2_screen.tutorial.visible)
-	assert((act_2_screen.tutorial.get_node("Message/Text") as Label).text == "General, we can press levies from the English")
+	assert((act_2_screen.tutorial.get_node("Message/Text") as Label).text == "General, we can raise levies from the English.")
 	act_2_screen.queue_free()
 
 func verify_screen(screen: RewardScreen) -> void:

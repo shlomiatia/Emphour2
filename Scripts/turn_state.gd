@@ -61,7 +61,7 @@ func discard_enemy_card() -> void:
 func begin_player_action() -> void:
     accepting_action = true
     game.player_hand.set_draggable(true)
-    game.set_status("Choose a card")
+    game.set_status(tr("turn.choose_card"))
     player_action_started.emit()
 
 func card_clicked(card: Card) -> void:
@@ -79,7 +79,7 @@ func enable_targets() -> void:
     game.board.set_dragged_card(selected_card)
     game.player_discard.set_targetable(full_row && discard_allowed)
     game.player_discard.set_dragged_card(selected_card)
-    game.set_status("Discard or choose a card to replace" if full_row else "Play a card")
+    game.set_status(tr("turn.discard_or_replace") if full_row else tr("turn.play_card"))
 
 func target_clicked(slot: CardSlot) -> void:
     if !selected_card:

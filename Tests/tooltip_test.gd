@@ -17,7 +17,7 @@ func run_test() -> void:
     assert(tooltip.data_tooltip.visible)
     assert(!tooltip.data_tooltip.description.text.is_empty())
     var armored := CardCatalog.get_data("Foot Knight")
-    assert(tooltip.data_tooltip.get_description(armored).contains("Block 1 non armor piercing attack"))
+    assert(tooltip.data_tooltip.get_description(armored).contains("Block 1 non-armor-piercing attack"))
     var cavalry := CardCatalog.get_data("Light Cavalry")
     assert(tooltip.data_tooltip.get_description(cavalry).contains("Charge attack"))
     var crossbowman := game.create_card("Crossbowman", GameRules.Side.PLAYER)

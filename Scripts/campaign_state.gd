@@ -6,7 +6,7 @@ enum Relation {WAR = -5, HOSTILE, CLOSE_BORDERS, DIPLOMATIC_PROTEST, TRADE_EMBAR
 enum Intro {OPENING, ACT_2, ENDING}
 
 static var selected_city := ""
-static var start_in_act_2 := false
+static var start_in_act_2 := true
 static var player_deck: Array[CampaignCard] = create_frank_deck(CampaignBalance.deck("act_1"))
 static var loyalty := {"Peasants": Relation.NEUTRAL, "Nobility": Relation.NEUTRAL}
 static var city_owner := create_act_1_owners()
@@ -147,6 +147,9 @@ static func loyal_group() -> String:
 static func disloyal_group() -> String:
     return "Nobility" if loyal_group() == "Peasants" else "Peasants"
 
+static func prepare_act_1_boss() -> void:
+    loyalty[disloyal_group()] = Relation.WAR
+
 static func negative_foreign_factions() -> Array[int]:
     var factions: Array[int]
     for faction in foreign_loyalty:
@@ -172,7 +175,10 @@ static func prepare_act_2_boss() -> void:
     act_2_boss_prepared = true
 
 static func faction_name(faction: Faction) -> String:
-    return "English" if faction == Faction.ENGLISH else "HRE" if faction == Faction.HRE else "Franks" if faction == Faction.FRANKS else "Rebels"
+    return TranslationServer.translate("faction.english") if faction == Faction.ENGLISH else TranslationServer.translate("faction.hre") if faction == Faction.HRE else TranslationServer.translate("faction.franks") if faction == Faction.FRANKS else TranslationServer.translate("faction.rebels")
+
+static func group_name(group: String) -> String:
+    return TranslationServer.translate("group.peasants") if group == "Peasants" else TranslationServer.translate("group.nobility")
 
 static func faction_color(faction: Faction) -> Color:
     match faction:

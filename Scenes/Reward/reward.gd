@@ -3,16 +3,16 @@ class_name RewardScreen extends Node2D
 const TUTORIAL_ID := "reward_loyalty"
 const ACT_2_TUTORIAL_ID := "act_2_reward"
 const TUTORIAL_TEXTS := [
-    "General, you won!",
-    "The nobility and peasants are offering rewards",
-    "Selecting a reward will improve faction loyalty",
-    "This will yield better rewards!",
-    "But the other faction won't like it..."
+    "tutorial.reward.won",
+    "tutorial.reward.offers",
+    "tutorial.reward.loyalty",
+    "tutorial.reward.better",
+    "tutorial.reward.other"
 ]
 const ACT_2_TUTORIAL_TEXTS := [
-    "General, we can press levies from the %s",
-    "Or accept weaker but loyal ally contigents",
-    "The choice is yours"
+    "tutorial.reward.levies",
+    "tutorial.reward.allies",
+    "tutorial.reward.choice"
 ]
 
 @onready var peasants: RewardOption = $CanvasLayer/Peasants
@@ -38,12 +38,10 @@ func show_tutorial() -> void:
             tutorial.show_messages(act_2_tutorial_texts())
         return
     if CampaignState.start_tutorial(TUTORIAL_ID):
-        tutorial.show_messages(TUTORIAL_TEXTS)
+        tutorial.show_messages(TUTORIAL_TEXTS.map(func(text: String) -> String: return tr(text)))
 
 func act_2_tutorial_texts() -> Array:
-    var texts := ACT_2_TUTORIAL_TEXTS.duplicate()
-    texts[0] = texts[0] % CampaignState.faction_name(CampaignState.faction_at_war())
-    return texts
+    return [tr(ACT_2_TUTORIAL_TEXTS[0]) % CampaignState.faction_name(CampaignState.faction_at_war()), tr(ACT_2_TUTORIAL_TEXTS[1]), tr(ACT_2_TUTORIAL_TEXTS[2])]
 
 func create_options() -> void:
     if final_reward:
@@ -62,6 +60,8 @@ func create_options() -> void:
 func create_act_2_options() -> void:
     setup_act_2_option(peasants, CampaignState.Faction.ENGLISH)
     setup_act_2_option(nobility, CampaignState.Faction.HRE)
+    peasants.setup_foreign_loyalty()
+    nobility.setup_foreign_loyalty()
 
 func setup_act_2_option(option: RewardOption, faction: CampaignState.Faction) -> void:
     option.group_name = CampaignState.faction_name(faction)

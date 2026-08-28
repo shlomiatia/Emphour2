@@ -1,5 +1,7 @@
 class_name RewardOption extends Control
 
+const SHIELD := preload("res://Textures/Shield.png")
+
 @export var group_name := "Peasants"
 @onready var panel: Panel = $Panel
 @onready var title: PanelTitle = $Panel/TitleBackground
@@ -20,7 +22,7 @@ signal chosen(group: String)
 
 func setup(value: Dictionary) -> void:
 	offer = value
-	title.title = offer.get("title", group_name)
+	title.title = offer["title"] if offer.has("faction") else CampaignState.group_name(offer.get("title", group_name))
 	group_icon.visible = !offer.has("faction")
 	faction_shield.visible = offer.has("faction")
 	if faction_shield.visible:
@@ -39,12 +41,7 @@ func setup(value: Dictionary) -> void:
 func offer_text() -> String:
 	var old_name := CardCatalog.display_name(offer["old"])
 	var new_name := CardCatalog.display_name(offer["new"])
-	if !offer.has("faction"):
-		return "Add %s to deck." % new_name if offer["old"].is_empty() else "Upgrade 1 %s from deck to %s." % [old_name, new_name]
-	var faction := CampaignState.faction_name(offer["faction"])
-	if offer["old"].is_empty():
-		return "Add %s %s to deck." % [faction, new_name]
-	return "Upgrade 1 %s %s to %s %s." % [CampaignState.faction_name(offer["old_faction"]), old_name, faction, new_name]
+	return tr("reward.add") % new_name if offer["old"].is_empty() else tr("reward.upgrade") % [old_name, new_name]
 
 func setup_loyalty(selected_group: String, visible: bool) -> void:
 	loyalty.visible = visible
@@ -53,12 +50,28 @@ func setup_loyalty(selected_group: String, visible: bool) -> void:
 	set_change(0, "Peasants", 1 if selected_group == "Peasants" else -1)
 	set_change(1, "Nobility", 1 if selected_group == "Nobility" else -1)
 
+func setup_foreign_loyalty() -> void:
+	loyalty.show()
+	set_foreign_change(0, CampaignState.Faction.ENGLISH)
+	set_foreign_change(1, CampaignState.Faction.HRE)
+
 func set_change(index: int, group: String, amount: int) -> void:
 	var row := loyalty.get_child(index)
 	(row.get_node("Group/Icon") as TextureRect).texture = load("res://Textures/%s.png" % group)
-	(row.get_node("Group/Name") as Label).text = group
+	(row.get_node("Group/Name") as Label).text = CampaignState.group_name(group)
+	(row.get_node("Change/Arrow") as Control).show()
+	(row.get_node("Change/Target") as Control).show()
 	set_label(current_labels[index], CampaignState.loyalty[group])
 	set_label(target_labels[index], CampaignState.loyalty_after(group, amount))
+
+func set_foreign_change(index: int, faction: CampaignState.Faction) -> void:
+	var row := loyalty.get_child(index)
+	(row.get_node("Group/Icon") as TextureRect).texture = SHIELD
+	(row.get_node("Group/Icon") as TextureRect).modulate = CampaignState.faction_color(faction)
+	(row.get_node("Group/Name") as Label).text = CampaignState.faction_name(faction)
+	(row.get_node("Change/Arrow") as Control).hide()
+	(row.get_node("Change/Target") as Control).hide()
+	set_label(current_labels[index], CampaignState.foreign_loyalty[faction])
 
 func set_label(label: Label, value: int) -> void:
 	label.text = RelationData.loyalty_name(value)

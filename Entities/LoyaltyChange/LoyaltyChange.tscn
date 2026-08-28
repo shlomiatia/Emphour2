@@ -24,7 +24,7 @@ custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 theme = ExtResource("3_dark")
 theme_override_font_sizes/font_size = 22
-text = "Peasants"
+text = "group.peasants"
 vertical_alignment = 1
 
 [node name="Change" type="HBoxContainer" parent="." unique_id=575262553]
@@ -37,7 +37,7 @@ theme = ExtResource("1_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
-text = "Neutral"
+text = "relation.neutral"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -52,5 +52,5 @@ theme = ExtResource("1_parchment")
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
-text = "Uneasy"
+text = "relation.uneasy"
 vertical_alignment = 1

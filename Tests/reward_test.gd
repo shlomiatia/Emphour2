@@ -110,10 +110,24 @@ func verify_act_2_screen() -> void:
     var screen := load("res://Scenes/Reward/Reward.tscn").instantiate() as RewardScreen
     root.add_child(screen)
     await process_frame
-    assert(!screen.peasants.loyalty.visible && !screen.nobility.loyalty.visible)
+    assert(screen.peasants.loyalty.visible && screen.nobility.loyalty.visible)
     assert(screen.peasants.title.title == "English" && screen.nobility.title.title == "HRE")
     assert(screen.peasants.faction_shield.visible && screen.nobility.faction_shield.visible)
+    assert(!screen.peasants.description.text.contains("English"))
+    assert(!screen.nobility.description.text.contains("HRE"))
+    verify_foreign_loyalty(screen.peasants)
+    verify_foreign_loyalty(screen.nobility)
     screen.queue_free()
+
+func verify_foreign_loyalty(option: RewardOption) -> void:
+    var english := option.loyalty.get_child(0)
+    var hre := option.loyalty.get_child(1)
+    assert((english.get_node("Group/Name") as Label).text == "English")
+    assert((hre.get_node("Group/Name") as Label).text == "HRE")
+    assert(!(english.get_node("Change/Arrow") as Control).visible)
+    assert(!(hre.get_node("Change/Target") as Control).visible)
+    assert((english.get_node("Change/Current") as Label).text == "Treacherous")
+    assert((hre.get_node("Change/Current") as Label).text == "Devoted")
 
 func setup_act_2() -> void:
     CampaignState.start_in_act_2 = true

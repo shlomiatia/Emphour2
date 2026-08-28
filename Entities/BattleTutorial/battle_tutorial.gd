@@ -29,35 +29,35 @@ func start() -> void:
 
 func run() -> void:
     await get_tree().process_frame
-    await say("General, there are 2 ways to win battles")
-    await say("Move the balance of power all the way to the right", meter_right())
-    await say("Or have it on the right when your cards run out", meter_right())
-    await say("Nothing will move until one battle line is full", line_rect())
-    await say("Our opponent played a card in secret", enemy_rect())
-    await say("Let's deploy a militia by dragging to our battle line")
+    await say(tr("tutorial.battle.ways"))
+    await say(tr("tutorial.battle.meter"), meter_right())
+    await say(tr("tutorial.battle.cards_run_out"), meter_right())
+    await say(tr("tutorial.battle.line_full"), line_rect())
+    await say(tr("tutorial.battle.secret"), enemy_rect())
+    await say(tr("tutorial.battle.deploy_militia"))
     restrict("Militia")
     stage = 1
     await action_done
     await game.turns.player_action_started
-    await say("Our militia and their light cavalry have equal strength", strengths_rect())
-    await say("But the light cavalry have a charge attack", attack_rect())
-    await say("It will kill the militia once the battle starts")
-    await say("Let's deploy stakes")
+    await say(tr("tutorial.battle.equal_strength"), strengths_rect())
+    await say(tr("tutorial.battle.charge"), attack_rect())
+    await say(tr("tutorial.battle.kill_militia"))
+    await say(tr("tutorial.battle.deploy_stakes"))
     restrict("Stakes")
     stage = 2
     await action_done
     await game.turns.player_action_started
     await get_tree().create_timer(0.25).timeout
-    await say("Stakes will block the light cavalry charge attack", stakes_right())
-    await say("Our opponent now have higher strength", game.battle_hud.preview.get_global_rect())
-    await say("But I have a plan")
-    message.show_action("Hover the opponent face down card", enemy_rect())
+    await say(tr("tutorial.battle.block_charge"), stakes_right())
+    await say(tr("tutorial.battle.enemy_stronger"), game.battle_hud.preview.get_global_rect())
+    await say(tr("tutorial.battle.plan"))
+    message.show_action(tr("tutorial.battle.hover_face_down"), enemy_rect())
     game.player_hand.set_draggable(false)
     var tooltip := game.get_node("CardTooltip") as CardTooltip
     await tooltip.enemy_tooltip_shown
     message.hide_message()
-    await say("They don't have a card that blocks missile attacks!")
-    await say("Deploy an archer. This will fill the battle line and start the battle")
+    await say(tr("tutorial.battle.no_missile_block"))
+    await say(tr("tutorial.battle.deploy_archer"))
     restrict("Archer")
     stage = 3
 
@@ -66,10 +66,10 @@ func after_player_action() -> void:
         return
     if stage == 4:
         message.hide_message()
-        await say("You can discard instead of replacing, by dragging to the discard pile", discard_rect())
-        await say("You must play or discard a card each turn")
-        await say("Our strength is now equal")
-        await say("But I trust you to win the battle now\nGood luck!")
+        await say(tr("tutorial.battle.discard"), discard_rect())
+        await say(tr("tutorial.battle.turn"))
+        await say(tr("tutorial.battle.equal"))
+        await say(tr("tutorial.battle.good_luck"))
         game.turns.set_allowed_slots([], true)
         game.player_hand.set_draggable_cards(game.player_hand.get_cards())
         stage = 6
@@ -87,7 +87,7 @@ func after_battle() -> bool:
         return false
     game.turns.play_enemy_card()
     game.turns.begin_player_action()
-    await say("We don't need the stakes anymore, let's replace it")
+    await say(tr("tutorial.battle.replace_stakes"))
     game.turns.set_allowed_slots([player_slot(1)], false)
     game.player_hand.set_draggable_cards(game.player_hand.get_cards())
     stage = 4
@@ -98,8 +98,8 @@ func prepare_choices(cards: Array[Card]) -> Array[Card]:
     if !active || stage != 3:
         return cards
     var targets := cards.filter(func(card: Card) -> bool: return card.card_name == "Light Cavalry")
-    await say("The balance of power moved in the enemy favor, so let's weaken them", game.battle_hud.preview.get_global_rect())
-    message.show_action("Kill the light cavalry by clicking on it!", targets[0].get_global_rect())
+    await say(tr("tutorial.battle.enemy_favor"), game.battle_hud.preview.get_global_rect())
+    message.show_action(tr("tutorial.battle.kill_cavalry"), targets[0].get_global_rect())
     stage = 5
     return targets
 

@@ -28,7 +28,7 @@ offset_top = 74.0
 offset_right = 1600.0
 offset_bottom = 147.0
 theme = ExtResource("4_large_gold")
-text = "Choose your reward"
+text = "ui.choose_reward"
 horizontal_alignment = 1
 vertical_alignment = 1
 

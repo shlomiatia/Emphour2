@@ -13,10 +13,10 @@ static func get_value(card_name: String) -> float:
 
 static func display_name(card_name: String) -> String:
     if card_name == "Crossbowman":
-        return "Crossbow"
+        return TranslationServer.translate("card.crossbow")
     if card_name == "Heavy Cavalry":
-        return "Heavy Cav"
-    return card_name
+        return TranslationServer.translate("card.heavy_cav")
+    return TranslationServer.translate("card.%s" % card_name.to_snake_case())
 
 static func get_data(card_name: String) -> CardData:
     match card_name:

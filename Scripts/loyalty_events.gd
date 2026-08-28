@@ -108,10 +108,10 @@ func show_message(card: Card, event: int) -> void:
     tutorial.show_messages([text], [TutorialMessage.KingMode.HIDDEN])
 
 func event_text(event: int) -> String:
-    return ["refuses to fight in the battle!", "has deserted your army!", "has betrayed you and fights for our enemies!"][event]
+    return tr(["loyalty.refuses", "loyalty.deserted", "loyalty.betrayed"][event])
 
 func insult(event: int) -> String:
-    return ["Cowardly dogs!", "Insolent pigs!", "Treacherous snakes!"][event]
+    return tr(["loyalty.cowardly", "loyalty.insolent", "loyalty.treacherous"][event])
 
 func log_check(result: Dictionary, card_name: String) -> void:
     checks_completed += 1

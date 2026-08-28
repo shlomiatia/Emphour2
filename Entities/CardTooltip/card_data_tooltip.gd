@@ -11,16 +11,16 @@ func show_data(data: CardData) -> void:
 func get_description(data: CardData) -> String:
     var lines: Array[String]
     if data.strength:
-        lines.append("Strength: %s" % data.strength)
+        lines.append(tr("tooltip.strength") % data.strength)
     if data.attack:
-        lines.append("%s attack" % get_attack_name(data.attack_type))
+        lines.append(tr("tooltip.attack") % get_attack_name(data.attack_type))
     if data.anti_attack != CardData.AttackType.NONE:
-        lines.append("Block 1 %s attack" % get_attack_name(data.anti_attack))
+        lines.append(tr("tooltip.block") % get_attack_name(data.anti_attack))
     if data.armored:
-        lines.append("Block 1 non armor piercing attack")
+        lines.append(tr("tooltip.block_non_armor_piercing"))
     return "\n".join(lines)
 
 func get_attack_name(type: CardData.AttackType) -> String:
     if type == CardData.AttackType.CAVALRY:
-        return "Charge"
+        return tr("attack.charge")
     return CardData.AttackType.keys()[type].capitalize()
