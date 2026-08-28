@@ -74,7 +74,6 @@ func start_game() -> void:
 		return
 	input_disabled = true
 	CampaignState.intro = CampaignState.Intro.OPENING
-	audio.restart_music()
 	await fade.fade_out()
 	get_tree().change_scene_to_file("res://Scenes/Map/Map.tscn")
 

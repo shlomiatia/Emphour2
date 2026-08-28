@@ -30,7 +30,7 @@ signal card_chosen(card: Card)
 signal battle_ready
 
 func _ready() -> void:
-    audio.start_music()
+    start_music()
     board.slot_count = CampaignState.battle_slot_count()
     setup_states()
     connect_signals()
@@ -41,6 +41,12 @@ func _ready() -> void:
     turns.start_round()
     await get_tree().process_frame
     battle_ready.emit()
+
+func start_music() -> void:
+    if CampaignState.is_act_1_boss() || CampaignState.is_act_2_boss():
+        audio.start_boss_music()
+        return
+    audio.start_general_music()
 
 func setup_states() -> void:
     battle.setup(self)

@@ -8,10 +8,9 @@ func _initialize() -> void:
 func run_test() -> void:
     CampaignState.start_in_act_2 = true
     CampaignState.reset()
-    await open_map()
     verify_declaration()
-    verify_route()
-    verify_boss()
+    await verify_route()
+    await verify_boss()
     await verify_act_1_boss_tutorial()
     quit()
 
@@ -29,10 +28,7 @@ func find_city(faction: int, index: int) -> CampaignCity:
     return null
 
 func verify_declaration() -> void:
-    var city := find_city(CampaignState.Faction.ENGLISH, 1)
-    assert(city.attackable)
-    map._on_city_clicked(city)
-    await process_frame
+    CampaignState.declare_war(CampaignState.Faction.ENGLISH)
     assert(CampaignState.selected_city == CampaignState.act_2_city_id(1))
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.WAR)
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.MILITARY_ALLIANCE)
@@ -50,6 +46,8 @@ func verify_boss() -> void:
     assert(host.attackable)
     assert(CampaignState.map_city_id(host.city_id) == "Act 2 Boss")
     assert(host.marker.modulate == CampaignState.faction_color(CampaignState.Faction.HRE))
+    assert(find_city(CampaignState.Faction.ENGLISH, 1).marker.modulate == CampaignState.faction_color(CampaignState.Faction.FRANKS))
+    assert(find_city(CampaignState.Faction.HRE, 1).marker.modulate == CampaignState.faction_color(CampaignState.Faction.HRE))
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.WAR)
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.NEUTRAL)
     assert(map.tutorial.visible)

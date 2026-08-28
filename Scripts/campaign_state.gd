@@ -93,7 +93,8 @@ static func map_owner(base_id: String, faction: Faction, route_index: int) -> Fa
         return Faction.REBELS
     if city_id == "Act 2 Boss":
         return Faction.FRANKS if act_2_boss_defeated else battlefield_faction()
-    if faction != Faction.FRANKS && is_act_2() && faction == faction_at_war() && route_index <= act_2_progress:
+    var conquered_faction := act_2_boss_warring_faction if act_2_boss_prepared else faction_at_war()
+    if faction != Faction.FRANKS && is_act_2() && faction == conquered_faction && route_index <= act_2_progress:
         return Faction.FRANKS
     return city_owner.get(city_id, faction)
 

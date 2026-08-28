@@ -16,12 +16,14 @@ const ACT_2_BOSS_TUTORIAL_ID := "act_2_boss"
 @onready var fade: Fade = $CanvasLayer/Fade
 @onready var confirm_sound: AudioStreamPlayer = $ConfirmSound
 @onready var tutorial: TutorialMessage = $TutorialMessage
+@onready var audio: GameAudio = get_node("/root/Audio")
 
 var roads := {}
 var input_disabled := false
 
 func _ready() -> void:
     prepare_boss()
+    start_music()
     setup_roads()
     setup_cities()
     update_header()
@@ -30,6 +32,16 @@ func _ready() -> void:
 func prepare_boss() -> void:
     if CampaignState.is_act_2() && CampaignState.act_2_progress == 5 && !CampaignState.act_2_boss_defeated:
         CampaignState.prepare_act_2_boss()
+
+func start_music() -> void:
+    if boss_available():
+        audio.stop_music()
+        return
+    audio.start_general_music()
+
+func boss_available() -> bool:
+    var city_id := CampaignState.map_city_id(CampaignState.act_1_city_id(1))
+    return city_id == "Act 1 Boss" || city_id == "Act 2 Boss"
 
 func show_boss_tutorial() -> void:
     if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 1 Boss" && CampaignState.start_tutorial(ACT_1_BOSS_TUTORIAL_ID):
@@ -137,11 +149,16 @@ func hide_tooltip(_city: CampaignCity = null) -> void:
 func _on_city_clicked(city: CampaignCity) -> void:
     if input_disabled || !city.attackable:
         return
-    if CampaignState.can_declare_war(city.faction, city.route_index):
-        CampaignState.declare_war(city.faction)
-    else:
-        CampaignState.selected_city = CampaignState.map_city_id(city.city_id)
+    select_city(city)
+    if CampaignState.is_act_1_boss() || CampaignState.is_act_2_boss():
+        audio.stop_music()
     input_disabled = true
     confirm_sound.play()
     await fade.fade_out()
     get_tree().change_scene_to_file("res://Scenes/Battlefield/Battlefield.tscn")
+
+func select_city(city: CampaignCity) -> void:
+    if CampaignState.can_declare_war(city.faction, city.route_index):
+        CampaignState.declare_war(city.faction)
+    else:
+        CampaignState.selected_city = CampaignState.map_city_id(city.city_id)

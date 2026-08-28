@@ -10,20 +10,20 @@ const BLOCK_SOUNDS: Array[AudioStream] = [preload("res://Audio/block1.mp3"), pre
 var music_index := 0
 
 func _ready() -> void:
-    music.finished.connect(play_next_track)
+    music.finished.connect(replay_music)
 
-func start_music() -> void:
-    if !music.playing:
-        music.stream = MUSIC_TRACKS[music_index]
-        music.play()
+func start_general_music() -> void:
+    play_track(0)
 
-func restart_music() -> void:
-    music_index = 0
-    music.stream = MUSIC_TRACKS[music_index]
-    music.play()
+func start_boss_music() -> void:
+    play_track(1)
 
 func stop_music() -> void:
     music.stop()
+    music_index = 0
+
+func replay_music() -> void:
+    play_track(music_index)
 
 func play_card() -> void:
     play_random(CARD_SOUNDS)
@@ -38,7 +38,10 @@ func play_random(sounds: Array[AudioStream]) -> void:
     effects.stream = sounds.pick_random()
     effects.play()
 
-func play_next_track() -> void:
-    music_index = (music_index + 1) % MUSIC_TRACKS.size()
+func play_track(index: int) -> void:
+    if music.playing && music_index == index:
+        return
+    music.stop()
+    music_index = index
     music.stream = MUSIC_TRACKS[music_index]
     music.play()

@@ -17,12 +17,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Message" type="Control" parent="." unique_id=53125160]
-layout_mode = 3
-anchors_preset = 0
+[node name="Message" type="ColorRect" parent="." unique_id=201855294]
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
+color = Color(0, 0, 0, 0.7529412)
 
 [node name="King" type="TextureRect" parent="Message" unique_id=1273473990]
 layout_mode = 0

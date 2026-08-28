@@ -18,7 +18,7 @@ script = ExtResource("1_script")
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
-color = Color(0.015, 0.035, 0.08, 0.48)
+color = Color(0.015686275, 0.03529412, 0.078431375, 0.7529412)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1986444931]
 
