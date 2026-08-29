@@ -1,7 +1,7 @@
 class_name BattleHud extends Control
 
-const ENEMY_COLOR := Color(0.9, 0.26, 0.22)
-const PLAYER_COLOR := Color(0.24, 0.58, 0.95)
+const ENEMY_COLOR := Color("#731927")
+const PLAYER_COLOR := Color("#1b4e7a")
 const NORMAL_COLOR := Color("#180f24")
 
 @export var loss_icon_scene: PackedScene

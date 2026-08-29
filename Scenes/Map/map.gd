@@ -8,8 +8,8 @@ const ACT_2_BOSS_TUTORIAL_ID := "act_2_boss"
 @onready var second_icon: TextureRect = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/Icon
 @onready var first_name: Label = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer/Peasants
 @onready var second_name: Label = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/Nobility
-@onready var first_status: Label = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer/PeasantsStatus
-@onready var second_status: Label = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/NobilityStatus
+@onready var first_status: LoyaltyTag = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer/PeasantsStatus
+@onready var second_status: LoyaltyTag = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/NobilityStatus
 @onready var tooltip: PanelContainer = $CanvasLayer/Tooltip
 @onready var tooltip_title: Label = $CanvasLayer/Tooltip/MarginContainer/Content/Title
 @onready var tooltip_changes := [$CanvasLayer/Tooltip/MarginContainer/Content/English, $CanvasLayer/Tooltip/MarginContainer/Content/HRE]
@@ -116,15 +116,14 @@ func update_header() -> void:
     set_loyalty_label(first_status, CampaignState.loyalty["Peasants"])
     set_loyalty_label(second_status, CampaignState.loyalty["Nobility"])
 
-func set_foreign_label(name_label: Label, icon: TextureRect, status: Label, faction: CampaignState.Faction) -> void:
+func set_foreign_label(name_label: Label, icon: TextureRect, status: LoyaltyTag, faction: CampaignState.Faction) -> void:
     name_label.text = CampaignState.faction_name(faction)
     icon.texture = SHIELD
     icon.modulate = CampaignState.faction_color(faction)
     set_loyalty_label(status, CampaignState.foreign_loyalty[faction])
 
-func set_loyalty_label(label: Label, loyalty_value: int) -> void:
-    label.text = RelationData.loyalty_name(loyalty_value)
-    label.add_theme_color_override("font_color", RelationData.color(loyalty_value))
+func set_loyalty_label(tag: LoyaltyTag, loyalty_value: int) -> void:
+    tag.set_value(loyalty_value)
 
 func _on_city_hovered(city: CampaignCity) -> void:
     if !CampaignState.can_declare_war(city.faction, city.route_index):
@@ -136,14 +135,9 @@ func _on_city_hovered(city: CampaignCity) -> void:
     tooltip.show()
 
 func set_tooltip_change(index: int, faction: CampaignState.Faction, target: int) -> void:
-    var change := tooltip_changes[index] as HBoxContainer
-    var icon := change.get_node("Group/Icon") as TextureRect
-    var name := change.get_node("Group/Name") as Label
-    icon.texture = SHIELD
-    icon.modulate = CampaignState.faction_color(faction)
-    name.text = CampaignState.faction_name(faction)
-    set_loyalty_label(change.get_node("Change/Current"), CampaignState.foreign_loyalty[faction])
-    set_loyalty_label(change.get_node("Change/Target"), target)
+    var change := tooltip_changes[index] as LoyaltyChange
+    change.set_group(SHIELD, CampaignState.faction_name(faction), CampaignState.faction_color(faction))
+    change.show_comparison(CampaignState.foreign_loyalty[faction], target)
 
 func hide_tooltip(_city: CampaignCity = null) -> void:
     tooltip.hide()

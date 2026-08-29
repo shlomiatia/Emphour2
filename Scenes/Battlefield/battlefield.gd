@@ -133,4 +133,3 @@ func set_balance(value: int, animate := true) -> void:
 func set_status(value: String, color := BattleHud.NORMAL_COLOR) -> void:
     status_label.text = value
     status_label.add_theme_color_override("font_color", color)
-    status_label.add_theme_constant_override("outline_size", 4 if color != BattleHud.NORMAL_COLOR else 0)

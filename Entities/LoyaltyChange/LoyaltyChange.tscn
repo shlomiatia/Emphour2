@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://bfx4r1xms2dwg"]
 
-[ext_resource type="Theme" uid="uid://brj5baqxslgsc" path="res://Themes/ParchmentText.tres" id="1_parchment"]
-[ext_resource type="PackedScene" uid="uid://b7rgeifyj5455" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="2_arrow"]
-[ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="3_dark"]
-[ext_resource type="Texture2D" uid="uid://b4ntkswf0kjr2" path="res://Textures/Peasants.png" id="4_icon"]
+[ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://cwjq3pw610vf6" path="res://Entities/LoyaltyChange/loyalty_change.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://b4ntkswf0kjr2" path="res://Textures/Peasants.png" id="3_icon"]
+[ext_resource type="Texture2D" uid="uid://blco54akhdtml" path="res://Textures/ArrowDown.png" id="4_down_arrow"]
+[ext_resource type="PackedScene" path="res://Entities/LoyaltyTag/LoyaltyTag.tscn" id="5_tag"]
+[ext_resource type="PackedScene" uid="uid://b7rgeifyj5455" path="res://Entities/ChangeArrow/ChangeArrow.tscn" id="6_arrow"]
 
 [node name="LoyaltyChange" type="HBoxContainer" unique_id=2039382546]
 custom_minimum_size = Vector2(570, 64)
 theme_override_constants/separation = 52
+script = ExtResource("2_script")
 
 [node name="Group" type="HBoxContainer" parent="." unique_id=1427389380]
 layout_mode = 2
@@ -17,40 +20,52 @@ theme_override_constants/separation = 8
 custom_maximum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("4_icon")
+texture = ExtResource("3_icon")
 
 [node name="Name" type="Label" parent="Group" unique_id=2029161488]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
-theme = ExtResource("3_dark")
+theme = ExtResource("1_theme")
 theme_override_font_sizes/font_size = 22
 text = "group.peasants"
 vertical_alignment = 1
 
-[node name="Change" type="HBoxContainer" parent="." unique_id=575262553]
+[node name="Single" type="HBoxContainer" parent="." unique_id=436329552]
 layout_mode = 2
-theme_override_constants/separation = 8
 
-[node name="Current" type="Label" parent="Change" unique_id=2023284371]
+[node name="Tag" parent="Single" unique_id=580626143 instance=ExtResource("5_tag")]
 layout_mode = 2
-theme = ExtResource("1_parchment")
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
-text = "relation.neutral"
-horizontal_alignment = 2
-vertical_alignment = 1
 
-[node name="Arrow" parent="Change" unique_id=459325806 instance=ExtResource("2_arrow")]
+[node name="Reward" type="HBoxContainer" parent="." unique_id=2054561769]
+visible = false
 layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(0, -4)
+theme_override_constants/separation = 12
 
-[node name="Target" type="Label" parent="Change" unique_id=2071257615]
+[node name="Tag" parent="Reward" unique_id=1252243746 instance=ExtResource("5_tag")]
 layout_mode = 2
-theme = ExtResource("1_parchment")
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
-text = "relation.uneasy"
-vertical_alignment = 1
+
+[node name="Arrow" type="TextureRect" parent="Reward" unique_id=1644387265]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_down_arrow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Comparison" type="HBoxContainer" parent="." unique_id=721448391]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Current" parent="Comparison" unique_id=316364440 instance=ExtResource("5_tag")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+
+[node name="Arrow" parent="Comparison" unique_id=58725455 instance=ExtResource("6_arrow")]
+layout_mode = 2
+
+[node name="Target" parent="Comparison" unique_id=1653063393 instance=ExtResource("5_tag")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22

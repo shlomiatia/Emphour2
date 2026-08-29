@@ -11,8 +11,6 @@ const SHIELD := preload("res://Textures/Shield.png")
 @onready var loyalty: VBoxContainer = $Panel/Loyalty
 @onready var group_icon: TextureRect = $Panel/GroupIcon
 @onready var faction_shield: TextureRect = $Panel/FactionShield
-@onready var current_labels := [$Panel/Loyalty/Peasants/Change/Current, $Panel/Loyalty/Nobility/Change/Current]
-@onready var target_labels := [$Panel/Loyalty/Peasants/Change/Target, $Panel/Loyalty/Nobility/Change/Target]
 
 var offer: Dictionary
 var cards: Array[Card]
@@ -56,26 +54,16 @@ func setup_foreign_loyalty() -> void:
 	set_foreign_change(1, CampaignState.Faction.HRE)
 
 func set_change(index: int, group: String, amount: int) -> void:
-	var row := loyalty.get_child(index)
-	(row.get_node("Group/Icon") as TextureRect).texture = load("res://Textures/%s.png" % group)
-	(row.get_node("Group/Name") as Label).text = CampaignState.group_name(group)
-	(row.get_node("Change/Arrow") as Control).show()
-	(row.get_node("Change/Target") as Control).show()
-	set_label(current_labels[index], CampaignState.loyalty[group])
-	set_label(target_labels[index], CampaignState.loyalty_after(group, amount))
+	var row := loyalty.get_child(index) as LoyaltyChange
+	var current: int = CampaignState.loyalty[group]
+	var target: int = CampaignState.loyalty_after(group, amount)
+	row.set_group(load("res://Textures/%s.png" % group), CampaignState.group_name(group))
+	row.show_reward(target, target - current)
 
 func set_foreign_change(index: int, faction: CampaignState.Faction) -> void:
-	var row := loyalty.get_child(index)
-	(row.get_node("Group/Icon") as TextureRect).texture = SHIELD
-	(row.get_node("Group/Icon") as TextureRect).modulate = CampaignState.faction_color(faction)
-	(row.get_node("Group/Name") as Label).text = CampaignState.faction_name(faction)
-	(row.get_node("Change/Arrow") as Control).hide()
-	(row.get_node("Change/Target") as Control).hide()
-	set_label(current_labels[index], CampaignState.foreign_loyalty[faction])
-
-func set_label(label: Label, value: int) -> void:
-	label.text = RelationData.loyalty_name(value)
-	label.add_theme_color_override("font_color", RelationData.color(value))
+	var row := loyalty.get_child(index) as LoyaltyChange
+	row.set_group(SHIELD, CampaignState.faction_name(faction), CampaignState.faction_color(faction))
+	row.show_level(CampaignState.foreign_loyalty[faction])
 
 func add_card(card_name: String, position_value: Vector2, faction: CampaignState.Faction) -> void:
 	var card := CardFactory.create(card_name, GameRules.Side.PLAYER, faction)

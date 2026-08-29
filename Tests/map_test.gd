@@ -6,15 +6,15 @@ func _initialize() -> void:
     run_test()
 
 func run_test() -> void:
-	CampaignState.start_in_act_2 = true
-	CampaignState.reset()
-	await verify_tooltip_order()
-	verify_declaration()
+    CampaignState.start_in_act_2 = true
+    CampaignState.reset()
+    await verify_tooltip_order()
+    verify_declaration()
     await verify_route()
-	await verify_boss()
-	await verify_act_1_boss_tutorial()
-	await verify_act_1_boss_tie()
-	quit()
+    await verify_boss()
+    await verify_act_1_boss_tutorial()
+    await verify_act_1_boss_tie()
+    quit()
 
 func open_map() -> void:
     map = load("res://Scenes/Map/Map.tscn").instantiate()
@@ -33,18 +33,23 @@ func verify_declaration() -> void:
     CampaignState.declare_war(CampaignState.Faction.ENGLISH)
     assert(CampaignState.selected_city == CampaignState.act_2_city_id(1))
     assert(CampaignState.foreign_loyalty[CampaignState.Faction.ENGLISH] == CampaignState.Relation.WAR)
-	assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.MILITARY_ALLIANCE)
+    assert(CampaignState.foreign_loyalty[CampaignState.Faction.HRE] == CampaignState.Relation.MILITARY_ALLIANCE)
 
 func verify_tooltip_order() -> void:
-	await open_map()
-	map._on_city_hovered(find_city(CampaignState.Faction.HRE, 1))
-	var english := map.tooltip_changes[0] as HBoxContainer
-	var hre := map.tooltip_changes[1] as HBoxContainer
-	assert((english.get_node("Group/Name") as Label).text == "English")
-	assert((hre.get_node("Group/Name") as Label).text == "HRE")
-	assert((english.get_node("Change/Target") as Label).text == "Devoted")
-	assert((hre.get_node("Change/Target") as Label).text == "Treacherous")
-	map.queue_free()
+    await open_map()
+    assert(tag_text(map.first_status) == "Neutral (0)")
+    assert(tag_text(map.second_status) == "Neutral (0)")
+    map._on_city_hovered(find_city(CampaignState.Faction.HRE, 1))
+    var english := map.tooltip_changes[0] as LoyaltyChange
+    var hre := map.tooltip_changes[1] as LoyaltyChange
+    assert((english.get_node("Group/Name") as Label).text == "English")
+    assert((hre.get_node("Group/Name") as Label).text == "HRE")
+    assert(tag_text(english.get_node("Comparison/Target")) == "Devoted (5)")
+    assert(tag_text(hre.get_node("Comparison/Target")) == "Treacherous (-5)")
+    map.queue_free()
+
+func tag_text(tag: LoyaltyTag) -> String:
+    return tag.text
 
 func verify_route() -> void:
     CampaignState.capture_selected_city()
@@ -67,31 +72,31 @@ func verify_boss() -> void:
     assert((map.tutorial.get_node("Message/Text") as Label).text == "...")
     assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.shocked_king)
     map.tutorial.advance()
-	assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the HRE has double-crossed us!")
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the HRE has double-crossed us!")
     assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.open_king)
 
 func verify_act_1_boss_tutorial() -> void:
-	CampaignState.start_in_act_2 = false
-	CampaignState.reset()
-	CampaignState.loyalty = {"Peasants": -1, "Nobility": -3}
-	for index in 5:
+    CampaignState.start_in_act_2 = false
+    CampaignState.reset()
+    CampaignState.loyalty = {"Peasants": -1, "Nobility": -3}
+    for index in 5:
         CampaignState.selected_city = CampaignState.act_1_city_id(index + 1)
         CampaignState.capture_selected_city()
     await open_map()
     assert(map.tutorial.visible)
     assert((map.tutorial.get_node("Message/Text") as Label).text == "...")
     map.tutorial.advance()
-	assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the Nobility are trying to take Paris!")
-	assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.open_king)
-	assert(CampaignState.loyalty["Nobility"] == CampaignState.Relation.WAR)
-	assert(CampaignState.loyalty["Peasants"] == -1)
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the Nobility are trying to take Paris!")
+    assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.open_king)
+    assert(CampaignState.loyalty["Nobility"] == CampaignState.Relation.WAR)
+    assert(CampaignState.loyalty["Peasants"] == -1)
 
 func verify_act_1_boss_tie() -> void:
-	CampaignState.start_in_act_2 = false
-	CampaignState.reset()
-	for index in 5:
-		CampaignState.selected_city = CampaignState.act_1_city_id(index + 1)
-		CampaignState.capture_selected_city()
-	await open_map()
-	assert(CampaignState.loyalty["Peasants"] == CampaignState.Relation.NEUTRAL)
-	assert(CampaignState.loyalty["Nobility"] == CampaignState.Relation.WAR)
+    CampaignState.start_in_act_2 = false
+    CampaignState.reset()
+    for index in 5:
+        CampaignState.selected_city = CampaignState.act_1_city_id(index + 1)
+        CampaignState.capture_selected_city()
+    await open_map()
+    assert(CampaignState.loyalty["Peasants"] == CampaignState.Relation.NEUTRAL)
+    assert(CampaignState.loyalty["Nobility"] == CampaignState.Relation.WAR)

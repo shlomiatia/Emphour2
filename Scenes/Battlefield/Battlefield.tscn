@@ -166,7 +166,6 @@ theme_override_constants/margin_right = 8
 [node name="Status" type="Label" parent="Interface/StatusBackground/MarginContainer" unique_id=2036854357]
 layout_mode = 2
 theme = ExtResource("15_panel")
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 text = "ui.preparing_game"
 horizontal_alignment = 1
 vertical_alignment = 1

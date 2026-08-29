@@ -10,6 +10,7 @@ func _initialize() -> void:
     verify_act_2_paths()
     verify_exclusions()
     verify_boss_rewards()
+    await verify_act_1_loyalty_preview()
     await verify_act_2_screen()
     verify_act_1_boss()
     quit()
@@ -120,14 +121,38 @@ func verify_act_2_screen() -> void:
     screen.queue_free()
 
 func verify_foreign_loyalty(option: RewardOption) -> void:
-    var english := option.loyalty.get_child(0)
-    var hre := option.loyalty.get_child(1)
+    var english := option.loyalty.get_child(0) as LoyaltyChange
+    var hre := option.loyalty.get_child(1) as LoyaltyChange
     assert((english.get_node("Group/Name") as Label).text == "English")
     assert((hre.get_node("Group/Name") as Label).text == "HRE")
-    assert(!(english.get_node("Change/Arrow") as Control).visible)
-    assert(!(hre.get_node("Change/Target") as Control).visible)
-    assert((english.get_node("Change/Current") as Label).text == "Treacherous")
-    assert((hre.get_node("Change/Current") as Label).text == "Devoted")
+    assert((english.get_node("Single") as Control).visible)
+    assert(!(english.get_node("Reward") as Control).visible)
+    assert((hre.get_node("Single") as Control).visible)
+    assert(!(hre.get_node("Reward") as Control).visible)
+    assert(tag_text(english.get_node("Single/Tag")) == "Treacherous (-5)")
+    assert(tag_text(hre.get_node("Single/Tag")) == "Devoted (5)")
+
+func tag_text(tag: LoyaltyTag) -> String:
+    return tag.text
+
+func verify_act_1_loyalty_preview() -> void:
+    CampaignState.start_in_act_2 = false
+    CampaignState.reset()
+    var screen := load("res://Scenes/Reward/Reward.tscn").instantiate() as RewardScreen
+    root.add_child(screen)
+    await process_frame
+    var peasants := screen.peasants.loyalty.get_child(0) as LoyaltyChange
+    var nobility := screen.peasants.loyalty.get_child(1) as LoyaltyChange
+    assert(!(peasants.get_node("Single") as Control).visible)
+    assert(tag_text(peasants.get_node("Reward/Tag")) == "At Ease (1)")
+    assert((peasants.get_node("Reward/Arrow") as TextureRect).flip_v)
+    assert(tag_text(nobility.get_node("Reward/Tag")) == "Uneasy (-1)")
+    assert(!(nobility.get_node("Reward/Arrow") as TextureRect).flip_v)
+    CampaignState.loyalty = {"Peasants": 5, "Nobility": -5}
+    screen.peasants.setup_loyalty("Peasants", true)
+    assert(!(peasants.get_node("Reward/Arrow") as TextureRect).visible)
+    assert(!(nobility.get_node("Reward/Arrow") as TextureRect).visible)
+    screen.queue_free()
 
 func setup_act_2() -> void:
     CampaignState.start_in_act_2 = true

@@ -13,6 +13,7 @@
 [ext_resource type="StyleBox" path="res://Themes/ParchmentPanel.tres" id="14_panel"]
 [ext_resource type="PackedScene" uid="uid://bfx4r1xms2dwg" path="res://Entities/LoyaltyChange/LoyaltyChange.tscn" id="15_loyalty_change"]
 [ext_resource type="PackedScene" uid="uid://byxk0sbymsvg1" path="res://Entities/TutorialMessage/TutorialMessage.tscn" id="16_tutorial"]
+[ext_resource type="PackedScene" path="res://Entities/LoyaltyTag/LoyaltyTag.tscn" id="17_tag"]
 
 [node name="Map" type="Node2D" unique_id=914594545]
 script = ExtResource("1_map")
@@ -195,14 +196,8 @@ theme = ExtResource("8_small_parchment")
 text = "group.peasants"
 vertical_alignment = 1
 
-[node name="PeasantsStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=465970467]
+[node name="PeasantsStatus" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer" unique_id=465970467 instance=ExtResource("17_tag")]
 layout_mode = 2
-theme = ExtResource("8_small_parchment")
-theme_override_colors/font_color = Color(0.9999592, 0.56896424, 0.5257008, 1)
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 4
-text = "relation.neutral"
-vertical_alignment = 1
 
 [node name="NobilityContainer" type="HBoxContainer" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer" unique_id=298819769]
 layout_mode = 2
@@ -221,13 +216,8 @@ theme = ExtResource("8_small_parchment")
 text = "group.nobility"
 vertical_alignment = 1
 
-[node name="NobilityStatus" type="Label" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=670872147]
+[node name="NobilityStatus" parent="CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer" unique_id=670872147 instance=ExtResource("17_tag")]
 layout_mode = 2
-theme = ExtResource("8_small_parchment")
-theme_override_colors/font_outline_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_constants/outline_size = 3
-text = "relation.neutral"
-vertical_alignment = 1
 
 [node name="Tooltip" type="PanelContainer" parent="CanvasLayer" unique_id=873779568]
 visible = false
