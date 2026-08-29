@@ -63,7 +63,7 @@ func choose_defender(attacker: Card, cards: Array[Card], opponents: Array[Card],
     if cards.is_empty():
         return null
     if attacker.side == GameRules.Side.ENEMY:
-        return await game.choose_card(cards, tr("battle.defend") % CardCatalog.display_name(attacker.card_name))
+        return await game.choose_card(cards, tr("battle.defend") % CardCatalog.inline_name(attacker.card_name))
     var defenders: Array[Card] = opponents.filter(func(card: Card) -> bool: return !used.has(card))
     var player_attackers: Array[Card] = attackers.filter(func(card: Card) -> bool: return card.side == GameRules.Side.PLAYER && card.data.attack > 0)
     return matcher.choose(attacker, cards, player_attackers, defenders)
@@ -75,7 +75,7 @@ func choose_target(attacker: Card, cards: Array[Card]) -> Card:
     if cards.is_empty():
         return null
     if attacker.side == GameRules.Side.PLAYER:
-        return await game.choose_card(cards, tr("battle.kill") % CardCatalog.display_name(attacker.card_name))
+        return await game.choose_card(cards, tr("battle.kill") % CardCatalog.inline_name(attacker.card_name))
     var chosen: Card = cards.pick_random()
     return chosen
 

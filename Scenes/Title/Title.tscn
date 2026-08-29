@@ -6,11 +6,109 @@
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/Fade.tscn" id="5_fade"]
 [ext_resource type="AudioStream" uid="uid://bko1c65p4u2wl" path="res://Audio/long_confirm.mp3" id="6_sound"]
 [ext_resource type="PackedScene" uid="uid://ejq7bly8xhs1" path="res://Entities/EuropeMap/EuropeMap.tscn" id="7_europe_map"]
+[ext_resource type="PackedScene" path="res://Entities/City/City.tscn" id="8_city"]
 
 [node name="Title" type="Node2D" unique_id=1851559752]
 script = ExtResource("1_title")
 
 [node name="EuropeMap" parent="." unique_id=2007218734 instance=ExtResource("7_europe_map")]
+
+[node name="Cities" type="Node2D" parent="." unique_id=182626263]
+
+[node name="Paris" parent="Cities" unique_id=415634833 instance=ExtResource("8_city")]
+position = Vector2(891, 583)
+city_id = "Act 1 City 1"
+display_name = "city.paris"
+
+[node name="Reims" parent="Cities" unique_id=2057095912 instance=ExtResource("8_city")]
+position = Vector2(855, 450)
+city_id = "Act 1 City 2"
+display_name = "city.reims"
+
+[node name="Rouen" parent="Cities" unique_id=646343645 instance=ExtResource("8_city")]
+position = Vector2(738, 499)
+city_id = "Act 1 City 3"
+display_name = "city.rouen"
+
+[node name="Orleans" parent="Cities" unique_id=77520392 instance=ExtResource("8_city")]
+position = Vector2(746, 618)
+city_id = "Act 1 City 4"
+display_name = "city.orleans"
+
+[node name="Tours" parent="Cities" unique_id=1201709700 instance=ExtResource("8_city")]
+position = Vector2(679, 709)
+city_id = "Act 1 City 5"
+display_name = "city.tours"
+
+[node name="Winchester" parent="Cities" unique_id=926490823 instance=ExtResource("8_city")]
+position = Vector2(569, 406)
+city_id = "Act 2 City 1"
+display_name = "city.winchester"
+faction = 2
+route_index = 1
+
+[node name="York" parent="Cities" unique_id=985024346 instance=ExtResource("8_city")]
+position = Vector2(661, 174)
+city_id = "Act 2 City 2"
+display_name = "city.york"
+faction = 2
+route_index = 2
+
+[node name="Lincoln" parent="Cities" unique_id=322223360 instance=ExtResource("8_city")]
+position = Vector2(693, 238)
+city_id = "Act 2 City 3"
+display_name = "city.lincoln"
+faction = 2
+route_index = 3
+
+[node name="Norwich" parent="Cities" unique_id=1407028878 instance=ExtResource("8_city")]
+position = Vector2(721, 304)
+city_id = "Act 2 City 4"
+display_name = "city.norwich"
+faction = 2
+route_index = 4
+
+[node name="London" parent="Cities" unique_id=78921211 instance=ExtResource("8_city")]
+position = Vector2(659, 360)
+city_id = "Act 2 City 5"
+display_name = "city.london"
+faction = 2
+route_index = 5
+
+[node name="Trier" parent="Cities" unique_id=1499370307 instance=ExtResource("8_city")]
+position = Vector2(1039, 530)
+city_id = "Act 2 City 1"
+display_name = "city.trier"
+faction = 3
+route_index = 1
+
+[node name="Aachen" parent="Cities" unique_id=1923947316 instance=ExtResource("8_city")]
+position = Vector2(1022, 402)
+city_id = "Act 2 City 2"
+display_name = "city.aachen"
+faction = 3
+route_index = 2
+
+[node name="Cologne" parent="Cities" unique_id=311471538 instance=ExtResource("8_city")]
+position = Vector2(1159, 338)
+city_id = "Act 2 City 3"
+display_name = "city.cologne"
+faction = 3
+route_index = 3
+
+[node name="Mainz" parent="Cities" unique_id=84563263 instance=ExtResource("8_city")]
+position = Vector2(1175, 508)
+city_id = "Act 2 City 4"
+display_name = "city.mainz"
+faction = 3
+route_index = 4
+
+[node name="Regensburg" parent="Cities" unique_id=1896251498 instance=ExtResource("8_city")]
+position = Vector2(1174, 636)
+city_id = "Act 2 City 5"
+display_name = "city.regensburg"
+faction = 3
+route_index = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1892615310]
 

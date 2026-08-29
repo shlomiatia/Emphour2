@@ -18,6 +18,9 @@ static func display_name(card_name: String) -> String:
         return TranslationServer.translate("card.heavy_cav")
     return TranslationServer.translate("card.%s" % card_name.to_snake_case())
 
+static func inline_name(card_name: String) -> String:
+    return display_name(card_name).to_lower()
+
 static func get_data(card_name: String) -> CardData:
     match card_name:
         "Archer":

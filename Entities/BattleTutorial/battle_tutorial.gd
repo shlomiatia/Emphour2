@@ -40,7 +40,8 @@ func run() -> void:
     stage = 1
     await action_done
     await game.turns.player_action_started
-    await say(tr("tutorial.battle.equal_strength"), strengths_rect())
+    await wait_for_slot_card(player_slot(0).get_card())
+    await say(tr("tutorial.battle.equal_strength"), equal_strength_rects())
     await say(tr("tutorial.battle.charge"), attack_rect())
     await say(tr("tutorial.battle.kill_militia"))
     await say(tr("tutorial.battle.deploy_stakes"))
@@ -50,7 +51,7 @@ func run() -> void:
     await game.turns.player_action_started
     await get_tree().create_timer(0.25).timeout
     await say(tr("tutorial.battle.block_charge"), stakes_right())
-    await say(tr("tutorial.battle.enemy_stronger"), game.battle_hud.preview.get_global_rect())
+    await say(tr("tutorial.battle.enemy_stronger"), strength_rects())
     await say(tr("tutorial.battle.plan"))
     message.show_action(tr("tutorial.battle.hover_face_down"), enemy_rect())
     game.player_hand.set_draggable(false)
@@ -113,11 +114,15 @@ func choice_selected() -> void:
 func restrict(card_name: String) -> void:
     game.player_hand.set_draggable_cards(game.player_hand.get_cards().filter(func(card: Card) -> bool: return card.card_name == card_name))
 
-func say(text: String, rect := Rect2()) -> void:
+func say(text: String, highlights = []) -> void:
     game.player_hand.hover_enabled = false
-    message.show_message(text, rect)
+    message.show_highlights(text, highlights if highlights is Array else [highlights])
     await message.completed
     game.player_hand.hover_enabled = true
+
+func wait_for_slot_card(card: Card) -> void:
+    while card.position.length() > 1.0:
+        await get_tree().process_frame
 
 func player_slot(index: int) -> CardSlot:
     return game.board.get_row_slots(Board.PLAYER_ROW)[index]
@@ -143,9 +148,12 @@ func enemy_rect() -> Rect2:
             return card.get_global_rect()
     return Rect2()
 
-func strengths_rect() -> Rect2:
-    var militia := player_slot(0).get_card().strength.get_global_rect()
-    return militia.merge(game.board.get_row_slots(Board.ENEMY_ROW)[0].get_card().strength.get_global_rect())
+func equal_strength_rects() -> Array[Rect2]:
+    return [player_slot(0).get_card().strength.get_global_rect(), game.board.get_row_slots(Board.ENEMY_ROW)[0].get_card().strength.get_global_rect()]
+
+func strength_rects() -> Array[Rect2]:
+    var enemy := game.board.get_row_slots(Board.ENEMY_ROW)
+    return [enemy[0].get_card().strength.get_global_rect(), enemy[1].get_card().strength.get_global_rect(), player_slot(0).get_card().strength.get_global_rect()]
 
 func attack_rect() -> Rect2:
     return game.board.get_row_slots(Board.ENEMY_ROW)[0].get_card().attack.get_global_rect()

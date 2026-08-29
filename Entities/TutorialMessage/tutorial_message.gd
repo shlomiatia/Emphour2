@@ -59,16 +59,19 @@ func show_messages(value: Array, modes: Array = []) -> void:
 	show()
 	show_current_message()
 
-func show_message(value: String, highlight := Rect2(), mode := KingMode.OPEN) -> void:
+func show_highlights(value: String, highlights: Array, mode := KingMode.OPEN) -> void:
 	messages = [value]
 	king_modes = [mode]
 	current_index = 0
-	spotlight.set_rect(highlight)
-	message.color.a = 0.0 if highlight.size != Vector2.ZERO else BACKGROUND_ALPHA
+	spotlight.set_rects(highlights)
+	message.color.a = 0.0 if !spotlight.rects.is_empty() else BACKGROUND_ALPHA
 	can_advance = true
 	input_blocker.mouse_filter = Control.MOUSE_FILTER_STOP
 	show()
 	show_current_message()
+
+func show_message(value: String, highlight := Rect2(), mode := KingMode.OPEN) -> void:
+	show_highlights(value, [] if highlight.size == Vector2.ZERO else [highlight], mode)
 
 func show_action(value: String, highlight := Rect2()) -> void:
 	show_message(value, highlight)

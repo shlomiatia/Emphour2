@@ -15,9 +15,6 @@ signal clicked(city: CampaignCity)
 signal hovered(city: CampaignCity)
 signal unhovered(city: CampaignCity)
 
-func _ready() -> void:
-    name_label.text = tr(display_name)
-
 func apply_owner(faction: CampaignState.Faction) -> void:
     marker.modulate = CampaignState.faction_color(faction)
 
@@ -28,6 +25,11 @@ func set_attackable(value: bool) -> void:
         animation_player.play("Pulse")
     else:
         animation_player.play("RESET")
+
+func _ready() -> void:
+    set_attackable(false)
+    apply_owner(faction)
+    name_label.text = tr(display_name)
 
 func _on_mouse_entered() -> void:
     if attackable:

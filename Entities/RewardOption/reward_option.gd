@@ -39,8 +39,8 @@ func setup(value: Dictionary) -> void:
 	description.text = offer_text()
 
 func offer_text() -> String:
-	var old_name := CardCatalog.display_name(offer["old"])
-	var new_name := CardCatalog.display_name(offer["new"])
+	var old_name := CardCatalog.inline_name(offer["old"])
+	var new_name := CardCatalog.inline_name(offer["new"])
 	return tr("reward.add") % new_name if offer["old"].is_empty() else tr("reward.upgrade") % [old_name, new_name]
 
 func setup_loyalty(selected_group: String, visible: bool) -> void:

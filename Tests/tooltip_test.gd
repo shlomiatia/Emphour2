@@ -42,4 +42,5 @@ func run_test() -> void:
     assert(counts["Archer"] == "x1")
     assert(!counts.has("Crossbowman"))
     assert(CardCatalog.display_name("Heavy Cavalry") == "Heavy Cav")
+    assert(CardCatalog.inline_name("Heavy Cavalry") == "heavy cav")
     quit()

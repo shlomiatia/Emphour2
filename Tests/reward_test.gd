@@ -25,7 +25,7 @@ func verify_rewards() -> void:
     assert(deck.all(func(entry: CampaignCard) -> bool: return entry.faction == CampaignState.Faction.FRANKS))
     var option := RewardOption.new()
     option.offer = {"old": "Crossbowman", "new": "Heavy Cavalry"}
-    assert(option.offer_text() == "Upgrade 1 Crossbow from deck to Heavy Cav.")
+    assert(option.offer_text() == "Upgrade crossbow from deck to heavy cav.")
 
 func verify_reward_levels() -> void:
     CampaignState.reset()
