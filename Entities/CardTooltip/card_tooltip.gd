@@ -32,7 +32,7 @@ func get_hovered_card(point: Vector2) -> Card:
 
 func show_tooltip() -> void:
     if is_hidden_enemy_card(hovered_card):
-        enemy_tooltip.show_cards(get_possible_card_names(), hovered_card.side)
+        enemy_tooltip.show_cards(get_possible_card_names(), hovered_card.side, hovered_card.group_identity_visible)
         position_tooltip(enemy_tooltip)
         enemy_tooltip_shown.emit()
         return

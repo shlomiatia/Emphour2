@@ -43,4 +43,19 @@ func run_test() -> void:
     assert(!counts.has("Crossbowman"))
     assert(CardCatalog.display_name("Heavy Cavalry") == "Heavy Cav")
     assert(CardCatalog.inline_name("Heavy Cavalry") == "heavy cav")
+    await verify_hidden_identity(tooltip)
     quit()
+
+func verify_hidden_identity(tooltip: CardTooltip) -> void:
+    CampaignState.selected_city = CampaignState.act_1_city_id(1)
+    var first_city_card := game.create_card("Archer", GameRules.Side.PLAYER)
+    game.add_child(first_city_card)
+    await process_frame
+    assert(!first_city_card.group_icon.visible)
+    assert(!tooltip.data_tooltip.get_description(first_city_card.data, first_city_card.card_name, first_city_card.faction, first_city_card.group_identity_visible).contains("Peasants"))
+    CampaignState.arc = CampaignState.Arc.FOREIGN_RELATIONS
+    var act_2_card := game.create_card("Knight", GameRules.Side.PLAYER)
+    game.add_child(act_2_card)
+    await process_frame
+    assert(!act_2_card.group_icon.visible)
+    assert(!tooltip.data_tooltip.get_description(act_2_card.data, act_2_card.card_name, act_2_card.faction, act_2_card.group_identity_visible).contains("Nobility"))

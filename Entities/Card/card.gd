@@ -17,6 +17,7 @@ const FACTION_PALETTES := {
 @export var side: int = GameRules.Side.PLAYER
 @export var faction: CampaignState.Faction = CampaignState.Faction.FRANKS
 @export var face_down := false
+@export var group_identity_visible := true
 @onready var front: Node2D = $Front
 @onready var back: Node2D = $Back
 @onready var art: Sprite2D = $Front/Art
@@ -59,6 +60,7 @@ func refresh() -> void:
     attack.text = str(data.attack)
     defence.text = str(data.defence)
     group_icon.texture = GROUP_ICONS["Nobility" if RewardRules.belongs_to(card_name, "Nobility") else "Peasants"]
+    group_icon.visible = group_identity_visible
     set_icons()
     set_side(side)
     set_faction(faction)

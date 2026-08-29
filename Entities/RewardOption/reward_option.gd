@@ -8,7 +8,10 @@ const SHIELD := preload("res://Textures/Shield.png")
 @onready var offer_root: Node2D = $Panel/Offer
 @onready var arrow: Control = $Panel/Offer/Arrow
 @onready var description: Label = $Panel/Description
-@onready var loyalty: VBoxContainer = $Panel/Loyalty
+@onready var loyalty_section: VBoxContainer = $Panel/LoyaltySection
+@onready var loyalty_border: ColorRect = $Panel/LoyaltyBorder
+@onready var loyalty_title: Label = $Panel/LoyaltySection/Title
+@onready var loyalty: VBoxContainer = $Panel/LoyaltySection/Loyalty
 @onready var group_icon: TextureRect = $Panel/GroupIcon
 @onready var faction_shield: TextureRect = $Panel/FactionShield
 
@@ -42,16 +45,21 @@ func offer_text() -> String:
 	return tr("reward.add") % new_name if offer["old"].is_empty() else tr("reward.upgrade") % [old_name, new_name]
 
 func setup_loyalty(selected_group: String, visible: bool) -> void:
-	loyalty.visible = visible
+	setup_loyalty_section(visible, "ui.kingdom_loyalty")
 	if !visible:
 		return
 	set_change(0, "Peasants", 1 if selected_group == "Peasants" else -1)
 	set_change(1, "Nobility", 1 if selected_group == "Nobility" else -1)
 
 func setup_foreign_loyalty() -> void:
-	loyalty.show()
+	setup_loyalty_section(true, "ui.foreign_relations")
 	set_foreign_change(0, CampaignState.Faction.ENGLISH)
 	set_foreign_change(1, CampaignState.Faction.HRE)
+
+func setup_loyalty_section(visible: bool, title_key: String) -> void:
+	loyalty_section.visible = visible
+	loyalty_border.visible = visible
+	loyalty_title.text = tr(title_key)
 
 func set_change(index: int, group: String, amount: int) -> void:
 	var row := loyalty.get_child(index) as LoyaltyChange

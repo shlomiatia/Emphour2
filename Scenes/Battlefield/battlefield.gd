@@ -81,9 +81,15 @@ func _on_target_chosen(slot: CardSlot) -> void:
 func draw_card(side: int) -> Card:
     return draws.draw_card(side)
 
+func create_campaign_card(entry: CampaignCard, side: int) -> Card:
+    return CardFactory.create_campaign_card(entry, side, show_group_identity())
+
 func create_card(card_name: String, side: int) -> Card:
-    var faction := CampaignState.Faction.FRANKS if side == GameRules.Side.PLAYER else CampaignState.battlefield_faction()
-    return CardFactory.create(card_name, side, faction)
+    var faction := CampaignState.Faction.FRANKS if side == GameRules.Side.PLAYER || CampaignState.is_act_1_boss() else CampaignState.battlefield_faction()
+    return CardFactory.create(card_name, side, faction, show_group_identity())
+
+func show_group_identity() -> bool:
+    return CampaignState.selected_city != CampaignState.act_1_city_id(1) && !CampaignState.is_act_2()
 
 func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(await tutorial.prepare_choices(cards))

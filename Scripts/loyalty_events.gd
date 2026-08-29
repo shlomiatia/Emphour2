@@ -101,9 +101,9 @@ func eligible_foreign_cards(factions: Array[int]) -> Array[Card]:
     return game.player_hand.get_cards().filter(func(card: Card) -> bool: return !card.is_queued_for_deletion() && factions.has(card.faction))
 
 func show_message(card: Card, event: int) -> void:
-    var text := "%s %s." % [CardCatalog.display_name(card.card_name), event_text(event)]
+    var text := "%s %s" % [CardCatalog.display_name(card.card_name), event_text(event)]
     if CampaignState.start_tutorial(TUTORIAL_ID % event):
-        tutorial.show_messages(["...", text, insult(event)], [TutorialMessage.KingMode.SHOCKED, TutorialMessage.KingMode.OPEN, TutorialMessage.KingMode.OPEN])
+        tutorial.show_messages(["Merde!", text, insult(event)], [TutorialMessage.KingMode.SHOCKED, TutorialMessage.KingMode.OPEN, TutorialMessage.KingMode.OPEN])
         return
     tutorial.show_messages([text], [TutorialMessage.KingMode.HIDDEN])
 

@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b72k1bw1wwp0f"]
 
-[ext_resource type="Script" path="res://Entities/BattleTutorial/battle_tutorial.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://Entities/TutorialMessage/TutorialMessage.tscn" id="2_message"]
+[ext_resource type="Script" uid="uid://fr78jgilcdad" path="res://Entities/BattleTutorial/battle_tutorial.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://byxk0sbymsvg1" path="res://Entities/TutorialMessage/TutorialMessage.tscn" id="2_message"]
 
 [node name="BattleTutorial" type="Node" unique_id=160201098]
 script = ExtResource("1_script")

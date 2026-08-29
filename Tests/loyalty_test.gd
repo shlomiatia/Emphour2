@@ -51,7 +51,7 @@ func verify_event_messages() -> void:
     assert(game.loyalty_events.tutorial.text.text == "...")
     assert(game.loyalty_events.tutorial.king.texture == game.loyalty_events.tutorial.shocked_king)
     game.loyalty_events.tutorial.advance()
-    assert(game.loyalty_events.tutorial.text.text.contains("refuses to fight"))
+    assert(game.loyalty_events.tutorial.text.text == "Archer refuses to fight in the battle!")
     game.loyalty_events.tutorial.advance()
     assert(game.loyalty_events.tutorial.text.text == "Cowardly dogs!")
     assert(game.loyalty_events.tutorial.king.texture == game.loyalty_events.tutorial.open_king)

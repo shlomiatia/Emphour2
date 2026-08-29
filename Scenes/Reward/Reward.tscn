@@ -36,13 +36,13 @@ vertical_alignment = 1
 offset_left = 270.0
 offset_top = 190.0
 offset_right = 880.0
-offset_bottom = 800.0
+offset_bottom = 820.0
 
 [node name="Nobility" parent="CanvasLayer" unique_id=1623765149 instance=ExtResource("3_option")]
 offset_left = 1040.0
 offset_top = 190.0
 offset_right = 1650.0
-offset_bottom = 800.0
+offset_bottom = 820.0
 group_name = "Nobility"
 
 [node name="Fade" parent="CanvasLayer" unique_id=2032149417 instance=ExtResource("5_fade")]

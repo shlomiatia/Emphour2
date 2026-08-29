@@ -52,7 +52,7 @@ func draw_card(side: int) -> Card:
         return null
     var deck: CardDeck = get_deck(side)
     var entry: Variant = take_entry(pile, side)
-    var card: Card = CardFactory.create_campaign_card(entry, side) if side == GameRules.Side.PLAYER else game.create_card(entry, side)
+    var card: Card = game.create_campaign_card(entry, side) if side == GameRules.Side.PLAYER else game.create_card(entry, side)
     var hand: CardHand = game.player_hand if side == GameRules.Side.PLAYER else game.enemy_hand
     hand.add_drawn_card(card, deck)
     deck.set_card_count(pile.size())

@@ -6,13 +6,13 @@ const PREVIEW_WIDTH := 116
 
 @onready var cards: Node2D = $Cards
 
-func show_cards(card_names: Array[String], side: int) -> void:
+func show_cards(card_names: Array[String], side: int, group_identity_visible := true) -> void:
     clear_cards()
     var counts := get_counts(card_names)
     var names := counts.keys()
     for index in names.size():
         var card_name := names[index] as String
-        add_preview(card_name, side, index, counts[card_name])
+        add_preview(card_name, side, index, counts[card_name], group_identity_visible)
     var columns := mini(names.size(), PREVIEW_COLUMNS)
     var rows := ceili(float(names.size()) / PREVIEW_COLUMNS)
     size = Vector2(columns * PREVIEW_WIDTH + 20, rows * 126 + 20)
@@ -24,8 +24,8 @@ func get_counts(card_names: Array[String]) -> Dictionary:
         result[card_name] = result.get(card_name, 0) + 1
     return result
 
-func add_preview(card_name: String, side: int, index: int, count: int) -> void:
-    var card := CardFactory.create(card_name, side)
+func add_preview(card_name: String, side: int, index: int, count: int, group_identity_visible: bool) -> void:
+    var card := CardFactory.create(card_name, side, -1, group_identity_visible)
     cards.add_child(card)
     card.set_meta("tooltip_preview", true)
     card.set_preview_count(count)

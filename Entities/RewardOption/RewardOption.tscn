@@ -9,11 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://gjf0egb2xubn" path="res://Textures/Shield.png" id="9_shield"]
 
 [node name="RewardOption" type="Control" unique_id=1684282293]
-custom_minimum_size = Vector2(610, 610)
+custom_minimum_size = Vector2(610, 630)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 610.0
-offset_bottom = 610.0
+offset_bottom = 630.0
 script = ExtResource("1_script")
 
 [node name="Panel" type="Panel" parent="." unique_id=2091488618]
@@ -47,25 +47,54 @@ layout_mode = 0
 offset_left = 30.0
 offset_top = 370.0
 offset_right = 580.0
-offset_bottom = 432.0
+offset_bottom = 446.0
 theme = ExtResource("5_dark")
+theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Loyalty" type="VBoxContainer" parent="Panel" unique_id=1880439636]
+[node name="LoyaltySection" type="VBoxContainer" parent="Panel" unique_id=1880439636]
+visible = false
 layout_mode = 0
 offset_left = 20.0
-offset_top = 438.0
+offset_top = 457.0
 offset_right = 590.0
-offset_bottom = 566.0
+offset_bottom = 619.0
 theme_override_constants/separation = 0
 
-[node name="Peasants" parent="Panel/Loyalty" unique_id=399469838 instance=ExtResource("6_loyalty_change")]
+[node name="Padding" type="Control" parent="Panel/LoyaltySection" unique_id=123400002]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Panel/LoyaltySection" unique_id=123400003]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme = ExtResource("5_dark")
+theme_override_font_sizes/font_size = 22
+text = "ui.kingdom_loyalty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Loyalty" type="VBoxContainer" parent="Panel/LoyaltySection" unique_id=123400004]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Peasants" parent="Panel/LoyaltySection/Loyalty" unique_id=399469838 instance=ExtResource("6_loyalty_change")]
 layout_mode = 2
 
-[node name="Nobility" parent="Panel/Loyalty" unique_id=1820880019 instance=ExtResource("6_loyalty_change")]
+[node name="Nobility" parent="Panel/LoyaltySection/Loyalty" unique_id=1820880019 instance=ExtResource("6_loyalty_change")]
 layout_mode = 2
+
+[node name="LoyaltyBorder" type="ColorRect" parent="Panel" unique_id=123400001]
+visible = false
+layout_mode = 0
+offset_top = 454.0
+offset_right = 610.0
+offset_bottom = 457.0
+mouse_filter = 2
+color = Color(0.352941, 0.286275, 0.196078, 1)
 
 [node name="GroupIcon" type="TextureRect" parent="Panel" unique_id=468412392]
 layout_mode = 0

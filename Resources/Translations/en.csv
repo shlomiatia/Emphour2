@@ -10,6 +10,7 @@ group.peasants,Peasants
 group.nobility,Nobility
 faction.english,English
 faction.hre,HRE
+faction.hre_full,Holy Roman Empire
 faction.franks,Franks
 faction.rebels,Rebels
 relation.treacherous,Treacherous
@@ -69,7 +70,7 @@ battle.kill,Choose a card for %s to kill
 battle.draw,Draw
 battle.win,%s win
 battle.restart,%s\nPress any key to restart the level
-tutorial.reward.won,"General, you won!"
+tutorial.reward.won,"General, you won the battle!"
 tutorial.reward.offers,The Nobility and Peasants are offering rewards.
 tutorial.reward.loyalty,Selecting a reward will improve faction loyalty.
 tutorial.reward.better,This will yield even better rewards!

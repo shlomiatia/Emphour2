@@ -4,6 +4,7 @@ const SHIELD := preload("res://Textures/Shield.png")
 const ACT_1_BOSS_TUTORIAL_ID := "act_1_boss"
 const ACT_2_BOSS_TUTORIAL_ID := "act_2_boss"
 @onready var title: Label = $CanvasLayer/KingdomLoyalty/PanelContent/TitleBackground/MarginContainer/Title
+@onready var kingdom_loyalty: PanelContainer = $CanvasLayer/KingdomLoyalty
 @onready var first_icon: TextureRect = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer/Icon
 @onready var second_icon: TextureRect = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/NobilityContainer/Icon
 @onready var first_name: Label = $CanvasLayer/KingdomLoyalty/PanelContent/MarginContainer/ContentTitleContainer/PeasantsContainer/Peasants
@@ -47,11 +48,11 @@ func boss_available() -> bool:
 
 func show_boss_tutorial() -> void:
     if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 1 Boss" && CampaignState.start_tutorial(ACT_1_BOSS_TUTORIAL_ID):
-        tutorial.show_messages(["...", tr("tutorial.act1_boss") % CampaignState.group_name(CampaignState.disloyal_group()), tr("tutorial.act1_treason"), tr("tutorial.act1_defeat")], [TutorialMessage.KingMode.SHOCKED])
+        tutorial.show_messages(["Merde!", tr("tutorial.act1_boss") % CampaignState.group_name(CampaignState.disloyal_group()), tr("tutorial.act1_treason"), tr("tutorial.act1_defeat")], [TutorialMessage.KingMode.SHOCKED])
     if CampaignState.map_city_id(CampaignState.act_1_city_id(1)) == "Act 2 Boss" && CampaignState.start_tutorial(ACT_2_BOSS_TUTORIAL_ID):
-        var ally := CampaignState.faction_name(CampaignState.other_foreign_faction(CampaignState.act_2_boss_warring_faction))
-        var enemy := CampaignState.faction_name(CampaignState.act_2_boss_warring_faction)
-        tutorial.show_messages(["...", tr("tutorial.act2_boss") % ally, tr("tutorial.act2_invaded") % enemy, tr("tutorial.act2_destroy")], [TutorialMessage.KingMode.SHOCKED])
+        var ally := CampaignState.faction_dialogue_name(CampaignState.other_foreign_faction(CampaignState.act_2_boss_warring_faction))
+        var enemy := CampaignState.faction_dialogue_name(CampaignState.act_2_boss_warring_faction)
+        tutorial.show_messages(["Merde!", tr("tutorial.act2_boss") % ally, tr("tutorial.act2_invaded") % enemy, tr("tutorial.act2_destroy")], [TutorialMessage.KingMode.SHOCKED])
 
 func setup_roads() -> void:
     setup_road($MapElements/Roads/Road, CampaignState.Faction.FRANKS)
@@ -108,6 +109,7 @@ func is_attackable(city: CampaignCity) -> bool:
     return roads.get(city_id, []).any(func(neighbor: String) -> bool: return CampaignState.city_owner[neighbor] == CampaignState.Faction.FRANKS)
 
 func update_header() -> void:
+    kingdom_loyalty.visible = CampaignState.is_act_2() || !CampaignState.selected_city.is_empty()
     if CampaignState.is_act_2():
         title.text = tr("ui.foreign_relations")
         set_foreign_label(first_name, first_icon, first_status, CampaignState.Faction.ENGLISH)

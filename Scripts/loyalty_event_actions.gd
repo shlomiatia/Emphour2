@@ -6,7 +6,7 @@ func setup(card_battle: CardBattle) -> void:
     game = card_battle
 
 func create_deck_card(entry: CampaignCard) -> Card:
-    var card := CardFactory.create_campaign_card(entry, GameRules.Side.PLAYER)
+    var card := game.create_campaign_card(entry, GameRules.Side.PLAYER)
     game.card_space.add_child(card)
     card.global_position = game.player_deck.global_position
     card.scale = Vector2.ONE * 0.18

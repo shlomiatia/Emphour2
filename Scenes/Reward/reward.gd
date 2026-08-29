@@ -41,7 +41,7 @@ func show_tutorial() -> void:
         tutorial.show_messages(TUTORIAL_TEXTS.map(func(text: String) -> String: return tr(text)))
 
 func act_2_tutorial_texts() -> Array:
-    return [tr(ACT_2_TUTORIAL_TEXTS[0]) % CampaignState.faction_name(CampaignState.faction_at_war()), tr(ACT_2_TUTORIAL_TEXTS[1]), tr(ACT_2_TUTORIAL_TEXTS[2])]
+    return [tr(ACT_2_TUTORIAL_TEXTS[0]) % CampaignState.faction_dialogue_name(CampaignState.faction_at_war()), tr(ACT_2_TUTORIAL_TEXTS[1]), tr(ACT_2_TUTORIAL_TEXTS[2])]
 
 func create_options() -> void:
     if final_reward:

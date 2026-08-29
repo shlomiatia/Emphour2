@@ -96,7 +96,7 @@ static func map_city_id(base_id: String) -> String:
 static func map_owner(base_id: String, faction: Faction, route_index: int) -> Faction:
     var city_id := map_city_id(base_id)
     if city_id == "Act 1 Boss":
-        return Faction.REBELS
+        return Faction.FRANKS
     if city_id == "Act 2 Boss":
         return Faction.FRANKS if act_2_boss_defeated else other_foreign_faction(act_2_boss_warring_faction)
     var conquered_faction := act_2_boss_warring_faction if act_2_boss_prepared else faction_at_war()
@@ -173,6 +173,9 @@ static func prepare_act_2_boss() -> void:
     act_2_boss_warring_faction = faction_at_war()
     foreign_loyalty[other_foreign_faction(act_2_boss_warring_faction)] = Relation.WAR
     act_2_boss_prepared = true
+
+static func faction_dialogue_name(faction: Faction) -> String:
+    return TranslationServer.translate("faction.hre_full") if faction == Faction.HRE else faction_name(faction)
 
 static func faction_name(faction: Faction) -> String:
     return TranslationServer.translate("faction.english") if faction == Faction.ENGLISH else TranslationServer.translate("faction.hre") if faction == Faction.HRE else TranslationServer.translate("faction.franks") if faction == Faction.FRANKS else TranslationServer.translate("faction.rebels")

@@ -6,6 +6,7 @@ func _initialize() -> void:
     run_test()
 
 func run_test() -> void:
+    await verify_initial_header()
     CampaignState.start_in_act_2 = true
     CampaignState.reset()
     await verify_tooltip_order()
@@ -15,6 +16,13 @@ func run_test() -> void:
     await verify_act_1_boss_tutorial()
     await verify_act_1_boss_tie()
     quit()
+
+func verify_initial_header() -> void:
+    CampaignState.start_in_act_2 = false
+    CampaignState.reset()
+    await open_map()
+    assert(!map.kingdom_loyalty.visible)
+    map.queue_free()
 
 func open_map() -> void:
     map = load("res://Scenes/Map/Map.tscn").instantiate()
@@ -72,7 +80,7 @@ func verify_boss() -> void:
     assert((map.tutorial.get_node("Message/Text") as Label).text == "...")
     assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.shocked_king)
     map.tutorial.advance()
-    assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the HRE has double-crossed us!")
+    assert((map.tutorial.get_node("Message/Text") as Label).text == "General, the Holy Roman Empire has double-crossed us!")
     assert((map.tutorial.get_node("Message/King") as TextureRect).texture == map.tutorial.open_king)
 
 func verify_act_1_boss_tutorial() -> void:
@@ -83,6 +91,9 @@ func verify_act_1_boss_tutorial() -> void:
         CampaignState.selected_city = CampaignState.act_1_city_id(index + 1)
         CampaignState.capture_selected_city()
     await open_map()
+    var host := map.get_node("MapElements/Cities/Act1City1") as CampaignCity
+    assert(host.marker.modulate == CampaignState.faction_color(CampaignState.Faction.FRANKS))
+    assert(host.animation_player.current_animation == "Pulse")
     assert(map.tutorial.visible)
     assert((map.tutorial.get_node("Message/Text") as Label).text == "...")
     map.tutorial.advance()

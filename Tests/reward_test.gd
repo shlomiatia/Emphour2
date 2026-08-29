@@ -112,6 +112,8 @@ func verify_act_2_screen() -> void:
     root.add_child(screen)
     await process_frame
     assert(screen.peasants.loyalty.visible && screen.nobility.loyalty.visible)
+    assert(screen.peasants.loyalty_section.visible && screen.nobility.loyalty_section.visible)
+    assert(screen.peasants.loyalty_title.text == "Foreign Loyalty")
     assert(screen.peasants.title.title == "English" && screen.nobility.title.title == "HRE")
     assert(screen.peasants.faction_shield.visible && screen.nobility.faction_shield.visible)
     assert(!screen.peasants.description.text.contains("English"))
@@ -143,6 +145,8 @@ func verify_act_1_loyalty_preview() -> void:
     await process_frame
     var peasants := screen.peasants.loyalty.get_child(0) as LoyaltyChange
     var nobility := screen.peasants.loyalty.get_child(1) as LoyaltyChange
+    assert(screen.peasants.loyalty_section.visible)
+    assert(screen.peasants.loyalty_title.text == "Kingdom Loyalty")
     assert(!(peasants.get_node("Single") as Control).visible)
     assert(tag_text(peasants.get_node("Reward/Tag")) == "At Ease (1)")
     assert((peasants.get_node("Reward/Arrow") as TextureRect).flip_v)
