@@ -20,6 +20,7 @@ func start() -> void:
     game.turns.accepting_action = false
     game.player_hand.set_draggable(false)
     game.set_status(tr("battle.start"), BattleHud.ENEMY_COLOR)
+    game.audio.play_battle()
     var delay := get_tree().create_timer(MESSAGE_DURATION).timeout
     await game.turns.reveal_enemy_card()
     await delay

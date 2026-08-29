@@ -106,7 +106,7 @@ faction = 2
 route_index = 4
 
 [node name="EnglandCity5" parent="MapElements/Cities" unique_id=399724753 instance=ExtResource("3_city")]
-position = Vector2(686, 366)
+position = Vector2(659, 360)
 city_id = "Act 2 City 5"
 display_name = "city.london"
 faction = 2
@@ -141,7 +141,7 @@ faction = 3
 route_index = 4
 
 [node name="HRECity5" parent="MapElements/Cities" unique_id=653078824 instance=ExtResource("3_city")]
-position = Vector2(1233, 639)
+position = Vector2(1174, 636)
 city_id = "Act 2 City 5"
 display_name = "city.regensburg"
 faction = 3

@@ -12,6 +12,7 @@ const CARD_SOUNDS: Array[AudioStream] = [preload("res://Audio/playcard1.wav"), p
 const ATTACK_SOUNDS: Array[AudioStream] = [preload("res://Audio/attack1.ogg"), preload("res://Audio/attack2.ogg"), preload("res://Audio/attack3.mp3")]
 const BLOCK_SOUNDS: Array[AudioStream] = [preload("res://Audio/block1.mp3"), preload("res://Audio/block2.mp3"), preload("res://Audio/block3.mp3")]
 const PUSH_SOUNDS: Array[AudioStream] = [preload("res://Audio/whoosh1.wav"), preload("res://Audio/whoosh2.wav"), preload("res://Audio/whoosh3.wav")]
+const BATTLE_SOUND: AudioStream = preload("res://Audio/whoosh3.wav")
 var music_index := -1
 var music_fade: Tween
 
@@ -58,6 +59,9 @@ func play_attack() -> void:
 
 func play_block() -> void:
     play_random(BLOCK_SOUNDS)
+
+func play_battle() -> void:
+    play_sound(BATTLE_SOUND)
 
 func play_push() -> void:
     push.stream = PUSH_SOUNDS.pick_random()

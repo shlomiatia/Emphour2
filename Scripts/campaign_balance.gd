@@ -1,24 +1,15 @@
 class_name CampaignBalance extends RefCounted
 
-const DATA_PATH := "res://Resources/campaign_balance.cfg"
-
-static var data := ConfigFile.new()
-static var loaded := false
-
-static func config() -> ConfigFile:
-    if !loaded:
-        assert(data.load(DATA_PATH) == OK)
-        loaded = true
-    return data
+const DATA := preload("res://Scripts/campaign_balance_data.gd").DATA
 
 static func strings(section: String, key: String) -> Array[String]:
     var result: Array[String]
-    for value in config().get_value(section, key, []):
-        result.append(value)
+    for item in value(section, key, []):
+        result.append(item)
     return result
 
 static func city_rule(city_id: String) -> Dictionary:
-    return config().get_value("cities", city_id, {}) as Dictionary
+    return value("cities", city_id, {}) as Dictionary
 
 static func city_slots(city_id: String) -> int:
     return int(city_rule(city_id).get("slots", 3))
@@ -48,13 +39,16 @@ static func tier_of(card_name: String) -> int:
     return 0
 
 static func tier_one_weight(card_name: String) -> int:
-    return int(config().get_value("tier_1_weights", card_name, 1))
+    return int(value("tier_1_weights", card_name, 1))
 
 static func upgrades(card_name: String) -> String:
-    return config().get_value("upgrades", card_name, "") as String
+    return value("upgrades", card_name, "") as String
 
 static func rewards(key: String) -> Array[String]:
     return strings("rewards", key)
 
 static func loyalty_chances(loyalty: int) -> Array:
-    return config().get_value("loyalty_chances", str(loyalty), []) as Array
+    return value("loyalty_chances", str(loyalty), []) as Array
+
+static func value(section: String, key: String, default: Variant) -> Variant:
+    return DATA.get(section, {}).get(key, default)

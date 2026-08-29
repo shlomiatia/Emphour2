@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://b7rgeifyj5455"]
 
 [ext_resource type="Theme" uid="uid://cr5ihhg0ld0sw" path="res://Themes/PanelText.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://vtme0drngs0q" path="res://Textures/Arrow.png" id="2_cy1wv"]
 
 [node name="Label" type="Label" unique_id=1369376511]
+custom_minimum_size = Vector2(28, 0)
 offset_right = 28.0
 offset_bottom = 44.0
 theme = ExtResource("1_theme")
-text = "→"
+text = " "
+
+[node name="Arrow" type="Sprite2D" parent="." unique_id=471440619]
+position = Vector2(14, 26)
+texture = ExtResource("2_cy1wv")
