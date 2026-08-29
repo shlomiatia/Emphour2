@@ -83,10 +83,10 @@ tutorial.act1_defeat,Defeat these traitorous toads!
 tutorial.act2_boss,"General, the %s has double-crossed us!"
 tutorial.act2_invaded,They invaded Paris while we fought the %s...
 tutorial.act2_destroy,Destroy these backstabbing rats!
-tutorial.battle.ways,"General, there are several ways to win battles."
-tutorial.battle.meter,Move the balance of power all the way to the right.
+tutorial.battle.ways,"General, let's teach you how to fight"
+tutorial.battle.meter,"To achieve victory, fill the balance of power in your color"
 tutorial.battle.cards_run_out,Or have it on the right when all cards run out.
-tutorial.battle.kill_all,Or... just kill them all!
+tutorial.battle.kill_all,Or kill them all!
 tutorial.battle.line_full,Nothing will move until one battle line is full.
 tutorial.battle.secret,Our opponent played a card in secret.
 tutorial.battle.deploy_militia,Let's deploy a militia by dragging it to our battle line.
@@ -106,7 +106,7 @@ tutorial.battle.good_luck,I trust you to win the battle now.\nGood luck!
 tutorial.battle.replace_stakes,We do not need the stakes anymore. Let's replace them.
 tutorial.battle.enemy_favor,"The balance of power moved in the enemy's favor, so let's weaken them."
 tutorial.battle.kill_cavalry,Kill the light cavalry by clicking it!
-intro.opening.millennium,"1,000 AD\na new millennium begins."
+intro.opening.millennium,"1,000 AD.\nA new millennium begins."
 intro.opening.king,King Robert the Pious is troubled...
 intro.opening.rebels,Flanders in Paris? Sacrebleu!
 intro.opening.general,"General, defeat them — and all the others..."

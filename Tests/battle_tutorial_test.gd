@@ -12,7 +12,12 @@ func run_test() -> void:
     game = load("res://Scenes/Battlefield/Battlefield.tscn").instantiate()
     root.add_child(game)
     await game.battle_ready
+    await process_frame
     assert(game.tutorial.active)
+    assert(game.tutorial.message.text.text == "General, let's teach you how to fight")
+    game.tutorial.message.advance()
+    await process_frame
+    assert(game.tutorial.message.text.text == "Our opponent played a card in secret.")
     assert(hand_has("Militia"))
     assert(hand_has("Archer"))
     assert(hand_has("Stakes"))

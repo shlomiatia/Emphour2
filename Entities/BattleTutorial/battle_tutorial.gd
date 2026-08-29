@@ -30,10 +30,6 @@ func start() -> void:
 func run() -> void:
     await get_tree().process_frame
     await say(tr("tutorial.battle.ways"))
-    await say(tr("tutorial.battle.meter"), meter_right())
-    await say(tr("tutorial.battle.cards_run_out"), meter_right())
-    await say(tr("tutorial.battle.kill_all"))
-    await say(tr("tutorial.battle.line_full"), line_rect())
     await say(tr("tutorial.battle.secret"), enemy_rect())
     await say(tr("tutorial.battle.deploy_militia"))
     restrict("Militia")
@@ -57,8 +53,8 @@ func run() -> void:
     game.player_hand.set_draggable(false)
     var tooltip := game.get_node("CardTooltip") as CardTooltip
     await tooltip.enemy_card_hovered
-    message.play_progress_sound()
     await tooltip.enemy_tooltip_shown
+    message.play_progress_sound()
     message.hide_message()
     await say(tr("tutorial.battle.no_missile_block"))
     await say(tr("tutorial.battle.deploy_archer"))
@@ -72,6 +68,8 @@ func after_player_action() -> void:
         message.hide_message()
         await say(tr("tutorial.battle.discard"), discard_rect())
         await say(tr("tutorial.battle.turn"))
+        await say(tr("tutorial.battle.meter"), meter_right())
+        await say(tr("tutorial.battle.kill_all"))
         await say(tr("tutorial.battle.good_luck"))
         game.turns.set_allowed_slots([], true)
         game.player_hand.set_draggable_cards(game.player_hand.get_cards())
@@ -153,7 +151,7 @@ func equal_strength_rects() -> Array[Rect2]:
 
 func strength_rects() -> Array[Rect2]:
     var enemy := game.board.get_row_slots(Board.ENEMY_ROW)
-    return [enemy[0].get_card().strength.get_global_rect(), enemy[1].get_card().strength.get_global_rect(), player_slot(0).get_card().strength.get_global_rect()]
+    return [enemy[0].get_card().strength.get_global_rect(), enemy[1].get_card().strength.get_global_rect(), player_slot(0).get_card().strength.get_global_rect(), game.battle_hud.meter.get_global_rect()]
 
 func attack_rect() -> Rect2:
     return game.board.get_row_slots(Board.ENEMY_ROW)[0].get_card().attack.get_global_rect()
@@ -163,4 +161,7 @@ func stakes_right() -> Rect2:
     return card.defence.get_global_rect().grow(8.0)
 
 func discard_rect() -> Rect2:
-    return Rect2(game.player_discard.global_position - Card.SIZE / 2.0, Card.SIZE)
+    var icon := game.player_discard.icon
+    var size := icon.texture.get_size() * icon.scale
+    var rect := Rect2(icon.global_position - size / 2.0, size).merge(game.player_discard.count_label.get_global_rect())
+    return rect.intersection(Rect2(Vector2(8, 8), get_viewport().get_visible_rect().size - Vector2(16, 16)))
