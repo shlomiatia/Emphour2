@@ -39,7 +39,7 @@ func run() -> void:
     await wait_for_slot_card(player_slot(0).get_card())
     await say(tr("tutorial.battle.equal_strength"), equal_strength_rects())
     await say(tr("tutorial.battle.charge"), attack_rect())
-    await say(tr("tutorial.battle.kill_militia"))
+    await say(tr("tutorial.battle.kill_militia"), game.battle_hud.player_losses.get_child(0).get_global_rect())
     await say(tr("tutorial.battle.deploy_stakes"))
     restrict("Stakes")
     stage = 2
@@ -68,7 +68,7 @@ func after_player_action() -> void:
         message.hide_message()
         await say(tr("tutorial.battle.discard"), discard_rect())
         await say(tr("tutorial.battle.turn"))
-        await say(tr("tutorial.battle.meter"), meter_right())
+        await say(tr("tutorial.battle.meter"), game.battle_hud.meter.get_global_rect())
         await say(tr("tutorial.battle.kill_all"))
         await say(tr("tutorial.battle.good_luck"))
         game.turns.set_allowed_slots([], true)
@@ -124,19 +124,6 @@ func wait_for_slot_card(card: Card) -> void:
 
 func player_slot(index: int) -> CardSlot:
     return game.board.get_row_slots(Board.PLAYER_ROW)[index]
-
-func meter_right() -> Rect2:
-    var rect := game.battle_hud.meter.get_global_rect()
-    rect.position.x += rect.size.x / 2.0
-    rect.size.x /= 2.0
-    return rect
-
-func line_rect() -> Rect2:
-    return row_rect(Board.ENEMY_ROW).merge(row_rect(Board.PLAYER_ROW))
-
-func row_rect(row: int) -> Rect2:
-    var slots := game.board.get_row_slots(row)
-    return slots[0].get_global_rect().merge(slots[-1].get_global_rect())
 
 func enemy_rect() -> Rect2:
     if game.turns.pending_enemy:

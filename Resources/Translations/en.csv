@@ -35,7 +35,7 @@ card.swordman,Swordsman
 card.spearman,Spearman
 card.foot_knight,Foot Knight
 card.lancer,Lancer
-card.heavy_cav,Heavy Cav
+card.heavy_cav,Heavy Cavalry
 card.knight,Knight
 city.paris,Paris
 city.reims,Reims
@@ -83,8 +83,8 @@ tutorial.act1_defeat,Defeat these traitorous toads!
 tutorial.act2_boss,"General, the %s has double-crossed us!"
 tutorial.act2_invaded,They invaded Paris while we fought the %s...
 tutorial.act2_destroy,Destroy these backstabbing rats!
-tutorial.battle.ways,"General, let's teach you how to fight"
-tutorial.battle.meter,"To achieve victory, fill the balance of power in your color"
+tutorial.battle.ways,"General, let's teach you how to fight."
+tutorial.battle.meter,"To achieve victory, fill the balance of power in your color."
 tutorial.battle.cards_run_out,Or have it on the right when all cards run out.
 tutorial.battle.kill_all,Or kill them all!
 tutorial.battle.line_full,Nothing will move until one battle line is full.
