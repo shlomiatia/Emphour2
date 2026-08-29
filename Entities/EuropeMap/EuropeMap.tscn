@@ -8,6 +8,7 @@
 [ext_resource type="Shader" uid="uid://ba0gtumv111j4" path="res://Shaders/map_wind.gdshader" id="5_06ubw"]
 [ext_resource type="Texture2D" uid="uid://nfcfp4bwjyuv" path="res://Textures/Tree.png" id="5_vneyi"]
 [ext_resource type="Texture2D" uid="uid://b8v3vgs0p70r7" path="res://Textures/Mountain.png" id="6_ec37h"]
+[ext_resource type="Shader" uid="uid://bt6wh60yc7oyg" path="res://Shaders/sway.gdshader" id="6_sway"]
 [ext_resource type="PackedScene" path="res://Entities/SinWaveTransform/SinWavePosition.tscn" id="7_wave_position"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_haze"]
@@ -17,7 +18,15 @@ shader_parameter/intensity = 0.0250000011875
 shader_parameter/blur_amount = 0.0
 shader_parameter/modulate_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pxo24"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sway"]
+resource_local_to_scene = true
+shader = ExtResource("6_sway")
+shader_parameter/speed = 1.0
+shader_parameter/strength = 0.1
+shader_parameter/y_origin = 16.0
+shader_parameter/restrict_dir = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_scol1"]
 resource_local_to_scene = true
 shader = ExtResource("5_06ubw")
 shader_parameter/wind_dir_angle = 0.0
@@ -324,122 +333,152 @@ texture = ExtResource("1_europe")
 [node name="Trees" type="Node2D" parent="Europe" unique_id=1161246877]
 
 [node name="Tree" type="Sprite2D" parent="Europe/Trees" unique_id=1352299205]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(-605, 352)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree2" type="Sprite2D" parent="Europe/Trees" unique_id=1109733124]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(-625, 370)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree3" type="Sprite2D" parent="Europe/Trees" unique_id=896550533]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(-587, 374)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree4" type="Sprite2D" parent="Europe/Trees" unique_id=661492343]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(519, 151)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree5" type="Sprite2D" parent="Europe/Trees" unique_id=1973299691]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(498, 170)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree6" type="Sprite2D" parent="Europe/Trees" unique_id=1937858192]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(483, 149)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree7" type="Sprite2D" parent="Europe/Trees" unique_id=260176012]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(498, 139)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree8" type="Sprite2D" parent="Europe/Trees" unique_id=859185454]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(803, -127)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree9" type="Sprite2D" parent="Europe/Trees" unique_id=416470640]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(771, -146)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree10" type="Sprite2D" parent="Europe/Trees" unique_id=1858205698]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(776, -117)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree11" type="Sprite2D" parent="Europe/Trees" unique_id=1921904769]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(786, -134)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree12" type="Sprite2D" parent="Europe/Trees" unique_id=971262981]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(786, 383)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree13" type="Sprite2D" parent="Europe/Trees" unique_id=1714274495]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(802, 401)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree14" type="Sprite2D" parent="Europe/Trees" unique_id=382747518]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(770, 402)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree15" type="Sprite2D" parent="Europe/Trees" unique_id=600991629]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(363, -153)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree16" type="Sprite2D" parent="Europe/Trees" unique_id=2057330289]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(387, -151)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree17" type="Sprite2D" parent="Europe/Trees" unique_id=1646219313]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(375, -177)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree18" type="Sprite2D" parent="Europe/Trees" unique_id=2115267714]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(777, -543)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree19" type="Sprite2D" parent="Europe/Trees" unique_id=58471263]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(789, -560)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree20" type="Sprite2D" parent="Europe/Trees" unique_id=1516021860]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(801, -540)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree21" type="Sprite2D" parent="Europe/Trees" unique_id=686605107]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(161, -548)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree22" type="Sprite2D" parent="Europe/Trees" unique_id=898035218]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(133, -559)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree23" type="Sprite2D" parent="Europe/Trees" unique_id=1192195292]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(144, -533)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree24" type="Sprite2D" parent="Europe/Trees" unique_id=342904604]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(92, 234)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree25" type="Sprite2D" parent="Europe/Trees" unique_id=565586392]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(83, 258)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree26" type="Sprite2D" parent="Europe/Trees" unique_id=1226309346]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(110, 249)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree27" type="Sprite2D" parent="Europe/Trees" unique_id=155276681]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(-751, 313)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree28" type="Sprite2D" parent="Europe/Trees" unique_id=972647269]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(-769, 303)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree29" type="Sprite2D" parent="Europe/Trees" unique_id=901626156]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(685, 43)
 texture = ExtResource("5_vneyi")
 
 [node name="Tree30" type="Sprite2D" parent="Europe/Trees" unique_id=1417431701]
+material = SubResource("ShaderMaterial_sway")
 position = Vector2(10, -458)
 texture = ExtResource("5_vneyi")
 
@@ -669,7 +708,7 @@ position = Vector2(626, -528)
 texture = ExtResource("6_ec37h")
 
 [node name="WindOverlay" parent="." unique_id=389009123 instance=ExtResource("2_map_wind")]
-material = SubResource("ShaderMaterial_pxo24")
+material = SubResource("ShaderMaterial_scol1")
 position = Vector2(1035, 648)
 texture = ExtResource("1_europe")
 patch_width = 120.0
