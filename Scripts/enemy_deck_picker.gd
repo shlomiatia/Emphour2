@@ -41,24 +41,31 @@ static func get_tiers(cards: Array[String]) -> Array[int]:
 	return tiers
 
 static func pick_tier_card(cards: Array[String], tier: int, budget: int) -> String:
-	var total := cards.size() if tier > 1 else total_weight(cards)
+	var total := total_weight(cards, tier)
 	var roll := randi_range(1, total)
 	var selected := select_card(cards, tier, roll)
 	print_card_roll(roll, total, cards, tier, selected, budget - tier)
 	return selected
 
-static func total_weight(cards: Array[String]) -> int:
+static func total_weight(cards: Array[String], tier: int) -> int:
 	var total := 0
 	for card in cards:
-		total += CampaignBalance.tier_one_weight(card)
+		total += card_weight(card, tier)
 	return total
 
 static func select_card(cards: Array[String], tier: int, roll: int) -> String:
 	for card in cards:
-		roll -= CampaignBalance.tier_one_weight(card) if tier == 1 else 1
+		roll -= card_weight(card, tier)
 		if roll <= 0:
 			return card
 	return cards[0]
+
+static func card_weight(card: String, tier: int) -> int:
+	if tier == 1:
+		return CampaignBalance.tier_one_weight(card)
+	if tier == 2:
+		return CampaignBalance.tier_two_weight(card)
+	return 1
 
 static func print_tier_roll(roll: int, tiers: Array[int], selected: int) -> void:
 	var chances: Array[String]
@@ -69,7 +76,7 @@ static func print_tier_roll(roll: int, tiers: Array[int], selected: int) -> void
 static func print_card_roll(roll: int, total: int, cards: Array[String], tier: int, selected: String, remaining: int) -> void:
 	var chances: Array[String]
 	for card in cards:
-		var weight: int = CampaignBalance.tier_one_weight(card) if tier == 1 else 1
+		var weight := card_weight(card, tier)
 		chances.append("%s=%.1f%%" % [card, weight * 100.0 / total])
 	print("Enemy card roll: tier=%d roll=%d/%d selected=%s remaining=%d chances=[%s]" % [tier, roll, total, selected, remaining, ", ".join(chances)])
 

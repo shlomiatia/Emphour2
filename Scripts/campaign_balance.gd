@@ -41,6 +41,9 @@ static func tier_of(card_name: String) -> int:
 static func tier_one_weight(card_name: String) -> int:
     return int(value("tier_1_weights", card_name, 1))
 
+static func tier_two_weight(card_name: String) -> int:
+    return int(value("tier_2_weights", card_name, 1))
+
 static func upgrades(card_name: String) -> String:
     return value("upgrades", card_name, "") as String
 

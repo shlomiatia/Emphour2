@@ -27,6 +27,7 @@ const DATA := {
         "4": ["Knight"]
     },
     "tier_1_weights": {"Militia": 3, "Archer": 3, "Stakes": 1, "Mantlet": 1},
+    "tier_2_weights": {"Crossbowman": 2, "Horse Archer": 1, "Light Cavalry": 1, "Axeman": 1, "Swordman": 1, "Spearman": 1},
     "rewards": {
         "Act1_Peasants_1": ["new:1"],
         "Act1_Peasants_2": ["upgrade:1:2:exclude:Crossbowman"],

@@ -20,6 +20,8 @@ func run_test() -> void:
     assert(tooltip.data_tooltip.get_description(armored).contains("Block 1 non-armor-piercing attack"))
     var cavalry := CardCatalog.get_data("Light Cavalry")
     assert(tooltip.data_tooltip.get_description(cavalry).contains("Charge attack"))
+    assert(tooltip.data_tooltip.description.text.ends_with("Peasants"))
+    assert(tooltip.data_tooltip.get_description(CardCatalog.get_data("Knight"), "Knight", CampaignState.Faction.ENGLISH).ends_with("English"))
     var crossbowman := game.create_card("Crossbowman", GameRules.Side.PLAYER)
     game.add_child(crossbowman)
     await process_frame

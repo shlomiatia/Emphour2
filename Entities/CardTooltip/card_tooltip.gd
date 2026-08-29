@@ -36,7 +36,7 @@ func show_tooltip() -> void:
         position_tooltip(enemy_tooltip)
         enemy_tooltip_shown.emit()
         return
-    data_tooltip.show_data(hovered_card.data)
+    data_tooltip.show_data(hovered_card)
     position_tooltip(data_tooltip)
 
 func can_show_for(card: Card) -> bool:
