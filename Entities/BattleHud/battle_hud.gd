@@ -53,12 +53,16 @@ func set_preview(value: int) -> void:
     if preview_tween:
         preview_tween.kill()
     preview_tween = CardMotion.create(self)
-    preview.visible = !is_equal_approx(current, target)
-    preview.color = half_color(blue_half.color if target > current else red_half.color)
-    blue_half.z_index = 3 if target > current else 1
-    red_half.z_index = 3 if target < current else 1
+    var returning := is_equal_approx(current, target)
+    if !returning:
+        preview.visible = true
+        preview.color = half_color(blue_half.color if target > current else red_half.color)
+        blue_half.z_index = 3 if target > current else 1
+        red_half.z_index = 3 if target < current else 1
     preview_tween.parallel().tween_property(preview, "position:x", minf(current, target), 0.4)
     preview_tween.parallel().tween_property(preview, "size:x", absf(target - current), 0.4)
+    if returning:
+        preview_tween.tween_callback(hide_preview)
 
 func set_balance(value: int, animate := true) -> void:
     var current := meter_position(balance)
