@@ -182,7 +182,7 @@ static func group_name(group: String) -> String:
 
 static func faction_color(faction: Faction) -> Color:
     match faction:
-        Faction.REBELS: return Color("#f5eee2")
+        Faction.REBELS: return Color("#4f5c31")
         Faction.ENGLISH: return Color("#792311")
         Faction.HRE: return Color("#b5860e")
     return Color("#1b3c67")
