@@ -26,11 +26,9 @@ func _process(_delta: float) -> void:
     var target := get_overlap_target(dragged_card) if dragged_card else get_target_at(get_viewport().get_mouse_position())
     if target == highlighted_target:
         return
-    if highlighted_target:
-        highlighted_target.set_hovering(false)
+    clear_hover()
     highlighted_target = target
-    if highlighted_target:
-        highlighted_target.set_hovering(true)
+    set_hover(target)
 
 func _unhandled_input(event: InputEvent) -> void:
     if !(event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed):
@@ -106,15 +104,17 @@ func reveal_enemy_cards() -> void:
         card.set_hidden(false)
     state_changed.emit()
 
-func enable_player_targets(full_row: bool) -> void:
+func enable_player_targets() -> void:
     clear_targets()
-    for slot in get_row_slots(PLAYER_ROW):
-        if full_row || !slot.get_card():
-            slot.set_targetable(true)
+    var player_slots := get_row_slots(PLAYER_ROW)
+    for slot in player_slots:
+        slot.set_targetable(true)
 
 func limit_targets(slots_to_enable: Array[CardSlot]) -> void:
     for slot in get_slots():
         slot.set_targetable(slot.targetable && slots_to_enable.has(slot))
+        if slot.get_card():
+            slot.get_card().set_disabled(!slot.targetable)
 
 func enable_card_targets(cards: Array[Card]) -> void:
     clear_targets()
@@ -124,13 +124,18 @@ func enable_card_targets(cards: Array[Card]) -> void:
         if card:
             card.set_disabled(!cards.has(card))
 
+func set_enabled_cards(cards: Array[Card]) -> void:
+    for slot in get_slots():
+        var card := slot.get_card()
+        if card:
+            card.set_disabled(!cards.has(card))
+
 func set_dragged_card(card: Card) -> void:
     dragged_card = card
 
 func clear_targets() -> void:
     dragged_card = null
-    if highlighted_target:
-        highlighted_target.set_hovering(false)
+    clear_hover()
     highlighted_target = null
     for slot in get_slots():
         slot.set_targetable(false)
@@ -142,6 +147,21 @@ func get_target_at(point: Vector2) -> CardSlot:
         if slot.targetable && slot.contains_point(point):
             return slot
     return null
+
+func clear_hover() -> void:
+    for slot in get_slots():
+        slot.set_hovering(false)
+
+func set_hover(target: CardSlot) -> void:
+    if !target:
+        return
+    var player_slots := get_row_slots(PLAYER_ROW)
+    var has_free_slot := player_slots.any(func(slot: CardSlot) -> bool: return !slot.get_card())
+    if target.row == PLAYER_ROW && has_free_slot:
+        for slot in player_slots:
+            slot.set_hovering(!slot.get_card())
+        return
+    target.set_hovering(true)
 
 func get_overlap_target(card: Card) -> CardSlot:
     if !card:

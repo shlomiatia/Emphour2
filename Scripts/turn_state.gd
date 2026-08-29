@@ -73,7 +73,7 @@ func card_clicked(card: Card) -> void:
 
 func enable_targets() -> void:
     var full_row := game.board.is_full(GameRules.Side.PLAYER)
-    game.board.enable_player_targets(full_row)
+    game.board.enable_player_targets()
     if !allowed_slots.is_empty():
         game.board.limit_targets(allowed_slots)
     game.board.set_dragged_card(selected_card)

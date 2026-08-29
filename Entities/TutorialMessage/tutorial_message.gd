@@ -40,8 +40,7 @@ func is_advance_event(event: InputEvent) -> bool:
 	return event is InputEventKey || event is InputEventMouseButton
 
 func advance() -> void:
-	confirm_sound.stream = SOUNDS.pick_random()
-	confirm_sound.play()
+	play_progress_sound()
 	if current_index < messages.size() - 1:
 		current_index += 1
 		show_current_message()
@@ -86,6 +85,10 @@ func show_current_message() -> void:
 	king.visible = mode != KingMode.HIDDEN
 	if king.visible:
 		king.texture = king_texture(mode)
+
+func play_progress_sound() -> void:
+	confirm_sound.stream = SOUNDS.pick_random()
+	confirm_sound.play()
 
 func king_texture(mode: int) -> Texture2D:
 	if mode == KingMode.CLOSED:

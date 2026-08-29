@@ -55,6 +55,8 @@ func run() -> void:
     message.show_action(tr("tutorial.battle.hover_face_down"), enemy_rect())
     game.player_hand.set_draggable(false)
     var tooltip := game.get_node("CardTooltip") as CardTooltip
+    await tooltip.enemy_card_hovered
+    message.play_progress_sound()
     await tooltip.enemy_tooltip_shown
     message.hide_message()
     await say(tr("tutorial.battle.no_missile_block"))
@@ -89,6 +91,7 @@ func after_battle() -> bool:
     game.turns.begin_player_action()
     await say(tr("tutorial.battle.replace_stakes"))
     game.turns.set_allowed_slots([player_slot(1)], false)
+    game.board.set_enabled_cards([player_slot(1).get_card()])
     game.player_hand.set_draggable_cards(game.player_hand.get_cards())
     stage = 4
     await replacement_done

@@ -89,9 +89,11 @@ func choose_card(cards: Array[Card], prompt: String) -> Card:
     selectable_cards.assign(await tutorial.prepare_choices(cards))
     set_status(prompt)
     board.enable_card_targets(selectable_cards)
+    player_hand.set_draggable_cards([])
     var chosen: Card = await card_chosen
     tutorial.choice_selected()
     board.clear_targets()
+    player_hand.set_draggable(false)
     selectable_cards.clear()
     return chosen
 
@@ -131,3 +133,4 @@ func set_balance(value: int, animate := true) -> void:
 func set_status(value: String, color := BattleHud.NORMAL_COLOR) -> void:
     status_label.text = value
     status_label.add_theme_color_override("font_color", color)
+    status_label.add_theme_constant_override("outline_size", 4 if color != BattleHud.NORMAL_COLOR else 0)

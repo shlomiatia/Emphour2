@@ -13,9 +13,9 @@ texture = ExtResource("3_back")
 
 [node name="Count" type="Label" parent="." unique_id=1145018165]
 z_index = 100
-offset_left = -68.0
+offset_left = -76.0
 offset_top = -18.0
-offset_right = -8.0
+offset_right = -16.0
 offset_bottom = 22.0
 theme = ExtResource("4_theme")
 text = "0"
