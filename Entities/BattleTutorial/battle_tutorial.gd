@@ -102,7 +102,7 @@ func prepare_choices(cards: Array[Card]) -> Array[Card]:
     if !active || stage != 3:
         return cards
     var targets := cards.filter(func(card: Card) -> bool: return card.card_name == "Light Cavalry")
-    await say(tr("tutorial.battle.enemy_favor"), game.battle_hud.preview.get_global_rect())
+    await say(tr("tutorial.battle.enemy_favor"), game.battle_hud.meter.get_global_rect())
     message.show_action(tr("tutorial.battle.kill_cavalry"), targets[0].get_global_rect())
     stage = 5
     return targets

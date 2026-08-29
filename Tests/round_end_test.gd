@@ -14,10 +14,10 @@ func run_test() -> void:
     game.get_node("CardSpace/Board").slot_count = 1
     root.add_child(game)
     await game.battle_ready
-    var marker := game.battle_hud.marker.position.x
+    var blue_width := game.battle_hud.blue_half.size.x
     play_last_card()
     assert(game.battle_hud.preview_tween != null)
-    assert(is_equal_approx(game.battle_hud.marker.position.x, marker))
+    assert(is_equal_approx(game.battle_hud.blue_half.size.x, blue_width))
     for _frame in 100:
         if game.finished:
             assert(game.enemy_hand.get_card_count() < 2)

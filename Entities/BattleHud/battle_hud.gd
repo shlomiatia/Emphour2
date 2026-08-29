@@ -6,13 +6,15 @@ const NORMAL_COLOR := Color("#180f24")
 
 @export var loss_icon_scene: PackedScene
 @onready var meter: Panel = $Meter
-@onready var preview: Panel = $Meter/Preview
-@onready var marker: Panel = $Meter/Marker
+@onready var preview: ColorRect = $Meter/Preview
+@onready var blue_half: ColorRect = $Meter/BlueHalf
+@onready var red_half: ColorRect = $Meter/RedHalf
 @onready var enemy_losses: HBoxContainer = $EnemyLosses
 @onready var player_losses: HBoxContainer = $PlayerLosses
 
-var marker_tween: Tween
+var balance_tween: Tween
 var preview_tween: Tween
+var balance := 0
 var player_loss_count := 0
 var enemy_loss_count := 0
 var losses_faded := false
@@ -46,27 +48,55 @@ func set_preview(value: int) -> void:
     if !losses_faded:
         set_loss_icons(player_losses, player_loss_count, PLAYER_COLOR)
         set_loss_icons(enemy_losses, enemy_loss_count, ENEMY_COLOR)
-    var target := meter_position(value, preview)
+    var current := meter_position(balance)
+    var target := meter_position(value)
     if preview_tween:
         preview_tween.kill()
     preview_tween = CardMotion.create(self)
-    preview_tween.tween_property(preview, "position:x", target, 0.4)
+    preview.visible = !is_equal_approx(current, target)
+    preview.color = half_color(blue_half.color if target > current else red_half.color)
+    blue_half.z_index = 3 if target > current else 1
+    red_half.z_index = 3 if target < current else 1
+    preview_tween.parallel().tween_property(preview, "position:x", minf(current, target), 0.4)
+    preview_tween.parallel().tween_property(preview, "size:x", absf(target - current), 0.4)
 
 func set_balance(value: int, animate := true) -> void:
-    var target := meter_position(value, marker)
-    set_preview(value)
-    if marker_tween:
-        marker_tween.kill()
+    var current := meter_position(balance)
+    var target := meter_position(value)
+    balance = value
+    if preview_tween:
+        preview_tween.kill()
+    if balance_tween:
+        balance_tween.kill()
     if !animate:
-        marker.position.x = target
+        preview.visible = false
+        set_meter_boundary(target)
         return
-    marker_tween = CardMotion.create(self)
-    marker_tween.tween_property(marker, "position:x", target, 0.4)
+    preview.position.x = minf(current, target)
+    preview.size.x = absf(target - current)
+    balance_tween = CardMotion.create(self)
+    balance_tween.parallel().tween_property(blue_half, "size:x", target - 3.0, 0.4)
+    balance_tween.parallel().tween_property(red_half, "position:x", target, 0.4)
+    balance_tween.parallel().tween_property(red_half, "size:x", meter.size.x - target - 3.0, 0.4)
+    balance_tween.tween_callback(hide_preview)
 
-func meter_position(value: int, item: Control) -> float:
+func hide_preview() -> void:
+    preview.visible = false
+    preview.position.x = meter_position(balance)
+    preview.size.x = 0.0
+
+func half_color(color: Color) -> Color:
+    return Color(color.r / 2.0, color.g / 2.0, color.b / 2.0, 1.0)
+
+func set_meter_boundary(value: float) -> void:
+    blue_half.size.x = value - 3.0
+    red_half.position.x = value
+    red_half.size.x = meter.size.x - value - 3.0
+
+func meter_position(value: int) -> float:
     var limit := GameRules.WINNING_SCORE
     var ratio := clampf((value + limit) / float(limit * 2), 0.0, 1.0)
-    return ratio * meter.size.x - item.size.x / 2.0
+    return 3.0 + ratio * (meter.size.x - 6.0)
 
 func set_loss_icons(container: HBoxContainer, losses: int, color: Color) -> void:
     while container.get_child_count() < losses:
